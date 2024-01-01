@@ -1,0 +1,31 @@
+(kicad_sch (version 20230121) (generator eeschema)
+
+  (uuid a1826416-a38b-4cae-99b3-2363dbc4dbc9)
+
+  (paper "A3")
+
+  (title_block
+    (title "MSF Owl Clock - Environmental Sensors")
+    (rev "0.1")
+    (company "Pete Restall <pete@restall.net>")
+  )
+
+  (lib_symbols
+  )
+
+
+  (text "TODO: SENSOR VDD MUST BE RAMPED WITHIN 1-5ms." (at 188.976 73.152 0)
+    (effects (font (size 1.27 1.27)) (justify right bottom))
+    (uuid 3a98fe5b-8504-48fd-b495-5d3a2ef3bbc6)
+  )
+  (text "TODO: USE 2.8V FOR ALL SENSOR VDDs - SOME LEVEL TRANSLATION IS NECESSARY FOR THE 'ALERT' PINS, AND A COUPLE OF MOSFETS WILL TRANSLATE THE I2C.\nSTANDBY CURRENTS FOR ALL SENSORS (EXCEPT PROXIMITY) IS MINIMAL, SO VDD SIMPLIFICATION IS GOOD.\nUSE THE 3.3V FROM VDD AND THEN AN LDO FOR 2.8V TO FILTER SOME OF THE NOISE.  THE 2.8V REGULATOR ALSO NEEDS TO BE SIZED TO HANDLE THE 135mA HEATER CURRENT FOR THE HUMIDITY SENSOR."
+    (at 131.318 98.298 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 5327aaf4-03e4-4423-8eb3-b4b95231d2e0)
+  )
+
+  (hierarchical_label "{I^{2}C}" (shape bidirectional) (at 76.2 101.854 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left))
+    (uuid 3aa9fef3-a911-456d-b7d1-ce13c0b0414a)
+  )
+)

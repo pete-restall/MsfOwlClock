@@ -1,0 +1,28 @@
+(kicad_sch (version 20230121) (generator eeschema)
+
+  (uuid 9af4e6f3-104a-4ca1-b63f-2bed43663d8c)
+
+  (paper "A3")
+
+  (title_block
+    (rev "0.1")
+    (company "Pete Restall <pete@restall.net>")
+  )
+
+  (lib_symbols
+  )
+
+
+  (hierarchical_label "{USBC_CONN}" (shape bidirectional) (at 66.04 119.38 180) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify right))
+    (uuid 1b428699-d9e4-4117-a3ca-df9494e18633)
+  )
+  (hierarchical_label "USBC_VBUS" (shape input) (at 50.8 101.346 180) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify right))
+    (uuid 3466903d-599c-4106-9604-7a2de81da32a)
+  )
+  (hierarchical_label "{I^{2}C}" (shape bidirectional) (at 76.2 127.254 180) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify right))
+    (uuid b9236eca-c964-4b8d-ad0f-dea95c3f861c)
+  )
+)
