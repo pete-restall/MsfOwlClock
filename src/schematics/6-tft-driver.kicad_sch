@@ -16,6 +16,10 @@
   (bus_alias "TFT_CONN0" (members "TP_SCL" "TP_SDA" "TP_INT" "TP_RST" "LEDA" "LEDK" "L_RES" "L_SDIN" "L_SCLK" "L_IO[1..3]" "L_CS" "L_TE"))
   (bus_alias "TFT_QSPI" (members "~{SS}" "SCK" "DATA[0..3]"))
 
+  (text "Multiplex the QSPI data lines using TMUX1574RSVR." (at 152.146 119.634 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 006a3aca-b81a-465e-b786-5dd1d10fec57)
+  )
   (text "TODO: TFT_QSPI needs bi-directional muxing for the four data pins and uni-directional for the ~{SS} and (possibly) SCK pins - a 1:2 buffer may suffice for SCK"
     (at 130.556 183.896 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
@@ -25,11 +29,6 @@
     (at 128.524 173.736 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 2313d6e0-6453-4350-8011-6b9b762c01b6)
-  )
-  (text "TODO: TFT_TP_RESET is an input that goes to both (no mux)"
-    (at 130.302 168.91 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid 4110dfae-ecaa-4fc0-b90e-0a4c59c73ac5)
   )
   (text "TODO: I2C PINS NEED MULTIPLEXING BECAUSE THEY WILL HAVE THE SAME ADDRESS - PERHAPS JUST MUX SCK."
     (at 132.588 158.75 0)
@@ -44,12 +43,22 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 7e62309c-e9b6-480e-abed-19ef7f1f72a9)
   )
+  (text "TODO: USE USB_SUSPEND TO PUT THE MUXES INTO LOW-POWER MODE (~{EN} PIN).  SAVES ABOUT 60uA."
+    (at 128.27 168.402 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid b15bfd32-81ab-4ec3-9fd6-ec6414940969)
+  )
   (text "TODO: TFT_TP_INT are two unmux'd lines from the connectors to the MCU"
     (at 129.286 163.83 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid b6f8646f-1289-4b63-a994-2d6f117be4f1)
   )
-  (text "TODO: TFT_RESET is an input that goes to both (no mux)"
+  (text "Multiplex the QSPI ~{SS} and SCK lines, and the I^{2}C, using another TMUX1574RSVR.  Cheapest and also matches propagation delays / skew."
+    (at 152.4 124.714 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid b895f1e8-abbf-4434-a058-85af6566f16f)
+  )
+  (text "TODO: TFT_RESET is an input that also serves TFT_TP_RESET and goes to both TFTs (no mux)"
     (at 131.318 177.546 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid dd88fa3a-b130-4959-9f48-aae3e64aaa64)
@@ -67,9 +76,9 @@
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid a4e6d886-9c82-40b9-b6d2-43167ccff5a6)
   )
-  (hierarchical_label "~{TFT_TP_RESET}" (shape input) (at 127 167.64 180) (fields_autoplaced)
+  (hierarchical_label "USB_SUSPEND" (shape input) (at 127 167.64 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))
-    (uuid afd404ea-9cda-4899-900f-0ff79e867a94)
+    (uuid c2f23c85-bfe9-4fb3-8fe4-7f25af185401)
   )
   (hierarchical_label "TFT_BACKLED[0..1]" (shape input) (at 127 172.72 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))

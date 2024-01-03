@@ -219,6 +219,12 @@
     (uuid e6042b6e-8a80-4ad7-bcf9-8beb8c220fbf)
   )
 
+  (text "TODO: RC LPF FILTER ON AMP_IN, WITH AC COUPLING TO FORM AN HPF.  PLACE R CLOSE TO MCU PIN THEN THE TRACE ACTS AS A SMALL L."
+    (at 115.824 89.662 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid ad562afb-5a4d-48fa-9968-572da5923fe0)
+  )
+
   (label "AMP_EN" (at 88.9 64.77 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 0d2a941f-84cc-46f6-8eed-ee3d3df8f005)
