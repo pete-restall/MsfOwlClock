@@ -13,7 +13,7 @@
   (lib_symbols
   )
 
-  (bus_alias "TFT_CONN0" (members "TP_SCL" "TP_SDA" "TP_INT" "TP_RST" "LEDA" "LEDK" "L_RES" "L_SDIN" "L_SCLK" "L_IO[1..3]" "L_CS" "L_TE"))
+  (bus_alias "TFT_CONN0" (members "TP_SCL" "TP_SDA" "TP_INT" "~{TP_{RST}}" "LED_{A}" "LED_{K}" "~{L_{RES}}" "L_{SDIN}" "L_{SCLK}" "L_{IO[1..3]}" "~{L_{CS}}" "L_{TE}"))
   (bus_alias "TFT_QSPI" (members "~{SS}" "SCK" "DATA[0..3]"))
 
   (text "Multiplex the QSPI data lines using TMUX1574RSVR." (at 152.146 119.634 0)

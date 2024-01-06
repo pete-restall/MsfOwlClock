@@ -24,6 +24,11 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 87256329-9f15-4bd4-8800-d9f8f5031c33)
   )
+  (text "TODO: POWER SUPPLIES.\n\nTPS62441 is a dual buck converter - two independent outputs with high switching frequency (ie. low value / small inductors).\n\nOne output should be an always-enabled +3.3V -> LC pi filter -> digital\nOne output should be an MCU-enabled +3.954V_{absmin} -> LC pi filter -> TPS7A20 -> +3.6V -> analogue (radio and vrefs)\n\nFor pi filters, use L with SRF >> 2.5MHz (preferably > 100MHz since spikes are high dV/dT), otherwise effectiveness is reduced.\n\nBefore pi filters, leave room for an optional RC snubber, with (for the analogue rail) an optional RC filter after / just before the LDO:\n\n--+------+--L--+----R--+------+------> LDO\n  R      C     C       C     Rfb\n  C      |     |       |      +------> SMPS\n GND    GND   GND     GND    Rfb\n                             GND\n\nFeedback V for SMPS _includes_ the filters in the loop.  Note that R might need to handle _very_ big I^{2}R if LDO is shorted.\n\nThese are 1A parts (or a 2A part for the TPS62442) so ensure that the digital supply can handle the current / power dissipation - do a power budget before settling on it.\n\nhttps://www.analog.com/en/technical-articles/designing-second-stage-output-filters-for-switching-power-supplies.html\n\n\nA TPS7A2028 ought to get about 250mA from the +3.3V digital line (for the sensors - the humidity sensor can take about 135mA).\n"
+    (at 138.176 209.804 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid fe9916fc-cb74-4240-bc3f-5e1e429c2f63)
+  )
 
   (hierarchical_label "{USBC_CONN}" (shape bidirectional) (at 66.04 119.38 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))
