@@ -400,7 +400,7 @@
     (uuid bdeac812-0a6a-4707-800e-d199f4321c73)
   )
 
-  (label "SDA" (at 127 144.78 0)
+  (label "SDA" (at 127 144.78 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 003cb125-34a0-4a67-b8b4-4e9d3943175c)
   )
@@ -408,7 +408,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 8dd8a64f-18ad-4ea6-a573-e0695cdb7401)
   )
-  (label "SCL" (at 127 134.62 0)
+  (label "SCL" (at 127 134.62 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 9422f3aa-13f1-4644-9dfa-0ecaaa2ada1a)
   )
@@ -417,6 +417,10 @@
     (uuid cbc54781-c799-4c6e-acc1-a9da4c983fdd)
   )
 
+  (hierarchical_label "{SENSOR_FLAGS}" (shape output) (at 279.146 152.146 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left))
+    (uuid 2f1f8640-986e-4fad-8286-28a441a35286)
+  )
   (hierarchical_label "{I^{2}C}" (shape bidirectional) (at 121.92 129.54 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 3aa9fef3-a911-456d-b7d1-ce13c0b0414a)
