@@ -1,1 +1,5 @@
+*.cir binary
+*.exe binary
+*.ibs binary
 *.lib binary
+*.TNO binary

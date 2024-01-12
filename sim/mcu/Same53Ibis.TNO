@@ -1,0 +1,408 @@
+********************************************************************************
+***                       Micro-Cap 12.2.0.5 (64 bit)                        ***
+***                                                                          ***
+***                                                                          ***
+***                     Transient Analysis of Same53Ibis                     ***
+***                           12/01/2024 11:32:06                            ***
+********************************************************************************
+Limits
+======
+Maximum Run Time           100n
+Output Start Time (tstart) 0
+Maximum Time Step          0
+Number of Points           51
+Temperature                Linear 27
+Retrace Runs               1
+Run Options                Normal
+State Variables            Zero
+Operating Point            On
+Operating Point Only       Off
+Auto Scale Ranges          Off
+Accumulate Plots           Off
+Fixed Time Step            Off
+Periodic Steady State      Off
+Ignore Expression Errors   Off
+
+
+*****************************************************
+***                Temperature=27                 ***
+*****************************************************
+
+Temperature=27
+
+DC Operating Point Voltages
+===========================
+Node                Voltage  Node                Voltage 
+1                    0.000   2                    3.300  
+VOUT_MAX             3.280   4                    3.281  
+5                    3.281   6                    3.300  
+VOUT_MIN             3.291   8                    3.292  
+9                    3.292   10                   3.283  
+11                   3.294   12                   3.300  
+13                   3.300   XMAX.XVKDF.TRIG      2.772  
+XMAX.VTPWR           2.772   XMAX.XPC.4           3.283  
+XMAX.XVKDF.EN        2.772   XMAX.12              3.283  
+XMAX.XE4.1        -771.390u  XMAX.XE5.1          63.437m 
+XMAX.XVKUR.10        1.007   XMAX.XVKDR.14       11.730m 
+XMAX.XVKUF.11        1.001   XMAX.XVKDF.15       -1.886n 
+XMIN.XVKDF.TRIG      2.772   XMIN.VTPWR           2.772  
+XMIN.XPC.4           3.294   XMIN.XVKDF.EN        2.772  
+XMIN.12              3.294   XMIN.XE4.1        -141.585u 
+XMIN.XE5.1          22.404m  XMIN.XVKUR.10      996.354m 
+XMIN.XVKDR.14        4.823m  XMIN.XVKUF.11        1.000  
+XMIN.XVKDF.15     -116.398u  XTXCLK.XPC.4         3.291  
+XTXCLK.12            3.291   X1.XPC.4             3.280  
+X1.12                3.280  
+
+DC Operating Point Inductor Current
+===================================
+       Inductor     Current         Inductor     Current 
+XMAX.L_PIN          32.887u  XMIN.L_PIN          33.006u 
+XTXCLK.L_PIN      -100.521n  X1.L_PIN           -90.115n 
+
+
+Operating Point for Devices of Type Resistor
+============================================
+Instance:                     R1                 R3                 R2
+V                         3.280              3.291              1.641m
+Power DC Terms:
+PD                      107.565u           108.275u            53.970n
+
+DC Pin Currents:
+Ir                       32.797u            32.905u            32.887u
+
+Device Variables:
+tc1                       0.000              0.000              0.000 
+tc2                       0.000              0.000              0.000 
+
+
+Instance:                     R4                 R5                 R6
+V                         1.647m             1.641m             1.647m
+Power DC Terms:
+PD                       54.360n            53.970n            54.360n
+
+DC Pin Currents:
+Ir                       33.006u            32.887u            33.006u
+
+Device Variables:
+tc1                       0.000              0.000              0.000 
+tc2                       0.000              0.000              0.000 
+
+
+Instance:               XMAX.R1T           XMAX.R2T        XMAX.R_COMP
+V                         2.772p             2.772              3.283 
+Power DC Terms:
+PD                    7.686E-024             7.684p           107.782p
+
+DC Pin Currents:
+Ir                        2.772p             2.772p            32.830p
+
+Device Variables:
+tc1                       0.000              0.000              0.000 
+tc2                       0.000              0.000              0.000 
+
+
+Instance:              XMAX.R1TE          XMAX.R2TE         XMAX.R_PIN
+V                         2.772p             2.772             -2.998u
+Power DC Terms:
+PD                    7.686E-024             7.684p            98.607p
+
+DC Pin Currents:
+Ir                        2.772p             2.772p           -32.887u
+
+Device Variables:
+tc1                       0.000              0.000              0.000 
+tc2                       0.000              0.000              0.000 
+
+
+Instance:               XMIN.R1T           XMIN.R2T        XMIN.R_COMP
+V                         2.772p             2.772              3.294 
+Power DC Terms:
+PD                    7.686E-024             7.684p           108.493p
+
+DC Pin Currents:
+Ir                        2.772p             2.772p            32.938p
+
+Device Variables:
+tc1                       0.000              0.000              0.000 
+tc2                       0.000              0.000              0.000 
+
+
+Instance:              XMIN.R1TE          XMIN.R2TE         XMIN.R_PIN
+V                         2.772p             2.772             -3.009u
+Power DC Terms:
+PD                    7.686E-024             7.684p            99.318p
+
+DC Pin Currents:
+Ir                        2.772p             2.772p           -33.006u
+
+Device Variables:
+tc1                       0.000              0.000              0.000 
+tc2                       0.000              0.000              0.000 
+
+
+Instance:          XTXCLK.R_COMP       XTXCLK.R_PIN          X1.R_COMP
+V                         3.291              6.928n             3.280 
+Power DC Terms:
+PD                      108.275p             0.696f           107.565p
+
+DC Pin Currents:
+Ir                       32.905p           100.521n            32.797p
+
+Device Variables:
+tc1                       0.000              0.000              0.000 
+tc2                       0.000              0.000              0.000 
+
+
+Instance:               X1.R_PIN        XMAX.XE4.R1        XMAX.XE5.R1
+V                         6.211n          -771.390u            63.437m
+Power DC Terms:
+PD                        0.560f           595.043n             4.024m
+
+DC Pin Currents:
+Ir                       90.115n          -771.390u            63.437m
+
+Device Variables:
+tc1                       0.000              0.000              0.000 
+tc2                       0.000              0.000              0.000 
+
+
+Instance:            XMIN.XE4.R1        XMIN.XE5.R1
+V                      -141.585u            22.404m
+Power DC Terms:
+PD                       20.046n           501.937u
+
+DC Pin Currents:
+Ir                     -141.585u            22.404m
+
+Device Variables:
+tc1                       0.000              0.000 
+tc2                       0.000              0.000 
+
+
+
+Operating Point for Devices of Type Inductor
+============================================
+Instance:             XMAX.L_PIN         XMIN.L_PIN       XTXCLK.L_PIN
+V                         0.000              0.000             -0.444f
+Power DC Terms:
+PS                        0.000              0.000          4.464E-023
+
+DC Pin Currents:
+Il                       32.887u            33.006u          -100.521n
+
+Device Variables:
+ic                        0.000              0.000              0.000 
+
+
+Instance:               X1.L_PIN
+V                         0.000 
+Power DC Terms:
+PS                        0.000 
+
+DC Pin Currents:
+Il                      -90.115n
+
+Device Variables:
+ic                        0.000 
+
+
+
+Operating Point for Devices of Type Capacitor
+=============================================
+Instance:                     C1                 C2           XMAX.C1T
+V                         3.280              3.291              2.772 
+Power DC Terms:
+PS                        0.000              0.000              0.000 
+
+DC Pin Currents:
+Ic                        0.000              0.000              0.000 
+
+Device Variables:
+ic                        0.000              0.000              0.000 
+
+
+Instance:            XMAX.C_COMP          XMAX.C1TE         XMAX.C_PIN
+V                         3.283              2.772             -3.283 
+Power DC Terms:
+PS                        0.000              0.000              0.000 
+
+DC Pin Currents:
+Ic                        0.000              0.000              0.000 
+
+Device Variables:
+ic                        0.000              0.000              0.000 
+
+
+Instance:               XMIN.C1T        XMIN.C_COMP          XMIN.C1TE
+V                         2.772              3.294              2.772 
+Power DC Terms:
+PS                        0.000              0.000              0.000 
+
+DC Pin Currents:
+Ic                        0.000              0.000              0.000 
+
+Device Variables:
+ic                        0.000              0.000              0.000 
+
+
+Instance:             XMIN.C_PIN      XTXCLK.C_COMP       XTXCLK.C_PIN
+V                        -3.294              3.291             -3.291 
+Power DC Terms:
+PS                        0.000              0.000              0.000 
+
+DC Pin Currents:
+Ic                        0.000              0.000              0.000 
+
+Device Variables:
+ic                        0.000              0.000              0.000 
+
+
+Instance:              X1.C_COMP           X1.C_PIN
+V                         3.280             -3.280 
+Power DC Terms:
+PS                        0.000              0.000 
+
+DC Pin Currents:
+Ic                        0.000              0.000 
+
+Device Variables:
+ic                        0.000              0.000 
+
+
+
+Operating Point for Devices of Type Ltra
+========================================
+Instance:                     T1                 T2
+Power DC Terms:
+PS                      471.327p           474.728p
+
+DC Pin Currents:
+Input                   -32.887u           -33.006u
+Output                   32.887u            33.006u
+
+Device Variables:
+r                        72.630m            72.630m
+l                        10.712n            10.712n
+c                         2.044p             2.044p
+g                     1.232E+018         1.232E+018
+len                       6.000              6.000 
+
+
+
+Operating Point for Devices of Type Function Source
+===================================================
+Instance:               XMAX.G1            XMAX.G2            XMIN.G1
+V                        3.283            -16.986m             3.294 
+Power DC Terms:
+PG                      -2.443m           -13.198u          -355.885u
+
+DC Pin Currents:
+ISource                744.142u          -777.029u           108.046u
+
+
+Instance:               XMIN.G2
+V                       -6.172m
+Power DC Terms:
+PG                    -870.638n
+
+DC Pin Currents:
+ISource               -141.069u
+
+
+
+Operating Point for Devices of Type SPICE Source
+================================================
+Instance:                    V1                 V2                 V4
+V                        0.000              3.300              3.300 
+Power DC Terms:
+PG                       0.000              2.564m           465.513u
+
+DC Pin Currents:
+ISource                  0.000           -777.029u          -141.065u
+
+
+Instance:                    V5                 V6           XMAX.V2T
+V                        3.300              3.300              2.772 
+Power DC Terms:
+PG                    -331.611n          -297.270n            15.370p
+
+DC Pin Currents:
+ISource                100.488n            90.082n            -5.545p
+
+
+Instance:              XMIN.V2T    XMAX.XVKUR.VKUR    XMAX.XVKDR.VKDR
+V                        2.772              1.007             11.730m
+Power DC Terms:
+PG                      15.370p             0.000              0.000 
+
+DC Pin Currents:
+ISource                 -5.545p             0.000              0.000 
+
+
+Instance:       XMAX.XVKUF.VKUF    XMAX.XVKDF.VKDF    XMIN.XVKUR.VKUR
+V                        1.001             -1.886n           996.354m
+Power DC Terms:
+PG                       0.000              0.000              0.000 
+
+DC Pin Currents:
+ISource                  0.000              0.000              0.000 
+
+
+Instance:       XMIN.XVKDR.VKDR    XMIN.XVKUF.VKUF    XMIN.XVKDF.VKDF
+V                        4.823m             1.000           -116.398u
+Power DC Terms:
+PG                       0.000              0.000              0.000 
+
+DC Pin Currents:
+ISource                  0.000              0.000              0.000 
+
+
+
+Operating Point for Devices of Type Table Source
+================================================
+Instance:           XMAX.XE4.G1        XMAX.XE5.G1        XMAX.XGC.G1
+V                      771.390u           -63.437m             3.283 
+Power DC Terms:
+PG                     595.043n             4.024m          -180.078p
+
+DC Pin Currents:
+ISource               -771.390u            63.437m            54.852p
+
+
+Instance:           XMAX.XPC.G1        XMIN.XE4.G1        XMIN.XE5.G1
+V                      -16.986m           141.585u           -22.404m
+Power DC Terms:
+PG                       0.306f            20.046n           501.937u
+
+DC Pin Currents:
+ISource                 17.986f          -141.585u            22.404m
+
+
+Instance:           XMIN.XGC.G1        XMIN.XPC.G1      XTXCLK.XGC.G1
+V                        3.294             -6.172m             3.291 
+Power DC Terms:
+PG                     -42.771n            24.263p          -346.514f
+
+DC Pin Currents:
+ISource                 12.985n             3.931n           105.307f
+
+
+Instance:         XTXCLK.XPC.G1          X1.XGC.G1          X1.XPC.G1
+V                       -9.483m             3.280            -20.285m
+Power DC Terms:
+PG                     952.941p          -309.949f             1.827n
+
+DC Pin Currents:
+ISource                100.488n            94.505f            90.082n
+
+
+Function Values
+==================
+Rise_Time(v(vout_max),1,1,0.33,2.97)   2.331n
+Rise_Time(v(vout_min),1,1,0.33,2.97)   4.146n
+Fall_Time(v(vout_max),1,1,0.33,2.97)   2.164n
+Fall_Time(v(vout_min),1,1,0.33,2.97)   4.213n
+High_Y(i(V2),1)                        4.397m
+Low_Y(i(V2),1)                       -48.457m
+

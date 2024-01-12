@@ -1,0 +1,45 @@
+***
+*** These settings correlate well with JLCPCB's impedance calculations for
+*** stackup JLC04161H-7628:
+***     https://jlcpcb.com/pcb-impedance-calculator/
+***
+*** The laminate parameters used can be found here:
+***     https://jlcpcb.com/help/article/263-User-Guide-to-the-JLCPCB-Impedance-Calculator
+***
+*** A copy is also in the doc/datasheets/pcb directory.
+***
+
+-------------------------------
+2D Impedance Calculator Program
+Version 0.2.1.88
+Time: Fri Jan 12 10:31:19 2024
+GPL Version 2.0
+-------------------------------
+Simulation pix map 416 pixels high by 900 pixels wide.
+1124224 bytes allocated for bmp.
+Writing BMP file:
+mdtlc_24001238880.bmp
+
+ 
+INPUT PARAMETERS:
+ 
+      Layer             Thick   Specifications 
+       Solder Mask Top   1.20    Opening w=0.0  offset=0.0
+        Signal Layer 1   1.60  Width=6.0  Etchback=0.16
+      Laminate Layer 2   8.60    Resin Content  49.0% 4.0-4.4 
+   Copper Plane Bottom   0.60    Opening w=0.0  offset=0.0
+ 
+      Layer             Thick   Er    Loss Tangent
+               Air top  29.60  1.00    0.00000
+       Solder Mask Top   1.20  3.80    0.00200
+        Signal Layer 1   1.60  4.20    0.00120
+      Laminate Layer 2   8.60  4.20    0.00120
+   Copper Plane Bottom   0.60  3.99
+ 
+ Rdc_trace_1= 72.63  milliohms/in 20C
+ DC resistance by pixel count:
+ Rdc_trace_1=  72.511 milliohm/in.
+ C          =   2.044 pF/in        L =  10.712 nH/in.
+ Er         =   3.050       Loss_tan =   0.00113
+ Zo         =  72.396 Ohms     Delay = 147.958 ps/in.
+ 
