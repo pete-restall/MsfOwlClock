@@ -1,0 +1,11 @@
+.subckt tps628512-ramp V+ V-
++params: Vmax=3.3 Imax=2.8u
+V1 2 3 DC {2.0*Imax*Vmax/0.6}
+V2 0 3 DC {Imax*Vmax/0.6/1000}
+R1 1 2 1k
+S1 1 3 V+ V- limit
+G1 V+ V- 1 0 -1
+.model limit vswitch
++Roff=1002 Ron=500.25m
++Voff={0.99*Vmax} Von={1.01*Vmax}
+.ends

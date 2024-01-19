@@ -1,0 +1,15 @@
+.subckt usb-source V+ V-
++params: Vmax=5 Imax=100m
+V1 2 3 DC {2.0*Imax}
+V2 0 3 DC {Imax/1000}
+R1 1 2 1k
+S1 1 3 V+ V- limit
+G1 V+ V- 1 0 -1
+.model limit vswitch
++Roff=1002 Ron=500.25m
++Voff={0.99*Vmax} Von={1.01*Vmax}
+
+V3 4 V- DC 5
+R2 4 V+ 10Meg
+C1 V+ V- 120u
+.ends
