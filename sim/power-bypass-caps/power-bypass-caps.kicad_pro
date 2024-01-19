@@ -319,7 +319,7 @@
         "version": 0
       },
       "model_mode": 2,
-      "workbook_filename": "power-in.wbk"
+      "workbook_filename": "power-bypass-caps.wbk"
     },
     "page_layout_descr_file": "/home/pete/.local/share/kicad/7.0/template/lophtware.kicad_wks",
     "plot_directory": "",
