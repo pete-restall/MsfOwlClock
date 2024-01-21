@@ -3545,7 +3545,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 81bcc908-f06f-4cbd-9431-64349b1bae24)
   )
-  (text "TODO: NOTE ABOUT ALL R AND C BEING 0402 UNLESS SPECIFIED.\nALSO ALL R THICK FILM 1% 100ppm.\nALSO ALL C MLCC +/- 10% X5R 16V."
+  (text "TODO: NOTE ABOUT ALL R AND C BEING 0402 UNLESS SPECIFIED.\nALSO ALL R THICK FILM 1% 100ppm.\nALSO ALL C MLCC +/- 10% X5R 10V."
     (at 309.372 261.874 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 8aa385eb-d15a-46b5-9929-c51a4b65a9e7)
@@ -4027,6 +4027,10 @@
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 56d16ecc-f933-47c4-bf95-eea60e56f673)
   )
+  (hierarchical_label "CORE_VDD_MODE" (shape output) (at 305.054 228.854 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left))
+    (uuid 5ab5691d-65ca-474d-90b2-1e682a4ebe55)
+  )
   (hierarchical_label "{MCU_DEBUG}" (shape bidirectional) (at 137.16 86.36 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 5d226331-a5cf-453c-a296-ba81979a1f06)
@@ -4035,7 +4039,7 @@
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid 5e6b0387-9b0c-4c1d-b33e-74b5bd490ee6)
   )
-  (hierarchical_label "MCU_V{DD}" (shape output) (at 355.6 81.28 0) (fields_autoplaced)
+  (hierarchical_label "CORE_VDD_{+3.3V}" (shape input) (at 355.6 81.28 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid 635e3b87-155d-4773-919b-8aa2327ffaf1)
   )
@@ -4593,12 +4597,6 @@
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
           (reference "R2") (unit 1)
-        )
-        (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R001") (unit 1)
-        )
-        (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/f496ae57-4ed4-47d4-8c97-f77f6741aea7"
-          (reference "R501") (unit 1)
         )
       )
     )
@@ -5478,12 +5476,6 @@
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
           (reference "R304") (unit 1)
         )
-        (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R001") (unit 1)
-        )
-        (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/f496ae57-4ed4-47d4-8c97-f77f6741aea7"
-          (reference "R501") (unit 1)
-        )
       )
     )
   )
@@ -5900,12 +5892,6 @@
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
           (reference "R305") (unit 1)
-        )
-        (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R001") (unit 1)
-        )
-        (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/f496ae57-4ed4-47d4-8c97-f77f6741aea7"
-          (reference "R501") (unit 1)
         )
       )
     )

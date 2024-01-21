@@ -399,6 +399,11 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid bdeac812-0a6a-4707-800e-d199f4321c73)
   )
+  (text "TODO: ALLOW +2.8V LDO REGULATOR FOR SENSORS TO BE COMPLETELY TURNED OFF, FOR EVEN LOWER STANDBY CURRENT ?"
+    (at 134.366 58.166 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid f65cabb8-eb66-47f2-b117-29f0977315d7)
+  )
 
   (label "SDA" (at 127 144.78 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
@@ -429,7 +434,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 162.56 125.73 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 3566316a-dfcd-43de-954c-c8913de73b7d)
-    (property "Reference" "R4" (at 164.084 124.714 0)
+    (property "Reference" "R501" (at 164.084 124.714 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "1.8kΩ" (at 164.084 126.746 0)
@@ -475,12 +480,6 @@
     (pin "2" (uuid 57f85666-e37e-43b0-af39-03d9a3094ac4))
     (instances
       (project "msf-owl-clock"
-        (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R4") (unit 1)
-        )
-        (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R001") (unit 1)
-        )
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/f496ae57-4ed4-47d4-8c97-f77f6741aea7"
           (reference "R501") (unit 1)
         )
@@ -491,7 +490,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 175.26 125.73 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 5e1c2b16-a2a3-41f1-92fd-d624872d76a5)
-    (property "Reference" "R4" (at 176.784 124.714 0)
+    (property "Reference" "R502" (at 176.784 124.714 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "1.8kΩ" (at 176.784 126.746 0)
@@ -537,12 +536,6 @@
     (pin "2" (uuid cfe538d4-7def-436a-9e25-8896f2dbdaa8))
     (instances
       (project "msf-owl-clock"
-        (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R4") (unit 1)
-        )
-        (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R001") (unit 1)
-        )
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/f496ae57-4ed4-47d4-8c97-f77f6741aea7"
           (reference "R502") (unit 1)
         )
