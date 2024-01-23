@@ -2160,7 +2160,7 @@
     (property "Sim.Type" "PULSE" (at 10.16 88.9 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Sim.Params" "y1=0 y2=5 td=10m tr=20m tf=3m tw=1 per=1 np=1" (at 38.862 175.0144 0)
+    (property "Sim.Params" "y1=0 y2=5 td=15m tr=20m tf=3m tw=1 per=1 np=1" (at 38.862 175.0144 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Sim.Pins" "1=+ 2=-" (at 10.16 88.9 0)
