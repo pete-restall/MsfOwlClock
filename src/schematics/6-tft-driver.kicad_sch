@@ -43,7 +43,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 7e62309c-e9b6-480e-abed-19ef7f1f72a9)
   )
-  (text "TODO: USE USB_SUSPEND TO PUT THE MUXES INTO LOW-POWER MODE (~{EN} PIN).  SAVES ABOUT 60uA."
+  (text "TODO: USE ~{USB_SUSPEND} TO PUT THE MUXES INTO LOW-POWER MODE (!~{EN} PIN).  SAVES ABOUT 60uA."
     (at 128.27 168.402 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid b15bfd32-81ab-4ec3-9fd6-ec6414940969)
@@ -76,7 +76,7 @@
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid a4e6d886-9c82-40b9-b6d2-43167ccff5a6)
   )
-  (hierarchical_label "USB_SUSPEND" (shape input) (at 127 167.64 180) (fields_autoplaced)
+  (hierarchical_label "~{USB_SUSPEND}" (shape input) (at 127 167.64 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid c2f23c85-bfe9-4fb3-8fe4-7f25af185401)
   )
