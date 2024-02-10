@@ -1,0 +1,32 @@
+version 2
+1
+9
+.tran 50u 500u 0{return}{return}{return}.kicad adjustpaths{return}.save all{return}.probe alli
+9
+2
+I(L1)
+ 
+2
+I(R_OVP1)
+ 
+2
+I(V_USB1)
+ 
+1
+V(/VIN)
+ 
+1
+V(/VSW)
+ 
+1
+V(/V_ANALOGUE)
+ 
+1
+V(/V_CORE)
+ 
+1
+V(/V_USB)
+ 
+1
+V(Net-_L_CABLE1-P1_)
+ 

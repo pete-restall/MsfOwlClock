@@ -1,0 +1,15 @@
+*
+* Using the graph from datasheet:
+*   DCR=90m-ohms
+*   XL=7.8 ohms at 1MHz, so L=XL/(2*pi*1MHz)=1.292uH
+*   R=630 ohms at 140MHz
+*   C=(1/(2*pi*f_resonant))^2/L, so C=(1/(2*pi*140MHz))^2/1.292uH=1.0pF
+*
+* Not a perfect model, but good enough for this simulation.
+*
+.subckt WLBD2012HCU601TH 1 2
+RSHUNT1 1 2 630
+CSHUNT1 1 2 1.0p
+RSER1 1 3 90m
+LSER1 3 2 1.292u
+.ends
