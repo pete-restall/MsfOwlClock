@@ -1,0 +1,9 @@
+.subckt NMOS-SWITCH D G S
++params: Ron=1m Roff=1Gig Vthl=0 Vthh=1
+.model Q1 SW(Vt={Vthl} Vh={Vthl*0.001} Ron={Ron} Roff={Roff})
+.model D1 D(Ron=1m Roff=1Gig Vfwd=0.8 Cjo=2n Tt=6n)
+S1 D S G 0 Q1 off
+*R1 D S {Roff-max(0,min(1,(v(G)-min(Vthl,Vthh))/abs(Vthh-Vthl)))*(Roff-Ron)}
+* Diode parameters are unknown for the TPS628512...
+D1 S D D1
+.ends
