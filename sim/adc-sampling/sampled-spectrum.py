@@ -30,11 +30,12 @@ from numpy.fft import fft
 #frequencies_hz = [180e3, 240e3, 420e3, 900e3, 1.02e6] # @ 120kHz
 #magnitudes_db = [-30.5, -33.5, -38.7, -45.5, -48]
 frequencies_hz = [180e3] # @ 240kHz
-magnitudes_db = [-84]
+magnitudes_db = [-79]
 sampling_frequency_hz = int(240e3)
-over_sampling_rate = 4
-right_shift = 0
-sampling_depth = math.log2(over_sampling_rate) // 2
+over_sampling_rate = 16
+forced_right_shift = 0
+forced_division = 1
+sampling_depth = 12 + math.log2(over_sampling_rate) // 2
 
 frequencies = [2 * math.pi * x / (sampling_frequency_hz * over_sampling_rate) for x in frequencies_hz]
 magnitudes = [10 ** (y / 20) for y in magnitudes_db]
@@ -42,10 +43,10 @@ samples = [0] * sampling_frequency_hz
 for t in range(0, len(samples) * over_sampling_rate):
 	i = t // over_sampling_rate
 	for n in range(0, len(frequencies)):
-		samples[i] += min(2**12 - 1, max(-2**12, round(magnitudes[n] * math.sin(frequencies[n] * t) * 2**12)))
+		samples[i] += min(2**12 - 1, max(-2**12, round(magnitudes[n] * math.sin(frequencies[n] * t) * 2**12))) # TODO: Resolution increase doesn't work without noise / dithering to toggle the LSb; if frequencies[n] <= -79dB (12 bits) then the accumulated sample is 0
 
 	if t % over_sampling_rate == over_sampling_rate - 1:
-		samples[i] = samples[i] // over_sampling_rate // 2**right_shift
+		samples[i] = samples[i] // 2**forced_right_shift // forced_division
 
 fft_X = np.abs(fft(samples))
 fft_frequencies_hz = np.arange(len(fft_X)) * sampling_frequency_hz / len(fft_X)
