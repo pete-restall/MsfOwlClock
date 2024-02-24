@@ -2208,10 +2208,10 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 2ea117ca-30c9-47e2-8a05-edc51cdabe6a)
   )
-  (text ".param cVariationPercent=0.03\n.param rVariationPercent=0.002"
-    (at 17.78 25.4 0)
+  (text "To run a Monte-Carlo simulation, set numberOfMonteCarloRuns > 0.\n\nThe cWithTolerance5_0(x) function provides a uniform distribution of ±5% initial and ±1% temperature.\nThe cWithTolerance2_0(x) function provides a uniform distribution of ±2% initial and ±1% temperature.\nThe rWithTolerance1_0(x) function provides a uniform distribution of ±1% initial and ±1% temperature.\nThe rWithTolerance0_1(x) function provides a uniform distribution of ±0.1% initial and ±0.1% temperature.\n\nSet the are* / is* flags to 1 or 0 depending on what needs adjusting.\n\nEnsure the R* and C* parameters are correct (ngspice cannot read the values of the components from the schematic).\n\nTo duplicate a previous run, set the rngSeed variable to the previous run's value.\n\nThe output will be in /tmp/msf-front-end-montecarlo.txt.\n\nUse the following command to view the output (don't forget to edit and set the actual number of runs):\n  gnuplot -c msf-front-end-montecarlo.gp"
+    (at 421.64 45.72 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid 641cf862-0892-488c-9799-14c69e24f509)
+    (uuid 7e9fbc17-beb7-4c1d-adeb-6addd18ce68c)
   )
   (text "Open Loop Gain Measurement\nRule of thumb (Op-Amps for Everyone, p461) - active filters need\n+40dB A_{o} headroom above filter response peak.  The MCP6849 model\ndoes not vary A_{o} over V_{dd}, etc. so ensure an additional -6dB\nheadroom to allow PVT variation."
     (at 17.78 226.06 0)
@@ -2222,11 +2222,11 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 9c21f8c0-c62b-49ef-9f84-0fa953bc7aa9)
   )
-  (text ".ac lin 100k 1 10Meg" (at 17.78 30.48 0)
+  (text ".ac lin 10k 1 10Meg" (at 17.78 25.4 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid c09bd52b-dd8a-4ef1-a4c3-1b9969ae3a80)
   )
-  (text ".options Rshunt=10G gmin=0.1p" (at 17.78 35.56 0)
+  (text ".options Rshunt=10G gmin=0.1p" (at 17.78 30.48 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid c4f5b035-f215-48a5-bd7e-eff84f7bdb74)
   )
@@ -2239,7 +2239,12 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid ccfe0796-1a59-4f43-bc71-694fafdb20a9)
   )
-  (text "*tran 1u 500u 0" (at 17.78 33.02 0)
+  (text ".control\nsetplot const\nlet numberOfMonteCarloRuns = 0\nlet areFiltersAdjusted = 1\nlet arePgasAdjusted = 1\nlet isAdcBufferAdjusted = 1\nlet rngSeed = 1 + rnd(2^32-2)\n\nlet Rfilt1 = 4.3k\nlet Rfilt2 = 68\nlet Rfilt3 = 54.9k\nlet Rfilt4 = 4.3k\nlet Cfilt1 = 4.7n\nlet Cfilt2 = 360p\n\nlet Rpga1 = 100\nlet Rpga2 = 390\nlet Rpga3 = 1.24k\nlet Rpga4 = 2.49k\nlet Rpga5 = 4.99k\nlet Cpga1 = 180p\nlet CpgaDecoupling1 = 360p\n\nlet CadcDecoupling1 = 360p\nlet Cadc1 = 360p\nlet Radc1 = 4.3k\nlet Radc2 = 10k\nlet Radc7 = 2.49k\n\nset rngSeed = {$&rngSeed}[1]\nsetseed $rngSeed\n\ndefine cWithTolerance5_0(x) (x + x * 0.06 * sunif(0))\ndefine cWithTolerance2_0(x) (x + x * 0.03 * sunif(0))\ndefine rWithTolerance1_0(x) (x + x * 0.02 * sunif(0))\ndefine rWithTolerance0_1(x) (x + x * 0.002 * sunif(0))\n\nlet runIndex = 1\n\nif numberOfMonteCarloRuns > 0\n	set curplot = new\n	set scratch = $curplot\nend\n\nwhile runIndex <= numberOfMonteCarloRuns\n	if arePgasAdjusted <> 0\n		alter C3 = cWithTolerance5_0(CpgaDecoupling1)\n\n		alter Cpga1_1 = cWithTolerance5_0(Cpga1)\n		alter Rpga1_1 = rWithTolerance1_0(Rpga1)\n		alter Rpga1_2 = rWithTolerance1_0(Rpga2)\n		alter Rpga1_3 = rWithTolerance1_0(Rpga3)\n		alter Rpga1_4 = rWithTolerance1_0(Rpga4)\n		alter Rpga1_5 = rWithTolerance1_0(Rpga5)\n\n		alter Cpga2_1 = cWithTolerance5_0(Cpga1)\n		alter Rpga2_1 = rWithTolerance1_0(Rpga1)\n		alter Rpga2_2 = rWithTolerance1_0(Rpga2)\n		alter Rpga2_3 = rWithTolerance1_0(Rpga3)\n		alter Rpga2_4 = rWithTolerance1_0(Rpga4)\n		alter Rpga2_5 = rWithTolerance1_0(Rpga5)\n	end\n\n	if areFiltersAdjusted <> 0\n		alter Cfilt1_1 = cWithTolerance2_0(Cfilt1)\n		alter Cfilt1_2 = cWithTolerance2_0(Cfilt2)\n		alter Rfilt1_1 = rWithTolerance0_1(Rfilt1)\n		alter Rfilt1_2 = rWithTolerance0_1(Rfilt2)\n		alter Rfilt1_3 = rWithTolerance0_1(Rfilt3)\n		alter Rfilt1_4 = rWithTolerance0_1(Rfilt4)\n\n		alter Cfilt2_1 = cWithTolerance2_0(Cfilt1)\n		alter Cfilt2_2 = cWithTolerance2_0(Cfilt2)\n		alter Rfilt2_1 = rWithTolerance0_1(Rfilt1)\n		alter Rfilt2_2 = rWithTolerance0_1(Rfilt2)\n		alter Rfilt2_3 = rWithTolerance0_1(Rfilt3)\n		alter Rfilt2_4 = rWithTolerance0_1(Rfilt4)\n	end\n\n	if isAdcBufferAdjusted <> 0\n		alter C4 = cWithTolerance5_0(CadcDecoupling1)\n\n		alter Radc1 = rWithTolerance0_1(Radc1)\n		alter Radc2 = rWithTolerance0_1(Radc2)\n		alter Radc3 = rWithTolerance0_1(Radc2)\n		alter Radc4 = rWithTolerance0_1(Radc2)\n		alter Radc5 = rWithTolerance0_1(Radc2)\n		alter Radc6 = rWithTolerance0_1(Radc2)\n		alter Radc7 = rWithTolerance0_1(Radc7)\n		alter Radc8 = rWithTolerance0_1(Radc7)\n		alter Cadc1 = cWithTolerance5_0(Cadc1)\n	end\n\n	ac lin 10k 1 10Meg\n	set runIndex = $&runIndex\n	set dt = $curplot\n	setplot $scratch\n\n	let vAdc{$runIndex} = ({$dt}.v(\"/Vadc+\") - {$dt}.v(\"/Vadc-\"))\n	setplot $dt\n\n	let runIndex = runIndex + 1\nend\n\nif numberOfMonteCarloRuns > 0\n	plot db({$scratch}.all)\n	wrdata /tmp/msf-front-end-montecarlo.txt db({$scratch}.all)\nend\n\n.endc\n"
+    (at 421.64 276.86 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid cf3c52be-306f-478c-8275-46ce0e04dd18)
+  )
+  (text "*tran 1u 500u 0" (at 17.78 27.94 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid f5f44a75-662f-4c3c-92c1-de844608f576)
   )
@@ -2498,7 +2503,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 181.61 181.61 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 06ce9747-aa1b-4fea-b246-4217d8f4291c)
-    (property "Reference" "R12" (at 181.61 176.5767 90)
+    (property "Reference" "Rpga2_5" (at 181.61 176.5767 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "${SIM.PARAMS}" (at 181.61 179.0009 90)
@@ -2557,7 +2562,7 @@
     (instances
       (project "msf-front-end"
         (path "/292600db-8009-4ff1-adb7-cebf96aeb855"
-          (reference "R12") (unit 1)
+          (reference "Rpga2_5") (unit 1)
         )
       )
     )
@@ -2659,7 +2664,7 @@
   (symbol (lib_id "restall-generic-capacitors:capacitor-unpolarised") (at 318.77 149.86 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 0c57805d-9b4e-43b8-828d-906af2637cb9)
-    (property "Reference" "C6" (at 318.77 143.5567 90)
+    (property "Reference" "C4" (at 318.77 143.5567 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "${SIM.PARAMS}" (at 318.77 145.9809 90)
@@ -2707,7 +2712,7 @@
     (property "Sim.Type" "=" (at 318.77 149.86 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Sim.Params" "c=390p" (at 318.77 149.86 0)
+    (property "Sim.Params" "c=360p" (at 318.77 149.86 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Sim.Pins" "1=+ 2=-" (at 318.77 149.86 0)
@@ -2718,7 +2723,7 @@
     (instances
       (project "msf-front-end"
         (path "/292600db-8009-4ff1-adb7-cebf96aeb855"
-          (reference "C6") (unit 1)
+          (reference "C4") (unit 1)
         )
       )
     )
@@ -3062,7 +3067,7 @@
   (symbol (lib_id "restall-generic-capacitors:capacitor-unpolarised") (at 105.41 149.86 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 1e847489-471e-435f-a7ef-47290f8ccb36)
-    (property "Reference" "C4" (at 105.41 143.5567 90)
+    (property "Reference" "C3" (at 105.41 143.5567 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "${SIM.PARAMS}" (at 105.41 145.9809 90)
@@ -3110,7 +3115,7 @@
     (property "Sim.Type" "=" (at 105.41 149.86 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Sim.Params" "c=390p" (at 105.41 149.86 0)
+    (property "Sim.Params" "c=360p" (at 105.41 149.86 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Sim.Pins" "1=+ 2=-" (at 105.41 149.86 0)
@@ -3121,7 +3126,7 @@
     (instances
       (project "msf-front-end"
         (path "/292600db-8009-4ff1-adb7-cebf96aeb855"
-          (reference "C4") (unit 1)
+          (reference "C3") (unit 1)
         )
       )
     )
@@ -3359,7 +3364,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 127 187.96 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 30220a24-24ed-47a3-a0c6-88e22f05b1cd)
-    (property "Reference" "R8" (at 128.651 186.7479 0)
+    (property "Reference" "Rpga2_1" (at 128.651 186.7479 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "${SIM.PARAMS}" (at 128.651 189.1721 0)
@@ -3418,7 +3423,7 @@
     (instances
       (project "msf-front-end"
         (path "/292600db-8009-4ff1-adb7-cebf96aeb855"
-          (reference "R8") (unit 1)
+          (reference "Rpga2_1") (unit 1)
         )
       )
     )
@@ -3595,7 +3600,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 156.21 181.61 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 38215ad0-d162-4263-a701-2d718c6ad7bc)
-    (property "Reference" "R10" (at 156.21 176.5767 90)
+    (property "Reference" "Rpga2_3" (at 156.21 176.5767 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "${SIM.PARAMS}" (at 156.21 179.0009 90)
@@ -3654,7 +3659,7 @@
     (instances
       (project "msf-front-end"
         (path "/292600db-8009-4ff1-adb7-cebf96aeb855"
-          (reference "R10") (unit 1)
+          (reference "Rpga2_3") (unit 1)
         )
       )
     )
@@ -3829,7 +3834,7 @@
     (property "Sim.Type" "=" (at 240.03 53.34 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Sim.Params" "c=390p" (at 240.03 53.34 0)
+    (property "Sim.Params" "c=360p" (at 240.03 53.34 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Sim.Pins" "1=+ 2=-" (at 240.03 53.34 0)
@@ -3990,7 +3995,7 @@
     (property "Sim.Type" "=" (at 386.08 186.69 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Sim.Params" "c=390p" (at 386.08 186.69 0)
+    (property "Sim.Params" "c=360p" (at 386.08 186.69 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Sim.Pins" "1=+ 2=-" (at 386.08 186.69 0)
@@ -4427,7 +4432,7 @@
     (property "Sim.Type" "=" (at 240.03 152.4 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Sim.Params" "c=390p" (at 240.03 152.4 0)
+    (property "Sim.Params" "c=360p" (at 240.03 152.4 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Sim.Pins" "1=+ 2=-" (at 240.03 152.4 0)
@@ -4700,7 +4705,7 @@
   (symbol (lib_id "restall-generic-capacitors:capacitor-unpolarised") (at 158.75 69.85 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 71ea417a-c040-4ebc-b934-151a44a9bad4)
-    (property "Reference" "C3" (at 158.75 63.5467 90)
+    (property "Reference" "Cpga1_1" (at 158.75 63.5467 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "${SIM.PARAMS}" (at 158.75 65.9709 90)
@@ -4759,7 +4764,7 @@
     (instances
       (project "msf-front-end"
         (path "/292600db-8009-4ff1-adb7-cebf96aeb855"
-          (reference "C3") (unit 1)
+          (reference "Cpga1_1") (unit 1)
         )
       )
     )
@@ -4793,7 +4798,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 127 88.9 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 72c693f7-cc79-4571-8b19-28534bdd6a0c)
-    (property "Reference" "R2" (at 128.651 87.6879 0)
+    (property "Reference" "Rpga1_1" (at 128.651 87.6879 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "${SIM.PARAMS}" (at 128.651 90.1121 0)
@@ -4852,7 +4857,7 @@
     (instances
       (project "msf-front-end"
         (path "/292600db-8009-4ff1-adb7-cebf96aeb855"
-          (reference "R2") (unit 1)
+          (reference "Rpga1_1") (unit 1)
         )
       )
     )
@@ -4861,7 +4866,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 156.21 82.55 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 756fb10a-d4b8-434c-aa5a-57bf0fd5f1fa)
-    (property "Reference" "R4" (at 156.21 77.5167 90)
+    (property "Reference" "Rpga1_3" (at 156.21 77.5167 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "${SIM.PARAMS}" (at 156.21 79.9409 90)
@@ -4920,7 +4925,7 @@
     (instances
       (project "msf-front-end"
         (path "/292600db-8009-4ff1-adb7-cebf96aeb855"
-          (reference "R4") (unit 1)
+          (reference "Rpga1_3") (unit 1)
         )
       )
     )
@@ -5047,7 +5052,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 143.51 181.61 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 7e3eeb4e-a076-49e4-b79c-8e0e524e3966)
-    (property "Reference" "R9" (at 143.51 176.5767 90)
+    (property "Reference" "Rpga2_2" (at 143.51 176.5767 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "${SIM.PARAMS}" (at 143.51 179.0009 90)
@@ -5106,7 +5111,7 @@
     (instances
       (project "msf-front-end"
         (path "/292600db-8009-4ff1-adb7-cebf96aeb855"
-          (reference "R9") (unit 1)
+          (reference "Rpga2_2") (unit 1)
         )
       )
     )
@@ -5115,7 +5120,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 181.61 82.55 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 7fc86926-7f46-4d59-bd0d-d93d74e3a75e)
-    (property "Reference" "R6" (at 181.61 77.5167 90)
+    (property "Reference" "Rpga1_5" (at 181.61 77.5167 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "${SIM.PARAMS}" (at 181.61 79.9409 90)
@@ -5174,7 +5179,7 @@
     (instances
       (project "msf-front-end"
         (path "/292600db-8009-4ff1-adb7-cebf96aeb855"
-          (reference "R6") (unit 1)
+          (reference "Rpga1_5") (unit 1)
         )
       )
     )
@@ -5478,7 +5483,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 168.91 82.55 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 891b8fd3-e3c0-4b79-86fc-a6b297e4a5c7)
-    (property "Reference" "R5" (at 168.91 77.5167 90)
+    (property "Reference" "Rpga1_4" (at 168.91 77.5167 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "${SIM.PARAMS}" (at 168.91 79.9409 90)
@@ -5537,7 +5542,7 @@
     (instances
       (project "msf-front-end"
         (path "/292600db-8009-4ff1-adb7-cebf96aeb855"
-          (reference "R5") (unit 1)
+          (reference "Rpga1_4") (unit 1)
         )
       )
     )
@@ -5988,7 +5993,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 143.51 82.55 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid a405b465-6957-4568-a39f-0467ca03714b)
-    (property "Reference" "R3" (at 143.51 77.5167 90)
+    (property "Reference" "Rpga1_2" (at 143.51 77.5167 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "${SIM.PARAMS}" (at 143.51 79.9409 90)
@@ -6047,7 +6052,7 @@
     (instances
       (project "msf-front-end"
         (path "/292600db-8009-4ff1-adb7-cebf96aeb855"
-          (reference "R3") (unit 1)
+          (reference "Rpga1_2") (unit 1)
         )
       )
     )
@@ -6217,7 +6222,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 168.91 181.61 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid ac2b1d36-702a-4b99-b30a-f77a354e6d03)
-    (property "Reference" "R11" (at 168.91 176.5767 90)
+    (property "Reference" "Rpga2_4" (at 168.91 176.5767 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "${SIM.PARAMS}" (at 168.91 179.0009 90)
@@ -6276,7 +6281,7 @@
     (instances
       (project "msf-front-end"
         (path "/292600db-8009-4ff1-adb7-cebf96aeb855"
-          (reference "R11") (unit 1)
+          (reference "Rpga2_4") (unit 1)
         )
       )
     )
@@ -7322,7 +7327,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 113.03 156.21 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid dccfb715-fb8c-4f9b-bec0-e28ec702e0f0)
-    (property "Reference" "R7" (at 114.681 154.9979 0)
+    (property "Reference" "R2" (at 114.681 154.9979 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "${SIM.PARAMS}" (at 114.681 157.4221 0)
@@ -7381,7 +7386,7 @@
     (instances
       (project "msf-front-end"
         (path "/292600db-8009-4ff1-adb7-cebf96aeb855"
-          (reference "R7") (unit 1)
+          (reference "R2") (unit 1)
         )
       )
     )
@@ -7483,7 +7488,7 @@
   (symbol (lib_id "restall-generic-capacitors:capacitor-unpolarised") (at 158.75 168.91 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid e86e27bc-625d-47ac-9fd3-47567983eb85)
-    (property "Reference" "C5" (at 158.75 162.6067 90)
+    (property "Reference" "Cpga2_1" (at 158.75 162.6067 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "${SIM.PARAMS}" (at 158.75 165.0309 90)
@@ -7542,7 +7547,7 @@
     (instances
       (project "msf-front-end"
         (path "/292600db-8009-4ff1-adb7-cebf96aeb855"
-          (reference "C5") (unit 1)
+          (reference "Cpga2_1") (unit 1)
         )
       )
     )
