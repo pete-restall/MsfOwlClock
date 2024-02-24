@@ -860,6 +860,11 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 5a69c929-4886-41ec-8118-7f4afa43a082)
   )
+  (text "TODO: DON'T FORGET THAT THE LARGE CAPACITANCE ON THE VREF RAILS WILL NEED A DIODE TO VDD FOR DISCHARGE (OTHERWISE WILL DISCHARGE THROUGH THE OPAMPS)."
+    (at 100.584 243.586 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 8986ef03-eb0a-47a8-8702-82b8cd5494d9)
+  )
   (text "TODO: VERIFY THERMAL PERFORMANCE OF TPS7A20xx AT MAXIMUM CURRENT AND VOLTAGE DROPS"
     (at 160.782 200.406 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
