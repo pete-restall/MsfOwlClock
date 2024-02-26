@@ -1,8 +1,8 @@
 * 1 and 2 = in, 3 = sel+, 4 = sel-
 .subckt TMUX1511-SW 1 2 3 4
 *.model switch1 sw(Vt=1.2 Ron=4.5 Roff=1Gig)
-*.model switch1 sw(Vt=1.2 Ron=1Gig Roff=1Gig)
-.model switch1 sw(Vt=1.2 Ron=4.5 Roff=4.5)
+.model switch1 sw(Vt=1.2 Ron=1Gig Roff=1Gig)
+*.model switch1 sw(Vt=1.2 Ron=4.5 Roff=4.5)
 .model switch2 sw(Vt=1.2 Ron=1m Roff=1m)
 
 S1 1 2 3 4 switch1
