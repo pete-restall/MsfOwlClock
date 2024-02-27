@@ -3,3 +3,4 @@
 adc-sampling/*.csv
 *-backups
 *.bak_*
+msf-front-end/*.txt
