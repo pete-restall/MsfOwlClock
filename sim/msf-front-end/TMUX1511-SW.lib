@@ -1,13 +1,16 @@
 * 1 and 2 = in, 3 = sel+, 4 = sel-
 .subckt TMUX1511-SW 1 2 3 4
+* Using the switch model introduces excessive noise based on Roff=1Gig even
+* when the switch is on...  Thus 'if' is used instead; initial switch models
+* below as reference - no hysteresis required since simulations are static.
 .model switch1 sw(Vt=1.2 Ron=4.5 Roff=1Gig)
 .model switch2 sw(Vt=1.2 Ron=1Gig Roff=10m)
 
-S1 1 2 3 4 switch1
+R1 1 2 {if(v(3,4)<1.2,1Gig,4.5)}
 C1 1 2 4p
-S2 1 5 3 4 switch2
+R2 1 5 {if(v(3,4)<1.2,10m,1Gig)} noisy=0
 C2 5 2 2p
 I1 1 2 dc 100n
-R1 3 4 6Meg
+R2 3 4 6Meg
 
 .ends TMUX1511-SW
