@@ -4040,7 +4040,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 6d7a4375-dd38-46bd-b65c-d845919850bb)
   )
-  (text "TODO: USE TSOP75338TT(to 3-mcu via UART) FOR 38kHz IR RECEIVER (500uA current) - MAKE THIS TOGGLEABLE (SUPPLIED BY AN I/O PIN) TO SAVE ON CURRENT IN STANDBY MODE (IE. NO REMOTE WAKEUP BY IR)\n"
+  (text "TODO: USE TSOP75338TT(to 3-mcu via UART) FOR 38kHz IR RECEIVER (500uA current) - MAKE THIS TOGGLEABLE (SUPPLIED BY AN I/O PIN) TO SAVE ON CURRENT IN STANDBY MODE (IE. NO REMOTE WAKEUP BY IR) - PULL-UP MUST NOT EXCEED THE SENSOR'S VDD RAIL !\n"
     (at 347.98 45.72 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 731e3412-8795-49bd-a3b5-209ad3edbf16)
