@@ -850,6 +850,11 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 30919690-9a41-40fd-b954-9647cefe5b30)
   )
+  (text "TODO: FOR THE SHIFT REGISTER, POWER FROM +3.3V.  HOWEVER, ON USB SUSPEND, WE NEED TO ENSURE THE OUTPUTS ARE ALL ZEROES (PREFERABLY IN HARDWARE) TO AVOID BACK-POWERING THE MUXES - UNLESS THE MUXES DON'T CARE ABOUT THIS, CHECK THE DATASHEET..."
+    (at 50.546 225.806 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 37f8fcd8-5944-40be-a2c5-fbd106a1d00c)
+  )
   (text "FOR ALL TPS7A20?? OTHER THAN TPS7A2040, USE SOT-23-5 AS HAS BETTER THERMAL CHARACTERISTICS !"
     (at 58.674 125.984 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
@@ -869,6 +874,11 @@
     (at 160.782 200.406 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid cd9eee49-5a77-411f-aec5-5aa3712d34cc)
+  )
+  (text "For the 2.5V reference...\n3.6V -> R1 || R2 -> R3 -> R4 -> GND\n\nR1 = R2 = 4.3k, R3 = 4.99k, R4 = 100\n\nThese are all 0.1% thin-film and used in the filter circuit so are available.\nThis gives worst-case Vref of 2.4015V (absolute minimum for the MCU = 2.4V; the 1.5mV will cover the op-amp offset / bias errors), typ=2.53V and max=2.66V\n\nTwo 4.99k can then be used to split that reference voltage into two, for the op-amp common-mode biasing."
+    (at 212.09 100.33 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid fc41c008-1dcb-4221-ab14-e02dc7e276a7)
   )
 
   (label "STCP" (at 50.165 92.71 0) (fields_autoplaced)
