@@ -386,6 +386,11 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 16f513f2-df53-458f-9fdc-3e13f84bb0a6)
   )
+  (text "Unless otherwise specified:\n  All resistors and capacitors are 0402\n  All resistors are ±1% 100ppm 0.625W thick-film\n  All capacitors are ±20% X5R 10V MLCC "
+    (at 301.244 261.62 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 18929580-ae73-49d5-835f-286544c05404)
+  )
   (text "TODO: SENSOR VDD MUST BE RAMPED WITHIN 1-5ms." (at 188.976 73.152 0)
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid 3a98fe5b-8504-48fd-b495-5d3a2ef3bbc6)

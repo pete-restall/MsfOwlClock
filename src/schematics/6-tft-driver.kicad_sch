@@ -63,6 +63,11 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid dd88fa3a-b130-4959-9f48-aae3e64aaa64)
   )
+  (text "Unless otherwise specified:\n  All resistors and capacitors are 0402\n  All resistors are ±1% 100ppm 0.625W thick-film\n  All capacitors are ±20% X5R 10V MLCC "
+    (at 301.244 261.62 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid eacc4ca3-65df-4b8e-b659-3ae350fed125)
+  )
 
   (hierarchical_label "~{TFT_RESET}" (shape input) (at 127 177.546 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))
