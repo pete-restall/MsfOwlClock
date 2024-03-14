@@ -350,6 +350,10 @@
     [
       "2680f60f-7a4f-44d1-82ff-576d0b59662d",
       "6-tft-driver"
+    ],
+    [
+      "4fbb3fbf-2c3d-43d2-97c2-d56faba30b72",
+      "2-msf-receiver-trf"
     ]
   ],
   "text_variables": {}
