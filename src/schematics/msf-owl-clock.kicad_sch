@@ -5236,7 +5236,7 @@
     (property "Resistance" "8Ω" (at 380.238 187.8442 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Rating" "1W" (at 380.238 190.2684 0)
+    (property "Rating" "1W (1.5W peak)" (at 380.238 190.2684 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Manufacturer" "" (at 375.92 184.15 0)
