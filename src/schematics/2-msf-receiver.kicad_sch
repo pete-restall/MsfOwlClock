@@ -2095,8 +2095,8 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 70449ff1-14cc-492d-bc12-3896bdad26b8)
   )
-  (text "Route as length-matched\ndifferential lines, Z_{0}=68Ω\n\nADC V_{fs}≃±2.5V_{p-p}-7% headroom\nADC V_{cm}≃1.25V"
-    (at 246.38 226.06 0)
+  (text "Route as length-matched\ndifferential lines, Z_{0}=68Ω\n\nADC V_{fs}≃±2.5V_{p-p}-7% headroom\nADC V_{cm}≃1.25V\n\nUnder fault conditions or transients it is possible to see nearly 3.7V\nfrom the op-amp on the ADC pins.  With a worst-case MCU V_{DD} of\naround 3.1V, there could be an excess 0.6V injecting current into the\nESD protection diodes.  The PIC32 datasheet states that the maximum\ninjection current is ±15mA; the 68Ω series resistors should limit\nthis to less than 9mA.  Schottky diodes could have been used at the\nexpense of offsets caused by reverse leakage currents and the distortion\nintroduced by further mismatch of the differential inputs."
+    (at 246.38 233.68 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 87bb3c13-1b66-4040-8efe-1c82f16c3a7b)
   )
@@ -5159,7 +5159,7 @@
     (property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps7a20.pdf" (at 219.075 53.975 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
-    (property "Package" "SOT-23" (at 202.946 39.37 0)
+    (property "Package" "SOT23" (at 202.946 39.37 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Manufacturer" "Texas Instruments" (at 226.568 35.306 0)
