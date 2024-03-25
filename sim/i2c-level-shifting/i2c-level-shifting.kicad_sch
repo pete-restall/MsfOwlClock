@@ -689,7 +689,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 4d11de35-7bb7-48d6-949e-d5170c2f40d8)
   )
-  (text ".tran 1p 100u 0 1n" (at 76.2 123.698 0)
+  (text ".tran 10n 100u 0" (at 76.2 123.698 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 7484086a-71e6-405b-b404-553dbf98f073)
   )
