@@ -1354,7 +1354,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 46e2ca14-a2d9-41f4-b707-fd151687f45e)
   )
-  (label "~{AMP_FAULT}" (at 129.54 104.14 0)
+  (label "~{AMP_FAULT}" (at 129.54 104.14 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 5b1de544-b3b8-421c-ad20-e08d5708076c)
   )
