@@ -271,7 +271,7 @@
       (property "ki_locked" "" (at 0 0 0)
         (effects (font (size 1.27 1.27)))
       )
-      (property "ki_keywords" "single differential quad opamp rail to rail" (at 0 0 0)
+      (property "ki_keywords" "single supply differential quad opamp op-amp rail-to-rail rail to rail amp amplifier microchip" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
       (property "ki_description" "Quad Low Voltage Single Supply 30MHz 40V/μs Rail-To-Rail Operational Amplifier" (at 0 0 0)

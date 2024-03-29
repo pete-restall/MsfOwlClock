@@ -521,9 +521,6 @@
       (property "ki_description" "2.7-22V, 0.7-5A Adjustable Current-Limiting Power Switch with Adjustable Ramp Rate, Over-Voltage Protection and Reverse-Voltage MOSFET Driver" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "ki_fp_filters" "*osc*" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
       (symbol "MP5016HGQH_0_0"
         (rectangle (start -9.144 -7.366) (end -10.16 -7.874)
           (stroke (width 0) (type default))
@@ -1119,7 +1116,7 @@
         )
       )
     )
-    (symbol "restall-manufacturer-walsin:WLBD2012HCU121TH" (pin_numbers hide) (pin_names (offset 0) hide) (in_bom yes) (on_board yes)
+    (symbol "restall-manufacturer-walsin:WLBD2012HCU121TH" (pin_numbers hide) (pin_names (offset 0)) (in_bom yes) (on_board yes)
       (property "Reference" "FB" (at 1.905 1.27 0)
         (effects (font (size 1.27 1.27)) (justify left))
       )
