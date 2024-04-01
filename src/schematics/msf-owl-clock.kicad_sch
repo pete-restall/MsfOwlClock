@@ -1308,7 +1308,7 @@
           (name "V_{CC}" (effects (font (size 1.27 1.27))))
           (number "1" (effects (font (size 1.27 1.27))))
         )
-        (pin input line (at 10.16 2.54 180) (length 2.54)
+        (pin output line (at 10.16 2.54 180) (length 2.54)
           (name "~{RESET}" (effects (font (size 1.27 1.27))))
           (number "10" (effects (font (size 1.27 1.27))))
         )
@@ -1316,7 +1316,7 @@
           (name "GND" (effects (font (size 1.27 1.27))))
           (number "11" (effects (font (size 1.27 1.27))))
         )
-        (pin input line (at 10.16 -2.54 180) (length 2.54)
+        (pin output line (at 10.16 -2.54 180) (length 2.54)
           (name "TRACECLK" (effects (font (size 1.27 1.27))))
           (number "12" (effects (font (size 1.27 1.27))))
         )
@@ -1324,7 +1324,7 @@
           (name "GND" (effects (font (size 1.27 1.27))))
           (number "13" (effects (font (size 1.27 1.27))))
         )
-        (pin output line (at 10.16 -5.08 180) (length 2.54)
+        (pin input line (at 10.16 -5.08 180) (length 2.54)
           (name "TRACEDATA[0]" (effects (font (size 1.27 1.27))))
           (number "14" (effects (font (size 1.27 1.27))))
         )
@@ -1332,7 +1332,7 @@
           (name "GND" (effects (font (size 1.27 1.27))))
           (number "15" (effects (font (size 1.27 1.27))))
         )
-        (pin output line (at 10.16 -7.62 180) (length 2.54)
+        (pin input line (at 10.16 -7.62 180) (length 2.54)
           (name "TRACEDATA[1]" (effects (font (size 1.27 1.27))))
           (number "16" (effects (font (size 1.27 1.27))))
         )
@@ -1340,7 +1340,7 @@
           (name "GND" (effects (font (size 1.27 1.27))))
           (number "17" (effects (font (size 1.27 1.27))))
         )
-        (pin output line (at 10.16 -10.16 180) (length 2.54)
+        (pin input line (at 10.16 -10.16 180) (length 2.54)
           (name "TRACEDATA[2]" (effects (font (size 1.27 1.27))))
           (number "18" (effects (font (size 1.27 1.27))))
         )
@@ -1353,7 +1353,7 @@
           (number "2" (effects (font (size 1.27 1.27))))
           (alternate "TMS" output line)
         )
-        (pin output line (at 10.16 -12.7 180) (length 2.54)
+        (pin input line (at 10.16 -12.7 180) (length 2.54)
           (name "TRACEDATA[3]" (effects (font (size 1.27 1.27))))
           (number "20" (effects (font (size 1.27 1.27))))
         )
@@ -1362,7 +1362,7 @@
           (number "3" (effects (font (size 1.27 1.27))))
         )
         (pin output line (at 10.16 10.16 180) (length 2.54)
-          (name "SWCLK" (effects (font (size 1.27 1.27))))
+          (name "SWDCLK" (effects (font (size 1.27 1.27))))
           (number "4" (effects (font (size 1.27 1.27))))
           (alternate "TCK" output line)
         )
@@ -1466,7 +1466,7 @@
           (name "V_{CC}" (effects (font (size 1.27 1.27))))
           (number "1" (effects (font (size 1.27 1.27))))
         )
-        (pin input line (at 7.62 -5.08 180) (length 2.54)
+        (pin output line (at 7.62 -5.08 180) (length 2.54)
           (name "~{RESET}" (effects (font (size 1.27 1.27))))
           (number "10" (effects (font (size 1.27 1.27))))
         )
@@ -1480,7 +1480,7 @@
           (number "3" (effects (font (size 1.27 1.27))))
         )
         (pin output line (at 7.62 2.54 180) (length 2.54)
-          (name "SWCLK" (effects (font (size 1.27 1.27))))
+          (name "SWDCLK" (effects (font (size 1.27 1.27))))
           (number "4" (effects (font (size 1.27 1.27))))
           (alternate "TCK" output line)
         )
@@ -1993,25 +1993,25 @@
       )
     )
     (symbol "restall-manufacturer-fanstel:BC805M" (in_bom yes) (on_board yes)
-      (property "Reference" "U" (at -12.7 13.716 0)
+      (property "Reference" "U" (at -12.954 13.462 0)
         (effects (font (size 1.27 1.27)) (justify left))
       )
-      (property "Value" "BC805M" (at -12.7 11.43 0)
+      (property "Value" "BC805M" (at -12.954 11.43 0)
         (effects (font (size 1.27 1.27)) (justify left))
       )
       (property "Footprint" "" (at 16.51 11.43 0)
         (effects (font (size 1.27 1.27)) (justify left) hide)
       )
-      (property "Datasheet" "https://www.fanstel.com/s/BC805M-p_Product-Specifications.pdf" (at -12.7 -20.32 0)
+      (property "Datasheet" "https://www.fanstel.com/s/BC805M-p_Product-Specifications.pdf" (at -12.7 -18.796 0)
         (effects (font (size 1.27 1.27)) (justify left) hide)
       )
       (property "Package" "BC805M" (at -12.7 -12.7 0)
         (effects (font (size 1.27 1.27)) (justify left) hide)
       )
-      (property "Manufacturer" "Fanstel" (at -12.7 -15.24 0)
+      (property "Manufacturer" "Fanstel" (at -12.7 -14.732 0)
         (effects (font (size 1.27 1.27)) (justify left) hide)
       )
-      (property "ManufacturerPartNumber" "BC805M" (at -12.7 -17.78 0)
+      (property "ManufacturerPartNumber" "BC805M" (at -12.7 -16.764 0)
         (effects (font (size 1.27 1.27)) (justify left) hide)
       )
       (property "ki_keywords" "fanstel nordic nrf bluetooth ble bcm bcm805 bcm805m nrf52805 cortex m4 rf 2.4g 2.4ghz" (at 0 0 0)
@@ -2102,7 +2102,7 @@
           (alternate "XL2" passive line)
         )
         (pin input line (at -15.24 5.08 0) (length 2.54)
-          (name "SWCLK" (effects (font (size 1.27 1.27))))
+          (name "SWDCLK" (effects (font (size 1.27 1.27))))
           (number "2" (effects (font (size 1.27 1.27))))
         )
         (pin bidirectional line (at -15.24 2.54 0) (length 2.54)
@@ -2952,7 +2952,7 @@
     (uuid 065fe9b9-7a2f-45a5-89d9-882048ec8bfa)
   )
 
-  (wire (pts (xy 17.78 53.34) (xy 20.32 53.34))
+  (wire (pts (xy 17.78 55.88) (xy 20.32 55.88))
     (stroke (width 0) (type default))
     (uuid 06a318af-9f49-425f-bc75-338166c9c097)
   )
@@ -3044,7 +3044,7 @@
     (stroke (width 0) (type default))
     (uuid 15a62568-1f9c-4426-801a-9633bbb242c1)
   )
-  (wire (pts (xy 17.78 53.34) (xy 17.78 55.88))
+  (wire (pts (xy 17.78 55.88) (xy 17.78 57.15))
     (stroke (width 0) (type default))
     (uuid 17390ca0-5da2-45a6-8d15-d77fa56fc2f7)
   )
@@ -4411,7 +4411,7 @@
     (uuid ea884027-c1da-414d-bde4-a4227527a498)
   )
 
-  (wire (pts (xy 17.78 63.5) (xy 17.78 66.04))
+  (wire (pts (xy 17.78 64.77) (xy 17.78 66.04))
     (stroke (width 0) (type default))
     (uuid ea939b49-b189-428f-9349-e0da6be73c34)
   )
@@ -4593,7 +4593,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 7dfb7f81-f41d-4666-befc-edbe508437ee)
   )
-  (text "R003-4" (at 87.63 29.718 0)
+  (text "R004-5" (at 87.63 29.718 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 8e674c11-9662-450d-8806-b47b4c4801a3)
   )
@@ -4619,7 +4619,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid deef4d2a-2bb0-4ce3-ac04-1cfceebf886b)
   )
-  (text "R00?-?" (at 119.634 30.734 0)
+  (text "R007-10" (at 119.634 30.734 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid ef07ffff-4877-4243-ae46-73909bc295ea)
   )
@@ -4677,7 +4677,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 3e785a0c-1a8c-47d0-b369-73914994ee86)
   )
-  (label "BC805M_V_{DD}" (at 20.32 53.34 0) (fields_autoplaced)
+  (label "BC805M_V_{DD}" (at 20.32 55.88 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 43d5d8b9-971c-4382-a9a4-658d8c3df5f2)
   )
@@ -4721,7 +4721,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid 6eaaee7f-f390-4a9c-b591-f2e9311f752e)
   )
-  (label "SWCLK" (at 88.9 147.32 90) (fields_autoplaced)
+  (label "SWDCLK" (at 88.9 147.32 90) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 73fa0740-8772-418b-89da-1410ea05ff92)
   )
@@ -4777,7 +4777,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 961eb7f7-da12-4e2c-9575-80d8ed5f7a44)
   )
-  (label "SWCLK" (at 99.06 63.5 90) (fields_autoplaced)
+  (label "SWDCLK" (at 99.06 63.5 90) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 98c31aab-6451-45f0-810b-473855b2f3d5)
   )
@@ -4941,7 +4941,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 161.29 40.64 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 0255a376-43c7-4b2d-acdf-a46f093ddeae)
-    (property "Reference" "R18" (at 158.75 29.718 90)
+    (property "Reference" "R011" (at 158.75 29.718 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "??Ω" (at 158.75 31.75 90)
@@ -4988,7 +4988,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R18") (unit 1)
+          (reference "R011") (unit 1)
         )
       )
     )
@@ -5366,7 +5366,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 106.68 194.31 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 111da09d-5b5f-41f4-9661-7a7369a82426)
-    (property "Reference" "R001" (at 107.188 197.612 0)
+    (property "Reference" "R016" (at 107.188 197.612 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "330Ω" (at 107.188 199.644 0)
@@ -5413,7 +5413,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R001") (unit 1)
+          (reference "R016") (unit 1)
         )
       )
     )
@@ -5422,7 +5422,7 @@
   (symbol (lib_id "restall-generic-capacitors:capacitor-unpolarised") (at 17.78 71.12 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 119bc2dd-3eb8-4103-b3a7-4184563b814f)
-    (property "Reference" "C007" (at 20.32 70.104 0)
+    (property "Reference" "C010" (at 20.32 70.104 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "100nF" (at 20.32 72.136 0)
@@ -5469,7 +5469,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "C007") (unit 1)
+          (reference "C010") (unit 1)
         )
       )
     )
@@ -5643,7 +5643,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 83.82 59.69 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 1923cff6-cabd-4cbd-99ff-0fe1f622c4be)
-    (property "Reference" "R007" (at 85.344 58.674 0)
+    (property "Reference" "R014" (at 85.344 58.674 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "1kΩ" (at 85.344 60.706 0)
@@ -5690,7 +5690,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R007") (unit 1)
+          (reference "R014") (unit 1)
         )
       )
     )
@@ -5699,7 +5699,7 @@
   (symbol (lib_id "restall-generic-capacitors:capacitor-unpolarised") (at 256.54 247.65 90) (unit 1)
     (in_bom no) (on_board yes) (dnp no)
     (uuid 1971cf1b-c51e-4dfa-8d8b-44b69cc822e4)
-    (property "Reference" "C010" (at 270.002 243.84 90)
+    (property "Reference" "C011" (at 270.002 243.84 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "DNP" (at 270.002 245.745 90)
@@ -5740,55 +5740,55 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "C010") (unit 1)
+          (reference "C011") (unit 1)
         )
       )
     )
   )
 
-  (symbol (lib_id "restall-generic-resistors:resistor") (at 17.78 59.69 0) (unit 1)
+  (symbol (lib_id "restall-generic-resistors:resistor") (at 17.78 60.96 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 1cc3f1a3-e854-4e9a-a057-f23889750560)
-    (property "Reference" "R21" (at 19.304 58.674 0)
+    (property "Reference" "R012" (at 19.304 59.944 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "10kΩ" (at 19.304 60.706 0)
+    (property "Value" "10kΩ" (at 19.304 61.976 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "restall-generic-resistors:nominal-0402-1005" (at 18.796 59.944 90)
+    (property "Footprint" "restall-generic-resistors:nominal-0402-1005" (at 18.796 61.214 90)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
-    (property "Datasheet" "~" (at 17.78 59.69 0)
+    (property "Datasheet" "~" (at 17.78 60.96 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
-    (property "Label" "10kΩ±1% 0.0625W" (at 19.558 61.214 0)
+    (property "Label" "10kΩ±1% 0.0625W" (at 19.558 62.484 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
-    (property "Tolerance" "±1%" (at 19.558 63.246 0)
+    (property "Tolerance" "±1%" (at 19.558 64.516 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
-    (property "PowerRating" "0.0625W" (at 19.558 65.278 0)
+    (property "PowerRating" "0.0625W" (at 19.558 66.548 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
-    (property "TemperatureCoefficient" "±100ppm" (at 19.558 67.31 0)
+    (property "TemperatureCoefficient" "±100ppm" (at 19.558 68.58 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
-    (property "Construction" "Thick Film" (at 19.558 69.342 0)
+    (property "Construction" "Thick Film" (at 19.558 70.612 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
-    (property "Package" "0402" (at 19.558 71.374 0)
+    (property "Package" "0402" (at 19.558 72.644 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
-    (property "Manufacturer" "" (at 17.78 59.69 0)
+    (property "Manufacturer" "" (at 17.78 60.96 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
-    (property "ManufacturerPartNumber" "" (at 17.78 59.69 0)
+    (property "ManufacturerPartNumber" "" (at 17.78 60.96 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
-    (property "Manufacturer2" "" (at 17.78 59.69 0)
+    (property "Manufacturer2" "" (at 17.78 60.96 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
-    (property "Manufacturer2PartNumber" "" (at 17.78 59.69 0)
+    (property "Manufacturer2PartNumber" "" (at 17.78 60.96 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
     (pin "1" (uuid d761e2bc-31b1-40ed-a776-2d92b48c98c7))
@@ -5796,7 +5796,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R21") (unit 1)
+          (reference "R012") (unit 1)
         )
       )
     )
@@ -5890,7 +5890,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 123.19 45.72 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 202a877b-1461-4f2d-9a96-ef08428a3963)
-    (property "Reference" "R17" (at 120.65 41.402 90)
+    (property "Reference" "R009" (at 120.65 41.402 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "??Ω" (at 120.65 43.434 90)
@@ -5937,7 +5937,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R17") (unit 1)
+          (reference "R009") (unit 1)
         )
       )
     )
@@ -6298,7 +6298,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 44.45 132.08 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 335f2acc-a9e2-4c76-a054-16f73230b13e)
-    (property "Reference" "R20" (at 41.91 134.874 90)
+    (property "Reference" "R015" (at 41.91 134.874 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "330Ω" (at 41.91 136.906 90)
@@ -6345,7 +6345,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R20") (unit 1)
+          (reference "R015") (unit 1)
         )
       )
     )
@@ -6429,7 +6429,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 83.82 21.59 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 3a05dd01-1a3a-42e3-86ea-e1f19bf16f32)
-    (property "Reference" "R002" (at 85.344 20.574 0)
+    (property "Reference" "R003" (at 85.344 20.574 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "10kΩ" (at 85.344 22.606 0)
@@ -6476,7 +6476,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R002") (unit 1)
+          (reference "R003") (unit 1)
         )
       )
     )
@@ -6711,7 +6711,7 @@
   (symbol (lib_id "restall-generic-capacitors:capacitor-unpolarised") (at 256.54 238.76 90) (unit 1)
     (in_bom no) (on_board yes) (dnp no)
     (uuid 492befcc-2afb-4dd5-8829-286c15f923a7)
-    (property "Reference" "C011" (at 237.998 234.95 90)
+    (property "Reference" "C012" (at 237.998 234.95 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "DNP" (at 237.998 236.855 90)
@@ -6752,7 +6752,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "C011") (unit 1)
+          (reference "C012") (unit 1)
         )
       )
     )
@@ -6761,7 +6761,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 90.17 33.02 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 494dc58d-a1f7-4f72-adf7-1d881719f8fd)
-    (property "Reference" "R003" (at 87.63 28.702 90)
+    (property "Reference" "R004" (at 87.63 28.702 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "??Ω" (at 87.63 30.734 90)
@@ -6808,7 +6808,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R003") (unit 1)
+          (reference "R004") (unit 1)
         )
       )
     )
@@ -6817,7 +6817,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 123.19 38.1 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 4a2367fb-b29b-40d2-9951-cb20dbe337e6)
-    (property "Reference" "R15" (at 120.65 33.782 90)
+    (property "Reference" "R007" (at 120.65 33.782 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "??Ω" (at 119.634 31.75 90)
@@ -6864,7 +6864,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R15") (unit 1)
+          (reference "R007") (unit 1)
         )
       )
     )
@@ -6873,7 +6873,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 44.45 15.24 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 4ad91f68-8d10-4bc2-a3f7-d5d1d048e270)
-    (property "Reference" "R14" (at 41.91 18.034 90)
+    (property "Reference" "R001" (at 41.91 18.034 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "330Ω" (at 41.91 20.066 90)
@@ -6920,7 +6920,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R14") (unit 1)
+          (reference "R001") (unit 1)
         )
       )
     )
@@ -6929,7 +6929,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 73.66 59.69 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 4f8f5559-8aaa-464c-b32c-f4f9a78099bb)
-    (property "Reference" "R006" (at 75.184 58.674 0)
+    (property "Reference" "R013" (at 75.184 58.674 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "1kΩ" (at 75.184 60.706 0)
@@ -6976,7 +6976,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R006") (unit 1)
+          (reference "R013") (unit 1)
         )
       )
     )
@@ -7775,7 +7775,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 73.66 21.59 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 7bb7d078-4225-42ac-9651-b5dec4b6d976)
-    (property "Reference" "R001" (at 75.184 20.574 0)
+    (property "Reference" "R002" (at 75.184 20.574 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "10kΩ" (at 75.184 22.606 0)
@@ -7822,7 +7822,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R001") (unit 1)
+          (reference "R002") (unit 1)
         )
       )
     )
@@ -7941,7 +7941,7 @@
   (symbol (lib_id "restall-generic-capacitors:capacitor-unpolarised") (at 256.54 229.87 90) (unit 1)
     (in_bom no) (on_board yes) (dnp no)
     (uuid 81844cc6-7a43-422b-9f92-c6815a374394)
-    (property "Reference" "C012" (at 270.002 226.06 90)
+    (property "Reference" "C013" (at 270.002 226.06 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "DNP" (at 270.002 227.965 90)
@@ -7982,7 +7982,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "C012") (unit 1)
+          (reference "C013") (unit 1)
         )
       )
     )
@@ -8938,7 +8938,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 90.17 35.56 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid b342f2e7-9baf-441a-9789-3e52144ea0ba)
-    (property "Reference" "R004" (at 87.63 31.242 90)
+    (property "Reference" "R005" (at 87.63 31.242 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "??Ω" (at 87.63 33.274 90)
@@ -8985,7 +8985,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R004") (unit 1)
+          (reference "R005") (unit 1)
         )
       )
     )
@@ -9019,7 +9019,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 123.19 43.18 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid bd6af548-43e5-4ede-aa1c-f7da047f9535)
-    (property "Reference" "R16" (at 120.65 38.862 90)
+    (property "Reference" "R008" (at 120.65 38.862 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "??Ω" (at 120.65 40.894 90)
@@ -9066,7 +9066,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R16") (unit 1)
+          (reference "R008") (unit 1)
         )
       )
     )
@@ -9659,7 +9659,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 123.19 48.26 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid dd64f03d-37ee-4b6d-92e0-55fb3d0437a1)
-    (property "Reference" "R19" (at 120.65 43.942 90)
+    (property "Reference" "R010" (at 120.65 43.942 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "??Ω" (at 120.65 45.974 90)
@@ -9706,7 +9706,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R19") (unit 1)
+          (reference "R010") (unit 1)
         )
       )
     )
@@ -9827,7 +9827,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 83.82 41.91 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid e0f9ae2f-dae2-4375-a6da-6a49520a0ec2)
-    (property "Reference" "R005" (at 85.344 40.894 0)
+    (property "Reference" "R006" (at 85.344 40.894 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "10kΩ" (at 85.344 42.926 0)
@@ -9874,7 +9874,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "R005") (unit 1)
+          (reference "R006") (unit 1)
         )
       )
     )
