@@ -563,7 +563,7 @@ Style=8192
 
 [Attr]
 ON=-29,-19,RESISTANCE
-V=49.9
+V=43
 Style=8192
 
 [Attr]
@@ -622,7 +622,7 @@ Style=8192
 
 [Attr]
 ON=-29,-19,RESISTANCE
-V=49.9
+V=43
 Style=8192
 
 [Attr]
@@ -774,7 +774,7 @@ Style=8192
 
 [Attr]
 ON=-29,-19,RESISTANCE
-V=49.9
+V=43
 Style=8192
 
 [Attr]
@@ -796,7 +796,7 @@ Style=8192
 
 [Attr]
 ON=-29,-19,RESISTANCE
-V=49.9
+V=43
 Style=8192
 
 [Attr]
@@ -831,8 +831,8 @@ Pxs=488,536,488,632
 Pxs=488,536,504,536
 
 [Grid Text]
-Text="ATSAME53 simulation for min/max serial clocking line at 3.3V supply."
-Text="Using DesignSpark figures for transmission line characteristics."
+Text="PIC32CX (ATSAME53) simulation for min/max serial clocking line at 3.3V supply."
+Text="Using JLCPCB / MDTLC 2D solver figures for transmission line characteristics."
 Text="Z=72ohm 6" line: len=4 R=72.63m L=10.712n C=2.044p (JLCPCB standard 4-layer stack at 6mil trace)"
 Px=312,480
 GridSnap=True
@@ -1053,7 +1053,7 @@ Scale 0=1
 Scale 1=1
 Scale 2=1
 Scale 3=1
-Px=1039,227
+Px=1294,175
 WinBackGround Color=#FFFFFF
 Select Color=#FF0000
 Anchor Color=#000000
@@ -8890,7 +8890,6 @@ Text=XVKDR TRIG 14 IN EN1 DTWIO33_TWIHS_M0_PAD_MAX_VKDR
 Text=XVKUF TRIG 11 IN EN1 DTWIO33_TWIHS_M0_PAD_MAX_VKUF
 Text=XVKDF TRIG 15 IN EN1 DTWIO33_TWIHS_M0_PAD_MAX_VKDF
 Text=.ENDS DTWIO33_TWIHS_M0_PAD_52_MAX
-Text=
 
 [InfoPage]
 InfoPage=True
@@ -9391,11 +9390,11 @@ Pseudo Transient=0,0
 
 [Measurements]
 Analysis=Transient
-ShowBar=False
+ShowBar=True
 MRUDockID=59422
 Floating=True
 LocalOffset=False
-Rect=681,179,723,218
+Rect=681,179,1000,439
 Horz=-1,-1
 Vert=42,39
 Float=307,225
