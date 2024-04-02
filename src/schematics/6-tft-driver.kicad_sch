@@ -2144,7 +2144,7 @@
     (effects (font (size 2.54 2.54)) (justify left bottom))
     (uuid 6126c448-096c-451f-b972-40bc1a791789)
   )
-  (text "R615-R618" (at 162.306 145.542 0)
+  (text "R615-R618" (at 162.052 145.542 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 77177f38-475d-47b6-97e5-82f41a96ddb6)
   )

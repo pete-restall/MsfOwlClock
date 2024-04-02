@@ -4576,10 +4576,6 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 6d558f07-08a6-4db9-a53c-5ef164c85b08)
   )
-  (text "TODO: 2x Push-Buttons (to 3-mcu)" (at 83.312 4.318 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid 6d7a4375-dd38-46bd-b65c-d845919850bb)
-  )
   (text "Unless otherwise specified:\n  All resistors and capacitors are 0402\n  All resistors are ±1% 100ppm 0.625W thick-film\n  All capacitors are ±20% X5R 10V MLCC "
     (at 301.244 261.62 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
@@ -4622,11 +4618,6 @@
   (text "R007-10" (at 119.634 30.734 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid ef07ffff-4877-4243-ae46-73909bc295ea)
-  )
-  (text "TODO: ADD PUSH-BUTTON FOR MANUAL RESET OF MCU (PULL ~{RESET} LINE LOW IN {MCU_DEBUG})"
-    (at 11.684 -5.334 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid f2246df6-0973-4e37-a19d-74907e9f2a8a)
   )
   (text "D003A-D" (at 51.308 190.5 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
