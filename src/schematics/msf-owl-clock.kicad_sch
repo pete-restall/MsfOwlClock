@@ -8626,7 +8626,7 @@
     (property "Datasheet" "https://static.rapidonline.com/pdf/88-3098.pdf" (at 232.156 271.78 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
-    (property "Windings" "164 turns of SWG?? / 80% coverage / no former" (at 256.54 262.89 0)
+    (property "Windings" "164 turns of SWG27 / 80% coverage / no former" (at 256.54 262.89 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Core" "Ferrite" (at 232.156 270.002 0)
