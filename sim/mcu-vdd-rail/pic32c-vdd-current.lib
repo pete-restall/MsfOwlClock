@@ -1,0 +1,28 @@
+.subckt DTWIO33_TWIHS_M1_PAD_52_MAX IN EN OUT VCC VEE
+.model trigger slew(rise_slope=1 fall_slope=100)
+Btrigger /trga 0 v={(v(IN)>=1.26)*(v(EN)>=1.26)}
+Atrigger /trga /trgb trigger
+Bout OUT 0 v={v(/trgb)*((v(IN)>=1.26)*(v(EN)>=1.26))}
+Rq VCC VEE 10k
+Bpwl VEE VCC i=pwl(v(/trgb)*((v(IN)>=1.26)*(v(EN)>=1.26)),
++0.000n,0,
++0.010n,0,
++0.782n,4.338m,
++0.949n,2.497m,
++1.195n,-48.226m,
++1.291n,-36.298m,
++1.476n,-31.781m,
++1.709n,-22.002m,
++2.003n,-24.677m,
++2.245n,-23.552m,
++2.521n,-24.056m,
++2.974n,-24.291m,
++3.303n,-26.417m,
++3.725n,-16.446m,
++4.322n,-8.933m,
++4.621n,-6.925m,
++5.847n,-1.425m,
++6.132n,-1.339m,
++10.213n,0,
++10.300n,0)
+.ends

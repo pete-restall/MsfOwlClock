@@ -1,0 +1,17 @@
+*
+* Using the graph from datasheet:
+*   DCR=20m-ohms
+*   XL=8 ohms at 1MHz, so L=XL/(2*pi*1MHz)=1.2732uH
+*   R=160 ohms at 330MHz
+*   C=(1/(2*pi*f_resonant))^2/L, so C=(1/(2*pi*380MHz))^2/1.2732uH=137.777fF
+*
+* The above values did not produce a transfer function similar to the graph
+* in the datasheet.  Scaling by 10x is closer - not perfect, but good enough
+* for this simulation.
+*
+.subckt WLBD2012HCU121TH 1 2
+RSHUNT1 1 2 160
+CSHUNT1 1 2 1.37777p
+RSER1 1 3 20m
+LSER1 3 2 0.12732u
+.ends
