@@ -2135,11 +2135,6 @@
     (uuid ff7ca759-5209-453b-a65d-787bf4fdaebc)
   )
 
-  (text "TODO: SIMULATE (IBIS) THE EFFECTS OF THE PULLS, SERIES R AND MUXES FOR THE QSPI LINES AND THEN ADJUST ACCORDINGLY"
-    (at -39.624 88.9 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid 42fc71f8-acd9-4dac-b463-7a428778064b)
-  )
   (text "Screen and Touch Resets" (at 48.26 132.334 0)
     (effects (font (size 2.54 2.54)) (justify left bottom))
     (uuid 6126c448-096c-451f-b972-40bc1a791789)
