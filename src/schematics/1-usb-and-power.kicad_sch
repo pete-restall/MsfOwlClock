@@ -5,6 +5,7 @@
   (paper "A3")
 
   (title_block
+    (title "MSF Owl Clock - USB and Core Power Module")
     (rev "0.1")
     (company "Pete Restall <pete@restall.net>")
   )
@@ -2222,11 +2223,6 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 81727446-e2a0-4aee-a9f4-3b43534e674d)
   )
-  (text "TODO: VERIFY LABEL CORE_VDD_{+5V} AND HIERARCHY PIN OF SAME NAME ARE ACTUALLY THE SAME NET !"
-    (at -96.266 150.368 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid 95ddef50-cf32-419b-9144-37852700da9d)
-  )
   (text "RAMP_{typ}=13ms; must be at\nleast 5ms to keep USB inrush\nsteady below 100mA with C_{eff}≤90μF"
     (at 143.256 100.584 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
@@ -2240,11 +2236,6 @@
     (at 95.25 185.42 0)
     (effects (font (size 2.54 2.54)) (justify left bottom))
     (uuid c74e690b-1421-4a79-88ed-bd6048f83ccc)
-  )
-  (text "TODO: VERIFY LABEL CORE_VDD_{+3.3V} AND HIERARCHY PIN OF SAME NAME ARE ACTUALLY THE SAME NET !"
-    (at -113.792 155.956 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid d9643bad-cb09-4c8b-b2ad-0569ee7d291c)
   )
   (text "For C=4.7μF (CL05A475MP5NRN) between 4V-6V of DC bias (-80%≤ΔC≤-66%),\nover temperature 0°C-70°C (ΔC≤±5%) and at the extremes of tolerance\n(ΔC≤±20%), we can use the range 0.7μF<C_{eff}<2.1μF\n\nBetween 3.0V-3.6V of DC bias (-64%≤ΔC≤-55%) we can use the\nrange 1.4μF<C_{eff}<2.7μF"
     (at 25.4 152.4 0)

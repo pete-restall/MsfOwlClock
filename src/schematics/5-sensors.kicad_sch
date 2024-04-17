@@ -5,7 +5,7 @@
   (paper "A3")
 
   (title_block
-    (title "MSF Owl Clock - Environmental Sensors")
+    (title "MSF Owl Clock - Environmental Sensors Module")
     (rev "0.1")
     (company "Pete Restall <pete@restall.net>")
   )
