@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "msf-owl-clock")(type "KiCad")(uri "${KIPRJMOD}/msf-owl-clock.pretty")(options "")(descr ""))
+)
