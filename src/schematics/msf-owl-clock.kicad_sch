@@ -863,11 +863,11 @@
       )
     )
     (symbol "restall-generic-power:GND-chassis" (power) (pin_names (offset 0)) (in_bom yes) (on_board yes)
-      (property "Reference" "#PWR0259" (at 0 -5.08 0)
+      (property "Reference" "#PWR" (at 0 -5.08 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "Value" "GND-chassis" (at -0.127 -3.7267 0)
-        (effects (font (size 1.27 1.27)) hide)
+      (property "Value" "GND-chassis" (at 0 -3.302 0)
+        (effects (font (size 1.27 1.27)))
       )
       (property "Footprint" "" (at 0 -1.27 0)
         (effects (font (size 1.27 1.27)) hide)
@@ -947,9 +947,6 @@
         )
       )
       (symbol "GND-chassis_1_1"
-        (text "GND" (at 0 -4.064 0)
-          (effects (font (size 1.27 1.27)))
-        )
         (pin power_in line (at 0 0 270) (length 0) hide
           (name "GND" (effects (font (size 1.27 1.27))))
           (number "1" (effects (font (size 1.27 1.27))))
@@ -1471,7 +1468,7 @@
           (alternate "TDO" input line)
           (alternate "TRACECTL" bidirectional line)
         )
-        (pin passive line (at -10.16 -15.24 0) (length 2.54) hide
+        (pin no_connect line (at -10.16 -15.24 0) (length 2.54) hide
           (name "KEY" (effects (font (size 1.27 1.27))))
           (number "7" (effects (font (size 1.27 1.27))))
         )
@@ -1587,7 +1584,7 @@
           (number "6" (effects (font (size 1.27 1.27))))
           (alternate "TDO" input line)
         )
-        (pin passive line (at -7.62 -10.16 0) (length 2.54) hide
+        (pin no_connect line (at -7.62 -10.16 0) (length 2.54) hide
           (name "KEY" (effects (font (size 1.27 1.27))))
           (number "7" (effects (font (size 1.27 1.27))))
         )
@@ -9635,8 +9632,8 @@
     (property "Package" "WLBD2012" (at 137.16 20.32 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid e24a2de0-82f0-4898-b573-5829f996d9ae))
-    (pin "2" (uuid b83e8464-db1c-4bf4-b761-e8c2a547b01e))
+    (pin "1" (uuid e24a2de0-82f0-4898-b573-5829f996d9ae) (alternate "P1_PWROUT"))
+    (pin "2" (uuid b83e8464-db1c-4bf4-b761-e8c2a547b01e) (alternate "P2_PWRIN"))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"

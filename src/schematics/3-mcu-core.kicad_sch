@@ -135,7 +135,7 @@
       (property "Manufacturer2PartNumber" "" (at 0 0 0)
         (effects (font (size 1.27 1.27)) (justify left) hide)
       )
-      (property "ki_keywords" "quartz crystal ceramic mems resonator" (at 0 0 0)
+      (property "ki_keywords" "quartz crystal xtal ceramic mems resonator" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
       (property "ki_description" "2-Pin Quartz Crystal, Ceramic or MEMS Resonator" (at 0 0 0)
@@ -288,7 +288,7 @@
           (name "1" (effects (font (size 1.27 1.27))))
           (number "1" (effects (font (size 1.27 1.27))))
         )
-        (pin no_connect line (at -12.7 -8.89 90) (length 1.27) hide
+        (pin no_connect line (at -15.24 -8.89 90) (length 1.27) hide
           (name "2" (effects (font (size 1.27 1.27))))
           (number "2" (effects (font (size 1.27 1.27))))
         )
