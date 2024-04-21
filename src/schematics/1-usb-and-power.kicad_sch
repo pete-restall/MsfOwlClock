@@ -207,8 +207,9 @@
       )
       (symbol "GND_1_1"
         (pin power_in line (at 0 0 270) (length 0) hide
-          (name "GND" (effects (font (size 1.27 1.27))))
+          (name "GND_PWRIN" (effects (font (size 1.27 1.27))))
           (number "1" (effects (font (size 1.27 1.27))))
+          (alternate "GND_PWROUT" power_out line)
         )
       )
     )
@@ -3192,7 +3193,7 @@
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
     (pin "1" (uuid e0fb37ed-4d93-491e-9b36-01ae9d067d47))
-    (pin "2" (uuid bd2de91b-1d5b-4e16-8700-c1a5891be4bb))
+    (pin "2" (uuid bd2de91b-1d5b-4e16-8700-c1a5891be4bb) (alternate "P2_PWROUT"))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/93bae52d-c1e4-402b-b299-c5014664f19e"
@@ -3403,8 +3404,8 @@
     (property "Package" "WLBD2012" (at 34.29 193.04 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (pin "1" (uuid 8a90daf3-c6fd-4d6e-8634-d4c85490d4f4))
-    (pin "2" (uuid 6251180c-a00c-4e57-b924-0621617571bb))
+    (pin "1" (uuid 8a90daf3-c6fd-4d6e-8634-d4c85490d4f4) (alternate "P1_PWRIN"))
+    (pin "2" (uuid 6251180c-a00c-4e57-b924-0621617571bb) (alternate "P2_PWROUT"))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/93bae52d-c1e4-402b-b299-c5014664f19e"
