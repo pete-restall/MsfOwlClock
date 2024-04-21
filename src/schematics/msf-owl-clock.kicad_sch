@@ -276,23 +276,19 @@
           (stroke (width 0) (type default))
           (fill (type none))
         )
-        (arc (start -5.207 -0.0027) (mid -4.572 -0.635) (end -3.937 -0.0027)
+        (arc (start -5.0781 -0.0136) (mid -4.4431 -0.6459) (end -3.8081 -0.0136)
           (stroke (width 0) (type default))
           (fill (type none))
         )
-        (arc (start -3.937 -0.0027) (mid -3.302 -0.635) (end -2.667 -0.0027)
+        (arc (start -3.8081 -0.0136) (mid -3.1731 -0.6459) (end -2.5381 -0.0136)
           (stroke (width 0) (type default))
           (fill (type none))
         )
-        (arc (start -2.667 -0.0027) (mid -2.032 -0.635) (end -1.397 -0.0027)
+        (arc (start -2.5381 -0.0136) (mid -1.9031 -0.6459) (end -1.2681 -0.0136)
           (stroke (width 0) (type default))
           (fill (type none))
         )
-        (arc (start -1.397 -0.0027) (mid -0.762 -0.635) (end -0.127 -0.0027)
-          (stroke (width 0) (type default))
-          (fill (type none))
-        )
-        (arc (start -0.127 -0.0027) (mid 0.508 -0.635) (end 1.143 -0.0027)
+        (arc (start -1.2681 -0.0136) (mid -0.6331 -0.6459) (end 0.0019 -0.0136)
           (stroke (width 0) (type default))
           (fill (type none))
         )
@@ -378,281 +374,285 @@
         )
         (polyline
           (pts
-            (xy -4.445 -1.7807)
-            (xy -4.953 -1.7807)
+            (xy -4.3161 -1.7916)
+            (xy -4.8241 -1.7916)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy -4.445 -1.2727)
-            (xy -4.953 -1.2727)
+            (xy -4.3161 -1.2836)
+            (xy -4.8241 -1.2836)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy -3.429 -1.7807)
-            (xy -3.937 -1.7807)
+            (xy -3.3001 -1.7916)
+            (xy -3.8081 -1.7916)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy -3.429 -1.2727)
-            (xy -3.937 -1.2727)
+            (xy -3.3001 -1.2836)
+            (xy -3.8081 -1.2836)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy -2.413 -1.7807)
-            (xy -2.921 -1.7807)
+            (xy -2.2841 -1.7916)
+            (xy -2.7921 -1.7916)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy -2.413 -1.2727)
-            (xy -2.921 -1.2727)
+            (xy -2.2841 -1.2836)
+            (xy -2.7921 -1.2836)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy -1.397 -1.7807)
-            (xy -1.905 -1.7807)
+            (xy -1.2681 -1.7916)
+            (xy -1.7761 -1.7916)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy -1.397 -1.2727)
-            (xy -1.905 -1.2727)
+            (xy -1.2681 -1.2836)
+            (xy -1.7761 -1.2836)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy -0.381 -1.7807)
-            (xy -0.889 -1.7807)
+            (xy -0.2521 -1.7916)
+            (xy -0.7601 -1.7916)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy -0.381 -1.2727)
-            (xy -0.889 -1.2727)
+            (xy -0.2521 -1.2836)
+            (xy -0.7601 -1.2836)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 0.635 -1.7807)
-            (xy 0.127 -1.7807)
+            (xy 0.7639 -1.7916)
+            (xy 0.2559 -1.7916)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 0.635 -1.2727)
-            (xy 0.127 -1.2727)
+            (xy 0.7639 -1.2836)
+            (xy 0.2559 -1.2836)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 1.651 -1.7807)
-            (xy 1.143 -1.7807)
+            (xy 1.7799 -1.7916)
+            (xy 1.2719 -1.7916)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 1.651 -1.2727)
-            (xy 1.143 -1.2727)
+            (xy 1.7799 -1.2836)
+            (xy 1.2719 -1.2836)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 2.667 -1.7807)
-            (xy 2.159 -1.7807)
+            (xy 2.7959 -1.7916)
+            (xy 2.2879 -1.7916)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 2.667 -1.2727)
-            (xy 2.159 -1.2727)
+            (xy 2.7959 -1.2836)
+            (xy 2.2879 -1.2836)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 3.683 -1.7807)
-            (xy 3.175 -1.7807)
+            (xy 3.8119 -1.7916)
+            (xy 3.3039 -1.7916)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 3.683 -1.2727)
-            (xy 3.175 -1.2727)
+            (xy 3.8119 -1.2836)
+            (xy 3.3039 -1.2836)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 4.699 -1.7807)
-            (xy 4.191 -1.7807)
+            (xy 4.8279 -1.7916)
+            (xy 4.3199 -1.7916)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 4.699 -1.2727)
-            (xy 4.191 -1.2727)
+            (xy 4.8279 -1.2836)
+            (xy 4.3199 -1.2836)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 5.715 -1.7807)
-            (xy 5.207 -1.7807)
+            (xy 5.8439 -1.7916)
+            (xy 5.3359 -1.7916)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 5.715 -1.2727)
-            (xy 5.207 -1.2727)
+            (xy 5.8439 -1.2836)
+            (xy 5.3359 -1.2836)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 6.731 -1.7807)
-            (xy 6.223 -1.7807)
+            (xy 6.8599 -1.7916)
+            (xy 6.3519 -1.7916)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 6.731 -1.2727)
-            (xy 6.223 -1.2727)
+            (xy 6.8599 -1.2836)
+            (xy 6.3519 -1.2836)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 7.747 -1.7807)
-            (xy 7.239 -1.7807)
+            (xy 7.8759 -1.7916)
+            (xy 7.3679 -1.7916)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 7.747 -1.2727)
-            (xy 7.239 -1.2727)
+            (xy 7.8759 -1.2836)
+            (xy 7.3679 -1.2836)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 8.763 -1.7807)
-            (xy 8.255 -1.7807)
+            (xy 8.8919 -1.7916)
+            (xy 8.3839 -1.7916)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 8.763 -1.2727)
-            (xy 8.255 -1.2727)
+            (xy 8.8919 -1.2836)
+            (xy 8.3839 -1.2836)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 9.779 -1.7807)
-            (xy 9.271 -1.7807)
+            (xy 9.9079 -1.7916)
+            (xy 9.3999 -1.7916)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
         (polyline
           (pts
-            (xy 9.779 -1.2727)
-            (xy 9.271 -1.2727)
+            (xy 9.9079 -1.2836)
+            (xy 9.3999 -1.2836)
           )
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
-        (arc (start 1.143 -0.0027) (mid 1.778 -0.635) (end 2.413 -0.0027)
+        (arc (start 0.0019 -0.0136) (mid 0.6369 -0.6459) (end 1.2719 -0.0136)
           (stroke (width 0) (type default))
           (fill (type none))
         )
-        (arc (start 2.413 -0.0027) (mid 3.048 -0.635) (end 3.683 -0.0027)
+        (arc (start 1.2719 -0.0136) (mid 1.9069 -0.6459) (end 2.5419 -0.0136)
           (stroke (width 0) (type default))
           (fill (type none))
         )
-        (arc (start 3.683 -0.0027) (mid 4.318 -0.635) (end 4.953 -0.0027)
+        (arc (start 2.5419 -0.0136) (mid 3.1769 -0.6459) (end 3.8119 -0.0136)
           (stroke (width 0) (type default))
           (fill (type none))
         )
-        (arc (start 4.953 -0.0027) (mid 5.588 -0.635) (end 6.223 -0.0027)
+        (arc (start 3.8119 -0.0136) (mid 4.4469 -0.6459) (end 5.0819 -0.0136)
           (stroke (width 0) (type default))
           (fill (type none))
         )
-        (arc (start 6.223 -0.0027) (mid 6.858 -0.635) (end 7.493 -0.0027)
+        (arc (start 5.0819 -0.0136) (mid 5.7169 -0.6459) (end 6.3519 -0.0136)
           (stroke (width 0) (type default))
           (fill (type none))
         )
-        (arc (start 7.493 -0.0027) (mid 8.128 -0.635) (end 8.763 -0.0027)
+        (arc (start 6.3519 -0.0136) (mid 6.9869 -0.6459) (end 7.6219 -0.0136)
           (stroke (width 0) (type default))
           (fill (type none))
         )
-        (arc (start 8.763 -0.0027) (mid 9.398 -0.635) (end 10.033 -0.0027)
+        (arc (start 7.6219 -0.0136) (mid 8.2569 -0.6459) (end 8.8919 -0.0136)
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (arc (start 8.8919 -0.0136) (mid 9.5269 -0.6459) (end 10.1619 -0.0136)
           (stroke (width 0) (type default))
           (fill (type none))
         )
       )
       (symbol "ferrite-rod-antenna_1_1"
-        (pin passive line (at 11.43 0 180) (length 1.27)
+        (pin passive line (at -11.43 0 0) (length 1.27)
           (name "P1" (effects (font (size 1.27 1.27))))
           (number "1" (effects (font (size 1.27 1.27))))
           (alternate "P1_PWRIN" power_in line)
           (alternate "P1_PWROUT" power_out line)
         )
-        (pin passive line (at -11.43 0 0) (length 1.27)
+        (pin passive line (at 11.43 0 180) (length 1.27)
           (name "P2" (effects (font (size 1.27 1.27))))
           (number "2" (effects (font (size 1.27 1.27))))
           (alternate "P2_PWRIN" power_in line)
@@ -660,7 +660,7 @@
         )
       )
     )
-    (symbol "restall-generic-audio:speaker" (pin_names (offset 0) hide) (in_bom yes) (on_board yes)
+    (symbol "msf-owl-clock:speaker" (pin_names (offset 0) hide) (in_bom yes) (on_board yes)
       (property "Reference" "SPK" (at 4.826 2.667 0)
         (effects (font (size 1.27 1.27)) (justify left))
       )
@@ -724,6 +724,10 @@
         (pin input line (at -5.08 -2.54 0) (length 2.54)
           (name "2" (effects (font (size 1.27 1.27))))
           (number "2" (effects (font (size 1.27 1.27))))
+        )
+        (pin free line (at -5.08 -5.08 0) (length 2.54) hide
+          (name "MP" (effects (font (size 1.27 1.27))))
+          (number "MP" (effects (font (size 1.27 1.27))))
         )
       )
     )
@@ -1510,10 +1514,6 @@
           (alternate "TDO" input line)
           (alternate "TRACECTL" bidirectional line)
         )
-        (pin no_connect line (at -10.16 -15.24 0) (length 2.54) hide
-          (name "KEY" (effects (font (size 1.27 1.27))))
-          (number "7" (effects (font (size 1.27 1.27))))
-        )
         (pin no_connect line (at 10.16 5.08 180) (length 2.54)
           (name "N/C" (effects (font (size 1.27 1.27))))
           (number "8" (effects (font (size 1.27 1.27))))
@@ -1625,10 +1625,6 @@
           (name "SWO" (effects (font (size 1.27 1.27))))
           (number "6" (effects (font (size 1.27 1.27))))
           (alternate "TDO" input line)
-        )
-        (pin no_connect line (at -7.62 -10.16 0) (length 2.54) hide
-          (name "KEY" (effects (font (size 1.27 1.27))))
-          (number "7" (effects (font (size 1.27 1.27))))
         )
         (pin no_connect line (at 7.62 -2.54 180) (length 2.54)
           (name "N/C" (effects (font (size 1.27 1.27))))
@@ -1879,11 +1875,19 @@
           (name "K" (effects (font (size 1.27 1.27))))
           (number "1" (effects (font (size 1.27 1.27))))
         )
+        (pin free line (at -3.81 0 0) (length 2.54) hide
+          (name "~" (effects (font (size 1.27 1.27))))
+          (number "10" (effects (font (size 1.27 1.27))))
+        )
       )
       (symbol "D5V0FS4U10LP_2_0"
         (pin passive line (at -3.81 0 0) (length 2.54)
           (name "K" (effects (font (size 1.27 1.27))))
           (number "2" (effects (font (size 1.27 1.27))))
+        )
+        (pin free line (at -3.81 0 0) (length 2.54) hide
+          (name "~" (effects (font (size 1.27 1.27))))
+          (number "9" (effects (font (size 1.27 1.27))))
         )
       )
       (symbol "D5V0FS4U10LP_3_0"
@@ -1891,11 +1895,19 @@
           (name "K" (effects (font (size 1.27 1.27))))
           (number "4" (effects (font (size 1.27 1.27))))
         )
+        (pin free line (at -3.81 0 0) (length 2.54) hide
+          (name "~" (effects (font (size 1.27 1.27))))
+          (number "7" (effects (font (size 1.27 1.27))))
+        )
       )
       (symbol "D5V0FS4U10LP_4_0"
         (pin passive line (at -3.81 0 0) (length 2.54)
           (name "K" (effects (font (size 1.27 1.27))))
           (number "5" (effects (font (size 1.27 1.27))))
+        )
+        (pin free line (at -3.81 0 0) (length 2.54) hide
+          (name "~" (effects (font (size 1.27 1.27))))
+          (number "6" (effects (font (size 1.27 1.27))))
         )
       )
     )
@@ -2125,6 +2137,10 @@
         (pin output line (at -7.62 21.59 0) (length 2.54)
           (name "TP_INT" (effects (font (size 1.27 1.27))))
           (number "9" (effects (font (size 1.27 1.27))))
+        )
+        (pin free line (at -7.62 16.51 0) (length 2.54) hide
+          (name "Shield" (effects (font (size 1.27 1.27))))
+          (number "S1" (effects (font (size 1.27 1.27))))
         )
       )
     )
@@ -5305,6 +5321,10 @@
     (pin "3" (uuid 6ca3a67f-3a7c-41ea-8fbc-94aaba3b9e89))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b735f6))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d381988))
+    (pin "7" (uuid bd13b4f7-f5bf-44c2-be81-71546b1aa211))
+    (pin "6" (uuid 974f20fb-65ab-4f3d-8add-049f1b218377))
+    (pin "10" (uuid a4f07b1b-91cf-46fb-805a-1eef0d105ce0))
+    (pin "9" (uuid 4aa65a3f-dcd5-40aa-96c6-047281f8ceba))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -5365,6 +5385,10 @@
     (pin "3" (uuid bbf90ce7-0a28-4f5f-9076-e64e90953800))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b735f8))
     (pin "4" (uuid 38d789b8-c151-4e2d-aa59-7ec1e04e1679))
+    (pin "9" (uuid 95b42804-b732-4a4e-8712-01bf6e37a82d))
+    (pin "7" (uuid b78dcc50-4f9d-40e3-8cee-1071ef09fb48))
+    (pin "6" (uuid 6da20132-6d96-4364-9a4c-e1b48c461994))
+    (pin "10" (uuid bf21fa05-eafe-4c16-9add-e53d3ae3c543))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -5761,6 +5785,10 @@
     (pin "3" (uuid 5d9c5908-1989-4b6b-ad9c-a6a442bc785e))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b735f9))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d38198b))
+    (pin "9" (uuid 73a183f4-629c-4a17-a1d2-ca2b988fc3ae))
+    (pin "10" (uuid f3bfb226-f0e7-4524-b02f-6057b6a59100))
+    (pin "7" (uuid efe44cbf-d164-445d-8bd1-e0b89b7f370b))
+    (pin "6" (uuid e0c53c28-90be-4d21-bff8-42cbf3bf66fc))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -6032,6 +6060,10 @@
     (pin "3" (uuid 2425cd9c-02d8-4c32-91b7-4f3cada8958f))
     (pin "2" (uuid f60f7f95-fbf4-4d71-8d7a-a86a5abeb660))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d381989))
+    (pin "10" (uuid 2118c06c-321e-4ff8-a714-8a0166577cc7))
+    (pin "9" (uuid c80c292b-7b3c-4747-b9a4-25e5b9e47d0b))
+    (pin "6" (uuid e9ad8225-d4b2-4900-a13d-430f990ab0de))
+    (pin "7" (uuid c06ee4f5-4945-49bc-b537-33d1416a9fb9))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -6172,7 +6204,7 @@
     )
   )
 
-  (symbol (lib_id "restall-generic-audio:speaker") (at 373.38 194.31 0) (unit 1)
+  (symbol (lib_id "msf-owl-clock:speaker") (at 373.38 194.31 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 21031516-e138-4eb9-865d-3eb0d6a1e5ce)
     (property "Reference" "SPK001" (at 377.698 190.7316 0)
@@ -6213,6 +6245,7 @@
     )
     (pin "2" (uuid e9441279-0ff5-4501-80b0-14a65876f3a0))
     (pin "1" (uuid e2c64e19-11df-4057-b1bc-544a4d37009f))
+    (pin "MP" (uuid 75750ef5-2a33-40ce-9042-fd61a8ecd720))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -6323,6 +6356,10 @@
     (pin "3" (uuid 2c9a65ee-9321-4690-84db-9a8814a2e25d))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b735fa))
     (pin "4" (uuid 9e917d93-566a-47cb-9c5a-cced8ffbfb8f))
+    (pin "10" (uuid c1a0c863-f2f4-43cb-ab5c-ea2243498770))
+    (pin "9" (uuid 767457a7-ab5c-4a6d-aa25-7fa1541c2382))
+    (pin "7" (uuid 70d4b670-8412-4f80-b2f4-f176461306dd))
+    (pin "6" (uuid 02e0564e-4af7-40a2-80bf-ae6148678470))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -6383,6 +6420,10 @@
     (pin "3" (uuid 34a1b954-beb3-4e75-bab9-0a97c0ed870d))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b735fb))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d38198c))
+    (pin "10" (uuid e36652c8-85dd-41e6-9620-aeb065d6c3f8))
+    (pin "7" (uuid 09d06223-e8c1-4da7-addd-237f777c78dd))
+    (pin "6" (uuid 3ad8580d-c35c-442d-8e79-87644c1bdb8b))
+    (pin "9" (uuid 9b38a4e2-0776-48d8-ba14-fd692923d8f2))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -6468,6 +6509,10 @@
     (pin "3" (uuid a917cdf0-e8b8-47d4-9b21-a97fcb3e27c5))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b735fc))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d38198d))
+    (pin "10" (uuid fa6366db-7053-40df-9413-4d9defc16e38))
+    (pin "9" (uuid 5bb1b92d-0d08-4338-b769-0c191e842bfc))
+    (pin "6" (uuid 099cf76b-862a-415d-ae2f-3f4160686368))
+    (pin "7" (uuid 5c546bc9-58c7-4413-b324-957a166604b6))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -6715,6 +6760,10 @@
     (pin "3" (uuid 1d01e959-7211-4758-88c9-0a2d0646f8f0))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b735f7))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d38198a))
+    (pin "10" (uuid 7b65358b-dd14-42ea-b002-36c7bd7d1114))
+    (pin "7" (uuid 74a642d2-8182-44e4-82e6-3e39b56bb74c))
+    (pin "9" (uuid a6b367a3-2e27-457b-b246-ada8776ba6bc))
+    (pin "6" (uuid 1dd6cbda-3db6-4f7a-bd46-e86dfb53bcde))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -6881,6 +6930,10 @@
     (pin "3" (uuid 9a006267-7cc6-47e4-b73e-45bed42c4ec3))
     (pin "2" (uuid 76191e85-7db0-4368-b3ac-036d3c279296))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d38198e))
+    (pin "9" (uuid b3d08cd9-026f-4d7a-80e4-9d49d59c8af4))
+    (pin "10" (uuid 23555aec-29ca-4d97-aff8-e834d98acad4))
+    (pin "7" (uuid 18e3b05b-4ba4-4fce-b85e-8c413487f550))
+    (pin "6" (uuid d819d04b-1a9d-4484-bfbc-f02ca9330e24))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -7215,6 +7268,10 @@
     (pin "3" (uuid 1d01e959-7211-4758-88c9-0a2d0646f8f1))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b735fd))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d38198f))
+    (pin "10" (uuid cdfe7f9e-a609-4ac4-be22-aefa4ec16769))
+    (pin "9" (uuid 865eafbd-9016-4623-ae7a-5bfd23f09157))
+    (pin "7" (uuid 148c8e2f-cf6d-4afb-b8dc-abad1997c9d3))
+    (pin "6" (uuid a7594e1d-ced1-4808-b990-fbc80f589109))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -7297,6 +7354,7 @@
     (pin "12" (uuid cd9b5977-085d-4c89-a683-0676e7c23175))
     (pin "19" (uuid 8cc7217e-7fc1-4cb0-b394-0e7dba73fc3f))
     (pin "14" (uuid 87b3e52f-abd8-4444-894a-70572ccef824))
+    (pin "S1" (uuid e7ea7973-dc24-4d25-8507-df6bcf808cad))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -7544,6 +7602,10 @@
     (pin "3" (uuid f5bdba2d-c24f-4b4f-9428-f0f9bea9a34b))
     (pin "2" (uuid 207361de-cfc3-4034-b50f-ee483b4f6fda))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d381990))
+    (pin "10" (uuid 0f1b4d21-56cf-4849-9cd7-f7ea65d5afc9))
+    (pin "9" (uuid b2599070-aa16-4f19-ba60-18d9c14a6c06))
+    (pin "7" (uuid 94d4b7a4-1495-4732-866c-6e5d8c2f6cc4))
+    (pin "6" (uuid eb0fee05-7cd3-48e6-9b29-fe1bcb994f0d))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -7735,6 +7797,10 @@
     (pin "3" (uuid c7db9c76-0080-4853-b39e-10e1ac459d5d))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b735fe))
     (pin "4" (uuid a6dad2ea-7f01-4754-a30a-ee430a674b93))
+    (pin "10" (uuid 9a3af74a-693a-4f7d-8291-6f4e331f368d))
+    (pin "9" (uuid 20d50c0a-3e62-487b-bf87-2db301c97935))
+    (pin "7" (uuid f811d446-49f4-4c58-b959-cf332e45852f))
+    (pin "6" (uuid a255e299-e205-4c47-9713-64bb3430e0c6))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -7820,6 +7886,10 @@
     (pin "3" (uuid 13fdd7c9-2323-4a6d-8aca-13364318503c))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b735ff))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d381991))
+    (pin "10" (uuid 3727eb8c-0be8-484a-a40f-4dbb62fd015e))
+    (pin "6" (uuid ca5e980c-e838-4043-b1b9-34b571eaf200))
+    (pin "9" (uuid c0c72900-35eb-46fc-9c7d-aed74084e1bf))
+    (pin "7" (uuid 0fad954b-df5e-4b0b-bdaa-de1637d1e6e5))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -7902,6 +7972,7 @@
     (pin "12" (uuid acec1dc2-912c-4060-8420-66fba00fdf5c))
     (pin "19" (uuid 819daf27-fecb-4deb-81a7-27ad428f0f6f))
     (pin "14" (uuid 2880ccfb-60c9-4c0c-aab1-6c2fe122ae01))
+    (pin "S1" (uuid fa125f26-ef6c-4769-8b20-1bdbe66494b5))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -8067,6 +8138,10 @@
     (pin "3" (uuid 3de67844-e340-4e3c-b87b-64dc30016c14))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b73600))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d381992))
+    (pin "7" (uuid a23823a7-1539-4641-8c5e-7d791dacf9e1))
+    (pin "10" (uuid 8d01ffe7-7e6c-4560-b578-54d6bde75262))
+    (pin "9" (uuid dcf602ba-4dbc-4ebd-8908-f0e12971372f))
+    (pin "6" (uuid 4622efef-24f4-43ee-adaf-a5f293f13b62))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -8260,7 +8335,6 @@
     (pin "3" (uuid 63cd1c26-ab39-4452-8236-ffd2efe4ee26))
     (pin "1" (uuid 80487319-3f0e-4846-9c59-110b09dfc04a))
     (pin "6" (uuid 3be7b0ef-3d2f-407a-86ef-3b58740e516f))
-    (pin "7" (uuid 9bb66d9b-b3f6-440e-b498-8b0c168429fe))
     (pin "4" (uuid ac8cd2da-d02d-4036-92b2-58de27ab77fc))
     (pin "2" (uuid 29e15862-c0a3-45c0-a654-69d4922c8cbe))
     (pin "10" (uuid 43583b7f-2574-46ef-9512-3b76e9d29473))
@@ -8377,6 +8451,10 @@
     (pin "3" (uuid 98a081be-2eb4-4149-bad1-711ebff90b5c))
     (pin "2" (uuid c30f557c-89c6-4d41-8689-f0d50ec76c90))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d381993))
+    (pin "7" (uuid d0495cd7-c581-4a4b-8b3c-45e0da8a5a00))
+    (pin "10" (uuid 98cb4d9a-ea1c-47ea-a2b7-92f3ac25cbcc))
+    (pin "9" (uuid 5b79b7bf-2930-4a4d-a27a-6f857ba330ce))
+    (pin "6" (uuid 05efd973-ff3c-4789-ab15-f5ecd2018474))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -8462,6 +8540,10 @@
     (pin "3" (uuid 803553b4-bea7-4654-bacd-eef10cf36744))
     (pin "2" (uuid c8bac025-8f2e-4e69-80fc-69542bba04ec))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d381994))
+    (pin "9" (uuid a9ddcdcf-bf5a-4511-b93d-79c3a302ca70))
+    (pin "10" (uuid 3b7bd31a-3a66-4a89-8385-45717db3eccf))
+    (pin "7" (uuid 9c68283f-c644-46f9-8dbc-7f4440953cb0))
+    (pin "6" (uuid be0a4ce0-e86f-4970-8759-47eb54b0ee01))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -8672,6 +8754,10 @@
     (pin "3" (uuid 6f37eeaf-c1b9-405f-9c4b-647aaee2b34b))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b73601))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d381995))
+    (pin "10" (uuid 053f4ee9-e047-40cf-afb6-47043e519407))
+    (pin "9" (uuid 973d3f10-6403-42f0-8dec-da47feb45bfb))
+    (pin "6" (uuid 5b978554-e9e7-477b-b194-ff343358094b))
+    (pin "7" (uuid 5ffe74d1-2230-4f3d-949f-9cbf53d6eed7))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -8718,7 +8804,6 @@
     (pin "6" (uuid c510f730-ef1e-4d89-bfb2-fd5d305f032c))
     (pin "9" (uuid 702b9c0f-fca0-4633-a441-698d6f293b57))
     (pin "2" (uuid fe7d0930-db62-47a3-b1a4-f61badb75b6e))
-    (pin "7" (uuid 8fcc1643-d824-40eb-be24-cf39b7a1c7fa))
     (pin "3" (uuid b972355d-88b6-435a-9723-3111fb26c536))
     (pin "15" (uuid 50cc0617-30f1-4196-817b-c9bc1daaa5b5))
     (pin "13" (uuid a57b2624-9e45-41db-b3ad-b59824e16c46))
@@ -8791,6 +8876,10 @@
     (pin "3" (uuid 1d01e959-7211-4758-88c9-0a2d0646f8f2))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b73602))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d381996))
+    (pin "9" (uuid 7cc951d4-0ef8-4f95-be9c-dc7e78e02065))
+    (pin "10" (uuid fa3ceec9-af9f-40d9-a845-c65d6768b98b))
+    (pin "7" (uuid e9ba6d71-a580-4968-bf6f-b85b5110b45a))
+    (pin "6" (uuid b5fed464-2686-46b4-9f62-4b94248b368d))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -8851,6 +8940,10 @@
     (pin "3" (uuid 1d01e959-7211-4758-88c9-0a2d0646f8f3))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b73603))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d381997))
+    (pin "9" (uuid bef4766d-4845-4c3c-8ac2-c6f66edac0dd))
+    (pin "10" (uuid 1b69b43b-0891-402f-89f9-15488c7de4a1))
+    (pin "7" (uuid 48fe837f-9e81-43b4-b818-a53b1f290b74))
+    (pin "6" (uuid 7fb6f61a-5cc1-40bd-a139-afee204f3f76))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -9045,6 +9138,10 @@
     (pin "3" (uuid dc2b9315-d11e-42db-8535-a7c7d81f21aa))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b73604))
     (pin "4" (uuid 7783d210-7c56-4db6-abd0-1d36058ea28a))
+    (pin "9" (uuid 60ccdc73-0248-4a9f-b03a-7c3507eca69f))
+    (pin "7" (uuid fb3afd8f-370f-4355-8731-43aa1faf8a1e))
+    (pin "10" (uuid 354e1af0-a22d-4ba2-9459-b55353d5ac1d))
+    (pin "6" (uuid 54d478b2-7a9e-4d20-aed4-4670ccb1ad00))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -9464,6 +9561,10 @@
     (pin "3" (uuid 926f646f-74f5-476c-911c-4e666165700f))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b73605))
     (pin "4" (uuid 7ff021f9-026d-40b9-af25-996b187b9558))
+    (pin "10" (uuid e0e96883-330b-4145-9c7a-adc1675aed90))
+    (pin "9" (uuid f666b77b-4f4e-41b0-99b2-c6ff8e936c2a))
+    (pin "7" (uuid c33882e4-e814-4dc6-9bd1-ff0f52e5b393))
+    (pin "6" (uuid 06cc63ba-94f7-4fad-9c62-6e6d399221a6))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -9599,6 +9700,10 @@
     (pin "3" (uuid a0ff8ef3-a91a-47b8-9a9f-d0489b8e28af))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b73606))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d381998))
+    (pin "9" (uuid 1364e5cc-21bf-4658-ab17-ac34aedb3a5d))
+    (pin "10" (uuid 7da9e523-4b63-4701-957a-3bc0ab08071c))
+    (pin "7" (uuid 757b6579-3f33-4731-ba3c-a2c942e9796c))
+    (pin "6" (uuid 4d6267b3-d248-41fd-8042-f5deb3c5a010))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -9659,6 +9764,10 @@
     (pin "3" (uuid a59d0820-1d17-41c3-93b7-b65efb98b4b5))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b73607))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d381999))
+    (pin "10" (uuid 7e9fe1e9-ae17-4ed3-a4d8-ea37afbc36d9))
+    (pin "9" (uuid 9cce021f-9a5b-4dfa-b437-bde31ee47c90))
+    (pin "7" (uuid 29de518e-b702-4ef9-b4cf-490d38cd6f88))
+    (pin "6" (uuid 2a3e3e74-e0ab-4b8b-a8f4-1063b38a0bc0))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -9819,6 +9928,10 @@
     (pin "3" (uuid 03cb865e-2940-4d53-958a-092f2f43d640))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b73608))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d38199a))
+    (pin "10" (uuid 3fc6a7a4-4c00-40d5-86df-0b54df8ac0d0))
+    (pin "7" (uuid 82547a16-1fc3-4067-a776-a6108557c297))
+    (pin "6" (uuid 4e778182-c15d-4670-8721-a24c45661c68))
+    (pin "9" (uuid a9550af0-864a-4bb9-9d69-9acec1460624))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -10284,6 +10397,10 @@
     (pin "3" (uuid 5c5ae471-c61c-49c0-9ee5-a21594314244))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b73609))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d38199b))
+    (pin "10" (uuid 0faf645b-5ad4-40d7-b9a6-c9926483c001))
+    (pin "7" (uuid ff3e5132-0955-4dd6-9bb5-758e62761961))
+    (pin "6" (uuid e998c733-11b4-4cc7-86dd-df7c346a6e25))
+    (pin "9" (uuid cd6cdcad-1155-498c-ace3-10a49a918f5a))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -10500,6 +10617,10 @@
     (pin "3" (uuid 28a29845-926a-4f5b-bf64-f0cfdd782e31))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b7360a))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d38199c))
+    (pin "10" (uuid 126cabc1-7786-4030-a21e-2d58a4c10030))
+    (pin "9" (uuid fadcc24f-ba54-414d-9b6c-922eb8a5d43a))
+    (pin "7" (uuid 5f52326b-1cd4-4662-9b95-9f7dcf98c0af))
+    (pin "6" (uuid e48e8fae-2c39-42bc-ab09-a59d7a0ca796))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -10560,6 +10681,10 @@
     (pin "3" (uuid d5f54bae-d650-4f19-a45a-e5c7832401c8))
     (pin "2" (uuid 2903baac-7022-49b3-87cf-c8a2a3a0e8cb))
     (pin "4" (uuid 1cb12211-bf84-4d7c-9550-b8073d38199d))
+    (pin "10" (uuid 53ffd80b-a573-44f2-bb46-734e48ec6dd2))
+    (pin "9" (uuid 9b4e12db-83a4-4f66-9ae1-af39aecc566c))
+    (pin "7" (uuid 94da512a-2480-4add-84c2-51ad0acdc82d))
+    (pin "6" (uuid af7df4d4-bdd0-4197-98c5-7881fef30ee1))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
@@ -10750,6 +10875,10 @@
     (pin "3" (uuid 615f58d1-32d6-4ef9-87b0-d3df4640bf1f))
     (pin "2" (uuid 07b37677-a1af-42ca-933d-b73000b7360b))
     (pin "4" (uuid f717cf03-1c03-4dee-ab73-172b3c1635c0))
+    (pin "10" (uuid db2170de-566f-4b0c-bfe1-e3023c5a0d09))
+    (pin "9" (uuid 294aa660-ec9f-4e2e-ac9a-ab82f8992869))
+    (pin "7" (uuid c7c0d5b1-ef18-46e8-8c00-568899f4dc34))
+    (pin "6" (uuid bf747384-0b28-46bf-9d18-1eaeaed7d413))
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"

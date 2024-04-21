@@ -4810,7 +4810,7 @@
     (property "Value" "SD103AWS" (at 93.472 214.7458 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Footprint" "restall-generic-sot:SOD-323" (at 91.44 214.884 0)
+    (property "Footprint" "restall-generic-sot:SOD323" (at 91.44 214.884 0)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Datasheet" "https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/5534/SD103AWS%20thru%20SD103CWS.pdf" (at 91.44 214.884 0)
