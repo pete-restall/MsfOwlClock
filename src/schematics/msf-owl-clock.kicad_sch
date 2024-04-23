@@ -4851,7 +4851,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 1f00dc2e-31a1-4c55-9252-5ec97c6803b3)
   )
-  (label "D_{-}" (at 81.28 101.6 0) (fields_autoplaced)
+  (label "D-" (at 81.28 101.6 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 25c064f9-6894-46f9-8660-95bb3e89a1a9)
   )
@@ -4879,7 +4879,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 486b46ef-643c-4dab-b3f8-4a1fa461a860)
   )
-  (label "D_{+}" (at 81.28 106.68 0) (fields_autoplaced)
+  (label "D+" (at 81.28 106.68 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 5217311f-7cc4-4f0c-8d19-8f32e67c61e7)
   )
@@ -5269,10 +5269,10 @@
     )
   )
 
-  (symbol (lib_id "restall-manufacturer-diodes-inc:D5V0FS4U10LP") (at 91.44 242.57 90) (mirror x) (unit 1)
+  (symbol (lib_id "restall-manufacturer-diodes-inc:D5V0FS4U10LP") (at 91.44 242.57 90) (mirror x) (unit 4)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 07e216d0-643f-4e4b-a631-bef22f8449d7)
-    (property "Reference" "D007" (at 93.472 242.316 90)
+    (property "Reference" "D006" (at 93.472 242.316 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "D5V0FS4U10LP" (at 94.488 255.27 90)
@@ -5327,7 +5327,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "D007") (unit 1)
+          (reference "D006") (unit 4)
         )
       )
     )
@@ -8488,10 +8488,10 @@
     )
   )
 
-  (symbol (lib_id "restall-manufacturer-diodes-inc:D5V0FS4U10LP") (at 96.52 242.57 90) (mirror x) (unit 2)
+  (symbol (lib_id "restall-manufacturer-diodes-inc:D5V0FS4U10LP") (at 96.52 242.57 90) (mirror x) (unit 3)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 8c2aafce-8b2d-4ea9-8cfd-bc90ab8d3211)
-    (property "Reference" "D007" (at 98.552 242.2525 90)
+    (property "Reference" "D006" (at 98.552 242.2525 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "D5V0FS4U10LP" (at 98.552 243.4646 90)
@@ -8546,7 +8546,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "D007") (unit 2)
+          (reference "D006") (unit 3)
         )
       )
     )
@@ -8702,10 +8702,10 @@
     )
   )
 
-  (symbol (lib_id "restall-manufacturer-diodes-inc:D5V0FS4U10LP") (at 86.36 242.57 90) (mirror x) (unit 4)
+  (symbol (lib_id "restall-manufacturer-diodes-inc:D5V0FS4U10LP") (at 86.36 242.57 90) (mirror x) (unit 2)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 9b468c32-cf35-453b-a069-4e2cd6c9e40d)
-    (property "Reference" "D006" (at 88.392 242.2525 90)
+    (property "Reference" "D007" (at 88.392 242.2525 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "D5V0FS4U10LP" (at 88.392 243.4646 90)
@@ -8760,7 +8760,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "D006") (unit 4)
+          (reference "D007") (unit 2)
         )
       )
     )
@@ -9086,10 +9086,10 @@
     )
   )
 
-  (symbol (lib_id "restall-manufacturer-diodes-inc:D5V0FS4U10LP") (at 81.28 242.57 90) (mirror x) (unit 3)
+  (symbol (lib_id "restall-manufacturer-diodes-inc:D5V0FS4U10LP") (at 81.28 242.57 90) (mirror x) (unit 4)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid aea4c67b-35b7-4531-9554-66fadfdf7a27)
-    (property "Reference" "D006" (at 83.312 242.2525 90)
+    (property "Reference" "D007" (at 83.312 242.2525 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "D5V0FS4U10LP" (at 83.312 243.4646 90)
@@ -9144,7 +9144,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "D006") (unit 3)
+          (reference "D007") (unit 4)
         )
       )
     )
@@ -9509,7 +9509,7 @@
     )
   )
 
-  (symbol (lib_id "restall-manufacturer-diodes-inc:D5V0FS4U10LP") (at 101.6 242.57 90) (mirror x) (unit 3)
+  (symbol (lib_id "restall-manufacturer-diodes-inc:D5V0FS4U10LP") (at 101.6 242.57 90) (mirror x) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid cabecdb9-a469-4438-be70-e8e3568d5ccd)
     (property "Reference" "D007" (at 103.632 242.2525 90)
@@ -9567,7 +9567,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "D007") (unit 3)
+          (reference "D007") (unit 1)
         )
       )
     )
@@ -9648,7 +9648,7 @@
     )
   )
 
-  (symbol (lib_id "restall-manufacturer-diodes-inc:D5V0FS4U10LP") (at 71.12 242.57 90) (mirror x) (unit 1)
+  (symbol (lib_id "restall-manufacturer-diodes-inc:D5V0FS4U10LP") (at 71.12 242.57 90) (mirror x) (unit 2)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid d07ae20d-d2f3-4151-be76-a6e887f26b85)
     (property "Reference" "D006" (at 73.152 242.316 90)
@@ -9706,7 +9706,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "D006") (unit 1)
+          (reference "D006") (unit 2)
         )
       )
     )
@@ -10565,7 +10565,7 @@
     )
   )
 
-  (symbol (lib_id "restall-manufacturer-diodes-inc:D5V0FS4U10LP") (at 106.68 242.57 90) (mirror x) (unit 4)
+  (symbol (lib_id "restall-manufacturer-diodes-inc:D5V0FS4U10LP") (at 106.68 242.57 90) (mirror x) (unit 3)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid f6b1b2f8-6e5b-4cd1-9060-edffd9cb7e9f)
     (property "Reference" "D007" (at 108.712 242.2525 90)
@@ -10623,13 +10623,13 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "D007") (unit 4)
+          (reference "D007") (unit 3)
         )
       )
     )
   )
 
-  (symbol (lib_id "restall-manufacturer-diodes-inc:D5V0FS4U10LP") (at 76.2 242.57 90) (mirror x) (unit 2)
+  (symbol (lib_id "restall-manufacturer-diodes-inc:D5V0FS4U10LP") (at 76.2 242.57 90) (mirror x) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid f6f52e37-dc1c-485a-b889-c1bd1313cbcb)
     (property "Reference" "D006" (at 78.232 242.2525 90)
@@ -10687,7 +10687,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946"
-          (reference "D006") (unit 2)
+          (reference "D006") (unit 1)
         )
       )
     )
