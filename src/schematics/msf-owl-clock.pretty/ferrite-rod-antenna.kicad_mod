@@ -2,7 +2,7 @@
   (layer "F.Cu")
   (descr "Ferrite Rod Antenna - 100mm x 10mm")
   (tags "owl-msf owl msf inductor coil magnetic l ferrite loop loopstick rod am antenna aerial")
-  (attr smd)
+  (attr through_hole)
   (fp_text reference "REF**" (at 0 -6.4) (layer "F.SilkS")
       (effects (font (size 1 1) (thickness 0.15)))
     (tstamp 87681aa8-2a91-4dca-8e72-dc16a212aac3)
