@@ -2433,7 +2433,7 @@
     )
   )
 
-  (symbol (lib_id "restall-manufacturer-microchip:MCP6499?-?-S?") (at 374.65 78.74 0) (mirror x) (unit 3)
+  (symbol (lib_id "restall-manufacturer-microchip:MCP6499?-?-S?") (at 374.65 78.74 0) (mirror x) (unit 2)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 1f99d70f-c30b-486d-9464-a3b8e79f6f53)
     (property "Reference" "U204" (at 368.554 77.724 0)
@@ -2474,7 +2474,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/ce863d79-d266-4984-b56b-ca957df41c84/4fbb3fbf-2c3d-43d2-97c2-d56faba30b72"
-          (reference "U204") (unit 3)
+          (reference "U204") (unit 2)
         )
       )
     )
@@ -2561,7 +2561,7 @@
     )
   )
 
-  (symbol (lib_id "restall-manufacturer-microchip:MCP6499?-?-S?") (at 280.67 73.66 0) (unit 2)
+  (symbol (lib_id "restall-manufacturer-microchip:MCP6499?-?-S?") (at 280.67 73.66 0) (unit 3)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 2b4f31bf-cc6a-49d5-8550-4d3113fe9a4b)
     (property "Reference" "U204" (at 274.574 72.5861 0)
@@ -2602,7 +2602,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/ce863d79-d266-4984-b56b-ca957df41c84/4fbb3fbf-2c3d-43d2-97c2-d56faba30b72"
-          (reference "U204") (unit 2)
+          (reference "U204") (unit 3)
         )
       )
     )
