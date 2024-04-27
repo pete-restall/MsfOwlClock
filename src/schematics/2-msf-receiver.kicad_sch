@@ -2279,8 +2279,8 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 70449ff1-14cc-492d-bc12-3896bdad26b8)
   )
-  (text "Route as length-matched\ndifferential lines, Z_{0}=68Ω\n\nADC V_{fs}≃±2.5V_{p-p}-7% headroom\nADC V_{cm}≃1.25V\n\nUnder fault conditions or transients it is possible to see nearly 3.7V\nfrom the op-amp on the ADC pins.  With a worst-case MCU V_{DD} of\naround 3.1V, there could be an excess 0.6V injecting current into the\nESD protection diodes.  The PIC32 datasheet states that the maximum\ninjection current is ±15mA; the 68Ω series resistors should limit\nthis to less than 9mA.  Schottky diodes could have been used at the\nexpense of offsets caused by reverse leakage currents and the distortion\nintroduced by further mismatch of the differential inputs."
-    (at 246.38 233.68 0)
+  (text "Route as length-matched differential pair, ideally with Z_{odd}=68Ω but\nthis is not critical because transmission line effects will not be present.\n\nUnfortunately the JLCPCB stack-up only lets us approach Z_{even}=103Ω\n(Z_{odd}=51.5Ω), about 25% less than our target.\n\nADC V_{fs}≃±2.5V_{p-p}-7% headroom\nADC V_{cm}≃1.25V\n\nUnder fault conditions or transients it is possible to see nearly 3.7V\nfrom the op-amp on the ADC pins.  With a worst-case MCU V_{DD} of\naround 3.1V, there could be an excess 0.6V injecting current into the\nESD protection diodes.  The PIC32 datasheet states that the maximum\ninjection current is ±15mA; the 68Ω series resistors should limit\nthis to less than 9mA.  Schottky diodes could have been used at the\nexpense of offsets caused by reverse leakage currents and the distortion\nintroduced by further mismatch of the differential inputs."
+    (at 246.38 238.76 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 87bb3c13-1b66-4040-8efe-1c82f16c3a7b)
   )
@@ -2397,7 +2397,7 @@
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 4af4cdf2-8af5-4c32-8c79-9e472e960bc7)
   )
-  (hierarchical_label "MSF_OUT_{+}" (shape output) (at 233.68 218.44 0) (fields_autoplaced)
+  (hierarchical_label "MSF_OUT+" (shape output) (at 233.68 218.44 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid 6f162a1d-64cf-4f11-8508-7593cc3021da)
   )
@@ -2417,7 +2417,7 @@
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid d33c209f-6ee5-4fb1-b8bc-1ad0dc654738)
   )
-  (hierarchical_label "MSF_OUT_{-}" (shape output) (at 233.68 223.52 0) (fields_autoplaced)
+  (hierarchical_label "MSF_OUT-" (shape output) (at 233.68 223.52 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid d6751983-0592-4fc0-a056-42f8fa964697)
   )
