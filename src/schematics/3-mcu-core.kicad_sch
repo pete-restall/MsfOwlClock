@@ -4631,11 +4631,6 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 69e6d52a-0403-4af3-9319-a31e30b9d17b)
   )
-  (text "TODO: R320 HAS BEEN REMOVED - RENAME R321 -> R320, ETC."
-    (at -7.874 171.704 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid 6cd307e0-482c-4917-b554-9d59793e7097)
-  )
   (text "R330-34" (at 235.966 162.56 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 6dea14d4-cd9a-4ec6-933b-5952fa538047)
