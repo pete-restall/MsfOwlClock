@@ -51,8 +51,8 @@
     (stroke (width 0.1) (type solid)) (layer "F.Fab") (tstamp 3bc5d1ee-0cc8-4330-aac1-a158017f2e66))
   (fp_line (start 50 5.5) (end 50 -5.5)
     (stroke (width 0.1) (type solid)) (layer "F.Fab") (tstamp c481bf43-f24d-45d6-9d42-c8aa698ff93c))
-  (pad "1" thru_hole circle (at -45 -10.5) (size 1.2 1.2) (drill 0.6) (layers "*.Cu" "*.Mask") (remove_unused_layers) (keep_end_layers) (tstamp 97bd6dad-3eaa-450b-93b1-181f2bd51c94))
-  (pad "2" thru_hole circle (at 45 -10.5) (size 1.2 1.2) (drill 0.6) (layers "*.Cu" "*.Mask") (remove_unused_layers) (keep_end_layers) (tstamp 6b7795da-4ed5-431a-84ab-e425298a5509))
+  (pad "1" thru_hole circle (at 45 -10.5) (size 1.2 1.2) (drill 0.6) (layers "*.Cu" "*.Mask") (remove_unused_layers) (keep_end_layers) (tstamp 6b7795da-4ed5-431a-84ab-e425298a5509))
+  (pad "2" thru_hole circle (at -45 -10.5) (size 1.2 1.2) (drill 0.6) (layers "*.Cu" "*.Mask") (remove_unused_layers) (keep_end_layers) (tstamp 97bd6dad-3eaa-450b-93b1-181f2bd51c94))
   (model "${KIPRJMOD}/msf-owl-clock.pretty/ferrite-rod-antenna.step"
     (offset (xyz 0 0 6))
     (scale (xyz 1 1 1))
