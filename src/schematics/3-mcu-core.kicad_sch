@@ -4604,7 +4604,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 4486f004-a67b-404f-9589-abc1ed121e76)
   )
-  (text "R336-40" (at 135.382 199.39 0)
+  (text "R335-39" (at 135.382 199.39 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 46a02797-6c13-413f-b3e9-3770d7d7b095)
   )
@@ -4636,7 +4636,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 6cd307e0-482c-4917-b554-9d59793e7097)
   )
-  (text "R331-35" (at 235.966 162.56 0)
+  (text "R330-34" (at 235.966 162.56 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 6dea14d4-cd9a-4ec6-933b-5952fa538047)
   )
@@ -4659,7 +4659,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid a7b10fd4-0513-4d4e-bf24-2edd5d5b6260)
   )
-  (text "R341-42" (at 176.022 213.614 0)
+  (text "R340-41" (at 176.022 213.614 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid beb94355-e432-4024-a516-c9070b03bd32)
   )
@@ -4667,7 +4667,7 @@
     (effects (font (size 2.54 2.54)) (justify left bottom))
     (uuid d402c92c-c822-4dbb-95b8-99758805c980)
   )
-  (text "R329-30" (at 234.442 154.178 0)
+  (text "R328-29" (at 234.442 154.178 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid d9eec6fb-59e5-45e3-976b-066169d83434)
   )
@@ -4676,7 +4676,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid f3ae5370-09ea-40aa-8cab-488ed9f7b631)
   )
-  (text "R321-26" (at 236.982 129.286 0)
+  (text "R320-25" (at 236.982 129.286 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid f3c38cb7-a0ef-41b3-a64a-e1b619b75987)
   )
@@ -5304,7 +5304,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 152.4 199.39 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 02f1ff97-18c4-47bf-a3d0-31cce6180961)
-    (property "Reference" "R338" (at 148.082 201.168 90)
+    (property "Reference" "R337" (at 148.082 201.168 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "41.2Ω" (at 150.114 201.168 90)
@@ -5351,7 +5351,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R338") (unit 1)
+          (reference "R337") (unit 1)
         )
       )
     )
@@ -5659,7 +5659,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 232.41 139.7 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 0a92e9c5-81b5-4d7d-856e-d9c4446e9037)
-    (property "Reference" "R324" (at 230.632 135.382 90)
+    (property "Reference" "R323" (at 230.632 135.382 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "43Ω" (at 230.632 137.414 90)
@@ -5706,7 +5706,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R324") (unit 1)
+          (reference "R323") (unit 1)
         )
       )
     )
@@ -5978,7 +5978,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 154.94 199.39 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 1e7dd995-4625-4aae-9ba0-f4c0c504e4d4)
-    (property "Reference" "R339" (at 150.622 201.168 90)
+    (property "Reference" "R338" (at 150.622 201.168 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "41.2Ω" (at 152.654 201.168 90)
@@ -6025,7 +6025,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R339") (unit 1)
+          (reference "R338") (unit 1)
         )
       )
     )
@@ -6321,7 +6321,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 232.41 144.78 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 2f2d9637-2d3c-4b23-aed9-53875845591a)
-    (property "Reference" "R326" (at 230.632 140.462 90)
+    (property "Reference" "R325" (at 230.632 140.462 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "43Ω" (at 230.632 142.494 90)
@@ -6368,7 +6368,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R326") (unit 1)
+          (reference "R325") (unit 1)
         )
       )
     )
@@ -6377,7 +6377,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 232.41 170.18 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 2f833735-de61-48ce-abd7-f6f81e5b16a6)
-    (property "Reference" "R333" (at 230.632 165.862 90)
+    (property "Reference" "R332" (at 230.632 165.862 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "43Ω" (at 230.632 167.894 90)
@@ -6424,7 +6424,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R333") (unit 1)
+          (reference "R332") (unit 1)
         )
       )
     )
@@ -6826,7 +6826,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 232.41 162.56 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 3d8426fc-c690-4f89-9ef2-bdeaaaa123bd)
-    (property "Reference" "R331" (at 230.632 158.242 90)
+    (property "Reference" "R330" (at 230.632 158.242 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "43Ω" (at 235.966 163.576 90)
@@ -6873,7 +6873,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R331") (unit 1)
+          (reference "R330") (unit 1)
         )
       )
     )
@@ -7069,7 +7069,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 294.64 236.22 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 449144b4-37b9-409a-b1f0-e9b75c1377ba)
-    (property "Reference" "R347" (at 296.164 235.458 0)
+    (property "Reference" "R346" (at 296.164 235.458 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "39kΩ" (at 296.164 237.49 0)
@@ -7116,7 +7116,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R347") (unit 1)
+          (reference "R346") (unit 1)
         )
       )
     )
@@ -7259,7 +7259,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 266.7 140.97 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 4ac80135-0d82-4a2a-b68d-fcbad50b1a5f)
-    (property "Reference" "R327" (at 268.224 139.954 0)
+    (property "Reference" "R326" (at 268.224 139.954 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "33kΩ" (at 268.224 141.986 0)
@@ -7306,7 +7306,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R327") (unit 1)
+          (reference "R326") (unit 1)
         )
       )
     )
@@ -7460,7 +7460,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 294.64 228.6 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 519d5670-c9d3-4d98-9a64-916e089520f6)
-    (property "Reference" "R346" (at 296.164 227.838 0)
+    (property "Reference" "R345" (at 296.164 227.838 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "39kΩ" (at 296.164 229.87 0)
@@ -7507,7 +7507,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R346") (unit 1)
+          (reference "R345") (unit 1)
         )
       )
     )
@@ -7740,7 +7740,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 215.9 207.01 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 5541e314-1c59-43d7-a19b-36e24a082c7e)
-    (property "Reference" "R343" (at 217.424 205.994 0)
+    (property "Reference" "R342" (at 217.424 205.994 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "33kΩ" (at 217.424 208.026 0)
@@ -7787,7 +7787,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R343") (unit 1)
+          (reference "R342") (unit 1)
         )
       )
     )
@@ -7796,7 +7796,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 232.41 134.62 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 55d3999b-8286-46e8-ab1f-82160a6e3023)
-    (property "Reference" "R322" (at 230.632 130.302 90)
+    (property "Reference" "R321" (at 230.632 130.302 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "43Ω" (at 230.632 132.334 90)
@@ -7843,7 +7843,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R322") (unit 1)
+          (reference "R321") (unit 1)
         )
       )
     )
@@ -8350,7 +8350,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 232.41 142.24 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 6b8470d2-86ea-4625-bef1-402d389af439)
-    (property "Reference" "R325" (at 230.632 137.922 90)
+    (property "Reference" "R324" (at 230.632 137.922 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "43Ω" (at 230.632 139.954 90)
@@ -8397,7 +8397,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R325") (unit 1)
+          (reference "R324") (unit 1)
         )
       )
     )
@@ -8514,7 +8514,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 232.41 132.08 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 6eca2bf4-3f7f-48fb-8139-b29e7bf8f023)
-    (property "Reference" "R321" (at 238.252 128.27 90)
+    (property "Reference" "R320" (at 238.252 128.27 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "43Ω" (at 236.982 130.302 90)
@@ -8561,7 +8561,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R321") (unit 1)
+          (reference "R320") (unit 1)
         )
       )
     )
@@ -9691,7 +9691,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 147.32 199.39 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 8e9653b5-0e89-42fd-9f22-6dadfa3171d5)
-    (property "Reference" "R336" (at 135.382 198.374 0)
+    (property "Reference" "R335" (at 135.382 198.374 0)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "41.2Ω" (at 135.382 200.406 0)
@@ -9738,7 +9738,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R336") (unit 1)
+          (reference "R335") (unit 1)
         )
       )
     )
@@ -9884,7 +9884,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 172.72 199.39 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 93b56c47-707c-4a68-b8e6-4c6dbde1239e)
-    (property "Reference" "R341" (at 166.624 198.374 0)
+    (property "Reference" "R340" (at 166.624 198.374 0)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "1.8kΩ" (at 176.022 214.63 0)
@@ -9931,7 +9931,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R341") (unit 1)
+          (reference "R340") (unit 1)
         )
       )
     )
@@ -9940,7 +9940,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 232.41 167.64 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 9bbb3efc-35c1-4f4e-840b-9af178991915)
-    (property "Reference" "R332" (at 230.632 163.322 90)
+    (property "Reference" "R331" (at 230.632 163.322 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "43Ω" (at 230.632 165.354 90)
@@ -9987,7 +9987,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R332") (unit 1)
+          (reference "R331") (unit 1)
         )
       )
     )
@@ -10266,7 +10266,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 162.56 199.39 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid a2f13d77-1592-4c3f-8261-fb1c7e1d25e1)
-    (property "Reference" "R340" (at 156.464 198.374 0)
+    (property "Reference" "R339" (at 156.464 198.374 0)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "41.2Ω" (at 156.464 200.406 0)
@@ -10313,7 +10313,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R340") (unit 1)
+          (reference "R339") (unit 1)
         )
       )
     )
@@ -10372,7 +10372,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 232.41 137.16 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid a8782018-9fd3-490a-a36b-4ac3fc0cd8ee)
-    (property "Reference" "R323" (at 230.632 132.842 90)
+    (property "Reference" "R322" (at 230.632 132.842 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "43Ω" (at 230.632 134.874 90)
@@ -10419,7 +10419,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R323") (unit 1)
+          (reference "R322") (unit 1)
         )
       )
     )
@@ -10565,7 +10565,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 281.94 228.854 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid b20e77c6-f06f-46a2-b351-6723796f6201)
-    (property "Reference" "R345" (at 283.464 228.092 0)
+    (property "Reference" "R344" (at 283.464 228.092 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "33kΩ" (at 283.464 230.124 0)
@@ -10612,7 +10612,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R345") (unit 1)
+          (reference "R344") (unit 1)
         )
       )
     )
@@ -10971,7 +10971,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 279.4 140.97 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid bc8a1d48-e43a-4eda-8cd6-78e8271a4529)
-    (property "Reference" "R328" (at 280.924 139.954 0)
+    (property "Reference" "R327" (at 280.924 139.954 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "33kΩ" (at 280.924 141.986 0)
@@ -11018,7 +11018,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R328") (unit 1)
+          (reference "R327") (unit 1)
         )
       )
     )
@@ -11165,7 +11165,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 175.26 199.39 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid c0b6c184-b5b5-4a11-b01d-5c35af0259a3)
-    (property "Reference" "R342" (at 169.164 198.374 0)
+    (property "Reference" "R341" (at 169.164 198.374 0)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "1.8kΩ" (at 169.164 200.406 0)
@@ -11212,7 +11212,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R342") (unit 1)
+          (reference "R341") (unit 1)
         )
       )
     )
@@ -11272,7 +11272,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 232.41 180.34 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid c73192d9-76db-436d-90a2-0d4676755767)
-    (property "Reference" "R335" (at 230.632 176.022 90)
+    (property "Reference" "R334" (at 230.632 176.022 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "43Ω" (at 230.632 178.054 90)
@@ -11319,7 +11319,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R335") (unit 1)
+          (reference "R334") (unit 1)
         )
       )
     )
@@ -11384,7 +11384,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 232.41 160.02 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid c888af0a-d4de-4dc1-ae9c-ca7c3ddd3393)
-    (property "Reference" "R330" (at 230.632 155.702 90)
+    (property "Reference" "R329" (at 230.632 155.702 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "330Ω" (at 230.632 157.734 90)
@@ -11431,7 +11431,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R330") (unit 1)
+          (reference "R329") (unit 1)
         )
       )
     )
@@ -11546,7 +11546,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 269.24 228.6 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid cb0266d8-2288-49a5-aecd-81f7bf6dea5c)
-    (property "Reference" "R344" (at 270.764 227.838 0)
+    (property "Reference" "R343" (at 270.764 227.838 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "33kΩ" (at 270.764 229.87 0)
@@ -11593,7 +11593,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R344") (unit 1)
+          (reference "R343") (unit 1)
         )
       )
     )
@@ -12027,7 +12027,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 149.86 199.39 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid e58fe73a-f99a-43c2-adf4-022d56360d28)
-    (property "Reference" "R337" (at 145.542 201.168 90)
+    (property "Reference" "R336" (at 145.542 201.168 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "41.2Ω" (at 147.574 201.168 90)
@@ -12074,7 +12074,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R337") (unit 1)
+          (reference "R336") (unit 1)
         )
       )
     )
@@ -12407,7 +12407,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 232.41 157.48 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid f768e807-556d-4b73-bffd-f0549f44e614)
-    (property "Reference" "R329" (at 230.632 153.162 90)
+    (property "Reference" "R328" (at 230.632 153.162 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "330Ω" (at 234.442 155.194 90)
@@ -12454,7 +12454,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R329") (unit 1)
+          (reference "R328") (unit 1)
         )
       )
     )
@@ -12707,7 +12707,7 @@
   (symbol (lib_id "restall-generic-resistors:resistor") (at 232.41 175.26 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid fed2f3f9-0358-4102-91ac-c839cd901494)
-    (property "Reference" "R334" (at 230.632 170.942 90)
+    (property "Reference" "R333" (at 230.632 170.942 90)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
     (property "Value" "43Ω" (at 230.632 172.974 90)
@@ -12754,7 +12754,7 @@
     (instances
       (project "msf-owl-clock"
         (path "/56d623d3-22db-4d43-a9d9-e6bb4bb68946/cc278a5b-e802-444a-81ef-f38d11985404"
-          (reference "R334") (unit 1)
+          (reference "R333") (unit 1)
         )
       )
     )
