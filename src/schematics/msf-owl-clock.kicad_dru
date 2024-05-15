@@ -6,3 +6,7 @@
 (rule "Zone clearances for MSF reference and supply voltages"
   (constraint clearance (min 1mm))
   (condition "A.Type == 'Zone' && (A.NetName == '/2-msf-receiver/MSF_VDD_{+3.6V}' || A.NetName == '/2-msf-receiver/MSF_RCV_VREF_{+2.5V}' || A.NetName == '/2-msf-receiver/MSF_RCV_VREF_{+1.8V}' || A.NetName == 'Net-(U201-OUT)') && B.Type == 'Zone' && (B.NetName == '/2-msf-receiver/MSF_VDD_{+3.6V}' || B.NetName == '/2-msf-receiver/MSF_RCV_VREF_{+2.5V}' || B.NetName == '/2-msf-receiver/MSF_RCV_VREF_{+1.8V}' || B.NetName == 'Net-(U201-OUT)')"))
+
+(rule "Zone clearances for +5V and +3.3V rails"
+  (constraint clearance (min 1mm))
+  (condition "A.Type == 'Zone' && (A.NetName == '/1-usb-and-power/CORE_VDD_{+5V}' || A.NetName == '/CORE_VDD_{+3.3V}' || A.NetName == '/3-mcu-core/SDCARD_V_{DD}') && B.Type == 'Zone' && (B.NetName == '/1-usb-and-power/CORE_VDD_{+5V}' || B.NetName == '/CORE_VDD_{+3.3V}' || B.NetName == '/3-mcu-core/SDCARD_V_{DD}')"))
