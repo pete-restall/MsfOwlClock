@@ -9,4 +9,4 @@
 
 (rule "Zone clearances for +5V and +3.3V rails"
   (constraint clearance (min 1mm))
-  (condition "A.Type == 'Zone' && (A.NetName == '/1-usb-and-power/CORE_VDD_{+5V}' || A.NetName == '/CORE_VDD_{+3.3V}' || A.NetName == '/3-mcu-core/SDCARD_V_{DD}') && B.Type == 'Zone' && (B.NetName == '/1-usb-and-power/CORE_VDD_{+5V}' || B.NetName == '/CORE_VDD_{+3.3V}' || B.NetName == '/3-mcu-core/SDCARD_V_{DD}')"))
+  (condition "A.Type == 'Zone' && A.Name != 'TftLed0' && A.Name != 'TftLed1' && (A.NetName == '/1-usb-and-power/CORE_VDD_{+5V}' || A.NetName == '/CORE_VDD_{+3.3V}' || A.NetName == '/3-mcu-core/SDCARD_V_{DD}') && B.Type == 'Zone' && B.Name != 'TftLed0' && B.Name != 'TftLed1' && (B.NetName == '/1-usb-and-power/CORE_VDD_{+5V}' || B.NetName == '/CORE_VDD_{+3.3V}' || B.NetName == '/3-mcu-core/SDCARD_V_{DD}')"))
