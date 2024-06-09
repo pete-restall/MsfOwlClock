@@ -670,7 +670,7 @@
         )
       )
     )
-    (symbol "restall-manufacturer-walsin:WLBD2012HCU121TH" (pin_numbers hide) (pin_names (offset 0) hide) (in_bom yes) (on_board yes)
+    (symbol "restall-manufacturer-walsin:WLBD2012HCU121TH" (pin_numbers hide) (pin_names (offset 0)) (in_bom yes) (on_board yes)
       (property "Reference" "FB" (at 1.905 1.27 0)
         (effects (font (size 1.27 1.27)) (justify left))
       )
