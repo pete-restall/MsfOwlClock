@@ -940,7 +940,6 @@
     (stroke (width 0.099999) (type solid)) (layer "F.Fab") (tstamp 97d7abe4-c285-4107-865f-dceb7291b382))
   (fp_line (start 19.219997 0) (end 19.194988 0.92319)
     (stroke (width 0.099999) (type solid)) (layer "F.Fab") (tstamp c8d2f56a-909d-49fd-9a21-1323b2f4e4ae))
-  (pad "1" thru_hole oval (at 22 0) (size 3.6 15.6) (drill oval 3 15) (layers "*.Cu" "*.Mask") (remove_unused_layers) (keep_end_layers) (tstamp 97bd6dad-3eaa-450b-93b1-181f2bd51c94))
   (group "" (id ab125d95-fa87-4f92-bf9e-f12dedba4ad7)
     (members
       02e8f117-31d9-4bde-b6b9-689d6ee41d70
