@@ -1,0 +1,87 @@
+(footprint "left-wing" (version 20221018) (generator pcbnew)
+  (layer "F.Cu")
+  (descr "Owl Left Wing")
+  (tags "owl-msf owl msf left wing")
+  (attr smd board_only exclude_from_pos_files exclude_from_bom)
+  (fp_text reference "REF**" (at 0 -6.4) (layer "F.SilkS") hide
+      (effects (font (size 1 1) (thickness 0.15)))
+    (tstamp 87681aa8-2a91-4dca-8e72-dc16a212aac3)
+  )
+  (fp_text value "left-wing" (at 0 2.2) (layer "F.Fab")
+      (effects (font (size 1 1) (thickness 0.15)))
+    (tstamp 3851b777-1d70-447c-b4ae-29a1abbb50cc)
+  )
+  (fp_text user "${REFERENCE}" (at 0 0) (layer "F.Fab")
+      (effects (font (size 0.98 0.98) (thickness 0.15)))
+    (tstamp 8f8cf86b-bf95-4a34-ace8-ea61da075dfa)
+  )
+  (fp_line (start -7.133032 19.685077) (end -7.018616 22.224388)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp a9fb751e-ea0b-4cc2-a53f-ff193c2c7b04))
+  (fp_line (start -7.075289 17.209422) (end -7.133032 19.685077)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp 5f79383f-84e5-4b74-9971-0c79fcad9c97))
+  (fp_line (start -7.018616 22.224388) (end -6.74782 24.811196)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp 8a8f9c86-0f54-4dc4-96e1-ef5bb3499d6e))
+  (fp_line (start -6.829609 14.813582) (end -7.075289 17.209422)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp 8e1d68dd-737d-40f1-b02a-b9b9590b00c5))
+  (fp_line (start -6.74782 24.811196) (end -5.800202 30.062664)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp b113e6fd-f524-45cd-8001-9316e4817aef))
+  (fp_line (start -6.380212 12.513718) (end -6.829609 14.813582)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp 6ca9f4ab-805c-4e9d-ac10-6f3ce5729ae3))
+  (fp_line (start -5.800202 30.062664) (end -4.416409 35.310204)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp 7f0f2e4e-0467-4045-8cf9-1f09627b4f29))
+  (fp_line (start -5.711319 10.325989) (end -6.380212 12.513718)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp e080a8cd-f2ce-4d35-aa35-cf928ce92f9a))
+  (fp_line (start -4.807153 8.266554) (end -5.711319 10.325989)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp e84e5fcb-e6ed-4fe9-ac42-7f4bf4fac9df))
+  (fp_line (start -4.416409 35.310204) (end -2.722671 40.424539)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp c6f7e002-8c28-429f-9172-0c27f4a41b16))
+  (fp_line (start -3.651933 6.351573) (end -4.807153 8.266554)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp 24daaee8-38f5-4892-8465-1cb193b8a7a9))
+  (fp_line (start -2.722671 40.424539) (end -0.845217 45.276393)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp b8158d53-37ce-4ee9-b5a3-0666c48767df))
+  (fp_line (start -2.229882 4.597206) (end -3.651933 6.351573)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp d47b4b6b-5231-4b6c-bd3a-b03fffc2ae46))
+  (fp_line (start -0.845217 45.276393) (end 1.089721 49.736489)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp 8ec78d38-d9d6-4ab1-a3b1-ed5b18310cd3))
+  (fp_line (start -0.525221 3.019612) (end -2.229882 4.597206)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp 4c1c8605-bcd4-4f0c-9be3-bc1bd593f449))
+  (fp_line (start 1.089721 49.736489) (end 2.955915 53.675552)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp 8945748a-00f3-4803-8bf7-cc03e1523b0a))
+  (fp_line (start 1.477829 1.63495) (end -0.525221 3.019612)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp 07a18b01-bfd6-447e-add4-d37735bdb335))
+  (fp_line (start 2.955915 53.675552) (end 5.977144 59.473469)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp 9c50a440-58e5-4e38-beaa-020f77f25ccb))
+  (fp_line (start 3.795048 0.459381) (end 1.477829 1.63495)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp 7f9ca5d7-1912-491d-ad0a-b225b901930c))
+  (fp_line (start 5.977144 59.473469) (end 7.20863 61.635933)
+    (stroke (width 1) (type solid)) (layer "F.SilkS") (tstamp 38b4d3d7-e031-41a3-80ef-e65ac15e1289))
+  (group "" (id caf86305-08cc-4320-9f11-4bfecec3e044)
+    (members
+      07a18b01-bfd6-447e-add4-d37735bdb335
+      24daaee8-38f5-4892-8465-1cb193b8a7a9
+      38b4d3d7-e031-41a3-80ef-e65ac15e1289
+      4c1c8605-bcd4-4f0c-9be3-bc1bd593f449
+      5f79383f-84e5-4b74-9971-0c79fcad9c97
+      6ca9f4ab-805c-4e9d-ac10-6f3ce5729ae3
+      7f0f2e4e-0467-4045-8cf9-1f09627b4f29
+      7f9ca5d7-1912-491d-ad0a-b225b901930c
+      8945748a-00f3-4803-8bf7-cc03e1523b0a
+      8a8f9c86-0f54-4dc4-96e1-ef5bb3499d6e
+      8e1d68dd-737d-40f1-b02a-b9b9590b00c5
+      8ec78d38-d9d6-4ab1-a3b1-ed5b18310cd3
+      9c50a440-58e5-4e38-beaa-020f77f25ccb
+      a9fb751e-ea0b-4cc2-a53f-ff193c2c7b04
+      b113e6fd-f524-45cd-8001-9316e4817aef
+      b8158d53-37ce-4ee9-b5a3-0666c48767df
+      c6f7e002-8c28-429f-9172-0c27f4a41b16
+      d47b4b6b-5231-4b6c-bd3a-b03fffc2ae46
+      e080a8cd-f2ce-4d35-aa35-cf928ce92f9a
+      e84e5fcb-e6ed-4fe9-ac42-7f4bf4fac9df
+    )
+  )
+  (model "${KIPRJMOD}/msf-owl-clock.pretty/er-tft1.32-1-eye.step"
+    (offset (xyz 0 0 6))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 90 0 0))
+  )
+)
