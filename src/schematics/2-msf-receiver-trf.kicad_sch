@@ -6,6 +6,7 @@
 
   (title_block
     (title "MSF Owl Clock - MSF Receiver Module (Tuned RF)")
+    (date "June 2024")
     (rev "0.1")
     (company "Pete Restall <pete@restall.net>")
   )

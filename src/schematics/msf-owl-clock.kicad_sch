@@ -6,6 +6,7 @@
 
   (title_block
     (title "MSF Owl Clock - Overview")
+    (date "June 2024")
     (rev "0.1")
     (company "Pete Restall <pete@restall.net>")
   )
@@ -2533,7 +2534,7 @@
         )
       )
     )
-    (symbol "restall-manufacturer-walsin:WLBD2012HCU601TH" (pin_numbers hide) (pin_names (offset 0)) (in_bom yes) (on_board yes)
+    (symbol "restall-manufacturer-walsin:WLBD2012HCU601TH" (pin_numbers hide) (pin_names (offset 0) hide) (in_bom yes) (on_board yes)
       (property "Reference" "FB" (at 1.905 1.27 0)
         (effects (font (size 1.27 1.27)) (justify left))
       )
@@ -4795,11 +4796,6 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 318b1b2e-8f66-4027-92a1-a3e765ae4e9a)
   )
-  (text "TODO: CHECK DATASHEETS AFTER COMPLETED THE LAYOUT - REMOVE ANY FOR PARTS THAT ARE NOT USED (PERHAPS MMBT3904 ?) AND ADD ANY THAT ARE MISSING."
-    (at 34.036 278.13 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid 408b95a8-7855-4b1f-b99e-820e3992717f)
-  )
   (text "UART pins named from\nthe MCU perspective" (at 131.064 60.96 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 4b97638d-74a1-4389-8867-47a72edbcf10)
@@ -6263,7 +6259,7 @@
     (property "Manufacturer" "Molex" (at 373.38 194.31 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
-    (property "ManufacturerPartNumber" "AC0402DR-0716KL" (at 373.38 194.31 0)
+    (property "ManufacturerPartNumber" "502443-0270" (at 373.38 194.31 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
     (property "Manufacturer2" "" (at 373.38 194.31 0)
