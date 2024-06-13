@@ -4830,11 +4830,6 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 84ba3d71-657d-4a24-8660-ba135d1c5a9a)
   )
-  (text "TODO: FOOTPRINTS FOR THE EYES - NO SYMBOL REQUIRED, HOWEVER."
-    (at 220.98 -5.334 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid 86e53995-e2c4-4ce8-a9e0-1bf5b4498fed)
-  )
   (text "R018-022" (at 60.96 210.82 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 88844dbb-3dc5-4aa4-8d08-5868627fd2f6)
