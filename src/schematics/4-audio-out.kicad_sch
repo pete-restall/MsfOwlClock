@@ -3216,7 +3216,7 @@
     (property "Manufacturer" "Yageo" (at 171.45 147.32 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
-    (property "ManufacturerPartNumber" "AC0402DR-0716KL" (at 171.45 147.32 0)
+    (property "ManufacturerPartNumber" "RC0402FR-0716KL" (at 171.45 147.32 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
     (property "Manufacturer2" "Panasonic" (at 171.45 147.32 0)
