@@ -1,0 +1,16 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Nucleo Debug (STM32L432KC)",
+			"cwd": "${workspaceFolder}",
+			"executable": "./build/out/debug.elf",
+			"device": "STM32L432KC",
+			"request": "launch",
+			"type": "cortex-debug",
+			"runToEntryPoint": "blinkyBlinky",
+			"servertype": "openocd",
+			"configFiles": ["build/debug/stm32l432kc-nucleo/openocd-stm32l432kc_nucleo.cfg"]
+		}
+	]
+}
