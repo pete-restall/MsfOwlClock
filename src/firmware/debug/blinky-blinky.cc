@@ -6,8 +6,8 @@
 
 using namespace smeg::kernel::bare_metal::mcu::st::stm32;
 
-static stm32l432kc::Rcc &rcc(stm32l432kc::__linker_peripherals_ahb1_rcc);
-static stm32l432kc::Gpio &gpioB(stm32l432kc::__linker_peripherals_ahb2_gpioB);
+static volatile stm32l432kc::Rcc &rcc(stm32l432kc::__linker_peripherals_ahb1_rcc);
+static volatile stm32l432kc::Gpio &gpioB(stm32l432kc::__linker_peripherals_ahb2_gpioB);
 
 void blinkyBlinky(void)
 {
