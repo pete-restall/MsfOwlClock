@@ -2,7 +2,7 @@
 
 using namespace smeg::kernel::crt0::mcu::arm::cortex::m4;
 
-namespace smeg::kernel::crt0::mcu::microchip::pic32c::pic32cx1025sg41100
+namespace smeg::kernel::crt:crt0::mcu::microchip::pic32c::pic32cx1025sg41100
 {
 	[[gnu::used]]
 	[[gnu::section(".isr_vector_table.mcu")]]

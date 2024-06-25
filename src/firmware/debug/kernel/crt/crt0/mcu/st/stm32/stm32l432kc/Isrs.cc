@@ -1,11 +1,11 @@
 #include "Isrs.hh"
 
-#define __STM32L432KC_ISRS_CLASS "_ZN4smeg6kernel4crt03mcu2st5stm3211stm32l432kc4Isrs"
+#define __STM32L432KC_ISRS_CLASS "_ZN4smeg6kernel3crt4crt03mcu2st5stm3211stm32l432kc4Isrs"
 #define __STM32L432KC_DEFAULT_ISR_NAME __STM32L432KC_ISRS_CLASS "10defaultIsrEv"
 #define __STM32L432KC_RESERVED_ISR_NAME __STM32L432KC_ISRS_CLASS "11reservedIsrEv"
 #define __STM32L432KC_UNAVAILABLE_ISR_NAME __STM32L432KC_ISRS_CLASS "14unavailableIsrEv"
 
-namespace smeg::kernel::crt0::mcu::st::stm32::stm32l432kc
+namespace smeg::kernel::crt::crt0::mcu::st::stm32::stm32l432kc
 {
 	[[gnu::naked]]
 	void Isrs::defaultIsr(void) noexcept

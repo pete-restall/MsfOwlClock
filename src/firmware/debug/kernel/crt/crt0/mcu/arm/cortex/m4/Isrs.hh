@@ -1,11 +1,11 @@
-#ifndef __SMEG_KERNEL_CRT0_MCU_ARM_CORTEX_M4_ISRS_HH
-#define __SMEG_KERNEL_CRT0_MCU_ARM_CORTEX_M4_ISRS_HH
+#ifndef __SMEG_KERNEL_CRT_CRT0_MCU_ARM_CORTEX_M4_ISRS_HH
+#define __SMEG_KERNEL_CRT_CRT0_MCU_ARM_CORTEX_M4_ISRS_HH
 
-#define __ARM_CORTEX_M4_ISRS_CLASS "_ZN4smeg6kernel4crt03mcu3arm6cortex2m44Isrs"
+#define __ARM_CORTEX_M4_ISRS_CLASS "_ZN4smeg6kernel3crt4crt03mcu3arm6cortex2m44Isrs"
 #define __ARM_CORTEX_M4_DEFAULT_ISR_NAME __ARM_CORTEX_M4_ISRS_CLASS "10defaultIsrEv"
 #define __ARM_CORTEX_M4_RESERVED_ISR_NAME __ARM_CORTEX_M4_ISRS_CLASS "11reservedIsrEv"
 
-namespace smeg::kernel::crt0::mcu::arm::cortex::m4
+namespace smeg::kernel::crt::crt0::mcu::arm::cortex::m4
 {
 	class Isrs
 	{

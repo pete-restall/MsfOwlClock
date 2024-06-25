@@ -1,6 +1,6 @@
 #include "Isrs.hh"
 
-namespace smeg::kernel::crt0::mcu::arm::cortex::m4
+namespace smeg::kernel::crt::crt0::mcu::arm::cortex::m4
 {
 	[[gnu::weak]]
 	void Isrs::defaultIsr(void) noexcept

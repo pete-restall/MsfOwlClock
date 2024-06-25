@@ -8,7 +8,7 @@ extern "C"
 	void _resetHandler(void) noexcept;
 }
 
-namespace smeg::kernel::crt0::mcu::arm::cortex::m4
+namespace smeg::kernel::crt::crt0::mcu::arm::cortex::m4
 {
 	[[gnu::used]]
 	[[gnu::section(".isr_vector_table.arm")]]

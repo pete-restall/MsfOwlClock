@@ -1,9 +1,9 @@
 #include "../../../arm/cortex/m4/IsrVectorTable.hh"
 #include "Isrs.hh"
 
-using namespace smeg::kernel::crt0::mcu::arm::cortex::m4;
+using namespace smeg::kernel::crt::crt0::mcu::arm::cortex::m4;
 
-namespace smeg::kernel::crt0::mcu::st::stm32::stm32l432kc
+namespace smeg::kernel::crt::crt0::mcu::st::stm32::stm32l432kc
 {
 	[[gnu::used]]
 	[[gnu::section(".isr_vector_table.mcu")]]

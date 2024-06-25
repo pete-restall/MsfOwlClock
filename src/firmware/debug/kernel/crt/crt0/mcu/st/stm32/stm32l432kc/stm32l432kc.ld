@@ -53,17 +53,23 @@ SECTIONS {
 	.code.reserved.2 0x1fff7810 : { . += 0x87f0; }
 
 	.sram.data.retained16k.kernel (ORIGIN(SRAM) + SRAM1_SIZE_BYTES) : {
+		. = ALIGN(4);
 		__linker_sram_data_retained16k_kernel_start = .;
 		*libcrt0.a: (.data.retained16k .data.retained16k*)
+		*libcrt.a: (.data.retained16k .data.retained16k*)
 		*libkernel.a: (.data.retained16k .data.retained16k*)
+		. = ALIGN(4);
 		__linker_sram_data_retained16k_kernel_pastEnd = .;
 	} AT> FLASH_TEXT
+	__linker_sram_data_retained16k_kernel_lmaStart = ALIGN(ADDR(.sram.data.retained16k.kernel), 4);
 
 	.sram.bss.retained16k.kernel : {
 		. = ALIGN(4);
 		__linker_sram_bss_retained16k_kernel_start = .;
 		*libcrt0.a: (.bss.retained16k .bss.retained16k*)
+		*libcrt.a: (.bss.retained16k .bss.retained16k*)
 		*libkernel.a: (.bss.retained16k .bss.retained16k*)
+		. = ALIGN(4);
 		__linker_sram_bss_retained16k_kernel_pastEnd = .;
 	}
 
@@ -73,13 +79,16 @@ SECTIONS {
 		. = ALIGN(4);
 		__linker_sram_data_retained16k_application_start = .;
 		* (.data.retained16k .data.retained16k*)
+		. = ALIGN(4);
 		__linker_sram_data_retained16k_application_pastEnd = .;
 	} AT> FLASH_TEXT
+	__linker_sram_data_retained16k_application_lmaStart = ALIGN(ADDR(.sram.data.retained16k.application), 4);
 
 	.sram.bss.retained16k.application : {
 		. = ALIGN(4);
 		__linker_sram_bss_retained16k_application_start = .;
 		* (.bss.retained16k .bss.retained16k*)
+		. = ALIGN(4);
 		__linker_sram_bss_retained16k_application_pastEnd = .;
 
 		ASSERT(
@@ -88,17 +97,23 @@ SECTIONS {
 	}
 
 	.sram.data.kernel ORIGIN(SRAM) : {
+		. = ALIGN(4);
 		__linker_sram_data_kernel_start = .;
 		*libcrt0.a: (.data .data*)
+		*libcrt.a: (.data .data*)
 		*libkernel.a: (.data .data*)
+		. = ALIGN(4);
 		__linker_sram_data_kernel_pastEnd = .;
 	} > SRAM AT> FLASH_TEXT
+	__linker_sram_data_kernel_lmaStart = ALIGN(ADDR(.sram.data.kernel), 4);
 
 	.sram.bss.kernel : {
 		. = ALIGN(4);
 		__linker_sram_bss_kernel_start = .;
 		*libcrt0.a: (.bss .bss*)
+		*libcrt.a: (.bss .bss*)
 		*libkernel.a: (.bss .bss*)
+		. = ALIGN(4);
 		__linker_sram_bss_kernel_pastEnd = .;
 	} > SRAM
 
@@ -115,13 +130,16 @@ SECTIONS {
 		. = ALIGN(4);
 		__linker_sram_data_application_start = .;
 		* (.data .data*)
+		. = ALIGN(4);
 		__linker_sram_data_application_pastEnd = .;
 	} > SRAM AT> FLASH_TEXT
+	__linker_sram_data_application_lmaStart = ALIGN(ADDR(.sram.data.application), 4);
 
 	.sram.bss.application : {
 		. = ALIGN(4);
 		__linker_sram_bss_application_start = .;
 		* (.bss .bss*)
+		. = ALIGN(4);
 		__linker_sram_bss_application_pastEnd = .;
 	} > SRAM
 
@@ -130,6 +148,8 @@ SECTIONS {
 		__linker_code_flash_kernel_initArray_start = .;
 		KEEP(*libcrt0.a: (.init_array))
 		KEEP(*libcrt0.a: (SORT_BY_INIT_PRIORITY(.init_array*)))
+		KEEP(*libcrt.a: (.init_array))
+		KEEP(*libcrt.a: (SORT_BY_INIT_PRIORITY(.init_array*)))
 		KEEP(*libkernel.a: (.init_array))
 		KEEP(*libkernel.a: (SORT_BY_INIT_PRIORITY(.init_array*)))
 		__linker_code_flash_kernel_initArray_pastEnd = .;
@@ -138,10 +158,12 @@ SECTIONS {
 	.code.flash.kernel.fini_array (READONLY) : {
 		. = ALIGN(4);
 		__linker_code_flash_kernel_finiArray_start = .;
-		KEEP(*libkernel.a: (SORT_BY_INIT_PRIORITY(.fini_array*)))
-		KEEP(*libkernel.a: (.fini_array))
-		KEEP(*libcrt0.a: (SORT_BY_INIT_PRIORITY(.fini_array*)))
 		KEEP(*libcrt0.a: (.fini_array))
+		KEEP(*libcrt0.a: (SORT_BY_INIT_PRIORITY(.fini_array*)))
+		KEEP(*libcrt.a: (.fini_array))
+		KEEP(*libcrt.a: (SORT_BY_INIT_PRIORITY(.fini_array*)))
+		KEEP(*libkernel.a: (.fini_array))
+		KEEP(*libkernel.a: (SORT_BY_INIT_PRIORITY(.fini_array*)))
 		__linker_code_flash_kernel_finiArray_pastEnd = .;
 	} > FLASH_TEXT
 
@@ -149,22 +171,16 @@ SECTIONS {
 		. = ALIGN(4);
 		__linker_code_flash_kernel_rodata_start = .;
 		*libcrt0.a: (.rodata .rodata*)
+		*libcrt.a: (.rodata .rodata*)
 		*libkernel.a: (.rodata .rodata*)
 		__linker_code_flash_kernel_rodata_pastEnd = .;
-	} > FLASH_TEXT
-
-	.code.flash.kernel.eh_frame (READONLY) : {
-		. = ALIGN(4);
-		__linker_code_flash_kernel_ehFrame_start = .;
-		KEEP(*libcrt0.a: (.eh_frame .eh_frame*))
-		KEEP(*libkernel.a: (.eh_frame .eh_frame*))
-		__linker_code_flash_kernel_ehFrame_pastEnd = .;
 	} > FLASH_TEXT
 
 	.code.flash.kernel.text (READONLY) : {
 		. = ALIGN(4);
 		__linker_code_flash_kernel_text_start = .;
 		*libcrt0.a: (.text .text*)
+		*libcrt.a: (.text .text*)
 		*libkernel.a: (.text .text*)
 		__linker_code_flash_kernel_text_pastEnd = .;
 	} > FLASH_TEXT
@@ -172,6 +188,7 @@ SECTIONS {
 	.code.flash.kernel.extab (READONLY) : {
 		. = ALIGN(4);
 		KEEP(*libcrt0.a: (.ARM.extab .ARM.extab*))
+		KEEP(*libcrt.a: (.ARM.extab .ARM.extab*))
 		KEEP(*libkernel.a: (.ARM.extab .ARM.extab*))
 	} > FLASH_TEXT
 
@@ -180,6 +197,7 @@ SECTIONS {
 		__exidx_start = .;
 		__linker_code_flash_shared_exidx_kernel_start = .;
 		KEEP(*libcrt0.a: (.ARM.exidx .ARM.exidx*))
+		KEEP(*libcrt.a: (.ARM.exidx .ARM.exidx*))
 		KEEP(*libkernel.a: (.ARM.exidx .ARM.exidx*))
 		__linker_code_flash_shared_exidx_kernel_pastEnd = .;
 		KEEP(* (.ARM.exidx .ARM.exidx*))
@@ -203,8 +221,8 @@ SECTIONS {
 	.code.flash.application.fini_array (READONLY) : {
 		. = ALIGN(4);
 		__linker_code_flash_application_finiArray_start = .;
-		KEEP(* (SORT_BY_INIT_PRIORITY(.fini_array*)))  /* TODO: THE FINI ARRAYS NEED TO BE REVERSED - D'OH ! */
 		KEEP(* (.fini_array))
+		KEEP(* (SORT_BY_INIT_PRIORITY(.fini_array*)))
 		__linker_code_flash_application_finiArray_pastEnd = .;
 
 		ASSERT(
@@ -217,13 +235,6 @@ SECTIONS {
 		__linker_code_flash_application_rodata_start = .;
 		* (.rodata .rodata*)
 		__linker_code_flash_application_rodata_pastEnd = .;
-	} > FLASH_TEXT
-
-	.code.flash.application.eh_frame (READONLY) : {
-		. = ALIGN(4);
-		__linker_code_flash_application_ehFrame_start = .;
-		KEEP(* (.eh_frame .eh_frame*))
-		__linker_code_flash_application_ehFrame_pastEnd = .;
 	} > FLASH_TEXT
 
 	.code.flash.application.text (READONLY) : {
