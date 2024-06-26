@@ -1,9 +1,59 @@
+// TODO: THIS FILE WILL DIE ONCE THE COMPONENT PARTS HAVE MIGRATED AWAY FROM IT...
 #include <algorithm>
 #include <cstdint>
 
 extern void blinkyBlinky(void) noexcept;
 
 typedef void (*const InitFuncPtr)(void); // TODO: THE noexcept CAN BE TAKEN OFF ONCE DEBUGGING SUITABLY ADVANCED...
+
+/*
+kernel {
+	initArray
+	finiArray
+
+	init();
+	fini();
+}
+
+application {
+	initArray
+	finiArray
+
+	init();
+	fini();
+}
+
+bss {
+	initialise();
+}
+
+data {
+	initialise();
+}
+
+kernelMemory {
+	bss[]
+	data[]
+	stack
+
+	initialise();
+}
+
+applicationMemory {
+	bss[]
+	data[]
+
+	initialise();
+}
+
+linkerMemoryMap {
+	linkerKernelMemoryMap;
+	linkerApplicationMemoryMap;
+}
+
+// this file, called from crt0._resetHandler...
+Crt::entrypoint(linkerMemoryMap);
+*/
 
 extern "C"
 {
