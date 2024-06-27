@@ -1,0 +1,103 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"cortex-debug.liveWatchRefreshRate": 500,
+		"cortex-debug.openocdPath": "/usr/bin/openocd",
+		"cortex-debug.armToolchainPath": "/opt/arm/local/cortex-m4f/bin",
+		"cortex-debug.armToolchainPrefix": "arm-none-eabi",
+		"cortex-debug.enableTelemetry": false,
+		"C_Cpp.default.cppStandard": "c++23",
+		"C_Cpp.default.compilerPath": "/opt/arm/local/cortex-m4f/bin/arm-none-eabi-g++",
+		"C_Cpp.default.compilerArgs": [
+			"-Wall",
+			"-pedantic",
+			"-mcpu=cortex-m4",
+			"-mthumb",
+			"-mfpu=fpv4-sp-d16",
+			"-mfloat-abi=hard"
+		],
+		"files.exclude": {
+			"build/meson/out": "explorerExcludedFiles"
+		}
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Nucleo Debug (STM32L432KC)",
+				"cwd": "${workspaceRoot}",
+				"executable": "build/meson/out/stm32l432kc/msf-owl-clock.elf",
+				"device": "STM32L432KC",
+				"request": "launch",
+				"type": "cortex-debug",
+				"runToEntryPoint": "_resetHandler",
+				"servertype": "openocd",
+				"configFiles": ["build/debug/stm32l432kc-nucleo/openocd-stm32l432kc_nucleo.cfg"]
+			}
+		],
+		"compounds": []
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "Meson Setup (Native)",
+				"group": "build",
+				"type": "shell",
+				"command": "meson setup build/meson/out/stm32l432kc --native-file build/meson/common.ini --native-file build/meson/native.ini",
+				"options": {
+					"cwd": "${workspaceRoot}"
+				}
+			},
+			{
+				"label": "Meson Compile (Native)",
+				"group": "build",
+				"type": "shell",
+				"command": "meson compile -C build/meson/out/native",
+				"options": {
+					"cwd": "${workspaceRoot}"
+				}
+			},
+			{
+				"label": "Meson Setup (PIC32CX1025SG41100)",
+				"group": "build",
+				"type": "shell",
+				"command": "meson setup build/meson/out/pic32cx1025sg41100 --cross-file build/meson/common.ini --cross-file build/meson/pic32cx1025sg41100.ini",
+				"options": {
+					"cwd": "${workspaceRoot}"
+				}
+			},
+			{
+				"label": "Meson Compile (PIC32CX1025SG41100)",
+				"group": "build",
+				"type": "shell",
+				"command": "meson compile -C build/meson/out/pic32cx1025sg41100",
+				"options": {
+					"cwd": "${workspaceRoot}"
+				}
+			},
+			{
+				"label": "Meson Setup (STM32L432KC)",
+				"group": "build",
+				"type": "shell",
+				"command": "meson setup build/meson/out/stm32l432kc --cross-file build/meson/common.ini --cross-file build/meson/stm32l432kc.ini",
+				"options": {
+					"cwd": "${workspaceRoot}"
+				}
+			},
+			{
+				"label": "Meson Compile (STM32L432KC)",
+				"group": "build",
+				"type": "shell",
+				"command": "meson compile -C build/meson/out/stm32l432kc",
+				"options": {
+					"cwd": "${workspaceRoot}"
+				}
+			}
+		]
+	}
+}

@@ -27,3 +27,22 @@ $ sudo make CROSS_TOOLCHAIN_DIR=/opt/microchip/local/pic32mm CROSS_TOOLCHAIN_BUI
 ---
 
 Make sure `OpenOCD` is installed for debugging; the `cortex-debug` extension to VSCode can be used to debug / step through an attached device via `gdb`.
+
+---
+
+Install the `meson` build system:
+```
+$ pip install --user meson
+```
+
+Setup the build system:
+```
+$ meson setup build/meson/out/native --native-file build/meson/common.ini --native-file build/meson/native.ini
+$ meson setup build/meson/out/stm32l432kc --cross-file build/meson/common.ini --cross-file build/meson/stm32l432kc.ini
+$ meson setup build/meson/out/pic32cx1025sg41100 --cross-file build/meson/common.ini --cross-file build/meson/pic32cx1025sg41100.ini
+```
+
+To build, use something like:
+```
+$ meson compile -C build/meson/out/stm32l432kc
+```
