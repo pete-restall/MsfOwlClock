@@ -46,3 +46,15 @@ To build, use something like:
 ```
 $ meson compile -C build/meson/out/stm32l432kc
 ```
+
+---
+
+Install the `mettle` testing framework; see the [installation instructions](https://github.com/jimporter/mettle/blob/master/doc/install.md).
+Clone the repository and then do something like:
+```
+$ pip install --user bfg9000
+$ 9k build/
+$ cd build
+$ ninja
+$ sudo ninja install
+```

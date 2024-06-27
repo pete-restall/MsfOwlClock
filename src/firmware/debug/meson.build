@@ -10,9 +10,10 @@ project(
 		'default_library=static',
 		'prefer_static=true'])
 
+srcdir = 'src'
 cpp_link_args = ['-nostartfiles']
 
-libkernel_srcdir = meson.get_external_property('libkernel_srcdir', 'kernel')
+libkernel_srcdir = meson.get_external_property('libkernel_srcdir', srcdir / 'kernel')
 libkernel = library(
 	'kernel',
 	sources: [
@@ -31,7 +32,7 @@ libcrt0 = library(
 	'crt0',
 	sources: meson.get_external_property('libcrt0_mcu_srcfiles', native: false))
 
-app_srcdir = meson.get_external_property('app_srcdir', '.')
+app_srcdir = meson.get_external_property('app_srcdir', srcdir / 'app')
 msf_owl_clock_elf = executable(
 	'msf-owl-clock.elf',
 	link_whole: [libcrt0, libcrt],

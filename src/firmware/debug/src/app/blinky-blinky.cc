@@ -1,8 +1,8 @@
 #include <cstdint>
 #include <atomic>
 
-#include "kernel/bare-metal/mcu/st/stm32/stm32l432kc/Gpio.hh"
-#include "kernel/bare-metal/mcu/st/stm32/stm32l432kc/Rcc.hh"
+#include "../kernel/bare-metal/mcu/st/stm32/stm32l432kc/Gpio.hh"
+#include "../kernel/bare-metal/mcu/st/stm32/stm32l432kc/Rcc.hh"
 
 using namespace smeg::kernel::bare_metal::mcu::st::stm32;
 
