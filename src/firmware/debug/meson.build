@@ -13,6 +13,7 @@ project(
 kernel_dir = 'kernel'
 kernel_crt_dir = kernel_dir / 'crt'
 kernel_crt_crt0_dir = kernel_crt_dir / 'crt0'
+kernel_crt_crt0_linker_dir = kernel_crt_crt0_dir / 'linker'
 kernel_crt_crt0_mcu_dir = kernel_crt_crt0_dir / 'mcu'
 kernel_crt_crt0_mcu_st_dir = kernel_crt_crt0_mcu_dir / 'st'
 kernel_crt_crt0_mcu_st_stm32_dir = kernel_crt_crt0_mcu_st_dir / 'stm32'
@@ -89,10 +90,10 @@ else
 		dependencies: [libmettle],
 		sources: [
 			unit_tests_dir / 'mettle.cc',
-			unit_tests_dir / kernel_crt_crt0_mcu_st_stm32_stm32l432kc_dir / 'LinkerAppInitArrayTest.cc',
-			unit_tests_dir / kernel_crt_crt0_mcu_st_stm32_stm32l432kc_dir / 'LinkerAppFiniArrayTest.cc',
-			unit_tests_dir / kernel_crt_crt0_mcu_st_stm32_stm32l432kc_dir / 'LinkerKernelInitArrayTest.cc',
-			unit_tests_dir / kernel_crt_crt0_mcu_st_stm32_stm32l432kc_dir / 'LinkerKernelFiniArrayTest.cc'
+			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerAppInitArrayTest.cc',
+			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerAppFiniArrayTest.cc',
+			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerKernelInitArrayTest.cc',
+			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerKernelFiniArrayTest.cc'
 		],
 		include_directories: [
 			src_dir

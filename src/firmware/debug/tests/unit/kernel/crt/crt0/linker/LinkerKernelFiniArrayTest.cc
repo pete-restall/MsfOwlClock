@@ -2,13 +2,11 @@
 #include <mettle/suite.hpp>
 #include <mettle/matchers.hpp>
 
-#include "kernel/crt/InitFiniArray.hh"
-#include "kernel/crt/crt0/mcu/st/stm32/stm32l432kc/LinkerKernelFiniArray.hh"
+#include "kernel/crt/crt0/linker/LinkerKernelFiniArray.hh"
 
 using namespace mettle;
 
-using namespace smeg::kernel::crt;
-using namespace smeg::kernel::crt::crt0::mcu::st::stm32::stm32l432kc;
+using namespace smeg::kernel::crt::crt0::linker;
 
 extern "C"
 {
@@ -16,7 +14,7 @@ extern "C"
 	const FiniArrayEntry __linker_code_flash_kernel_finiArray_pastEnd = nullptr;
 }
 
-namespace smeg::tests::unit::kernel::crt::crt0::mcu::st::stm32::stm32l432kc
+namespace smeg::tests::unit::kernel::crt::crt0::linker
 {
 	suite<> linkerKernelFiniArrayTest("LinkerKernelFiniArray Test Suite", [](auto &unit)
 	{
