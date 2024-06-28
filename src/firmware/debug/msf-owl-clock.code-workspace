@@ -20,6 +20,9 @@
 			"-mfpu=fpv4-sp-d16",
 			"-mfloat-abi=hard"
 		],
+		"C_Cpp.default.includePath": [
+			"/usr/local/include"
+		],
 		"files.exclude": {
 			"build/meson/out": "explorerExcludedFiles"
 		}
@@ -48,7 +51,7 @@
 				"label": "Meson Setup (Native)",
 				"group": "build",
 				"type": "shell",
-				"command": "meson setup build/meson/out/stm32l432kc --native-file build/meson/common.ini --native-file build/meson/native.ini",
+				"command": "meson setup build/meson/out/native --native-file build/meson/common.ini --native-file build/meson/native.ini",
 				"options": {
 					"cwd": "${workspaceRoot}"
 				}
@@ -94,6 +97,33 @@
 				"group": "build",
 				"type": "shell",
 				"command": "meson compile -C build/meson/out/stm32l432kc",
+				"options": {
+					"cwd": "${workspaceRoot}"
+				}
+			},
+			{
+				"label": "Meson Test (All)",
+				"group": "build",
+				"type": "shell",
+				"command": "meson test -C build/meson/out/native",
+				"options": {
+					"cwd": "${workspaceRoot}"
+				}
+			},
+			{
+				"label": "Meson Test (Kernel Unit Tests)",
+				"group": "build",
+				"type": "shell",
+				"command": "meson test -C build/meson/out/native kernel_unit_tests",
+				"options": {
+					"cwd": "${workspaceRoot}"
+				}
+			},
+			{
+				"label": "Meson Test (App Unit Tests)",
+				"group": "build",
+				"type": "shell",
+				"command": "meson test -C build/meson/out/native app_unit_tests",
 				"options": {
 					"cwd": "${workspaceRoot}"
 				}

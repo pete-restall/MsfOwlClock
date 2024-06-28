@@ -58,3 +58,5 @@ $ cd build
 $ ninja
 $ sudo ninja install
 ```
+
+It needs to be accessible via `pkg-config`, so make sure `PKG_CONFIG_PATH` has been set accordingly.
