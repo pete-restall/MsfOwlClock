@@ -1,4 +1,5 @@
-#include <mettle.hpp>
+#include <mettle/suite.hpp>
+#include <mettle/matchers.hpp>
 
 using namespace mettle;
 

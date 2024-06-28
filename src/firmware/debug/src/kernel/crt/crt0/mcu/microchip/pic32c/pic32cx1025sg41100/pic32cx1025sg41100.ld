@@ -72,21 +72,21 @@ SECTIONS {
 
 	.sram.data.retained32k.application : {
 		. = ALIGN(4);
-		__linker_sram_data_retained32k_application_start = .;
+		__linker_sram_data_retained32k_app_start = .;
 		* (.data.retained32k .data.retained32k*)
 		. = ALIGN(4);
-		__linker_sram_data_retained32k_application_pastEnd = .;
+		__linker_sram_data_retained32k_app_pastEnd = .;
 	} > SRAM AT> FLASH_TEXT
 
 	.sram.bss.retained32k.application : {
 		. = ALIGN(4);
-		__linker_sram_bss_retained32k_application_start = .;
+		__linker_sram_bss_retained32k_app_start = .;
 		* (.bss.retained32k .bss.retained32k*)
 		. = ALIGN(4);
-		__linker_sram_bss_retained32k_application_pastEnd = .;
+		__linker_sram_bss_retained32k_app_pastEnd = .;
 
 		ASSERT(
-			(__linker_sram_bss_retained32k_application_pastEnd <= ORIGIN(SRAM) + 32K),
+			(__linker_sram_bss_retained32k_app_pastEnd <= ORIGIN(SRAM) + 32K),
 			"The total sizeof(.data.retained32k.*) + sizeof(.bss.retained32k.*) is greater than 32KiB and so exceeds the amount of retained SRAM; if the entire SRAM is to be retained then use of these sections is un-necessary");
 	} > SRAM
 
@@ -121,17 +121,17 @@ SECTIONS {
 
 	.sram.data.application : {
 		. = ALIGN(4);
-		__linker_sram_data_application_start = .;
+		__linker_sram_data_app_start = .;
 		* (.data .data*)
-		__linker_sram_data_application_pastEnd = .;
+		__linker_sram_data_app_pastEnd = .;
 	} > SRAM AT> FLASH_TEXT
 
 	.sram.bss.application : {
 		. = ALIGN(4);
-		__linker_sram_bss_application_start = .;
+		__linker_sram_bss_app_start = .;
 		* (.bss .bss*)
 		. = ALIGN(4);
-		__linker_sram_bss_application_pastEnd = .;
+		__linker_sram_bss_app_pastEnd = .;
 	} > SRAM
 
 	.bsram.bss.kernel : {
@@ -146,10 +146,10 @@ SECTIONS {
 
 	.bsram.bss.application : {
 		. = ALIGN(4);
-		__linker_bsram_bss_application_start = .;
+		__linker_bsram_bss_app_start = .;
 		* (.bss.backup .bss.backup*)
 		. = ALIGN(4);
-		__linker_bsram_bss_application_pastEnd = .;
+		__linker_bsram_bss_app_pastEnd = .;
 	} > BSRAM
 
 	.code.flash.kernel.init_array (READONLY) : {
@@ -219,7 +219,7 @@ SECTIONS {
 		KEEP(*libkernel.a: (.ARM.exidx .ARM.exidx*))
 		__linker_code_flash_shared_exidx_kernel_pastEnd = .;
 		KEEP(* (.ARM.exidx .ARM.exidx*))
-		__linker_code_flash_shared_exidx_application_pastEnd = .;
+		__linker_code_flash_shared_exidx_app_pastEnd = .;
 		__exidx_end = .;
 	} > FLASH_TEXT
 
@@ -230,36 +230,36 @@ SECTIONS {
 
 	.code.flash.application.init_array (READONLY) : {
 		. = ALIGN(4);
-		__linker_code_flash_application_initArray_start = .;
+		__linker_code_flash_app_initArray_start = .;
 		KEEP(* (.init_array))
 		KEEP(* (SORT_BY_INIT_PRIORITY(.init_array*)))
-		__linker_code_flash_application_initArray_pastEnd = .;
+		__linker_code_flash_app_initArray_pastEnd = .;
 	} > FLASH_TEXT
 
 	.code.flash.application.fini_array (READONLY) : {
 		. = ALIGN(4);
-		__linker_code_flash_application_finiArray_start = .;
+		__linker_code_flash_app_finiArray_start = .;
 		KEEP(* (.fini_array))
 		KEEP(* (SORT_BY_INIT_PRIORITY(.fini_array*)))
-		__linker_code_flash_application_finiArray_pastEnd = .;
+		__linker_code_flash_app_finiArray_pastEnd = .;
 
 		ASSERT(
-			(. - __linker_code_flash_application_finiArray_start == 0),
+			(. - __linker_code_flash_app_finiArray_start == 0),
 			"Finalisers are not supported / will not be executed by the firmware");
 	} > FLASH_TEXT
 
 	.code.flash.application.rodata (READONLY) : {
 		. = ALIGN(4);
-		__linker_code_flash_application_rodata_start = .;
+		__linker_code_flash_app_rodata_start = .;
 		* (.rodata .rodata*)
-		__linker_code_flash_application_rodata_pastEnd = .;
+		__linker_code_flash_app_rodata_pastEnd = .;
 	} > FLASH_TEXT
 
 	.code.flash.application.text (READONLY) : {
 		. = ALIGN(4);
-		__linker_code_flash_application_text_start = .;
+		__linker_code_flash_app_text_start = .;
 		* (.text .text*)
-		__linker_code_flash_application_text_pastEnd = .;
+		__linker_code_flash_app_text_pastEnd = .;
 	} > FLASH_TEXT
 
 	.code.flash.initial_stack_pointer (READONLY) : {

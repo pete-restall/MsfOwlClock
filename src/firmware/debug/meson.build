@@ -10,11 +10,21 @@ project(
 		'default_library=static',
 		'prefer_static=true'])
 
-srcdir = 'src'
-libkernel_srcdir = meson.get_external_property('libkernel_srcdir', srcdir / 'kernel')
-libcrt_srcdir = meson.get_external_property('libcrt_srcdir', libkernel_srcdir / 'crt')
-libcrt0_srcdir = meson.get_external_property('libcrt0_srcdir', libcrt_srcdir / 'crt0')
-app_srcdir = meson.get_external_property('app_srcdir', srcdir / 'app')
+kernel_dir = 'kernel'
+kernel_crt_dir = kernel_dir / 'crt'
+kernel_crt_crt0_dir = kernel_crt_dir / 'crt0'
+kernel_crt_crt0_mcu_dir = kernel_crt_crt0_dir / 'mcu'
+kernel_crt_crt0_mcu_st_dir = kernel_crt_crt0_mcu_dir / 'st'
+kernel_crt_crt0_mcu_st_stm32_dir = kernel_crt_crt0_mcu_st_dir / 'stm32'
+kernel_crt_crt0_mcu_st_stm32_stm32l432kc_dir = kernel_crt_crt0_mcu_st_stm32_dir / 'stm32l432kc'
+
+app_dir = 'app'
+
+src_dir = 'src'
+libkernel_srcdir = meson.get_external_property('libkernel_srcdir', src_dir / kernel_dir)
+libcrt_srcdir = meson.get_external_property('libcrt_srcdir', src_dir / kernel_crt_dir)
+libcrt0_srcdir = meson.get_external_property('libcrt0_srcdir', src_dir / kernel_crt_crt0_dir)
+app_srcdir = meson.get_external_property('app_srcdir', src_dir / app_dir)
 
 if meson.is_cross_build()
 	cpp_link_args = ['-nostartfiles']
@@ -46,7 +56,10 @@ if meson.is_cross_build()
 		link_depends: [meson.get_external_property('linker_script', native: false)],
 		link_args: ['-nostartfiles', '-T' + meson.project_source_root() / meson.get_external_property('linker_script', native: false)],
 		sources: [
-			app_srcdir / 'blinky-blinky.cc'])
+			app_srcdir / 'blinky-blinky.cc'],
+		include_directories: [
+			src_dir
+		])
 
 	objcopy = find_program('objcopy').full_path()
 	custom_target(
@@ -64,31 +77,41 @@ if meson.is_cross_build()
 		output: 'msf-owl-clock.bin',
 		depends: [msf_owl_clock_elf],
 		build_by_default: true)
+else
+	mettle = find_program('mettle')
+	libmettle = dependency('mettle')
+
+	unit_tests_dir = 'tests/unit'
+
+	kernel_unit_tests = executable(
+		'kernel_unit_tests',
+		native: true,
+		dependencies: [libmettle],
+		sources: [
+			unit_tests_dir / 'mettle.cc',
+			unit_tests_dir / kernel_crt_crt0_mcu_st_stm32_stm32l432kc_dir / 'LinkerAppInitArrayTest.cc',
+			unit_tests_dir / kernel_crt_crt0_mcu_st_stm32_stm32l432kc_dir / 'LinkerAppFiniArrayTest.cc',
+			unit_tests_dir / kernel_crt_crt0_mcu_st_stm32_stm32l432kc_dir / 'LinkerKernelInitArrayTest.cc',
+			unit_tests_dir / kernel_crt_crt0_mcu_st_stm32_stm32l432kc_dir / 'LinkerKernelFiniArrayTest.cc'
+		],
+		include_directories: [
+			src_dir
+		])
+
+	test('kernel_unit_tests', mettle, args: [kernel_unit_tests])
+
+	app_unit_tests_dir = unit_tests_dir / 'app'
+	app_unit_tests = executable(
+		'app_unit_tests',
+		native: true,
+		dependencies: [libmettle],
+		sources: [
+			unit_tests_dir / 'mettle.cc',
+			app_unit_tests_dir / 'NoddyAppTest.cc'
+		],
+		include_directories: [
+			src_dir
+		])
+
+	test('app_unit_tests', mettle, args: [app_unit_tests])
 endif
-
-mettle = find_program('mettle')
-libmettle = dependency('mettle')
-
-unit_tests_dir = 'tests/unit'
-
-kernel_unit_tests_dir = unit_tests_dir / 'kernel'
-kernel_unit_tests = executable(
-	'kernel_unit_tests',
-	native: true,
-	dependencies: [libmettle],
-	sources: [
-		kernel_unit_tests_dir / 'NoddyKernelTest.cc'
-	])
-
-test('kernel_unit_tests', mettle, args: [kernel_unit_tests])
-
-app_unit_tests_dir = unit_tests_dir / 'app'
-app_unit_tests = executable(
-	'app_unit_tests',
-	native: true,
-	dependencies: [libmettle],
-	sources: [
-		app_unit_tests_dir / 'NoddyAppTest.cc'
-	])
-
-test('app_unit_tests', mettle, args: [app_unit_tests])

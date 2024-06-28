@@ -21,7 +21,8 @@
 			"-mfloat-abi=hard"
 		],
 		"C_Cpp.default.includePath": [
-			"/usr/local/include"
+			"/usr/local/include",
+			"${workspaceRoot}/src"
 		],
 		"files.exclude": {
 			"build/meson/out": "explorerExcludedFiles"
@@ -105,7 +106,7 @@
 				"label": "Meson Test (All)",
 				"group": "build",
 				"type": "shell",
-				"command": "meson test -C build/meson/out/native",
+				"command": "meson test -C build/meson/out/native --print-errorlogs",
 				"options": {
 					"cwd": "${workspaceRoot}"
 				}
@@ -114,7 +115,7 @@
 				"label": "Meson Test (Kernel Unit Tests)",
 				"group": "build",
 				"type": "shell",
-				"command": "meson test -C build/meson/out/native kernel_unit_tests",
+				"command": "meson test -C build/meson/out/native --print-errorlogs kernel_unit_tests",
 				"options": {
 					"cwd": "${workspaceRoot}"
 				}
@@ -123,7 +124,7 @@
 				"label": "Meson Test (App Unit Tests)",
 				"group": "build",
 				"type": "shell",
-				"command": "meson test -C build/meson/out/native app_unit_tests",
+				"command": "meson test -C build/meson/out/native --print-errorlogs app_unit_tests",
 				"options": {
 					"cwd": "${workspaceRoot}"
 				}
