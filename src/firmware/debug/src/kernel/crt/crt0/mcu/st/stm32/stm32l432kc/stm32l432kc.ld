@@ -52,7 +52,16 @@ SECTIONS {
 	.code.options 0x1fff7800 (READONLY) : { __linker_code_options = .; . += 0x10; }
 	.code.reserved.2 0x1fff7810 : { . += 0x87f0; }
 
-	.sram.data.retained16k.kernel (ORIGIN(SRAM) + SRAM1_SIZE_BYTES) : {
+	.sram.stack.kernel (ORIGIN(SRAM) + SRAM1_SIZE_BYTES) : {
+		. = ALIGN(4);
+		__linker_sram_stack_kernel_bottom = .;
+		. += (KERNEL_STACK_SIZE_WORDS - 1) * 4;
+		__linker_sram_stack_kernel_top = .;
+		. += 4;
+		__linker_sram_stack_kernel_pastTop = .;
+	} > SRAM
+
+	.sram.data.retained16k.kernel : {
 		. = ALIGN(4);
 		__linker_sram_data_retained16k_kernel_start = .;
 		*libcrt0.a: (.data.retained16k .data.retained16k*)
@@ -73,18 +82,16 @@ SECTIONS {
 		__linker_sram_bss_retained16k_kernel_pastEnd = .;
 	}
 
-	/* TODO: Kernel stack should probably be in the retained section if the rest of SRAM is switched off */
-
-	.sram.data.retained16k.application : {
+	.sram.data.retained16k.app : {
 		. = ALIGN(4);
 		__linker_sram_data_retained16k_app_start = .;
 		* (.data.retained16k .data.retained16k*)
 		. = ALIGN(4);
 		__linker_sram_data_retained16k_app_pastEnd = .;
 	} AT> FLASH_TEXT
-	__linker_sram_data_retained16k_app_lmaStart = ALIGN(ADDR(.sram.data.retained16k.application), 4);
+	__linker_sram_data_retained16k_app_lmaStart = ALIGN(ADDR(.sram.data.retained16k.app), 4);
 
-	.sram.bss.retained16k.application : {
+	.sram.bss.retained16k.app : {
 		. = ALIGN(4);
 		__linker_sram_bss_retained16k_app_start = .;
 		* (.bss.retained16k .bss.retained16k*)
@@ -117,25 +124,16 @@ SECTIONS {
 		__linker_sram_bss_kernel_pastEnd = .;
 	} > SRAM
 
-	.sram.stack.kernel : {
-		. = ALIGN(4);
-		__linker_sram_stack_kernel_bottom = .;
-		. += (KERNEL_STACK_SIZE_WORDS - 1) * 4;
-		__linker_sram_stack_kernel_top = .;
-		. += 4;
-		__linker_sram_stack_kernel_pastTop = .;
-	} > SRAM
-
-	.sram.data.application : {
+	.sram.data.app : {
 		. = ALIGN(4);
 		__linker_sram_data_app_start = .;
 		* (.data .data*)
 		. = ALIGN(4);
 		__linker_sram_data_app_pastEnd = .;
 	} > SRAM AT> FLASH_TEXT
-	__linker_sram_data_app_lmaStart = ALIGN(ADDR(.sram.data.application), 4);
+	__linker_sram_data_app_lmaStart = ALIGN(ADDR(.sram.data.app), 4);
 
-	.sram.bss.application : {
+	.sram.bss.app : {
 		. = ALIGN(4);
 		__linker_sram_bss_app_start = .;
 		* (.bss .bss*)
@@ -205,12 +203,12 @@ SECTIONS {
 		__exidx_end = .;
 	} > FLASH_TEXT
 
-	.code.flash.application.extab (READONLY) : {
+	.code.flash.app.extab (READONLY) : {
 		. = ALIGN(4);
 		KEEP(* (.ARM.extab .ARM.extab*))
 	} > FLASH_TEXT
 
-	.code.flash.application.init_array (READONLY) : {
+	.code.flash.app.init_array (READONLY) : {
 		. = ALIGN(4);
 		__linker_code_flash_app_initArray_start = .;
 		KEEP(* (.init_array))
@@ -218,7 +216,7 @@ SECTIONS {
 		__linker_code_flash_app_initArray_pastEnd = .;
 	} > FLASH_TEXT
 
-	.code.flash.application.fini_array (READONLY) : {
+	.code.flash.app.fini_array (READONLY) : {
 		. = ALIGN(4);
 		__linker_code_flash_app_finiArray_start = .;
 		KEEP(* (.fini_array))
@@ -230,14 +228,14 @@ SECTIONS {
 			"Finalisers are not supported / will not be executed by the firmware");
 	} > FLASH_TEXT
 
-	.code.flash.application.rodata (READONLY) : {
+	.code.flash.app.rodata (READONLY) : {
 		. = ALIGN(4);
 		__linker_code_flash_app_rodata_start = .;
 		* (.rodata .rodata*)
 		__linker_code_flash_app_rodata_pastEnd = .;
 	} > FLASH_TEXT
 
-	.code.flash.application.text (READONLY) : {
+	.code.flash.app.text (READONLY) : {
 		. = ALIGN(4);
 		__linker_code_flash_app_text_start = .;
 		* (.text .text*)
