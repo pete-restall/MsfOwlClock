@@ -10,8 +10,8 @@ using namespace smeg::kernel::crt::crt0::mcu::st::stm32::stm32l432kc::linker;
 
 extern "C"
 {
-	const std::uint32_t __linker_sram_bss_app_start = 0;
-	const std::uint32_t __linker_sram_bss_app_pastEnd = 0;
+	std::uint32_t __linker_sram_bss_app_start = 0;
+	std::uint32_t __linker_sram_bss_app_pastEnd = 0;
 }
 
 namespace smeg::tests::unit::kernel::crt::crt0::mcu::st::stm32::stm32l432kc::linker

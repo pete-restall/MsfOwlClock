@@ -4,8 +4,8 @@
 
 extern "C"
 {
-	extern const std::uint32_t __linker_sram_bss_app_start;
-	extern const std::uint32_t __linker_sram_bss_app_pastEnd;
+	extern std::uint32_t __linker_sram_bss_app_start;
+	extern std::uint32_t __linker_sram_bss_app_pastEnd;
 }
 
 namespace smeg::kernel::crt::crt0::mcu::st::stm32::stm32l432kc::linker
@@ -13,8 +13,8 @@ namespace smeg::kernel::crt::crt0::mcu::st::stm32::stm32l432kc::linker
 	class LinkerAppSramBss
 	{
 public:
-		consteval const std::uint32_t *begin(void) const { return &__linker_sram_bss_app_start; }
-		consteval const std::uint32_t *end(void) const { return &__linker_sram_bss_app_pastEnd; }
+		consteval std::uint32_t *begin(void) const { return &__linker_sram_bss_app_start; }
+		consteval std::uint32_t *end(void) const { return &__linker_sram_bss_app_pastEnd; }
 	};
 }
 
