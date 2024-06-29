@@ -57,7 +57,8 @@ SECTIONS {
 		. = ALIGN(4);
 		__linker_sram_data_retained32k_kernel_pastEnd = .;
 	} > SRAM AT> FLASH_TEXT
-	__linker_sram_data_retained32k_kernel_lmaStart = ALIGN(ADDR(.sram.data.retained32k.kernel), 4);
+	__linker_sram_data_retained32k_kernel_lmaStart = ALIGN(LOADADDR(.sram.data.retained32k.kernel), 4);
+	__linker_sram_data_retained32k_kernel_lmaPastEnd = __linker_sram_data_retained32k_kernel_lmaStart + (__linker_sram_data_retained32k_kernel_pastEnd - __linker_sram_data_retained32k_kernel_start);
 
 	.sram.bss.retained32k.kernel : {
 		. = ALIGN(4);
@@ -76,7 +77,8 @@ SECTIONS {
 		. = ALIGN(4);
 		__linker_sram_data_retained32k_app_pastEnd = .;
 	} > SRAM AT> FLASH_TEXT
-	__linker_sram_data_retained32k_app_lmaStart = ALIGN(ADDR(.sram.data.retained32k.app), 4);
+	__linker_sram_data_retained32k_app_lmaStart = ALIGN(LOADADDR(.sram.data.retained32k.app), 4);
+	__linker_sram_data_retained32k_app_lmaPastEnd = __linker_sram_data_retained32k_app_lmaStart + (__linker_sram_data_retained32k_app_pastEnd - __linker_sram_data_retained32k_app_start);
 
 	.sram.bss.retained32k.app : {
 		. = ALIGN(4);
@@ -99,7 +101,8 @@ SECTIONS {
 		. = ALIGN(4);
 		__linker_sram_data_kernel_pastEnd = .;
 	} > SRAM AT> FLASH_TEXT
-	__linker_sram_data_kernel_lmaStart = ALIGN(ADDR(.sram.data.kernel), 4);
+	__linker_sram_data_kernel_lmaStart = ALIGN(LOADADDR(.sram.data.kernel), 4);
+	__linker_sram_data_kernel_lmaPastEnd = __linker_sram_data_kernel_lmaStart + (__linker_sram_data_kernel_pastEnd - __linker_sram_data_kernel_start);
 
 	.sram.bss.kernel : {
 		. = ALIGN(4);
@@ -117,7 +120,8 @@ SECTIONS {
 		* (.data .data*)
 		__linker_sram_data_app_pastEnd = .;
 	} > SRAM AT> FLASH_TEXT
-	__linker_sram_data_app_lmaStart = ALIGN(ADDR(.sram.data.app), 4);
+	__linker_sram_data_app_lmaStart = ALIGN(LOADADDR(.sram.data.app), 4);
+	__linker_sram_data_app_lmaPastEnd = __linker_sram_data_app_lmaStart + (__linker_sram_data_app_pastEnd - __linker_sram_data_app_start);
 
 	.sram.bss.app : {
 		. = ALIGN(4);

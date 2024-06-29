@@ -96,8 +96,10 @@ else
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerKernelFiniArrayTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerKernelInitArrayTest.cc',
 			unit_tests_dir / kernel_crt_crt0_mcu_st_stm32_stm32l432kc_linker_dir / 'LinkerAppSramBssTest.cc',
-			unit_tests_dir / kernel_crt_crt0_mcu_st_stm32_stm32l432kc_linker_dir / 'LinkerKernelSramBssTest.cc',
+			unit_tests_dir / kernel_crt_crt0_mcu_st_stm32_stm32l432kc_linker_dir / 'LinkerAppSramDataTest.cc',
 			unit_tests_dir / kernel_crt_crt0_mcu_st_stm32_stm32l432kc_linker_dir / 'LinkerAppSramRetained16kBssTest.cc',
+			unit_tests_dir / kernel_crt_crt0_mcu_st_stm32_stm32l432kc_linker_dir / 'LinkerKernelSramBssTest.cc',
+			unit_tests_dir / kernel_crt_crt0_mcu_st_stm32_stm32l432kc_linker_dir / 'LinkerKernelSramDataTest.cc',
 			unit_tests_dir / kernel_crt_crt0_mcu_st_stm32_stm32l432kc_linker_dir / 'LinkerKernelSramRetained16kBssTest.cc'
 		],
 		include_directories: [
