@@ -91,8 +91,10 @@ else
 		dependencies: [libmettle],
 		sources: [
 			unit_tests_dir / 'mettle.cc',
+			unit_tests_dir / 'NonDeterminism.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerAppFiniArrayTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerAppInitArrayTest.cc',
+			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerBssMemoryMapTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerKernelFiniArrayTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerKernelInitArrayTest.cc',
 			unit_tests_dir / kernel_crt_crt0_mcu_st_stm32_stm32l432kc_linker_dir / 'LinkerAppSramBssTest.cc',

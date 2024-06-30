@@ -26,6 +26,27 @@
 		],
 		"files.exclude": {
 			"build/meson/out": "explorerExcludedFiles"
+		},
+		"files.associations": {
+			"cstdint": "cpp",
+			"ranges": "cpp",
+			"array": "cpp",
+			"memory": "cpp",
+			"ratio": "cpp",
+			"*.tcc": "cpp",
+			"bitset": "cpp",
+			"functional": "cpp",
+			"random": "cpp",
+			"format": "cpp",
+			"istream": "cpp",
+			"new": "cpp",
+			"ostream": "cpp",
+			"span": "cpp",
+			"sstream": "cpp",
+			"streambuf": "cpp",
+			"type_traits": "cpp",
+			"tuple": "cpp",
+			"limits": "cpp"
 		}
 	},
 	"launch": {
