@@ -1,13 +1,14 @@
 #ifndef __SMEG_KERNEL_IINITIALISABLE_HH
 #define __SMEG_KERNEL_IINITIALISABLE_HH
+#include <type_traits>
+
+#include "IConstInitialisable.hh"
+#include "INonConstInitialisable.hh"
 
 namespace smeg::kernel
 {
 	template <class T>
-	concept IInitialisable = requires(const T &obj)
-	{
-		{ obj.initialise() };
-	};
+	concept IInitialisable = INonConstInitialisable<T> || IConstInitialisable<T>;
 }
 
 #endif

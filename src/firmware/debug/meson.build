@@ -92,6 +92,9 @@ else
 		sources: [
 			unit_tests_dir / 'mettle.cc',
 			unit_tests_dir / 'NonDeterminism.cc',
+			unit_tests_dir / kernel_dir / 'ConstInitialisableTest.cc',
+			unit_tests_dir / kernel_dir / 'InitialisableTest.cc',
+			unit_tests_dir / kernel_dir / 'NonConstInitialisableTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerAppFiniArrayTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerAppInitArrayTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerBssMemoryMapTest.cc',
