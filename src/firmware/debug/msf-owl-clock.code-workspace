@@ -46,7 +46,8 @@
 			"streambuf": "cpp",
 			"type_traits": "cpp",
 			"tuple": "cpp",
-			"limits": "cpp"
+			"limits": "cpp",
+			"concepts": "cpp"
 		}
 	},
 	"launch": {
@@ -88,6 +89,15 @@
 				}
 			},
 			{
+				"label": "Meson Clean (Native)",
+				"group": "build",
+				"type": "shell",
+				"command": "meson compile --clean -C build/meson/out/native",
+				"options": {
+					"cwd": "${workspaceRoot}"
+				}
+			},
+			{
 				"label": "Meson Setup (PIC32CX1025SG41100)",
 				"group": "build",
 				"type": "shell",
@@ -106,6 +116,15 @@
 				}
 			},
 			{
+				"label": "Meson Clean (PIC32CX1025SG41100)",
+				"group": "build",
+				"type": "shell",
+				"command": "meson compile --clean -C build/meson/out/pic32cx1025sg41100",
+				"options": {
+					"cwd": "${workspaceRoot}"
+				}
+			},
+			{
 				"label": "Meson Setup (STM32L432KC)",
 				"group": "build",
 				"type": "shell",
@@ -119,6 +138,15 @@
 				"group": "build",
 				"type": "shell",
 				"command": "meson compile -C build/meson/out/stm32l432kc",
+				"options": {
+					"cwd": "${workspaceRoot}"
+				}
+			},
+			{
+				"label": "Meson Clean (STM32L432KC)",
+				"group": "build",
+				"type": "shell",
+				"command": "meson compile --clean -C build/meson/out/stm32l432kc",
 				"options": {
 					"cwd": "${workspaceRoot}"
 				}
