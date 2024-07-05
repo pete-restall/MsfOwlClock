@@ -1,6 +1,6 @@
 #ifndef __SMEG_KERNEL_INONCONSTINITIALISABLE_HH
 #define __SMEG_KERNEL_INONCONSTINITIALISABLE_HH
-#include <type_traits>
+#include <concepts>
 
 namespace smeg::kernel
 {

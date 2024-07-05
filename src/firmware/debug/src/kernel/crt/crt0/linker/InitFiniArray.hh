@@ -3,8 +3,8 @@
 
 namespace smeg::kernel::crt::crt0::linker
 {
-	typedef void (*InitArrayEntry)(void);
-	typedef void (*FiniArrayEntry)(void);
+	typedef void (*InitArrayEntry)(void); // TODO: PROBABLY noexcept TO ENFORCE abort() ON EXCEPTIONS
+	typedef void (*FiniArrayEntry)(void); // TODO: PROBABLY noexcept TO ENFORCE abort() ON EXCEPTIONS
 }
 
 #endif

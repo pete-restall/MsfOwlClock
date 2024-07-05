@@ -9,6 +9,7 @@ namespace smeg::kernel::crt
 	class Entrypoint
 	{
 public:
+		// TODO: ROLL THESE TWO PARAMETERS INTO A SINGLE PARAMETER, SAY, TBootstrapper OR SOMETHING
 		Entrypoint(TLinkerMemoryMap linkerMemoryMap, TResetMcu resetter) noexcept
 		{
 		}

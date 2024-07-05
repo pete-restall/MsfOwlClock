@@ -11,7 +11,7 @@
 namespace smeg::tests::unit
 {
 	template<typename T>
-	std::vector<T> anyVectorOfSize(size_t size);
+	std::vector<T> anyVectorOfSize(typename std::vector<T>::size_type size);
 
 	template<typename T>
 	T anyInClosedRange(T min, T max);
@@ -19,10 +19,19 @@ namespace smeg::tests::unit
 	template<typename T>
 	std::span<T> anyNonEmptySpanIn(std::vector<T> &range);
 
+	template<typename T>
+	std::span<T> anySpanInClosedRangeSize(
+		std::vector<T> &range,
+		typename std::vector<T>::size_type minSize,
+		typename std::vector<T>::size_type maxSize);
+
+	template<typename T>
+	std::span<T> anySpanInClosedRangeSize(std::vector<T> &range, typename std::vector<T>::size_type size);
+
 	extern thread_local std::default_random_engine randomGenerator;
 
 	template<typename T>
-	std::vector<T> anyVectorOfSize(size_t size)
+	std::vector<T> anyVectorOfSize(typename std::vector<T>::size_type size)
 	{
 		std::uniform_int_distribution<T> distribution(
 			std::numeric_limits<T>::min(),
@@ -36,9 +45,24 @@ namespace smeg::tests::unit
 	template<typename T>
 	std::span<T> anyNonEmptySpanIn(std::vector<T> &range)
 	{
-		auto numberOfElements = anyInClosedRange<std::size_t>(1, range.size());
-		auto startIndex = anyInClosedRange<std::size_t>(0, range.size() - numberOfElements - 1);
-		return std::span(range.begin() + startIndex, numberOfElements);
+		return anySpanInClosedRangeSize(range, 1, range.size());
+	}
+
+	template<typename T>
+	std::span<T> anySpanInClosedRangeSize(
+		std::vector<T> &range,
+		typename std::vector<T>::size_type minSize,
+		typename std::vector<T>::size_type maxSize)
+	{
+		auto numberOfElements = anyInClosedRange<typename std::vector<T>::size_type>(minSize, maxSize);
+		return anySpanInClosedRangeSize(range, numberOfElements);
+	}
+
+	template<typename T>
+	std::span<T> anySpanInClosedRangeSize(std::vector<T> &range, typename std::vector<T>::size_type size)
+	{
+		auto startIndex = anyInClosedRange<typename std::vector<T>::size_type>(0, range.size() - size - 1);
+		return std::span(range.begin() + startIndex, size);
 	}
 
 	template<typename T>
