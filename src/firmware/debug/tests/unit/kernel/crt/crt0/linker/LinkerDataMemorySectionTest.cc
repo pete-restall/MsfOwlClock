@@ -33,6 +33,17 @@ namespace smeg::tests::unit::kernel::crt::crt0::linker
 			expect(ram, equal_to(originalRam));
 		});
 
+		unit.test("initialise_calledWhenSectionIsZeroLength_expectWordsInDataSectionAreUnchanged", []()
+		{
+			const auto romData(anyVectorOfSize<std::uint32_t>(100));
+			auto ram(anyVectorOfSize<std::uint32_t>(100));
+			auto originalRam(ram);
+
+			LinkerDataMemorySection dataSection(romData.begin(), romData.begin(), ram.begin());
+			dataSection.initialise();
+			expect(ram, equal_to(originalRam));
+		});
+
 		unit.test("initialise_called_expectWordsInRamDataSectionAreCopiedFromRom", []()
 		{
 			const auto romData(anyVectorOfSize<std::uint32_t>(anyInClosedRange(10, 50)));

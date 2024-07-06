@@ -32,6 +32,16 @@ namespace smeg::tests::unit::kernel::crt::crt0::linker
 			expect(ram, equal_to(originalRam));
 		});
 
+		unit.test("initialise_calledWhenSectionIsZeroLength_expectWordsInBssSectionAreUnchanged", []()
+		{
+			auto ram(anyVectorOfSize<std::uint32_t>(100));
+			auto originalRam(ram);
+
+			LinkerBssMemorySection bssSection(ram.begin(), ram.begin());
+			bssSection.initialise();
+			expect(ram, equal_to(originalRam));
+		});
+
 		unit.test("initialise_called_expectWordsInSectionAreZeroed", []()
 		{
 			auto ram(anyVectorOfSize<std::uint32_t>(100));
