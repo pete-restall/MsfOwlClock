@@ -18,7 +18,7 @@ namespace smeg::tests::unit::kernel::crt::crt0::linker
 {
 	suite<> linkerDataMemorySectionTest("LinkerDataMemorySection Test Suite", [](auto &unit)
 	{
-		unit.test("class_testedAgainstILinkerInitialisableMemoryException_expectTrue", []()
+		unit.test("class_testedAgainstILinkerInitialisableMemoryConcept_expectTrue", []()
 		{
 			expect(ILinkerInitialisableMemorySection<LinkerDataMemorySection<const std::uint32_t *, std::uint32_t *>>, equal_to(true));
 		});

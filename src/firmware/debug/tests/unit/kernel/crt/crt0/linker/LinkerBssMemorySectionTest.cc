@@ -18,7 +18,7 @@ namespace smeg::tests::unit::kernel::crt::crt0::linker
 {
 	suite<> linkerBssMemorySectionTest("LinkerBssMemorySection Test Suite", [](auto &unit)
 	{
-		unit.test("class_testedAgainstILinkerInitialisableMemoryException_expectTrue", []()
+		unit.test("class_testedAgainstILinkerInitialisableMemoryConcept_expectTrue", []()
 		{
 			expect(ILinkerInitialisableMemorySection<LinkerBssMemorySection<std::uint32_t *>>, equal_to(true));
 		});
