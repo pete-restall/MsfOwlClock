@@ -4,6 +4,8 @@
 #include "../../../../../../../ChainedInitialisation.hh"
 #include "../../../../../linker/LinkerBssMemorySection.hh"
 #include "../../../../../linker/LinkerDataMemorySection.hh"
+#include "../../../../../linker/LinkerFiniArraySection.hh"
+#include "../../../../../linker/LinkerInitArraySection.hh"
 
 extern "C"
 {
@@ -24,6 +26,12 @@ extern "C"
 
 	extern const std::uint32_t __linker_sram_retained16k_data_kernel_lmaStart;
 	extern const std::uint32_t __linker_sram_retained16k_data_kernel_lmaPastEnd;
+
+	extern const smeg::kernel::crt::crt0::linker::LinkerInitArrayEntry __linker_code_flash_kernel_initArray_start;
+	extern const smeg::kernel::crt::crt0::linker::LinkerInitArrayEntry __linker_code_flash_kernel_initArray_pastEnd;
+
+	extern const smeg::kernel::crt::crt0::linker::LinkerFiniArrayEntry __linker_code_flash_kernel_finiArray_start;
+	extern const smeg::kernel::crt::crt0::linker::LinkerFiniArrayEntry __linker_code_flash_kernel_finiArray_pastEnd;
 }
 
 namespace smeg::kernel::crt::crt0::mcu::st::stm32::stm32l432kc::linker
@@ -33,9 +41,9 @@ namespace smeg::kernel::crt::crt0::mcu::st::stm32::stm32l432kc::linker
 	class LinkerKernelMemoryMap
 	{
 public:
-		void initialise(void)
+		ChainedInitialisation createInitialiserForRamSections(void) const
 		{
-			ChainedInitialisation initialisers(
+			return ChainedInitialisation(
 				LinkerBssMemorySection(&__linker_sram_bss_kernel_start, &__linker_sram_bss_kernel_pastEnd),
 				LinkerBssMemorySection(&__linker_sram_bss_retained16k_kernel_start, &__linker_sram_bss_retained16k_kernel_pastEnd),
 				LinkerDataMemorySection(
@@ -46,8 +54,12 @@ public:
 					&__linker_sram_retained16k_data_kernel_lmaStart,
 					&__linker_sram_retained16k_data_kernel_lmaPastEnd,
 					&__linker_sram_retained16k_data_kernel_start));
+		}
 
-			initialisers.initialise();
+		ChainedInitialisation createInitialiserForCodeSections(void) const
+		{
+			return ChainedInitialisation(
+				LinkerInitArraySection(&__linker_code_flash_kernel_initArray_start, &__linker_code_flash_kernel_initArray_pastEnd));
 		}
 	};
 }

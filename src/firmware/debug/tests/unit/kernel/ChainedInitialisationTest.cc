@@ -9,6 +9,7 @@
 
 #include "../CallRecorder.hh"
 #include "../NonDeterminism.hh"
+#include "../ViewUtilities.hh"
 #include "InitialisableTestDoubles.hh"
 #include "MockConstInitialisable.hh"
 #include "MockNonConstInitialisable.hh"
@@ -18,13 +19,6 @@ using namespace smeg::kernel;
 
 namespace smeg::tests::unit::kernel
 {
-	template <std::ranges::range TRange>
-	auto toVector(TRange &&range)
-	{
-		auto rangeAsCommon = range | std::views::common;
-		return std::vector(rangeAsCommon.begin(), rangeAsCommon.end());
-	}
-
 	class Fixture
 	{
 private:

@@ -47,7 +47,20 @@
 			"type_traits": "cpp",
 			"tuple": "cpp",
 			"limits": "cpp",
-			"concepts": "cpp"
+			"concepts": "cpp",
+			"deque": "cpp",
+			"string": "cpp",
+			"unordered_map": "cpp",
+			"vector": "cpp",
+			"string_view": "cpp",
+			"initializer_list": "cpp",
+			"regex": "cpp",
+			"atomic": "cpp",
+			"exception": "cpp",
+			"iterator": "cpp",
+			"iosfwd": "cpp",
+			"stdexcept": "cpp",
+			"utility": "cpp"
 		}
 	},
 	"launch": {
