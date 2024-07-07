@@ -92,6 +92,7 @@ else
 		sources: [
 			unit_tests_dir / 'mettle.cc',
 			unit_tests_dir / 'NonDeterminism.cc',
+			unit_tests_dir / kernel_dir / 'ChainedFinalisationTest.cc',
 			unit_tests_dir / kernel_dir / 'ChainedInitialisationTest.cc',
 			unit_tests_dir / kernel_dir / 'ConstInitialisableTest.cc',
 			unit_tests_dir / kernel_dir / 'InitialisableTest.cc',
