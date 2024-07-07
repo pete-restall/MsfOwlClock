@@ -34,21 +34,21 @@ namespace smeg::tests::unit::kernel::crt::crt0::linker
 	{
 		unit.test("class_testedAgainstINonConstFinalisableConcept_expectTrue", []()
 		{
-			std::vector finiArray{&dummyFini};
+			const std::vector finiArray{&dummyFini};
 			LinkerFiniArraySection finiArraySection(finiArray.begin(), finiArray.end());
 			expect(INonConstFinalisable<decltype(finiArraySection)>, equal_to(true));
 		});
 
 		unit.test("constructor_called_expectNoFunctionPointersAreCalled", []()
 		{
-			std::vector finiArray{&mockFini0};
+			const std::vector finiArray{&mockFini0};
 			LinkerFiniArraySection finiArraySection(finiArray.begin(), finiArray.end());
 			expect(mockFini0Calls.count(), equal_to(0));
 		});
 
 		unit.test("finalise_testedAgainstNoExceptConcept_expectTrue", []()
 		{
-			std::vector finiArray{&dummyFini};
+			const std::vector finiArray{&dummyFini};
 			LinkerFiniArraySection finiArraySection(finiArray.begin(), finiArray.end());
 			finiArraySection.finalise();
 			expect(noexcept(finiArraySection.finalise()), equal_to(true));
@@ -56,7 +56,7 @@ namespace smeg::tests::unit::kernel::crt::crt0::linker
 
 		unit.test("finalise_calledWithNoFunctionPointers_expectNoFunctionPointersAreCalled", []()
 		{
-			std::vector finiArray{&mockFini0};
+			const std::vector finiArray{&mockFini0};
 			LinkerFiniArraySection finiArraySection(finiArray.begin(), finiArray.begin());
 			finiArraySection.finalise();
 			expect(mockFini0Calls.count(), equal_to(0));
@@ -64,7 +64,7 @@ namespace smeg::tests::unit::kernel::crt::crt0::linker
 
 		unit.test("finalise_calledWithSingleFunctionPointer_expectFunctionPointerIsCalledOnce", []()
 		{
-			std::vector finiArray{&mockFini0};
+			const std::vector finiArray{&mockFini0};
 			LinkerFiniArraySection finiArraySection(finiArray.begin(), finiArray.end());
 			finiArraySection.finalise();
 			expect(mockFini0Calls.count(), equal_to(1));
@@ -72,7 +72,7 @@ namespace smeg::tests::unit::kernel::crt::crt0::linker
 
 		unit.test("finalise_calledWithMultipleFunctionPointers_expectAllFunctionPointersAreCalledOnce", []()
 		{
-			std::vector finiArray{&mockFini0, &mockFini1, &mockFini2};
+			const std::vector finiArray{&mockFini0, &mockFini1, &mockFini2};
 			LinkerFiniArraySection finiArraySection(finiArray.begin(), finiArray.end());
 			finiArraySection.finalise();
 
@@ -83,7 +83,7 @@ namespace smeg::tests::unit::kernel::crt::crt0::linker
 
 		unit.test("finalise_calledWithMultipleFunctionPointers_expectAllFunctionPointersAreCalledInReverseOrder", []()
 		{
-			std::vector finiArray{&mockFini0, &mockFini1, &mockFini2};
+			const std::vector finiArray{&mockFini0, &mockFini1, &mockFini2};
 			LinkerFiniArraySection finiArraySection(finiArray.begin(), finiArray.end());
 			finiArraySection.finalise();
 
@@ -94,6 +94,15 @@ namespace smeg::tests::unit::kernel::crt::crt0::linker
 			};
 			expect(callsToFinis[2], all(less(callsToFinis[1])));
 			expect(callsToFinis[1], all(less(callsToFinis[0])));
+		});
+
+		unit.test("finalise_calledMoreThanOnce_expectFunctionPointersAreCalledEachTime", []()
+		{
+			const std::vector finiArray{&mockFini0};
+			LinkerFiniArraySection finiArraySection(finiArray.begin(), finiArray.end());
+			finiArraySection.finalise();
+			finiArraySection.finalise();
+			expect(mockFini0Calls.count(), equal_to(2));
 		});
 	});
 }

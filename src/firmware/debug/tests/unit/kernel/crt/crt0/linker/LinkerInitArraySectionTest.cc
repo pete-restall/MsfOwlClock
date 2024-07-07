@@ -34,21 +34,21 @@ namespace smeg::tests::unit::kernel::crt::crt0::linker
 	{
 		unit.test("class_testedAgainstINonConstInitialisableConcept_expectTrue", []()
 		{
-			std::vector initArray{&dummyInit};
+			const std::vector initArray{&dummyInit};
 			LinkerInitArraySection initArraySection(initArray.begin(), initArray.end());
 			expect(INonConstInitialisable<decltype(initArraySection)>, equal_to(true));
 		});
 
 		unit.test("constructor_called_expectNoFunctionPointersAreCalled", []()
 		{
-			std::vector initArray{&mockInit0};
+			const std::vector initArray{&mockInit0};
 			LinkerInitArraySection initArraySection(initArray.begin(), initArray.end());
 			expect(mockInit0Calls.count(), equal_to(0));
 		});
 
 		unit.test("initialise_testedAgainstNoExceptConcept_expectTrue", []()
 		{
-			std::vector initArray{&dummyInit};
+			const std::vector initArray{&dummyInit};
 			LinkerInitArraySection initArraySection(initArray.begin(), initArray.end());
 			initArraySection.initialise();
 			expect(noexcept(initArraySection.initialise()), equal_to(true));
@@ -56,7 +56,7 @@ namespace smeg::tests::unit::kernel::crt::crt0::linker
 
 		unit.test("initialise_calledWithNoFunctionPointers_expectNoFunctionPointersAreCalled", []()
 		{
-			std::vector initArray{&mockInit0};
+			const std::vector initArray{&mockInit0};
 			LinkerInitArraySection initArraySection(initArray.begin(), initArray.begin());
 			initArraySection.initialise();
 			expect(mockInit0Calls.count(), equal_to(0));
@@ -64,7 +64,7 @@ namespace smeg::tests::unit::kernel::crt::crt0::linker
 
 		unit.test("initialise_calledWithSingleFunctionPointer_expectFunctionPointerIsCalledOnce", []()
 		{
-			std::vector initArray{&mockInit0};
+			const std::vector initArray{&mockInit0};
 			LinkerInitArraySection initArraySection(initArray.begin(), initArray.end());
 			initArraySection.initialise();
 			expect(mockInit0Calls.count(), equal_to(1));
@@ -72,7 +72,7 @@ namespace smeg::tests::unit::kernel::crt::crt0::linker
 
 		unit.test("initialise_calledWithMultipleFunctionPointers_expectAllFunctionPointersAreCalledOnce", []()
 		{
-			std::vector initArray{&mockInit0, &mockInit1, &mockInit2};
+			const std::vector initArray{&mockInit0, &mockInit1, &mockInit2};
 			LinkerInitArraySection initArraySection(initArray.begin(), initArray.end());
 			initArraySection.initialise();
 
@@ -83,7 +83,7 @@ namespace smeg::tests::unit::kernel::crt::crt0::linker
 
 		unit.test("initialise_calledWithMultipleFunctionPointers_expectAllFunctionPointersAreCalledInOrder", []()
 		{
-			std::vector initArray{&mockInit0, &mockInit1, &mockInit2};
+			const std::vector initArray{&mockInit0, &mockInit1, &mockInit2};
 			LinkerInitArraySection initArraySection(initArray.begin(), initArray.end());
 			initArraySection.initialise();
 
@@ -94,6 +94,15 @@ namespace smeg::tests::unit::kernel::crt::crt0::linker
 			};
 			expect(callsToInits[0], all(less(callsToInits[1])));
 			expect(callsToInits[1], all(less(callsToInits[2])));
+		});
+
+		unit.test("initialise_calledMoreThanOnce_expectFunctionPointersAreCalledEachTime", []()
+		{
+			const std::vector initArray{&mockInit0};
+			LinkerInitArraySection initArraySection(initArray.begin(), initArray.end());
+			initArraySection.initialise();
+			initArraySection.initialise();
+			expect(mockInit0Calls.count(), equal_to(2));
 		});
 	});
 }
