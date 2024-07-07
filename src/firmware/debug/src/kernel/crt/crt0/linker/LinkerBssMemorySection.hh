@@ -9,11 +9,11 @@ namespace smeg::kernel::crt::crt0::linker
 	class LinkerBssMemorySection
 	{
 private:
-		TPtr alignedStart;
-		TPtr alignedPastEnd;
+		const TPtr alignedStart;
+		const TPtr alignedPastEnd;
 
 public:
-		LinkerBssMemorySection(TPtr start, TPtr pastEnd) :
+		LinkerBssMemorySection(const TPtr start, const TPtr pastEnd) :
 			alignedStart(start),
 			alignedPastEnd(pastEnd)
 		{

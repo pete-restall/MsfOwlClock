@@ -9,12 +9,12 @@ namespace smeg::kernel::crt::crt0::linker
 	class LinkerDataMemorySection
 	{
 private:
-		TRomPtr romAlignedStart;
-		TRomPtr romAlignedPastEnd;
-		TRamPtr ramAlignedStart;
+		const TRomPtr romAlignedStart;
+		const TRomPtr romAlignedPastEnd;
+		const TRamPtr ramAlignedStart;
 
 public:
-		LinkerDataMemorySection(TRomPtr romStart, TRomPtr romPastEnd, TRamPtr ramStart) :
+		LinkerDataMemorySection(const TRomPtr romStart, const TRomPtr romPastEnd, const TRamPtr ramStart) :
 			romAlignedStart(romStart),
 			romAlignedPastEnd(romPastEnd),
 			ramAlignedStart(ramStart)
