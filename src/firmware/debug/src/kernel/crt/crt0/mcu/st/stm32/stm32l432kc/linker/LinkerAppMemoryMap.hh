@@ -1,6 +1,7 @@
 #ifndef __SMEG_KERNEL_CRT_CRT0_MCU_ST_STM32_STM32L432KC_LINKER_LINKERAPPMEMORYMAP_HH
 #define __SMEG_KERNEL_CRT_CRT0_MCU_ST_STM32_STM32L432KC_LINKER_LINKERAPPMEMORYMAP_HH
 #include <cstdint>
+#include "../../../../../../../ChainedFinalisation.hh"
 #include "../../../../../../../ChainedInitialisation.hh"
 #include "../../../../../linker/LinkerBssMemorySection.hh"
 #include "../../../../../linker/LinkerDataMemorySection.hh"
@@ -60,6 +61,12 @@ public:
 		{
 			return ChainedInitialisation(
 				LinkerInitArraySection(&__linker_code_flash_app_initArray_start, &__linker_code_flash_app_initArray_pastEnd));
+		}
+
+		ChainedFinalisation createFinaliserForCodeSections(void) const
+		{
+			return ChainedFinalisation(
+				LinkerFiniArraySection(&__linker_code_flash_app_finiArray_start, &__linker_code_flash_app_finiArray_pastEnd));
 		}
 	};
 }
