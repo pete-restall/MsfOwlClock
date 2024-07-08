@@ -358,11 +358,20 @@ SECTIONS {
 	.ARM.attributes 0 (READONLY) : { KEEP(* (.ARM.attributes)) }
 	.comment 0 (READONLY) : { KEEP(* (.comment)) }
 	.debug_abbrev 0 (READONLY) : { KEEP(* (.debug_abbrev)) }
+	.debug_rnglists 0 (READONLY) : { KEEP(* (.debug_rnglists)) }
 	.debug_aranges 0 (READONLY) : { KEEP(* (.debug_aranges)) }
 	.debug_frame 0 (READONLY) : { KEEP(* (.debug_frame)) }
 	.debug_info 0 (READONLY) : { KEEP(* (.debug_info)) }
 	.debug_line 0 (READONLY) : { KEEP(* (.debug_line)) }
+	.debug_line_str 0 (READONLY) : { KEEP(* (.debug_line_str)) }
 	.debug_str 0 (READONLY) : { KEEP(* (.debug_str)) }
 
-	/DISCARD/ : { * (*) }
+	.unsupported.pic 0 : {
+		* (.got* .plt*)
+		ASSERT(
+			SIZEOF(.unsupported.pic) == 0,
+			"Turn off Position-Independent Code generation; some types of relocations are not supported / do not work correctly and will silently fail.  This produces subtly incorrect binaries");
+	}
+
+	/DISCARD/ : { * (.discard*) }
 }

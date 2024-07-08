@@ -1,3 +1,4 @@
+#if false
 // TODO: THIS FILE WILL DIE ONCE THE COMPONENT PARTS HAVE MIGRATED AWAY FROM IT...
 #include <algorithm>
 #include <cstdint>
@@ -156,16 +157,6 @@ extern "C"
 	}
 };
 
-extern "C"
-{
-	void *__dso_handle(nullptr);
-	void *sbrk(void) { return reinterpret_cast<void *>(-1); }
-
-// exit() calls __call_exitprocs and then _exit(); we need to trap __call_exitprocs() to only destroy application-created stuff methinks, so the kernel can continue running to shutdown properly.  Although should be fine if not using global objects, so maybe just provide a hook for it so it's not hidden away ?
-// Can't override __call_exitprocs (unless we __wrap it), so maybe just making sure the kernel uses no statics is sufficient...
-// Overriding exit() is also not possible as it's not weak.  However, __call_exitprocs() is weak if picolibc is built with '_LITE_EXIT'.  Investigate at some point...
-}
-
 static int __xxx = 0;
 
 class Xxx
@@ -228,3 +219,4 @@ volatile int Zzz::z;
 static Xxx xxx;
 static Yyy yyy;
 static Zzz zzz;
+#endif

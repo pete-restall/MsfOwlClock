@@ -5,15 +5,15 @@
 
 namespace smeg::kernel::crt::crt0::mcu::st::stm32::stm32l432kc::linker
 {
-	class LinkerMemoryMap // TODO: This could (should ?) be made into a template (ILinkerMemoryMap constraint) to avoid un-necessary code in the MCU-specific library; the MCU-specific library should be as lightweight as possible to make it quick / easy to add new MCUs, plus the bootstrapping stuff is largely untestable without an emulator or manual tests
+	class LinkerMemoryMap
 	{
 public:
-		LinkerKernelMemoryMap createLinkerMemoryMapForKernel(void) const
+		LinkerKernelMemoryMap getLinkerMemoryMapForKernel(void) const
 		{
 			return LinkerKernelMemoryMap();
 		}
 
-		LinkerAppMemoryMap createLinkerMemoryMapForApp(void) const
+		LinkerAppMemoryMap getLinkerMemoryMapForApp(void) const
 		{
 			return LinkerAppMemoryMap();
 		}

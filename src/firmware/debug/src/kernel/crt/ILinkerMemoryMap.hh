@@ -8,8 +8,8 @@ namespace smeg::kernel::crt
 	template <class T>
 	concept ILinkerMemoryMap = requires(const T &map)
 	{
-		{ map.createLinkerMemoryMapForKernel() } -> ILinkerKernelMemoryMap;
-		{ map.createLinkerMemoryMapForApp() } -> ILinkerAppMemoryMap;
+		{ map.getLinkerMemoryMapForKernel() } -> ILinkerKernelMemoryMap;
+		{ map.getLinkerMemoryMapForApp() } -> ILinkerAppMemoryMap;
 	};
 }
 

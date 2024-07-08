@@ -69,7 +69,7 @@ SECTIONS {
 		*libkernel.a: (.data.retained16k .data.retained16k*)
 		. = ALIGN(4);
 		__linker_sram_data_retained16k_kernel_pastEnd = .;
-	} AT> FLASH_TEXT
+	} > SRAM AT> FLASH_TEXT
 	__linker_sram_data_retained16k_kernel_lmaStart = ALIGN(LOADADDR(.sram.data.retained16k.kernel), 4);
 	__linker_sram_data_retained16k_kernel_lmaPastEnd = __linker_sram_data_retained16k_kernel_lmaStart + (__linker_sram_data_retained16k_kernel_pastEnd - __linker_sram_data_retained16k_kernel_start);
 
@@ -81,7 +81,7 @@ SECTIONS {
 		*libkernel.a: (.bss.retained16k .bss.retained16k*)
 		. = ALIGN(4);
 		__linker_sram_bss_retained16k_kernel_pastEnd = .;
-	}
+	} > SRAM
 
 	.sram.data.retained16k.app : {
 		. = ALIGN(4);
@@ -89,7 +89,7 @@ SECTIONS {
 		* (.data.retained16k .data.retained16k*)
 		. = ALIGN(4);
 		__linker_sram_data_retained16k_app_pastEnd = .;
-	} AT> FLASH_TEXT
+	} > SRAM AT> FLASH_TEXT
 	__linker_sram_data_retained16k_app_lmaStart = ALIGN(LOADADDR(.sram.data.retained16k.app), 4);
 	__linker_sram_data_retained16k_app_lmaPastEnd = __linker_sram_data_retained16k_app_lmaStart + (__linker_sram_data_retained16k_app_pastEnd - __linker_sram_data_retained16k_app_start);
 
@@ -103,7 +103,7 @@ SECTIONS {
 		ASSERT(
 			(__linker_sram_bss_retained16k_app_pastEnd <= ORIGIN(SRAM) + SRAM1_SIZE_BYTES + 16K),
 			"The total sizeof(.data.retained16k.*) + sizeof(.bss.retained16k.*) is greater than 16KiB and so exceeds the amount of retained SRAM2; if the entire SRAM is to be retained then use of these sections is un-necessary");
-	}
+	} > SRAM
 
 	.sram.data.kernel ORIGIN(SRAM) : {
 		. = ALIGN(4);
@@ -346,11 +346,20 @@ SECTIONS {
 	.ARM.attributes 0 (READONLY) : { KEEP(* (.ARM.attributes)) }
 	.comment 0 (READONLY) : { KEEP(* (.comment)) }
 	.debug_abbrev 0 (READONLY) : { KEEP(* (.debug_abbrev)) }
+	.debug_rnglists 0 (READONLY) : { KEEP(* (.debug_rnglists)) }
 	.debug_aranges 0 (READONLY) : { KEEP(* (.debug_aranges)) }
 	.debug_frame 0 (READONLY) : { KEEP(* (.debug_frame)) }
 	.debug_info 0 (READONLY) : { KEEP(* (.debug_info)) }
 	.debug_line 0 (READONLY) : { KEEP(* (.debug_line)) }
+	.debug_line_str 0 (READONLY) : { KEEP(* (.debug_line_str)) }
 	.debug_str 0 (READONLY) : { KEEP(* (.debug_str)) }
 
-	/DISCARD/ : { * (*) }
+	.unsupported.pic 0 : {
+		* (.got* .plt*)
+		ASSERT(
+			SIZEOF(.unsupported.pic) == 0,
+			"Turn off Position-Independent Code generation; some types of relocations are not supported / do not work correctly and will silently fail.  This produces subtly incorrect binaries");
+	}
+
+	/DISCARD/ : { * (.discard*) }
 }
