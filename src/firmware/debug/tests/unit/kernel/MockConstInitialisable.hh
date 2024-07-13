@@ -7,10 +7,10 @@ namespace smeg::tests::unit::kernel
 {
 	class MockConstInitialisable
 	{
-private:
+	private:
 		std::shared_ptr<CallRecorder<>> initialiseCalls;
 
-public:
+	public:
 		MockConstInitialisable(std::shared_ptr<CallRecorder<>> initialiseCallRecorder) :
 			initialiseCalls(initialiseCallRecorder)
 		{

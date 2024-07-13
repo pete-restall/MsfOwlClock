@@ -8,12 +8,12 @@ namespace smeg::kernel::crt::crt0::linker
 	template<std::input_iterator TRomPtr, std::output_iterator<std::uint32_t> TRamPtr>
 	class LinkerDataMemorySection
 	{
-private:
+	private:
 		const TRomPtr romAlignedStart;
 		const TRomPtr romAlignedPastEnd;
 		const TRamPtr ramAlignedStart;
 
-public:
+	public:
 		LinkerDataMemorySection(const TRomPtr romStart, const TRomPtr romPastEnd, const TRamPtr ramStart) :
 			romAlignedStart(romStart),
 			romAlignedPastEnd(romPastEnd),

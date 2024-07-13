@@ -10,38 +10,38 @@ namespace smeg::tests::unit::kernel
 {
 	class ShouldNotBeConstInitialisable
 	{
-public:
+	public:
 		void initialise(void) { }
 	};
 
 	class ShouldBeConstInitialisable
 	{
-public:
+	public:
 		void initialise(void) const { }
 	};
 
 	class ShouldBeBothConstAndNonConstInitialisable
 	{
-public:
+	public:
 		void initialise(void) { }
 		void initialise(void) const { }
 	};
 
 	class ProtectedShouldNotBeInitialisable
 	{
-protected:
+	protected:
 		void initialise(void) const { }
 	};
 
 	class WithArgumentsShouldNotBeInitialisable
 	{
-public:
+	public:
 		void initialise([[maybe_unused]] int _) const { }
 	};
 
 	class NonVoidReturnShouldNotBeInitialisable
 	{
-public:
+	public:
 		int initialise(void) const { return 0; }
 	};
 

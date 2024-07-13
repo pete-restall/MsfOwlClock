@@ -7,7 +7,7 @@ namespace smeg::kernel::crt::crt0::mcu::st::stm32::stm32l432kc
 {
 	class Crt0Environment
 	{
-public:
+	public:
 		auto getLinkerMemoryMap(void) const
 		{
 			return linker::LinkerMemoryMap();

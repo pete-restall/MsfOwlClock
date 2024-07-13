@@ -21,12 +21,12 @@ namespace smeg::tests::unit::kernel
 {
 	class Fixture
 	{
-private:
+	private:
 		typedef CallRecorder<>::CallCountInt CallCountInt;
 		std::atomic<CallCountInt> callSequence;
 		FinalisableTestDoubles finalisableTestDoubles;
 
-public:
+	public:
 		Fixture() :
 			callSequence(0),
 			finalisableTestDoubles(this->callSequence)

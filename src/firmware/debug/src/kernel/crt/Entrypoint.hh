@@ -9,10 +9,10 @@ namespace smeg::kernel::crt
 	template <ICrt0Environment TCrt0Environment>
 	class Entrypoint
 	{
-private:
+	private:
 		TCrt0Environment environment;
 
-public:
+	public:
 		Entrypoint(TCrt0Environment crt0Environment) noexcept :
 			environment(crt0Environment)
 		{

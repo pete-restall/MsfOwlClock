@@ -6,12 +6,12 @@ namespace smeg::kernel::crt::crt0::mcu::st::stm32::stm32l432kc
 {
 	class Isrs
 	{
-private:
+	private:
 		static void defaultIsr(void) noexcept;
 		static void reservedIsr(void) noexcept;
 		static void unavailableIsr(void) noexcept;
 
-public:
+	public:
 		static void wwdg(void) noexcept;
 		static void pvdPvm(void) noexcept;
 		static void rtcTampCssLse(void) noexcept;

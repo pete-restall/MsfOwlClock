@@ -8,11 +8,11 @@ namespace smeg::kernel::crt::crt0::linker
 	template<std::output_iterator<std::uint32_t> TPtr>
 	class LinkerBssMemorySection
 	{
-private:
+	private:
 		const TPtr alignedStart;
 		const TPtr alignedPastEnd;
 
-public:
+	public:
 		LinkerBssMemorySection(const TPtr start, const TPtr pastEnd) :
 			alignedStart(start),
 			alignedPastEnd(pastEnd)

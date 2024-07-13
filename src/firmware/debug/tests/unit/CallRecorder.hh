@@ -12,11 +12,11 @@ namespace smeg::tests::unit
 	{
 		public: typedef std::vector<int>::size_type CallCountInt;
 
-private:
+	private:
 		std::atomic<CallCountInt> &callSequence;
 		std::vector<std::tuple<CallCountInt, TArgs...>> calls;
 
-public:
+	public:
 		CallRecorder(std::atomic<CallCountInt> &callSequenceCounter) noexcept :
 			callSequence(callSequenceCounter),
 			calls(std::vector<std::tuple<CallCountInt, TArgs...>>())

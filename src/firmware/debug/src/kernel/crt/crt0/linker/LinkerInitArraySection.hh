@@ -16,11 +16,11 @@ namespace smeg::kernel::crt::crt0::linker
 	template<ILinkerInitArrayEntryIterator TPtr>
 	class LinkerInitArraySection
 	{
-private:
+	private:
 		const TPtr alignedStart;
 		const TPtr alignedPastEnd;
 
-public:
+	public:
 		LinkerInitArraySection(const TPtr start, const TPtr pastEnd) :
 			alignedStart(start),
 			alignedPastEnd(pastEnd)

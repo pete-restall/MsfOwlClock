@@ -9,11 +9,11 @@ namespace smeg::kernel::crt::crt0::mcu::arm::cortex::m4
 {
 	class Isrs
 	{
-private:
+	private:
 		static void defaultIsr(void) noexcept;
 		static void reservedIsr(void) noexcept;
 
-public:
+	public:
 		static void nmi(void) noexcept;
 		static void hardFault(void) noexcept;
 		static void memManage(void) noexcept;

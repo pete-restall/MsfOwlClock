@@ -7,7 +7,7 @@ namespace smeg::kernel::crt::crt0::mcu::st::stm32::stm32l432kc::linker
 {
 	class LinkerMemoryMap
 	{
-public:
+	public:
 		LinkerKernelMemoryMap getLinkerMemoryMapForKernel(void) const
 		{
 			return LinkerKernelMemoryMap();

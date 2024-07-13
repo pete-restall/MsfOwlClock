@@ -41,7 +41,7 @@ namespace smeg::kernel::crt::crt0::mcu::st::stm32::stm32l432kc::linker
 
 	class LinkerAppMemoryMap
 	{
-public:
+	public:
 		auto getInitialiserForRamSections(void) const
 		{
 			return ChainedInitialisation(

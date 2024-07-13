@@ -7,10 +7,10 @@ namespace smeg::tests::unit::kernel
 {
 	class MockConstFinalisable
 	{
-private:
+	private:
 		std::shared_ptr<CallRecorder<>> finaliseCalls;
 
-public:
+	public:
 		MockConstFinalisable(std::shared_ptr<CallRecorder<>> finaliseCallRecorder) :
 			finaliseCalls(finaliseCallRecorder)
 		{
