@@ -60,3 +60,18 @@ $ sudo ninja install
 ```
 
 It needs to be accessible via `pkg-config`, so make sure `PKG_CONFIG_PATH` has been set accordingly.
+
+---
+
+Spent a fruitless few days trying to convert the headers into modules but the toolchain support isn't quite there yet so reverted.  Learnings / problems not solved:
+* Simply using `-std=c++23` is not enough, compilation and linking also requires `-fmodules-ts`.
+* Ninja can't figure out the dependencies and ordering (note - required GCC flag `-fdeps-format=p1689r5`, from GCC 14 onwards, prevents the `inputs may not also have inputs` error) and so the build has to be run several times in succession to get them all built.
+* Cryptic or opaque errors when dependencies were missing.
+* Visibility and reachability doesn't seem to be correct in the GCC implementation - in fact this is one area that the GCC release notes point out as incomplete.
+* Problems with concepts; the header-based concept constraints on template parameters seem to work, but when converted to modules, they do not (GCC complains about such things as `T` not conforming to `destructible` when constraining against `input_iterator`, but `destructible` does not appear to be a sub-constraint of `input_iterator` according to cppreference.com).
+* System headers need to be specially built upfront prior to using them, which is also difficult to work into Meson.  Basically the following needs to be run (the list of headers):
+```
+$ pushd build/meson/out/stm32l432kc
+$ /opt/arm/local/cortex-m4f/bin/arm-none-eabi-g++ -std=c++23 -fno-rtti -O2 -g -fmodules-ts -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -xc++-system-header algorithm cstdint concepts iterator tuple -c
+$ popd
+```

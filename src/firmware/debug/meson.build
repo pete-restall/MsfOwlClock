@@ -27,6 +27,9 @@ kernel_crt_picolibc_dir = kernel_crt_dir / 'picolibc'
 
 app_dir = 'app'
 
+extra_cpp_args = [] + meson.get_external_property('mcu_cpp_args', [])
+add_global_arguments(extra_cpp_args, language: 'cpp')
+
 if meson.is_cross_build()
 	cpp_link_args = ['-nostartfiles']
 
