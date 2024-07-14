@@ -56,6 +56,12 @@ if meson.is_cross_build()
 		pic: false,
 		sources: meson.get_external_property('libcrt0_mcu_srcfiles', native: false))
 
+	# TODO: We really need to create something self-contained for the kernel, with all of the libgcc / libc++ support code.  Otherwise we cannot
+	# separate the kernel's .init from the app's .init, and also a bootloader would not function because some of the libc++ code the kernel depended
+	# upon could be in the app.  Something like a relocatable object file for the kernel ought to work, but the linker scripts will need rewriting to
+	# use 'libsmeg.o: * ( .text* )' style rules to ensure the kernel is placed correctly.  Creating a relocatable object file with the custom toolchain
+	# that contains everything the kernel needs ought to be as simple as 'g++ -Wl,-r libcrt0.a libcrt.a libkernel.a -o libsmeg.o'
+
 	msf_owl_clock_elf = executable(
 		'msf-owl-clock.elf',
 		native: false,
