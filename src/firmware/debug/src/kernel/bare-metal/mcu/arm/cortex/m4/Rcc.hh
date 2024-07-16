@@ -1,9 +1,9 @@
-#ifndef __SMEG_KERNEL_BAREMETAL_MCU_ST_STM32_STM32L432KC_RCC_HH
-#define __SMEG_KERNEL_BAREMETAL_MCU_ST_STM32_STM32L432KC_RCC_HH
+#ifndef __SMEG_KERNEL_BAREMETAL_MCU_ARM_CORTEX_M4_RCC_HH
+#define __SMEG_KERNEL_BAREMETAL_MCU_ARM_CORTEX_M4_RCC_HH
 #include <type_traits>
 #include "../../../../Register.hh"
 
-namespace smeg::kernel::bare_metal::mcu::st::stm32::stm32l432kc
+namespace smeg::kernel::bare_metal::mcu::arm::cortex::m4
 {
 	struct Rcc
 	{
@@ -12,37 +12,37 @@ namespace smeg::kernel::bare_metal::mcu::st::stm32::stm32l432kc
 		RegisterU32 CFGR;
 		RegisterU32 PLLCFGR;
 		RegisterU32 PLLSAI1CFGR;
-		RegisterU32 _reserved14;
+		RegisterU32 _reserved_14;
 		RegisterU32 CIER;
 		RegisterU32 CIFR;
 		RegisterU32 CICR;
-		RegisterU32 _reserved24;
+		RegisterU32 _reserved_24;
 		RegisterU32 AHB1RSTR;
 		RegisterU32 AHB2RSTR;
 		RegisterU32 AHB3RSTR;
-		RegisterU32 _reserved34;
+		RegisterU32 _reserved_34;
 		RegisterU32 APB1RSTR1;
 		RegisterU32 APB1RSTR2;
 		RegisterU32 APB2RSTR;
-		RegisterU32 _reserved44;
+		RegisterU32 _reserved_44;
 		RegisterU32 AHB1ENR;
 		RegisterU32 AHB2ENR;
 		RegisterU32 AHB3ENR;
-		RegisterU32 _reserved54;
+		RegisterU32 _reserved_54;
 		RegisterU32 APB1ENR1;
 		RegisterU32 APB1ENR2;
 		RegisterU32 APB2ENR;
-		RegisterU32 _reserved64;
+		RegisterU32 _reserved_64;
 		RegisterU32 AHB1SMENR;
 		RegisterU32 AHB2SMENR;
 		RegisterU32 AHB3SMENR;
-		RegisterU32 _reserved74;
+		RegisterU32 _reserved_74;
 		RegisterU32 APB1SMENR1;
 		RegisterU32 APB1SMENR2;
 		RegisterU32 APB2SMENR;
-		RegisterU32 _reserved84;
+		RegisterU32 _reserved_84;
 		RegisterU32 CCIPR;
-		RegisterU32 _reserved8c;
+		RegisterU32 _reserved_8c;
 		RegisterU32 BDCR;
 		RegisterU32 CSR;
 		RegisterU32 CRRCR;
