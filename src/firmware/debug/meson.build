@@ -15,6 +15,7 @@ tests_dir = 'tests'
 unit_tests_dir = tests_dir / 'unit'
 
 kernel_dir = 'kernel'
+kernel_baremetal_dir = kernel_dir / 'bare-metal'
 kernel_crt_dir = kernel_dir / 'crt'
 kernel_crt_crt0_dir = kernel_crt_dir / 'crt0'
 kernel_crt_crt0_linker_dir = kernel_crt_crt0_dir / 'linker'
@@ -107,6 +108,7 @@ else
 			unit_tests_dir / kernel_dir / 'ConstInitialisableTest.cc',
 			unit_tests_dir / kernel_dir / 'InitialisableTest.cc',
 			unit_tests_dir / kernel_dir / 'NonConstInitialisableTest.cc',
+			unit_tests_dir / kernel_baremetal_dir / 'OffsetIntegerSequenceTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerBssMemorySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerDataMemorySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerFiniArraySectionTest.cc',
