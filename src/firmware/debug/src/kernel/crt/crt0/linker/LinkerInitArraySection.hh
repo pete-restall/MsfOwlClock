@@ -8,12 +8,12 @@ namespace smeg::kernel::crt::crt0::linker
 {
 	typedef void (*LinkerInitArrayEntry)(void) noexcept;
 
-	template<typename TPtr>
+	template <typename TPtr>
 	concept ILinkerInitArrayEntryIterator =
 		std::input_iterator<TPtr> &&
 		std::is_same_v<std::iter_value_t<TPtr>, LinkerInitArrayEntry>;
 
-	template<ILinkerInitArrayEntryIterator TPtr>
+	template <ILinkerInitArrayEntryIterator TPtr>
 	class LinkerInitArraySection
 	{
 	private:

@@ -5,7 +5,7 @@
 
 namespace smeg::kernel::crt::crt0::linker
 {
-	template<std::input_iterator TRomPtr, std::output_iterator<std::uint32_t> TRamPtr>
+	template <std::input_iterator TRomPtr, std::output_iterator<std::uint32_t> TRamPtr>
 	class LinkerDataMemorySection
 	{
 	private:

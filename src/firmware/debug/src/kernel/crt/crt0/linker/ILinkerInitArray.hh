@@ -4,7 +4,7 @@
 
 namespace smeg::kernel::crt::crt0::linker
 {
-	template<typename T>
+	template <typename T>
 	concept ILinkerInitArray = INonConstInitialisable<T>;
 }
 

@@ -5,7 +5,7 @@
 
 namespace smeg::kernel::crt::crt0::linker
 {
-	template<std::output_iterator<std::uint32_t> TPtr>
+	template <std::output_iterator<std::uint32_t> TPtr>
 	class LinkerBssMemorySection
 	{
 	private:
