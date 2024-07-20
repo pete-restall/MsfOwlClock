@@ -31,6 +31,8 @@ app_dir = 'app'
 extra_cpp_args = [] + meson.get_external_property('mcu_cpp_args', [])
 add_global_arguments(extra_cpp_args, language: 'cpp')
 
+# TODO: Disable the 'noexcept' warnings for the tests, otherwise std::abort() is called on failure and that doesn't allow source / line numbers, etc.
+
 if meson.is_cross_build()
 	cpp_link_args = ['-nostartfiles']
 
@@ -108,6 +110,7 @@ else
 			unit_tests_dir / kernel_dir / 'ConstInitialisableTest.cc',
 			unit_tests_dir / kernel_dir / 'InitialisableTest.cc',
 			unit_tests_dir / kernel_dir / 'NonConstInitialisableTest.cc',
+			unit_tests_dir / kernel_baremetal_dir / 'BitmaskTest.cc',
 			unit_tests_dir / kernel_baremetal_dir / 'IntegerSequenceTest.cc',
 			unit_tests_dir / kernel_baremetal_dir / 'OffsetIntegerSequenceTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerBssMemorySectionTest.cc',
