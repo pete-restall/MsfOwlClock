@@ -5,13 +5,13 @@
 
 namespace smeg::kernel::bare_metal
 {
-	template <std::integral auto N, typename TSeq>
+	template <std::integral auto Offset, typename TSeq>
 	struct OffsetIntegerSequence;
 
-	template <std::integral auto N, decltype(N)... Ints>
-	struct OffsetIntegerSequence<N, std::integer_sequence<decltype(N), Ints...>>
+	template <std::integral auto Offset, decltype(Offset)... Ints>
+	struct OffsetIntegerSequence<Offset, std::integer_sequence<decltype(Offset), Ints...>>
 	{
-		using Seq = std::integer_sequence<decltype(N), N + Ints...>;
+		using Values = std::integer_sequence<decltype(Offset), Offset + Ints...>;
 	};
 }
 
