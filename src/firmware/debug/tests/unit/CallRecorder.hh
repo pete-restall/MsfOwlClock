@@ -7,10 +7,10 @@
 
 namespace smeg::tests::unit
 {
-	template<typename... TArgs>
+	template <typename... TArgs>
 	class CallRecorder
 	{
-		public: typedef std::vector<int>::size_type CallCountInt;
+		public: using CallCountInt = std::vector<int>::size_type;
 
 	private:
 		std::atomic<CallCountInt> &callSequence;

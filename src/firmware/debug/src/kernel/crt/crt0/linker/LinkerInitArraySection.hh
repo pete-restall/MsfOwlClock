@@ -6,7 +6,7 @@
 
 namespace smeg::kernel::crt::crt0::linker
 {
-	typedef void (*LinkerInitArrayEntry)(void) noexcept;
+	using LinkerInitArrayEntry = void (*)(void) noexcept;
 
 	template <typename TPtr>
 	concept ILinkerInitArrayEntryIterator =

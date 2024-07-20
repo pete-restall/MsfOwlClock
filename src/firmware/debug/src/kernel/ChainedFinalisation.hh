@@ -5,7 +5,7 @@
 
 namespace smeg::kernel
 {
-	template<IFinalisable... TFinalisers>
+	template <IFinalisable... TFinalisers>
 	class ChainedFinalisation
 	{
 	private:

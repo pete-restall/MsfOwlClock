@@ -3,7 +3,7 @@
 
 namespace smeg::kernel::crt::crt0::mcu::arm::cortex::m4
 {
-	typedef void (*const IsrVector)(void) noexcept;
+	using IsrVector = void (*const)(void) noexcept;
 }
 
 #endif

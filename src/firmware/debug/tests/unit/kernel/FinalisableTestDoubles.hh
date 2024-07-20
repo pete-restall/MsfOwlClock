@@ -12,11 +12,11 @@ namespace smeg::tests::unit::kernel
 	class FinalisableTestDoubles
 	{
 	private:
-		typedef CallRecorder<> FinaliseCallRecorder;
-		typedef FinaliseCallRecorder::CallCountInt CallCountInt;
+		using FinaliseCallRecorder = CallRecorder<>;
+		using CallCountInt = FinaliseCallRecorder::CallCountInt;
 		std::atomic<CallCountInt> &callSequence;
 
-		typedef std::shared_ptr<FinaliseCallRecorder> FinaliseCallRecorderPtr;
+		using FinaliseCallRecorderPtr = std::shared_ptr<FinaliseCallRecorder>;
 
 	public:
 		FinalisableTestDoubles(std::atomic<CallCountInt> &callSequenceCounter) :

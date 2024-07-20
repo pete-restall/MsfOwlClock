@@ -2,11 +2,12 @@
 #include <atomic>
 
 #include "../kernel/bare-metal/mcu/st/stm32/stm32l432kc/Gpio.hh"
-#include "../kernel/bare-metal/mcu/st/stm32/stm32l432kc/Rcc.hh"
+#include "../kernel/bare-metal/mcu/arm/cortex/m4/Rcc.hh"
 
+using namespace smeg::kernel::bare_metal::mcu::arm::cortex;
 using namespace smeg::kernel::bare_metal::mcu::st::stm32;
 
-static volatile stm32l432kc::Rcc &rcc(stm32l432kc::__linker_peripherals_ahb1_rcc);
+static volatile m4::Rcc &rcc(m4::__linker_peripherals_ahb1_rcc);
 static volatile stm32l432kc::Gpio &gpioB(stm32l432kc::__linker_peripherals_ahb2_gpioB);
 
 void blinkyBlinky(void)

@@ -10,27 +10,27 @@
 
 namespace smeg::tests::unit
 {
-	template<typename T>
+	template <typename T>
 	std::vector<T> anyVectorOfSize(typename std::vector<T>::size_type size);
 
-	template<typename T>
+	template <typename T>
 	T anyInClosedRange(T min, T max);
 
-	template<typename T>
+	template <typename T>
 	std::span<T> anyNonEmptySpanIn(std::vector<T> &range);
 
-	template<typename T>
+	template <typename T>
 	std::span<T> anySpanInClosedRangeSize(
 		std::vector<T> &range,
 		typename std::vector<T>::size_type minSize,
 		typename std::vector<T>::size_type maxSize);
 
-	template<typename T>
+	template <typename T>
 	std::span<T> anySpanInClosedRangeSize(std::vector<T> &range, typename std::vector<T>::size_type size);
 
 	extern thread_local std::default_random_engine randomGenerator;
 
-	template<typename T>
+	template <typename T>
 	std::vector<T> anyVectorOfSize(typename std::vector<T>::size_type size)
 	{
 		std::uniform_int_distribution<T> distribution(
@@ -42,13 +42,13 @@ namespace smeg::tests::unit
 		return data;
 	}
 
-	template<typename T>
+	template <typename T>
 	std::span<T> anyNonEmptySpanIn(std::vector<T> &range)
 	{
 		return anySpanInClosedRangeSize(range, 1, range.size());
 	}
 
-	template<typename T>
+	template <typename T>
 	std::span<T> anySpanInClosedRangeSize(
 		std::vector<T> &range,
 		typename std::vector<T>::size_type minSize,
@@ -58,14 +58,14 @@ namespace smeg::tests::unit
 		return anySpanInClosedRangeSize(range, numberOfElements);
 	}
 
-	template<typename T>
+	template <typename T>
 	std::span<T> anySpanInClosedRangeSize(std::vector<T> &range, typename std::vector<T>::size_type size)
 	{
 		auto startIndex = anyInClosedRange<typename std::vector<T>::size_type>(0, range.size() - size - 1);
 		return std::span(range.begin() + startIndex, size);
 	}
 
-	template<typename T>
+	template <typename T>
 	T anyInClosedRange(T min, T max)
 	{
 		std::uniform_int_distribution<T> distribution(min, max);

@@ -22,7 +22,7 @@ namespace smeg::tests::unit::kernel
 	class Fixture
 	{
 	private:
-		typedef CallRecorder<>::CallCountInt CallCountInt;
+		using CallCountInt = CallRecorder<>::CallCountInt;
 		std::atomic<CallCountInt> callSequence;
 		InitialisableTestDoubles initialisableTestDoubles;
 

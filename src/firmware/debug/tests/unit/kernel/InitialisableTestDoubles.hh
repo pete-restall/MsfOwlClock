@@ -12,11 +12,11 @@ namespace smeg::tests::unit::kernel
 	class InitialisableTestDoubles
 	{
 	private:
-		typedef CallRecorder<> InitialiseCallRecorder;
-		typedef InitialiseCallRecorder::CallCountInt CallCountInt;
+		using InitialiseCallRecorder = CallRecorder<>;
+		using CallCountInt = InitialiseCallRecorder::CallCountInt;
 		std::atomic<CallCountInt> &callSequence;
 
-		typedef std::shared_ptr<InitialiseCallRecorder> InitialiseCallRecorderPtr;
+		using InitialiseCallRecorderPtr = std::shared_ptr<InitialiseCallRecorder>;
 
 	public:
 		InitialisableTestDoubles(std::atomic<CallCountInt> &callSequenceCounter) :

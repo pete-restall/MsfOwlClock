@@ -4,7 +4,7 @@
 
 namespace smeg::kernel::bare_metal
 {
-	typedef volatile std::atomic_uint32_t RegisterU32;
+	using RegisterU32 = volatile std::atomic_uint32_t;
 }
 
 #endif

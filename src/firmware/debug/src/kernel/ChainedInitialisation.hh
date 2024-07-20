@@ -5,7 +5,7 @@
 
 namespace smeg::kernel
 {
-	template<IInitialisable... TInitialisers>
+	template <IInitialisable... TInitialisers>
 	class ChainedInitialisation
 	{
 	private:
