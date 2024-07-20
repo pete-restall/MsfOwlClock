@@ -34,13 +34,6 @@ namespace smeg::tests::unit::kernel::bare_metal
 			expect(IHaveValuesOf<int, intSeq>, equal_to(true));
 		});
 
-		unit.test("IntegerSequence_testedAgainstIHaveValuesOfConcept_expectTrue", []()
-		{
-			using seq = std::make_integer_sequence<int, 10>;
-			using intSeq = IntegerSequence<seq>;
-			expect(IHaveValuesOf<int, intSeq>, equal_to(true));
-		});
-
 		unit.test("Values_enumeratedWithSequenceLengthOf1_expectSingleEntryOf0", []()
 		{
 			using seq = std::make_integer_sequence<int, 1>;
