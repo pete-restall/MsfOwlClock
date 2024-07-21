@@ -161,9 +161,9 @@ namespace smeg::tests::unit::kernel
 			chain.initialise();
 
 			const std::vector callsToInitialisers{
-				toVector(initialisers[0].callsToConstInitialise().getCallSequences()),
-				toVector(initialisers[1].callsToConstInitialise().getCallSequences()),
-				toVector(initialisers[2].callsToConstInitialise().getCallSequences())
+				asVector(initialisers[0].callsToConstInitialise().getCallSequences()),
+				asVector(initialisers[1].callsToConstInitialise().getCallSequences()),
+				asVector(initialisers[2].callsToConstInitialise().getCallSequences())
 			};
 			expect(callsToInitialisers[0], all(less(callsToInitialisers[1])));
 			expect(callsToInitialisers[1], all(less(callsToInitialisers[2])));
@@ -180,9 +180,9 @@ namespace smeg::tests::unit::kernel
 			chain.initialise();
 
 			const std::vector callsToInitialisers{
-				toVector(initialisers[0].callsToNonConstInitialise().getCallSequences()),
-				toVector(initialisers[1].callsToNonConstInitialise().getCallSequences()),
-				toVector(initialisers[2].callsToNonConstInitialise().getCallSequences())
+				asVector(initialisers[0].callsToNonConstInitialise().getCallSequences()),
+				asVector(initialisers[1].callsToNonConstInitialise().getCallSequences()),
+				asVector(initialisers[2].callsToNonConstInitialise().getCallSequences())
 			};
 			expect(callsToInitialisers[0], all(less(callsToInitialisers[1])));
 			expect(callsToInitialisers[1], all(less(callsToInitialisers[2])));

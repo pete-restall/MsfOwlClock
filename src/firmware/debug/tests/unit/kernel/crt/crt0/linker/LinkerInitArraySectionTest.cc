@@ -88,9 +88,9 @@ namespace smeg::tests::unit::kernel::crt::crt0::linker
 			initArraySection.initialise();
 
 			const std::vector callsToInits{
-				toVector(mockInit0Calls.getCallSequences()),
-				toVector(mockInit1Calls.getCallSequences()),
-				toVector(mockInit2Calls.getCallSequences())
+				asVector(mockInit0Calls.getCallSequences()),
+				asVector(mockInit1Calls.getCallSequences()),
+				asVector(mockInit2Calls.getCallSequences())
 			};
 			expect(callsToInits[0], all(less(callsToInits[1])));
 			expect(callsToInits[1], all(less(callsToInits[2])));

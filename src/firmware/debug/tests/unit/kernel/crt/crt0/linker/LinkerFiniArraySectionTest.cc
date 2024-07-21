@@ -88,9 +88,9 @@ namespace smeg::tests::unit::kernel::crt::crt0::linker
 			finiArraySection.finalise();
 
 			const std::vector callsToFinis{
-				toVector(mockFini0Calls.getCallSequences()),
-				toVector(mockFini1Calls.getCallSequences()),
-				toVector(mockFini2Calls.getCallSequences())
+				asVector(mockFini0Calls.getCallSequences()),
+				asVector(mockFini1Calls.getCallSequences()),
+				asVector(mockFini2Calls.getCallSequences())
 			};
 			expect(callsToFinis[2], all(less(callsToFinis[1])));
 			expect(callsToFinis[1], all(less(callsToFinis[0])));

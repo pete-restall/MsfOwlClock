@@ -6,7 +6,7 @@
 namespace smeg::tests::unit
 {
 	template <std::ranges::range TRange>
-	auto toVector(TRange &&range)
+	auto asVector(TRange &&range)
 	{
 		auto rangeAsCommon = range | std::views::common;
 		return std::vector(rangeAsCommon.begin(), rangeAsCommon.end());
