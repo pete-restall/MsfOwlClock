@@ -110,6 +110,7 @@ else
 			unit_tests_dir / kernel_dir / 'ConstInitialisableTest.cc',
 			unit_tests_dir / kernel_dir / 'InitialisableTest.cc',
 			unit_tests_dir / kernel_dir / 'NonConstInitialisableTest.cc',
+			unit_tests_dir / kernel_baremetal_dir / 'BitfieldTraitsTest.cc',
 			unit_tests_dir / kernel_baremetal_dir / 'BitmaskTest.cc',
 			unit_tests_dir / kernel_baremetal_dir / 'IntegerSequenceTest.cc',
 			unit_tests_dir / kernel_baremetal_dir / 'OffsetIntegerSequenceTest.cc',
