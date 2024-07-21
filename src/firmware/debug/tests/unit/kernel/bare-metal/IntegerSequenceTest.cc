@@ -8,23 +8,13 @@
 #include "kernel/bare-metal/IHaveValuesOf.hh"
 #include "kernel/bare-metal/IntegerSequence.hh"
 
+#include "../../IntegerSequenceUtilities.hh"
+
 using namespace mettle;
 using namespace smeg::kernel::bare_metal;
 
 namespace smeg::tests::unit::kernel::bare_metal
 {
-	template <typename T, T... Ints>
-	static auto asVector(std::integer_sequence<T, Ints...>)
-	{
-		return std::vector{Ints...};
-	}
-
-	template <typename T>
-	static auto asVector(std::integer_sequence<T>)
-	{
-		return std::vector<T>{};
-	}
-
 	suite<> integerSequenceTest("IntegerSequence Tests", [](auto &unit)
 	{
 		unit.test("class_testedAgainstIHaveValuesOfConcept_expectTrue", []()
