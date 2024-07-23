@@ -1,5 +1,5 @@
 # MSF Owl Clock
-[![Front of PCB](doc/photos/pcb-with-edge-rails-front-434x578.jpg)](doc/photos/pcb-with-edge-rails-front-6944x9248.jpg) [![Back of PCB](doc/photos/pcb-with-edge-rails-back-434x578.jpg)](doc/photos/pcb-with-edge-rails-back-6944x9248.jpg)
+[![Front of PCB](doc/photos/pcb-with-edge-rails-front-217x289.jpg)](doc/photos/pcb-with-edge-rails-front-6944x9248.jpg) [![Back of PCB](doc/photos/pcb-with-edge-rails-back-217x289.jpg)](doc/photos/pcb-with-edge-rails-back-6944x9248.jpg)
 
 The above images are the boards as delivered from fabrication, not the end product.  Namely:
 * The edge / tool rails need to be cut off to leave only the owl-shaped board
