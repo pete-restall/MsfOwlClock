@@ -11,7 +11,7 @@ MEMORY {
 
 	FLASH_ISR_VECTORS (r) :
 		ORIGIN = ORIGIN(FLASH_INITIAL_SP) + LENGTH(FLASH_INITIAL_SP),
-		LENGTH = (15 + 137) * 4
+		LENGTH = (15 + 138) * 4
 
 	FLASH_TEXT (rx) :
 		ORIGIN = ORIGIN(FLASH_ISR_VECTORS) + LENGTH(FLASH_ISR_VECTORS),
@@ -28,7 +28,7 @@ SECTIONS {
 		KEEP(*libcrt0.a: (.isr_vector_table.mcu))
 		ASSERT(
 			(. - ADDR(.code.flash.kernel.isr_vector_table) == LENGTH(FLASH_ISR_VECTORS)),
-			"The interrupt vector table must contain 15 ARM-defined vectors and 137 PIC32CX1025SG41100-specific vectors");
+			"The interrupt vector table must contain 15 ARM-defined vectors and 138 PIC32CX1025SG41100-specific vectors");
 	} > FLASH_ISR_VECTORS
 
 	.code.reserved.0 0x00100000 : { . += 0x700030; }
@@ -270,7 +270,7 @@ SECTIONS {
 
 	.code.flash.initial_stack_pointer (READONLY) : {
 		__linker_code_flash_initialStackPointer = .;
-		LONG(__linker_sram_stack_kernel_top);
+		LONG(__linker_bsram_stack_kernel_top);
 	} > FLASH_INITIAL_SP
 
 	.undefined.0 0x20040000 : { . += 0x1ffc0000; }

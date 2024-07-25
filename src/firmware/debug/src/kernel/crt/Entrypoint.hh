@@ -10,10 +10,10 @@ namespace smeg::kernel::crt
 	class Entrypoint
 	{
 	private:
-		TCrt0Environment environment;
+		const TCrt0Environment environment;
 
 	public:
-		Entrypoint(TCrt0Environment crt0Environment) noexcept :
+		Entrypoint(const TCrt0Environment crt0Environment) noexcept :
 			environment(crt0Environment)
 		{
 		}
@@ -21,6 +21,18 @@ namespace smeg::kernel::crt
 		[[gnu::noreturn]] // TODO: THIS SHOULD BE CONDITIONAL - IF RUNNING ON HOST (IE. TESTS) THEN IT SHOULD BE RETURNABLE...
 		void run(void) const noexcept
 		{
+			// The plan...
+			// initialise the kernel (bss, data, init)
+			// initialise the kernel structures based on kernel config
+			// revoke kernel privileges and then continue initialisation:
+			//     if bootloader enabled, call into bootloader to:
+			//         THE FLAW HERE IS THAT THE BOOTLOADER NEEDS TO BE GIVEN AS PART OF A config CLASS, WHICH WILL RUN UNDER PRIVILEGED MODE...OR IS THAT ALRIGHT ?  THE CONFIG IS PRIVILEGED ANYWAY SINCE IT CONFIGURES EVERYTHING...
+			//         test state of firmware (ie. if app CRC is valid, or in middle of failed update, etc.)
+			//         then call app
+			//     else:
+			//         initialise app bss, data and init
+			//         call app
+
 			// TODO: WE'RE NOW AT A POINT WHERE THINGS RUN AGAIN IN HARDWARE - TIDY ALL THIS UP AND START TDD-ING IT...
 			auto kernelMemoryMap = this->environment.getLinkerMemoryMap().getLinkerMemoryMapForKernel();
 			auto appMemoryMap = this->environment.getLinkerMemoryMap().getLinkerMemoryMapForApp();
@@ -38,5 +50,212 @@ namespace smeg::kernel::crt
 		}
 	};
 }
+
+/*
+The Kernel is a library comprising some modular parts:
+	Tasks
+		* Tasks and their resources need to be statically defined, which cannot change (no dynamic Task definition / creation)
+		* an Idle Task must always be defined and it will not be pre-empted by SysTick; it will have the lowest priority and if it terminates then it will be restarted - exiting due to exception can have a policy attached (for example, to restart the MCU)
+		* need a block of RAM for use as a stack (including context saving); the stack can be shared to allow Task overlay on termination, but obviously only one Task at a time can use the stack
+		* need an API into the kernel and any APIs for any drivers that are used (all statically declared)
+		* state - running, runnable / not blocked, runnable / blocked, terminated / not blocked, terminated / blocked (ie. stack in use by another Task)
+		* module-specific state, eg:
+			* the Dispatcher will require a pointer to a chain of context-saving objects
+			* some drivers may require semaphores, etc. for resource allocation
+			* statistics, for example the Scheduler may wish to priorise based on expected time left to run (quickest task first, for example, to increase throughput)
+		* priority - implicit in which Scheduler queue the task is in (no explicit per-Task state needed)
+
+	Task Scheduler
+		Dispatcher
+			Task Execution Lifecycle (uspace)
+				* entrypoint for _all Tasks_, the PC is initally set to the Lifecycle's run() method when a Task is (re)started
+				* constructs the instance of ITask(env), calls ITask.run(), destructs the ITask instance; on termination (normal and exception), execute a termination strategy which may, for example, schedule the same task to be re-started
+
+			Task Execution Context Management
+				Context Saving (kspace)
+					* needs to be able to call various other (trusted) Kernel modules (ie. memory protection, power saving, etc.)  Basically driver-specific chain of method calls
+					* the chain of context-saving routines to call is Task-specific
+				Context Restoration (kspace)
+					* needs to be able to call various other (trusted) Kernel modules (ie. memory protection, power saving, etc.)  Basically driver-specific chain of method calls
+					* the chain of context-restoring routines to call is Task-specific
+
+		Pre-emption (kspace)
+			* Tick Timer (not necessarily SysTick for ARM) - requires an ISR
+			* define an SVCALL (or equivalent) for 'yield', which does the same thing as the Tick Timer ISR; other SVCALLs will be available, but a 'yield' jumps to the Scheduler prioritisation routine
+
+		Prioritisation (kspace)
+			* the Task priority is implicit in which queue the task is in (no explicit per-Task state needed)
+			* scheduler takes first runnable / not blocked Task from the head of the highest-priority queue
+			Managing task priorities (uspace)
+
+	Memory Manager
+
+	APIs
+		Kernel-facing
+		App-facing
+
+	Drivers
+		Kernelspace
+			* ISRs - if they affect the state of Tasks then they will need to call the Scheduler to find the next prioritised Task to run
+			* Kernel-facing API
+
+		Userspace
+			* Tasks for managing the driver
+			* App-facing API
+
+Startup tasks (probably _resetHandler ?):
+	Ensure CCR.STKALIGN is set correctly (to 1) to enforce 8-byte stack alignment - do this as soon as possible, in the _resetHandler really...
+	Ensure FPCCR.ASPEN and FPCCR.LSPEN are set correctly:
+		Original thought was (1 and 1) to ensure lazy FP stacking for ISR entry (faster for use-cases that don't touch FP; which the kernel should not)
+	Configure both SVCall and PendSV with the same, highest exception priority (0).
+
+isrSystick()
+	; probably need to treat this as a watchdog - every time a context switch occurs (just before the 'bx LR') then clear out so the task gets a full quantum
+	; would that stop an 'svcall' followed by an 'isrSystick' though ?  That scenario could cause the 'isrSvcall' to skip over a task if called back-to-back
+	if currentTask != schedulerTask
+		pendsv 0x????
+
+svcall 0x????
+isrSvcall() ; this is the highest priority interrupt
+	nextTask = currentTask->next // TODO: if pendsv is back-to-back (eg. 'yield' followed by 'isrSystick') then this could skip a task
+	if (!nextTask)
+		nextTask = schedulerTask;
+
+	if currentTask == nextTask {
+		// just return from interrupt - no context switch is required
+	}
+
+	currentTask->saveContext() {
+		mrs r0, psp
+		isb
+
+		tst LR, #0x10
+		it eq
+			vstmdbeq r0!, {s16-s31} ; push the floating-point registers if the caller was using the FPU (LR & 0x10) - 112 BYTES OF STACK REQUIRED !!!
+
+		; See ARMv7 Technical Reference Manual, b1-531 - what if stmdb gets interrupted by higher priority ISR ?  Double-check it resumes or restarts...
+		stmdb r0!, {r4-r11, LR}; push r4-r11 to process stack (r0-3, r12, r14(LR), PC, xpsr are pushed by the MCU on ISR entry; LR seems to be pushed again to allow easy context restoration - the initial value is SP+0x14), r0 contains process stack pointer
+		store 'r0' into currentTask->stackPointer ; r0 is 'top of (process) stack' from the previous 'stmdb'
+		currentTask->onContextSwitchedOut()
+	}
+
+	nextTask->restoreContext() {
+		currentTask = nextTask ; need to get stack pointer of highestPriorityTask into r0
+		currentTask->onContextSwitchedIn()
+
+		ldmia r0!, {r4-r11} ; can get LR if pushed above, or from r0+0x14 ?
+		tst LR, #0x10
+		it eq
+			vldmiaeq r0!, {s16-s31} ; pop the floating-point registers if the caller was using the FPU (LR & 0x10) - 112 BYTES OF STACK REQUIRED !!!
+
+		msr psp, r0
+		isb
+		bx LR
+	}
+*/
+
+
+
+/*
+
+USE TEMPLATE SPECIALISATION FOR PARSING THE CONFIG OBJECT.  THIS ALLOWS USERS TO SPECIFY THE BARE MINIMUM CONFIG AND ALLOWS SENSIBLE DEFAULTS.
+IF THERE IS NO createBootloader() METHOD PRESENT THEN WE CAN USE A DEFAULT BOOTLOADER; IF THERE IS A createBootloader() METHOD PRESENT THEN IT CAN BE USED
+TO CREATE / CONFIGURE A GIVEN BOOTLOADER.  BASICALLY COMPILE-TIME DEPENDENCY INJECTION...
+
+OR...THE USER JUST CREATES THE SPECIALISATIONS THEMSELVES, IN A config SUBDIRECTORY.  THIS COULD BE A BIT SERVICE-LOCATOR-Y (UURGH).
+
+OR...THE bootloader PROPERTY IS OF A GIVEN TYPE, SAY, SpecialBootloaderConfig, SuperSpecialBootloaderConfig, ETC. AND THEN THE BOOTLOADER IMPLEMENTATIONS
+PROVIDE THEIR OWN FACTORY SPECIALISATIONS FOR THESE CONFIG TYPES - PROBABLY THE BEST WAY FOR CONFIGS.
+
+THREE DIFFERENT TECHNIQUES FOR THREE DIFFERENT USE-CASES.
+
+---
+
+#include <concepts>
+#include <iostream>
+
+template <class T>
+concept IBootloaderConfig = requires(const T &obj)
+{
+	{ obj.magic } -> std::convertible_to<int>;
+};
+
+class DefaultBootloader
+{
+public:
+	void run(void)
+	{
+		std::cout << "Default bootloader..." << std::endl;
+	}
+};
+
+class SpecialBootloader
+{
+private:
+	int magic;
+
+public:
+	SpecialBootloader(int magic) :
+		magic(magic)
+	{
+	}
+
+	void run(void)
+	{
+		std::cout << "Special bootloader (" << this->magic << ") !!!" << std::endl;
+	}
+};
+
+template <class TConfig>
+class BootloaderFactory
+{
+private:
+	const TConfig config;
+
+public:
+	BootloaderFactory(const TConfig &config) :
+		config(config)
+	{
+	}
+
+	DefaultBootloader createBootloader(void)
+	{
+		return DefaultBootloader();
+	}
+};
+
+template <IBootloaderConfig TConfig>
+class BootloaderFactory<TConfig>
+{
+private:
+	const TConfig config;
+
+public:
+	BootloaderFactory(const TConfig &config) :
+		config(config)
+	{
+	}
+
+	SpecialBootloader createBootloader(void)
+	{
+		return SpecialBootloader(this->config.magic);
+	}
+};
+
+class Config
+{
+public:
+	int magic = 42;
+};
+
+int main(int argc, char *argv[])
+{
+	Config config;
+	BootloaderFactory factory(config);
+	factory.createBootloader().run();
+	return 0;
+}
+
+*/
 
 #endif

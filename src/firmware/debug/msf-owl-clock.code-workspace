@@ -60,7 +60,35 @@
 			"iterator": "cpp",
 			"iosfwd": "cpp",
 			"stdexcept": "cpp",
-			"utility": "cpp"
+			"utility": "cpp",
+			"bit": "cpp",
+			"cctype": "cpp",
+			"charconv": "cpp",
+			"chrono": "cpp",
+			"clocale": "cpp",
+			"cmath": "cpp",
+			"codecvt": "cpp",
+			"compare": "cpp",
+			"cstdarg": "cpp",
+			"cstddef": "cpp",
+			"cstdio": "cpp",
+			"cstdlib": "cpp",
+			"ctime": "cpp",
+			"cwchar": "cpp",
+			"cwctype": "cpp",
+			"set": "cpp",
+			"algorithm": "cpp",
+			"memory_resource": "cpp",
+			"numeric": "cpp",
+			"optional": "cpp",
+			"source_location": "cpp",
+			"system_error": "cpp",
+			"iomanip": "cpp",
+			"numbers": "cpp",
+			"text_encoding": "cpp",
+			"cinttypes": "cpp",
+			"typeinfo": "cpp",
+			"variant": "cpp"
 		}
 	},
 	"launch": {
@@ -76,6 +104,17 @@
 				"runToEntryPoint": "_resetHandler",
 				"servertype": "openocd",
 				"configFiles": ["build/debug/stm32l432kc-nucleo/openocd-stm32l432kc_nucleo.cfg"]
+			},
+			{
+				"name": "Black Magic Probe",
+				"cwd": "${workspaceRoot}",
+				"executable": "build/meson/out/stm32l432kc/msf-owl-clock.elf",
+				"device": "PIC32CX1025SG41100",
+				"request": "launch",
+				"type": "cortex-debug",
+				"runToEntryPoint": "_resetHandler",
+				"servertype": "bmp",
+				"BMPGDBSerialPort": "/dev/ttyACM0"
 			}
 		],
 		"compounds": []

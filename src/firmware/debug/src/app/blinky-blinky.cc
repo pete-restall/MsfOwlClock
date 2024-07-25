@@ -1,6 +1,7 @@
 #include <cstdint>
 #include <atomic>
 
+#if false
 #include "../kernel/bare-metal/mcu/st/stm32/stm32l432kc/Gpio.hh"
 #include "../kernel/bare-metal/mcu/arm/cortex/m4/Rcc.hh"
 
@@ -15,10 +16,20 @@ void blinkyBlinky(void)
 	// LED = PB3 (pin 26)
 	rcc.AHB2ENR = 2;
 	gpioB.MODER = 0xfffffe7f;
-	while (1)
+	while (true)
 	{
 		gpioB.ODR ^= 1 << 3;
 		for (auto i = 0; i < 200000; i++)
 			__asm__ volatile ("nop");
 	}
 }
+
+#else
+
+void blinkyBlinky(void)
+{
+	while (true)
+		;;
+}
+
+#endif

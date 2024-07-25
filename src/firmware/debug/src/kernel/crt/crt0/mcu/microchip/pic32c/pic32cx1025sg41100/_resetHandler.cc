@@ -2,7 +2,7 @@
 #include "Crt0Environment.hh"
 
 using namespace smeg::kernel::crt;
-using namespace smeg::kernel::crt::crt0::mcu::st::stm32::stm32l432kc;
+using namespace smeg::kernel::crt::crt0::mcu::microchip::pic32c::pic32cx1025sg41100;
 
 extern "C"
 {
