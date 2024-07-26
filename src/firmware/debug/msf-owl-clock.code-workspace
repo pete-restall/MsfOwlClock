@@ -108,7 +108,7 @@
 			{
 				"name": "Black Magic Probe",
 				"cwd": "${workspaceRoot}",
-				"executable": "build/meson/out/stm32l432kc/msf-owl-clock.elf",
+				"executable": "build/meson/out/pic32cx1025sg41100/msf-owl-clock.elf",
 				"device": "PIC32CX1025SG41100",
 				"request": "launch",
 				"type": "cortex-debug",

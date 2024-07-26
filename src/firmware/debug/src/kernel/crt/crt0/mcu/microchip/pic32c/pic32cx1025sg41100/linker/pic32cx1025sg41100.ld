@@ -11,7 +11,7 @@ MEMORY {
 
 	FLASH_ISR_VECTORS (r) :
 		ORIGIN = ORIGIN(FLASH_INITIAL_SP) + LENGTH(FLASH_INITIAL_SP),
-		LENGTH = (15 + 138) * 4
+		LENGTH = (15 + 137) * 4
 
 	FLASH_TEXT (rx) :
 		ORIGIN = ORIGIN(FLASH_ISR_VECTORS) + LENGTH(FLASH_ISR_VECTORS),
@@ -28,7 +28,7 @@ SECTIONS {
 		KEEP(*libcrt0.a: (.isr_vector_table.mcu))
 		ASSERT(
 			(. - ADDR(.code.flash.kernel.isr_vector_table) == LENGTH(FLASH_ISR_VECTORS)),
-			"The interrupt vector table must contain 15 ARM-defined vectors and 138 PIC32CX1025SG41100-specific vectors");
+			"The interrupt vector table must contain 15 ARM-defined vectors and 137 PIC32CX1025SG41100-specific vectors");
 	} > FLASH_ISR_VECTORS
 
 	.code.reserved.0 0x00100000 : { . += 0x700030; }
@@ -297,7 +297,10 @@ SECTIONS {
 	.peripherals.ahb_apb.apbb.dsu 0x41002000 : { __linker_peripherals_ahbApb_apbb_dsu = .; . += 0x2000; }
 	.peripherals.ahb_apb.apbb.nvmctrl 0x41004000 : { __linker_peripherals_ahbApb_apbb_nvmctrl = .; . += 0x2000; }
 	.peripherals.ahb_apb.apbb.cmcc 0x41006000 : { __linker_peripherals_ahbApb_apbb_cmcc = .; . += 0x2000; }
-	.peripherals.ahb_apb.apbb.port 0x41008000 : { __linker_peripherals_ahbApb_apbb_port = .; . += 0x2000; }
+	.peripherals.ahb_apb.apbb.portA 0x41008000 : { __linker_peripherals_ahbApb_apbb_portA = .; . += 0x80; }
+	.peripherals.ahb_apb.apbb.portB 0x41008080 : { __linker_peripherals_ahbApb_apbb_portB = .; . += 0x80; }
+	.peripherals.ahb_apb.apbb.portC 0x41008100 : { __linker_peripherals_ahbApb_apbb_portC = .; . += 0x80; }
+	.peripherals.ahb_apb.apbb.port.reserved.0 0x41008180 : { . += 0x1e80; }
 	.peripherals.ahb_apb.apbb.dmac 0x4100a000 : { __linker_peripherals_ahbApb_apbb_dmac = .; . += 0x2000; }
 	.peripherals.ahb_apb.apbb.reserved.0 0x4100c000 : { . += 0x2000; }
 	.peripherals.ahb_apb.apbb.evsys 0x4100e000 : { __linker_peripherals_ahbApb_apbb_evsys = .; . += 0x2000; }

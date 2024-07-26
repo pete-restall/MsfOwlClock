@@ -1,3 +1,5 @@
+#include "../../../arm/cortex/m4/Isrs.hh"
+
 #include "Isrs.hh"
 
 #define __STM32L432KC_ISRS_CLASS "_ZN4smeg6kernel3crt4crt03mcu2st5stm3211stm32l432kc4Isrs"

@@ -26,10 +26,29 @@ void blinkyBlinky(void)
 
 #else
 
+#include "../kernel/bare-metal/mcu/microchip/pic32/pic32cx1025sg41100/Port.hh"
+
+using namespace smeg::kernel::bare_metal::mcu::microchip::pic32;
+
+static volatile pic32cx1025sg41100::Port &portB(pic32cx1025sg41100::__linker_peripherals_ahbApb_apbb_portB);
+static volatile pic32cx1025sg41100::Port &portC(pic32cx1025sg41100::__linker_peripherals_ahbApb_apbb_portC);
+
 void blinkyBlinky(void)
 {
+	// SDCARD_EN = PC15
+	portC.DIR = 1 << 15;
+	portC.OUT = 1 << 15;
+
+	// /SDCARD_BUSYLED = PB25
+	portB.DIR = 1 << 25;
+	portB.OUT = 0;
+
 	while (true)
-		;;
+	{
+		portB.OUTTGL = 1 << 25;
+		for (auto i = 0; i < 2400000; i++)
+			__asm__ volatile ("nop");
+	}
 }
 
 #endif
