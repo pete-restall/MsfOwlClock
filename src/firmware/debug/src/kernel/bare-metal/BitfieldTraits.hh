@@ -23,7 +23,7 @@ namespace smeg::kernel::bare_metal
 		static constexpr std::size_t leftIndex{LeftIndex};
 		static constexpr std::size_t rightIndex{LeftIndex - NumBits + 1};
 
-		using Indices = typename OffsetIntegerSequence<rightIndex, std::make_integer_sequence<std::size_t, NumBits>>::Values;
+		using Indices = typename OffsetIntegerSequence<rightIndex, std::make_index_sequence<NumBits>>::Values;
 
 		using Mask = BitmaskFrom<Indices>;
 	};
