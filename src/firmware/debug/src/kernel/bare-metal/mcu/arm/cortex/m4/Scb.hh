@@ -23,7 +23,7 @@ namespace smeg::kernel::bare_metal::mcu::arm::cortex::m4
 		RegisterU32 MMFAR;
 		RegisterU32 BFAR;
 		RegisterU32 AFSR;
-		RegisterU32 _reserved_40[18];
+		RegisterU32 _reserved_40[18]; // TODO: THESE ARE ACTUALLY THE CPUID REGISTERS - SEE CHAPTER B4, P643 IN ARMV7 MANUAL
 		RegisterU32 CPACR;
 		RegisterU32 _reserved_8c;
 	};
