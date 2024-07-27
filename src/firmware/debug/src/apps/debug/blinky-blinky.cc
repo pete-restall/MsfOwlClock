@@ -2,8 +2,8 @@
 #include <atomic>
 
 #if false
-#include "../kernel/bare-metal/mcu/st/stm32/stm32l432kc/Gpio.hh"
-#include "../kernel/bare-metal/mcu/arm/cortex/m4/Rcc.hh"
+#include "../../kernel/bare-metal/mcu/st/stm32/stm32l432kc/Gpio.hh"
+#include "../../kernel/bare-metal/mcu/arm/cortex/m4/Rcc.hh"
 
 using namespace smeg::kernel::bare_metal::mcu::arm::cortex;
 using namespace smeg::kernel::bare_metal::mcu::st::stm32;
@@ -26,7 +26,7 @@ void blinkyBlinky(void)
 
 #else
 
-#include "../kernel/bare-metal/mcu/microchip/pic32/pic32cx1025sg41100/Port.hh"
+#include "../../kernel/bare-metal/mcu/microchip/pic32/pic32cx1025sg41100/Port.hh"
 
 using namespace smeg::kernel::bare_metal::mcu::microchip::pic32;
 

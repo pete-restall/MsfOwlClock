@@ -23,7 +23,7 @@ kernel_crt_crt0_mcu_dir = kernel_crt_crt0_dir / 'mcu'
 kernel_crt_crt0_mcu_st_dir = kernel_crt_crt0_mcu_dir / 'st'
 kernel_crt_picolibc_dir = kernel_crt_dir / 'picolibc'
 
-app_dir = 'app'
+app_dir = 'apps/debug'
 
 extra_cpp_args = [] + meson.get_external_property('mcu_cpp_args', [])
 add_global_arguments(extra_cpp_args, language: 'cpp')
