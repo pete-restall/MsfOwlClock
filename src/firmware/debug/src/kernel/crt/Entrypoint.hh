@@ -197,7 +197,7 @@ THREE DIFFERENT TECHNIQUES FOR THREE DIFFERENT USE-CASES.
 #include <concepts>
 #include <iostream>
 
-template <class T>
+template <typename T>
 concept IBootloaderConfig = requires(const T &obj)
 {
 	{ obj.magic } -> std::convertible_to<int>;
@@ -229,7 +229,7 @@ public:
 	}
 };
 
-template <class TConfig>
+template <typename TConfig>
 class BootloaderFactory
 {
 private:

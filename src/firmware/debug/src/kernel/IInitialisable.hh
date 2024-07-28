@@ -5,7 +5,7 @@
 
 namespace smeg::kernel
 {
-	template <class T>
+	template <typename T>
 	concept IInitialisable = INonConstInitialisable<T> || IConstInitialisable<T>;
 }
 

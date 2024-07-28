@@ -4,7 +4,7 @@
 
 namespace smeg::kernel
 {
-	template <class T>
+	template <typename T>
 	concept IConstFinalisable = requires(const T &obj)
 	{
 		{ obj.finalise() } -> std::same_as<void>;

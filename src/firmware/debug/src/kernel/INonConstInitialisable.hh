@@ -4,7 +4,7 @@
 
 namespace smeg::kernel
 {
-	template <class T>
+	template <typename T>
 	concept INonConstInitialisable = requires(T &obj)
 	{
 		{ obj.initialise() } -> std::same_as<void>;

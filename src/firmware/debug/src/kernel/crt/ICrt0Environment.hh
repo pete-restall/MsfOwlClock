@@ -4,7 +4,7 @@
 
 namespace smeg::kernel::crt
 {
-	template <class T>
+	template <typename T>
 	concept ICrt0Environment = requires(const T &env)
 	{
 		{ env.getLinkerMemoryMap() } -> ILinkerMemoryMap;

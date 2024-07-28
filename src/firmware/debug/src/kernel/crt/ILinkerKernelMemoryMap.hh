@@ -5,7 +5,7 @@
 
 namespace smeg::kernel::crt
 {
-	template <class T>
+	template <typename T>
 	concept ILinkerKernelMemoryMap = requires(const T &map)
 	{
 		{ map.getInitialiserForRamSections() } -> INonConstInitialisable;
