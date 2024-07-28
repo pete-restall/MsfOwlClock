@@ -21,17 +21,40 @@ namespace smeg::kernel::crt
 		[[gnu::noreturn]] // TODO: THIS SHOULD BE CONDITIONAL - IF RUNNING ON HOST (IE. TESTS) THEN IT SHOULD BE RETURNABLE...
 		void run(void) const noexcept
 		{
+			// TODO: give a bootloader an opportunity - firmware upgrades will need to be done in stages.  If one stage fails, we can tell where.  To initiate a firmware update:
+			//   1. erase a block in the application's .text (linker script provides the range)  The first two words of this block are the 'bootloader magic bytes' - if something goes wrong after erasing even the first bit, the magic bytes will be damaged
+			//   2. write the intermediate bootloader into the (erased block + 16 bytes)
+			//   3. write the address of the intermediate bootloader entrypoint into (erased block + 12 bytes) - the word at (erased block + 8 bytes) is reserved
+			//   4. write the bootloader magic bytes (0x736d6567, 0x68656164) into (erased block + 0 bytes)
+			//   5. reset ?
+			//
+			// On booting, we thus need to:
+			//   1. if bootloader magic bytes == (0x534d4547, 0x48454144), jump to the application
+			//   2. if bootloader magic bytes == (0x534d4547, *), the new kernel bootloader is working, so call that
+			//   3. if bootloader magic bytes == (*, 0x68656164), load the intermediate bootloader address (erased block + 12 bytes) and jump to it
+			//   4. if bootloader magic bytes are anything else then the application is corrupted but the kernel bootloader should still be working, so call that
+			//
+			// When the intermediate bootloader is invoked, write the kernel portion of the firmware:
+			//   1. erase and write the non-vector and non-bootloader locations
+			//   2. erase the vector table and bootloader and write those, then set the first magic byte to 0x534d4547
+			// *** NOTE THAT IT IS POSSIBLE TO BRICK THE DEVICE IF STEP 2 FAILS, IF, FOR EXAMPLE, POWER IS LOST ***
+			// *** FOR THE PIC32CX DEVICE, THERE IS SPECIFIC FUNCTIONALITY TO HELP THIS - THE 'BKSWRST' COMMAND AND BANKED FLASH, WHICH WOULD PRECLUDE THE
+			//     NEED FOR THE INTERMEDIATE BOOTLOADER ENTIRELY ***
+			//
+			// When the kernel bootloader needs to do its work, erase and write the application portion of the firmware, then set the second magic byte to 0x48454144
+			//
+			// The reading of the kernel config, the app initialisation, jumping to the app, etc. all need to be done in a separate (non-inline) method so the
+			// kernel doesn't try using corrupted application state during the firmware upgrade process.  This all relies on having anything in 'libkernel',
+			// 'libcrt' and 'libcrt0' self-contained (including exception tables, dependent libgcc / libstdc++ library code, etc.)
+
+
+
 			// The plan...
 			// initialise the kernel (bss, data, init)
 			// initialise the kernel structures based on kernel config
 			// revoke kernel privileges and then continue initialisation:
-			//     if bootloader enabled, call into bootloader to:
-			//         THE FLAW HERE IS THAT THE BOOTLOADER NEEDS TO BE GIVEN AS PART OF A config CLASS, WHICH WILL RUN UNDER PRIVILEGED MODE...OR IS THAT ALRIGHT ?  THE CONFIG IS PRIVILEGED ANYWAY SINCE IT CONFIGURES EVERYTHING...
-			//         test state of firmware (ie. if app CRC is valid, or in middle of failed update, etc.)
-			//         then call app
-			//     else:
-			//         initialise app bss, data and init
-			//         call app
+			//   initialise app bss, data and init
+			//   call app
 
 			// TODO: WE'RE NOW AT A POINT WHERE THINGS RUN AGAIN IN HARDWARE - TIDY ALL THIS UP AND START TDD-ING IT...
 			auto kernelMemoryMap = this->environment.getLinkerMemoryMap().getLinkerMemoryMapForKernel();
