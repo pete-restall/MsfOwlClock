@@ -5,6 +5,8 @@
 #include <tuple>
 #include <vector>
 
+#include "TupleUtilities.hh"
+
 namespace smeg::tests::unit
 {
 	template <typename... TArgs>
@@ -36,6 +38,11 @@ namespace smeg::tests::unit
 		auto getCallSequences(void) const
 		{
 			return this->calls | std::views::transform([](auto &&x) noexcept { return std::get<0>(x); });
+		}
+
+		auto getCallArguments(void) const
+		{
+			return this->calls | std::views::transform([](auto &&x) noexcept { return popFront(x); });
 		}
 	};
 }

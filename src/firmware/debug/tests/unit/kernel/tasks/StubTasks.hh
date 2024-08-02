@@ -1,0 +1,151 @@
+#ifndef __SMEG_TESTS_UNIT_KERNEL_TASKS_STUBTASKS_HH
+#define __SMEG_TESTS_UNIT_KERNEL_TASKS_STUBTASKS_HH
+#include <stdexcept>
+#include "../../TypeUtilities.hh"
+#include "StubExceptions.hh"
+
+namespace smeg::tests::unit::kernel::tasks
+{
+	template <typename TException>
+	struct StubTaskDefaultConstructorToThrow
+	{
+		static const char *what(void)
+		{
+			static auto value = nameof<TException>() + " thrown from " + nameof<StubTaskDefaultConstructorToThrow>() + "::ctor()";
+			return value.c_str();
+		}
+
+		StubTaskDefaultConstructorToThrow(void)
+		{
+			throw TException(what());
+		}
+
+		void run(void)
+		{
+		}
+	};
+
+	template <>
+	struct StubTaskDefaultConstructorToThrow<StubUnknownException>
+	{
+		StubTaskDefaultConstructorToThrow(void)
+		{
+			throw StubUnknownException();
+		}
+
+		void run(void)
+		{
+		}
+	};
+
+	template <typename TException, typename TKernelApi>
+	struct StubTaskKernelApiConstructorToThrow
+	{
+		static const char *what(void)
+		{
+			static auto value =
+				nameof<TException>() + " thrown from " +
+				nameof<StubTaskKernelApiConstructorToThrow>() + "::ctor(" + nameof<TKernelApi>() + " &)";
+
+			return value.c_str();
+		}
+
+		StubTaskKernelApiConstructorToThrow(TKernelApi &&)
+		{
+			throw TException(what());
+		}
+
+		void run(void)
+		{
+		}
+	};
+
+	template <typename TKernelApi>
+	struct StubTaskKernelApiConstructorToThrow<StubUnknownException, TKernelApi>
+	{
+		void run(void)
+		{
+			throw StubUnknownException();
+		}
+	};
+
+	template <typename TException>
+	struct StubTaskDestructorToThrow
+	{
+		static const char *what(void)
+		{
+			static auto value = nameof<TException>() + " thrown from " + nameof<StubTaskDestructorToThrow>() + "::dtor()";
+			return value.c_str();
+		}
+
+		~StubTaskDestructorToThrow(void) noexcept(false)
+		{
+			throw TException(what());
+		}
+
+		void run(void)
+		{
+		}
+	};
+
+	template <>
+	struct StubTaskDestructorToThrow<StubUnknownException>
+	{
+		~StubTaskDestructorToThrow(void) noexcept(false)
+		{
+			throw StubUnknownException();
+		}
+
+		void run(void)
+		{
+		}
+	};
+
+	template <typename TException>
+	struct StubTaskRunToThrow
+	{
+		static const char *what(void)
+		{
+			static auto value = nameof<TException>() + " thrown from " + nameof<StubTaskRunToThrow>() + "::run()";
+			return value.c_str();
+		}
+
+		void run(void)
+		{
+			throw TException(what());
+		}
+	};
+
+	template <>
+	struct StubTaskRunToThrow<StubUnknownException>
+	{
+		void run(void)
+		{
+			throw StubUnknownException();
+		}
+	};
+
+	class StubBooleanTaskToRunGivenNumberOfTimes
+	{
+	private:
+		const int terminalRunCount;
+		int numberOfRuns;
+
+	public:
+		StubBooleanTaskToRunGivenNumberOfTimes(int numberOfTimes) :
+			terminalRunCount(numberOfTimes > 1 ? numberOfTimes : 1),
+			numberOfRuns(0)
+		{
+		}
+
+		bool run(void)
+		{
+			if (this->numberOfRuns == this->terminalRunCount)
+				throw std::runtime_error("Stubbed task was run more times than its limit; limit=" + this->terminalRunCount);
+
+			return ++this->numberOfRuns < this->terminalRunCount;
+		}
+	};
+}
+
+#endif
