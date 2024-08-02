@@ -7,22 +7,11 @@
 
 namespace smeg::kernel::tasks
 {
-	template <typename TTask, typename TKernelApi, IHandleAbnormalTaskExits TAbnormalExitHandler>
+	template <typename TTaskFactory, IHandleAbnormalTaskExits TAbnormalExitHandler>
 	class TaskLifecycle
 	{
 	private:
 		TAbnormalExitHandler &abnormalExitHandler;
-
-		static_assert(ITask<TTask, TKernelApi>, "TTask and TKernelApi do not match the ITask concept");
-		// TODO: static_assert(TKernelApi must be AppToKernelApi<drivers...> or KernelToKernelApi<drivers...>);
-
-		static constexpr TTask createTask(void)
-		{
-			if constexpr (IHaveKernelApiTaskConstructor<TTask, TKernelApi>)
-				return TTask((TKernelApi()));
-			else
-				return TTask();
-		}
 
 	public:
 		TaskLifecycle(TAbnormalExitHandler &abnormalExitHandler) noexcept :
@@ -34,7 +23,7 @@ namespace smeg::kernel::tasks
 		{
 			try
 			{
-				auto task(createTask());
+				auto task(TTaskFactory::createTask());
 				task.run();
 			}
 			catch (const Exception &exception)

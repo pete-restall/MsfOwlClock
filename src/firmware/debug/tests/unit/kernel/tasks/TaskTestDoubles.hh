@@ -1,11 +1,53 @@
-#ifndef __SMEG_TESTS_UNIT_KERNEL_TASKS_STUBTASKS_HH
-#define __SMEG_TESTS_UNIT_KERNEL_TASKS_STUBTASKS_HH
+#ifndef __SMEG_TESTS_UNIT_KERNEL_TASKS_TASKTESTDOUBLES_HH
+#define __SMEG_TESTS_UNIT_KERNEL_TASKS_TASKTESTDOUBLES_HH
 #include <stdexcept>
 #include "../../TypeUtilities.hh"
 #include "StubExceptions.hh"
 
 namespace smeg::tests::unit::kernel::tasks
 {
+	struct StubTaskWithDefaultConstructor
+	{
+		void run(void)
+		{
+		}
+	};
+
+	template <typename TKernelApi>
+	struct StubTaskWithKernelApiConstructor
+	{
+		StubTaskWithKernelApiConstructor(TKernelApi &&)
+		{
+		}
+
+		void run(void)
+		{
+		}
+	};
+
+	template <typename TKernelApi>
+	struct MockTaskWithBothDefaultAndKernelApiConstructors
+	{
+		bool wasDefaultConstructorCalled;
+		bool wasKernelApiConstructorCalled;
+
+		MockTaskWithBothDefaultAndKernelApiConstructors(void) :
+			wasDefaultConstructorCalled(true),
+			wasKernelApiConstructorCalled(false)
+		{
+		}
+
+		MockTaskWithBothDefaultAndKernelApiConstructors(TKernelApi &&) :
+			wasDefaultConstructorCalled(false),
+			wasKernelApiConstructorCalled(true)
+		{
+		}
+
+		void run(void)
+		{
+		}
+	};
+
 	template <typename TException>
 	struct StubTaskDefaultConstructorToThrow
 	{

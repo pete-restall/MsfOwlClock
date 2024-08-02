@@ -5,6 +5,8 @@
 
 namespace smeg::tests::unit::kernel::tasks
 {
+	using namespace smeg::kernel;
+
 	template <typename TBase>
 	class StubExceptionWithBase : public TBase
 	{

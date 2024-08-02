@@ -1,9 +1,6 @@
 #include <atomic>
 #include <exception>
 #include <stdexcept>
-#include <string>
-#include <tuple>
-#include <utility>
 
 #include <mettle/suite.hpp>
 #include <mettle/matchers.hpp>
@@ -16,7 +13,7 @@
 #include "AbnormalExitHandlerSubstitute.hh"
 #include "AbnormalExitHandlerTestDoubles.hh"
 #include "StubExceptions.hh"
-#include "StubTasks.hh"
+#include "TaskTestDoubles.hh"
 
 using namespace mettle;
 
@@ -54,18 +51,20 @@ namespace smeg::tests::unit::kernel::tasks
 		}
 	};
 
-	struct DummyKernelApi
+	template <typename TTask>
+	struct StubTaskFactoryFor
 	{
+		static TTask createTask(void)
+		{
+			return TTask();
+		}
 	};
-
-	template <typename TException>
-	using StubTaskDummyKernelApiConstructorToThrow = StubTaskKernelApiConstructorToThrow<TException, DummyKernelApi>;
 
 	template <template <typename> typename TThrowingTask, typename TException, typename TExceptionBase>
 	static void run_calledWhenTaskThrowsKnownException_expectAbnormalExitHandlerIsCalledWithSameException(auto &fixture)
 	{
 		auto abnormalExitHandler = fixture.mockAbnormalExitHandlerWithAllStubbedToReturn(true);
-		TaskLifecycle<TThrowingTask<TException>, DummyKernelApi, AbnormalExitHandlerSubstitute> lifecycle(abnormalExitHandler);
+		TaskLifecycle<StubTaskFactoryFor<TThrowingTask<TException>>, AbnormalExitHandlerSubstitute> lifecycle(abnormalExitHandler);
 		lifecycle.run();
 
 		auto callsToOnException(
@@ -85,7 +84,7 @@ namespace smeg::tests::unit::kernel::tasks
 	static void run_calledWhenTaskThrowsUnknownException_expectAbnormalExitHandlerOnUnknownExceptionIsCalled(auto &fixture)
 	{
 		auto abnormalExitHandler = fixture.mockAbnormalExitHandlerWithAllStubbedToReturn(true);
-		TaskLifecycle<TThrowingTask<StubUnknownException>, DummyKernelApi, AbnormalExitHandlerSubstitute> lifecycle(abnormalExitHandler);
+		TaskLifecycle<StubTaskFactoryFor<TThrowingTask<StubUnknownException>>, AbnormalExitHandlerSubstitute> lifecycle(abnormalExitHandler);
 		lifecycle.run();
 
 		expect(abnormalExitHandler.callsToOnUnknownException().count(), equal_to(1));
@@ -93,18 +92,10 @@ namespace smeg::tests::unit::kernel::tasks
 
 	suite<Fixture> taskLifecycleTest("TaskLifecycle Test Suite", [](auto &unit)
 	{
-		unit.test("run_calledWhenTaskDefaultConstructorThrowsSmegException_expectAbnormalExitHandlerIsCalledWithSameException", [](auto &fixture)
+		unit.test("run_calledWhenTaskConstructorThrowsSmegException_expectAbnormalExitHandlerIsCalledWithSameException", [](auto &fixture)
 		{
 			run_calledWhenTaskThrowsKnownException_expectAbnormalExitHandlerIsCalledWithSameException<
 				StubTaskDefaultConstructorToThrow,
-				StubSmegException,
-				Exception>(fixture);
-		});
-
-		unit.test("run_calledWhenTaskKernelApiConstructorThrowsSmegException_expectAbnormalExitHandlerIsCalledWithSameException", [](auto &fixture)
-		{
-			run_calledWhenTaskThrowsKnownException_expectAbnormalExitHandlerIsCalledWithSameException<
-				StubTaskDummyKernelApiConstructorToThrow,
 				StubSmegException,
 				Exception>(fixture);
 		});
@@ -125,18 +116,10 @@ namespace smeg::tests::unit::kernel::tasks
 				Exception>(fixture);
 		});
 
-		unit.test("run_calledWhenTaskDefaultConstructorThrowsStandardException_expectAbnormalExitHandlerIsCalledWithSameException", [](auto &fixture)
+		unit.test("run_calledWhenTaskConstructorThrowsStandardException_expectAbnormalExitHandlerIsCalledWithSameException", [](auto &fixture)
 		{
 			run_calledWhenTaskThrowsKnownException_expectAbnormalExitHandlerIsCalledWithSameException<
 				StubTaskDefaultConstructorToThrow,
-				StubStandardException,
-				std::exception>(fixture);
-		});
-
-		unit.test("run_calledWhenTaskKernelApiConstructorThrowsStandardException_expectAbnormalExitHandlerIsCalledWithSameException", [](auto &fixture)
-		{
-			run_calledWhenTaskThrowsKnownException_expectAbnormalExitHandlerIsCalledWithSameException<
-				StubTaskDummyKernelApiConstructorToThrow,
 				StubStandardException,
 				std::exception>(fixture);
 		});
@@ -157,14 +140,9 @@ namespace smeg::tests::unit::kernel::tasks
 				std::exception>(fixture);
 		});
 
-		unit.test("run_calledWhenTaskDefaultConstructorThrowsUnknownException_expectAbnormalExitHandlerOnUnknownExceptionIsCalled", [](auto &fixture)
+		unit.test("run_calledWhenTaskConstructorThrowsUnknownException_expectAbnormalExitHandlerOnUnknownExceptionIsCalled", [](auto &fixture)
 		{
 			run_calledWhenTaskThrowsUnknownException_expectAbnormalExitHandlerOnUnknownExceptionIsCalled<StubTaskDefaultConstructorToThrow>(fixture);
-		});
-
-		unit.test("run_calledWhenTaskKernelApiConstructorThrowsUnknownException_expectAbnormalExitHandlerOnUnknownExceptionIsCalled", [](auto &fixture)
-		{
-			run_calledWhenTaskThrowsUnknownException_expectAbnormalExitHandlerOnUnknownExceptionIsCalled<StubTaskDummyKernelApiConstructorToThrow>(fixture);
 		});
 
 		unit.test("run_calledWhenTaskRunThrowsUnknownException_expectAbnormalExitHandlerOnUnknownExceptionIsCalled", [](auto &fixture)
@@ -179,7 +157,7 @@ namespace smeg::tests::unit::kernel::tasks
 
 		unit.test("run_calledWhenTaskRunReturnsBoolean_expectTaskIsRepeatedlyRunUntilFalseIsReturned", [](auto &fixture)
 		{
-			// TODO: this is where StubBooleanTaskToRunGivenNumberOfTimes comes in, but to use this stub we need to refactor to use a task factory.
+			// TODO: now we can use a StubTaskFactory that returns a StubBooleanTaskToRunGivenNumberOfTimes(N)
 		});
 
 		// TODO: now start to work in the 'while (restartTask...) { runTask(); }' logic

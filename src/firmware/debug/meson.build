@@ -118,6 +118,7 @@ else
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerDataMemorySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerFiniArraySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerInitArraySectionTest.cc',
+			unit_tests_dir / kernel_tasks_dir / 'DefaultTaskFactoryTest.cc',
 			unit_tests_dir / kernel_tasks_dir / 'TaskLifecycleTest.cc'
 		],
 		include_directories: [
