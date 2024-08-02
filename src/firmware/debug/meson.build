@@ -22,6 +22,7 @@ kernel_crt_crt0_linker_dir = kernel_crt_crt0_dir / 'linker'
 kernel_crt_crt0_mcu_dir = kernel_crt_crt0_dir / 'mcu'
 kernel_crt_crt0_mcu_st_dir = kernel_crt_crt0_mcu_dir / 'st'
 kernel_crt_picolibc_dir = kernel_crt_dir / 'picolibc'
+kernel_tasks_dir = kernel_dir / 'tasks'
 
 app_dir = 'apps/debug'
 
@@ -29,6 +30,8 @@ extra_cpp_args = [] + meson.get_external_property('mcu_cpp_args', [])
 add_global_arguments(extra_cpp_args, language: 'cpp')
 
 # TODO: Disable the 'noexcept' warnings for the tests, otherwise std::abort() is called on failure and that doesn't allow source / line numbers, etc.
+# TODO: Disable the 'constructor parameter shadows member' warnings.
+# TODO: Disable the 'cxx11' ABI tag warnings for all projects, since everything will be built to the newer ABI ('-Wabi-tag') - this is generally an issue when using std::string
 
 if meson.is_cross_build()
 	cpp_link_args = ['-nostartfiles']
@@ -114,7 +117,8 @@ else
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerBssMemorySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerDataMemorySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerFiniArraySectionTest.cc',
-			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerInitArraySectionTest.cc'
+			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerInitArraySectionTest.cc',
+			unit_tests_dir / kernel_tasks_dir / 'TaskLifecycleTest.cc'
 		],
 		include_directories: [
 			src_dir
@@ -122,7 +126,7 @@ else
 
 	test('kernel_unit_tests', mettle, args: [kernel_unit_tests])
 
-	app_unit_tests_dir = unit_tests_dir / 'app'
+	app_unit_tests_dir = unit_tests_dir / 'apps'
 	app_unit_tests = executable(
 		'app_unit_tests',
 		native: true,
