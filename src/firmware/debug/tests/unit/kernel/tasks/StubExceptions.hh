@@ -14,6 +14,10 @@ namespace smeg::tests::unit::kernel::tasks
 		const char *whatPtr;
 
 	public:
+		StubExceptionWithBase(void) : StubExceptionWithBase("StubExceptionWithBase")
+		{
+		}
+
 		StubExceptionWithBase(const char *whatPtr) :
 			whatPtr(whatPtr)
 		{

@@ -8,6 +8,7 @@
 
 #include "../../CallRecorder.hh"
 #include "AbnormalExitHandlerSubstitute.hh"
+#include "DummyAbnormalExitHandler.hh"
 
 namespace smeg::tests::unit::kernel::tasks
 {
@@ -29,6 +30,11 @@ namespace smeg::tests::unit::kernel::tasks
 		{
 		}
 
+		DummyAbnormalExitHandler dummy(void)
+		{
+			return DummyAbnormalExitHandler();
+		}
+
 		AbnormalExitHandlerSubstitute mock(void)
 		{
 			auto onExceptionSmegExceptionOverloadCallRecorder = std::make_shared<OnExceptionSmegExceptionOverloadCallRecorder>(this->callSequence);
@@ -38,6 +44,11 @@ namespace smeg::tests::unit::kernel::tasks
 				onExceptionSmegExceptionOverloadCallRecorder,
 				onExceptionStandardExceptionOverloadCallRecorder,
 				onUnknownExceptionCallRecorder);
+		}
+
+		AbnormalExitHandlerSubstitute stub(void)
+		{
+			return this->mock();
 		}
 	};
 }

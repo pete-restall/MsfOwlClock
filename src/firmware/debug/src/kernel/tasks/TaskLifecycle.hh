@@ -7,11 +7,49 @@
 
 namespace smeg::kernel::tasks
 {
+	/*
+		TODO: Notes for further implementation:
+		The stack pointer must already be set to the top of the task's stack when this method is entered...
+		The link register must already be set when this method is entered...
+		The CPU must be executing in unprivileged mode when this method is entered...
+	*/
 	template <typename TTaskFactory, IHandleAbnormalTaskExits TAbnormalExitHandler>
 	class TaskLifecycle
 	{
 	private:
 		TAbnormalExitHandler &abnormalExitHandler;
+
+		bool runOnceWithoutCatch(void)
+		{
+			auto task(TTaskFactory::createTask());
+			if constexpr (!IRunBooleanTasks<decltype(task)>)
+			{
+				task.run();
+				return true;
+			}
+			else
+				return task.run();
+		}
+
+		bool runOnce(void) noexcept
+		{
+			try
+			{
+				return this->runOnceWithoutCatch();
+			}
+			catch (const Exception &exception)
+			{
+				return abnormalExitHandler.onException(exception);
+			}
+			catch (const std::exception &exception)
+			{
+				return abnormalExitHandler.onException(exception);
+			}
+			catch (...)
+			{
+				return abnormalExitHandler.onUnknownException();
+			}
+		}
 
 	public:
 		TaskLifecycle(TAbnormalExitHandler &abnormalExitHandler) noexcept :
@@ -21,32 +59,8 @@ namespace smeg::kernel::tasks
 
 		void run(void) noexcept
 		{
-			try
-			{
-				auto task(TTaskFactory::createTask());
-				task.run();
-			}
-			catch (const Exception &exception)
-			{
-				abnormalExitHandler.onException(exception);
-			}
-			catch (const std::exception &exception)
-			{
-				abnormalExitHandler.onException(exception);
-			}
-			catch (...)
-			{
-				abnormalExitHandler.onUnknownException();
-			}
-			// the stack pointer must already be set to the top of the task's stack when this method is entered...
-			// the link register must already be set when this method is entered...
-			// the CPU must be executing in unprivileged mode when this method is entered...
-
-			// inside try...catch, we'll need to TTask((TKernelApi())).run();
-			// after the run(), we'll loop (ie. immediately restart the task); the task can terminate or yield by using the kernelApi passed to it
-			// in the catch(uint32_t), we'll need to call 'abnormalExitHandler.onException(uint32_t) noexcept', which will return 'true' to restart the task, 'false' to return
-			// in the catch(std::exception), we'll need to call 'abnormalExitHandler.onException(std::exception) noexcept', which will return 'true' to restart the task, 'false' to return
-			// in the catch(...), we'll need to call 'abnormalExitHandler.onUnknownException() noexcept', which will return 'true' to restart the task, 'false' to return
+			while (this->runOnce())
+				;;
 		}
 	};
 }

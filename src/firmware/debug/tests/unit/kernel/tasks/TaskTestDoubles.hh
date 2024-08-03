@@ -170,22 +170,72 @@ namespace smeg::tests::unit::kernel::tasks
 	class StubBooleanTaskToRunGivenNumberOfTimes
 	{
 	private:
-		const int terminalRunCount;
-		int numberOfRuns;
+		const int &numberOfRunsBeforeFalseReturned;
+		int &numberOfRuns;
 
 	public:
-		StubBooleanTaskToRunGivenNumberOfTimes(int numberOfTimes) :
-			terminalRunCount(numberOfTimes > 1 ? numberOfTimes : 1),
-			numberOfRuns(0)
+		StubBooleanTaskToRunGivenNumberOfTimes(const int &numberOfRunsBeforeFalseReturned, int &numberOfRuns) :
+			numberOfRunsBeforeFalseReturned(numberOfRunsBeforeFalseReturned),
+			numberOfRuns(numberOfRuns)
 		{
 		}
 
 		bool run(void)
 		{
-			if (this->numberOfRuns == this->terminalRunCount)
-				throw std::runtime_error("Stubbed task was run more times than its limit; limit=" + this->terminalRunCount);
+			if (this->numberOfRuns == this->numberOfRunsBeforeFalseReturned)
+				throw std::runtime_error("Stubbed task was run more times than its limit; limit=" + this->numberOfRunsBeforeFalseReturned);
 
-			return ++this->numberOfRuns < this->terminalRunCount;
+			return ++this->numberOfRuns < this->numberOfRunsBeforeFalseReturned;
+		}
+	};
+
+	template <typename TException>
+	class StubVoidTaskToThrowAfterGivenNumberOfTimes
+	{
+	private:
+		const int &numberOfRunsBeforeExceptionThrown;
+		int &numberOfRuns;
+
+	public:
+		StubVoidTaskToThrowAfterGivenNumberOfTimes(const int &numberOfRunsBeforeExceptionThrown, int &numberOfRuns) :
+			numberOfRunsBeforeExceptionThrown(numberOfRunsBeforeExceptionThrown),
+			numberOfRuns(numberOfRuns)
+		{
+		}
+
+		void run(void)
+		{
+			if (++this->numberOfRuns >= this->numberOfRunsBeforeExceptionThrown)
+			{
+				this->numberOfRuns = 0;
+				throw TException();
+			}
+		}
+	};
+
+	template <typename TException>
+	class StubBooleanTaskToThrowAfterGivenNumberOfTimes
+	{
+	private:
+		const int &numberOfRunsBeforeExceptionThrown;
+		int &numberOfRuns;
+
+	public:
+		StubBooleanTaskToThrowAfterGivenNumberOfTimes(const int &numberOfRunsBeforeExceptionThrown, int &numberOfRuns) :
+			numberOfRunsBeforeExceptionThrown(numberOfRunsBeforeExceptionThrown),
+			numberOfRuns(numberOfRuns)
+		{
+		}
+
+		bool run(void)
+		{
+			if (++this->numberOfRuns >= this->numberOfRunsBeforeExceptionThrown)
+			{
+				this->numberOfRuns = 0;
+				throw TException();
+			}
+
+			return true;
 		}
 	};
 }
