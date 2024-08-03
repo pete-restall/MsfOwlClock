@@ -7,10 +7,13 @@ namespace smeg::kernel::tasks
 	class DefaultIdleTask
 	{
 	public:
+		[[noreturn]]
 		void run(void) noexcept
 		{
 			while (true)
 				;;
+
+			__builtin_unreachable();
 		}
 	};
 
