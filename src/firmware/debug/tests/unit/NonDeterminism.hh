@@ -28,7 +28,7 @@ namespace smeg::tests::unit
 	template <typename T>
 	std::span<T> anySpanInClosedRangeSize(std::vector<T> &range, typename std::vector<T>::size_type size);
 
-	extern thread_local std::default_random_engine randomGenerator;
+	extern thread_local std::mt19937 randomGenerator;
 
 	template <typename T>
 	std::vector<T> anyVectorOfSize(typename std::vector<T>::size_type size)
