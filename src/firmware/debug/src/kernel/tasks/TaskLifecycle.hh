@@ -19,18 +19,19 @@ namespace smeg::kernel::tasks
 	private:
 		TAbnormalExitHandler &abnormalExitHandler;
 
-		bool runOnceWithoutCatch(void)
+	public:
+		TaskLifecycle(TAbnormalExitHandler &abnormalExitHandler) noexcept :
+			abnormalExitHandler(abnormalExitHandler)
 		{
-			auto task(TTaskFactory::createTask());
-			if constexpr (!IRunBooleanTask<decltype(task)>)
-			{
-				task.run();
-				return true;
-			}
-			else
-				return task.run();
 		}
 
+		void run(void) noexcept
+		{
+			while (this->runOnce())
+				;;
+		}
+
+	private:
 		bool runOnce(void) noexcept
 		{
 			try
@@ -51,16 +52,16 @@ namespace smeg::kernel::tasks
 			}
 		}
 
-	public:
-		TaskLifecycle(TAbnormalExitHandler &abnormalExitHandler) noexcept :
-			abnormalExitHandler(abnormalExitHandler)
+		bool runOnceWithoutCatch(void)
 		{
-		}
-
-		void run(void) noexcept
-		{
-			while (this->runOnce())
-				;;
+			auto task(TTaskFactory::createTask());
+			if constexpr (!IRunBooleanTask<decltype(task)>)
+			{
+				task.run();
+				return true;
+			}
+			else
+				return task.run();
 		}
 	};
 }
