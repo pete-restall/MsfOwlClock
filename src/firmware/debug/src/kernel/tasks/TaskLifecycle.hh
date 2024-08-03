@@ -22,7 +22,7 @@ namespace smeg::kernel::tasks
 		bool runOnceWithoutCatch(void)
 		{
 			auto task(TTaskFactory::createTask());
-			if constexpr (!IRunBooleanTasks<decltype(task)>)
+			if constexpr (!IRunBooleanTask<decltype(task)>)
 			{
 				task.run();
 				return true;

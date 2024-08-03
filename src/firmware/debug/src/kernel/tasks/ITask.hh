@@ -14,19 +14,19 @@ namespace smeg::kernel::tasks
 	concept IHaveTaskConstructor = IHaveDefaultTaskConstructor<TTask> || IHaveKernelApiTaskConstructor<TTask, TKernelApi>;
 
 	template <typename TTask>
-	concept IRunVoidTasks = requires(TTask &task)
+	concept IRunVoidTask = requires(TTask &task)
 	{
 		{ task.run() } -> std::same_as<void>;
 	};
 
 	template <typename TTask>
-	concept IRunBooleanTasks = requires(TTask &task)
+	concept IRunBooleanTask = requires(TTask &task)
 	{
 		{ task.run() } -> std::convertible_to<bool>;
 	};
 
 	template <typename TTask, typename TKernelApi>
-	concept ITask = IHaveTaskConstructor<TTask, TKernelApi> && (IRunVoidTasks<TTask> || IRunBooleanTasks<TTask>);
+	concept ITask = IHaveTaskConstructor<TTask, TKernelApi> && (IRunVoidTask<TTask> || IRunBooleanTask<TTask>);
 }
 
 #endif
