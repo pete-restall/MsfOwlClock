@@ -23,6 +23,7 @@ kernel_crt_crt0_mcu_dir = kernel_crt_crt0_dir / 'mcu'
 kernel_crt_crt0_mcu_st_dir = kernel_crt_crt0_mcu_dir / 'st'
 kernel_crt_picolibc_dir = kernel_crt_dir / 'picolibc'
 kernel_tasks_dir = kernel_dir / 'tasks'
+kernel_tasks_config_dir = kernel_tasks_dir / 'config'
 
 app_dir = 'apps/debug'
 
@@ -119,7 +120,8 @@ else
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerFiniArraySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerInitArraySectionTest.cc',
 			unit_tests_dir / kernel_tasks_dir / 'DefaultTaskFactoryTest.cc',
-			unit_tests_dir / kernel_tasks_dir / 'TaskLifecycleTest.cc'
+			unit_tests_dir / kernel_tasks_dir / 'TaskLifecycleTest.cc',
+			unit_tests_dir / kernel_tasks_config_dir / 'TasksFromTest.cc'
 		],
 		include_directories: [
 			src_dir
