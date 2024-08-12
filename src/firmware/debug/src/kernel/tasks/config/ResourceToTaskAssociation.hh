@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <type_traits>
 #include <utility>
+#include "../../IntegerSequenceUtilities.hh"
 
 namespace smeg::kernel::tasks::config
 {
@@ -13,16 +14,8 @@ namespace smeg::kernel::tasks::config
 		// TODO: ALL OF THIS NEEDS REFACTORING - IT CAN ALL BE SPLIT OUT AND TESTED INDEPENDENTLY...LOVELY.
 
 		template <typename T, T Head, T... Tail>
-		class Unique
+		struct Unique
 		{
-		private:
-			template <T X, T... Ints>
-			static constexpr auto pushFront(std::integer_sequence<T, Ints...>)
-			{
-				return std::integer_sequence<T, X, Ints...>();
-			}
-
-		public:
 			using Values = std::conditional<
 				((Head != Tail) && ...),
 				decltype(pushFront<Head>(typename Unique<T, Tail...>::Values{})),
@@ -40,12 +33,6 @@ namespace smeg::kernel::tasks::config
 		class BubbleSorted
 		{
 		private:
-			template <T A, T... Ints>
-			static constexpr auto pushFront(std::integer_sequence<T, Ints...>)
-			{
-				return std::integer_sequence<T, A, Ints...>();
-			}
-
 			template <T A, T... Ints>
 			struct BubbleSortIteration;
 
