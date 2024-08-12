@@ -6,7 +6,7 @@
 namespace smeg::kernel::integer_sequences
 {
 	template <std::integral auto NewFirstElement, std::integral T, T... Ints>
-	constexpr auto pushFront(std::integer_sequence<T, Ints...>)
+	consteval auto pushFront(std::integer_sequence<T, Ints...>)
 	{
 		return std::integer_sequence<T, NewFirstElement, Ints...>();
 	}
