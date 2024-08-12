@@ -6,19 +6,22 @@
 
 namespace smeg::kernel::bare_metal
 {
-	namespace
+	template <std::integral auto FirstElement, std::integral auto... Values>
+	struct _StructTypeOfFirstElementIn
 	{
-		template <auto... Values>
-		using TypeOfFirstElementIn = decltype(std::to_array({Values...}))::value_type;
-	}
+		using Type = decltype(FirstElement);
+	};
+
+	template <std::integral auto... Values>
+	using _TypeOfFirstElementIn = _StructTypeOfFirstElementIn<Values...>::Type;
 
 	template <typename TSeq>
 	struct IntegerSequence;
 
 	template <std::integral auto... Ints>
-	struct IntegerSequence<std::integer_sequence<TypeOfFirstElementIn<Ints...>, Ints...>>
+	struct IntegerSequence<std::integer_sequence<_TypeOfFirstElementIn<Ints...>, Ints...>>
 	{
-		using Values = std::integer_sequence<TypeOfFirstElementIn<Ints...>, Ints...>;
+		using Values = std::integer_sequence<_TypeOfFirstElementIn<Ints...>, Ints...>;
 	};
 
 	template <typename T>
