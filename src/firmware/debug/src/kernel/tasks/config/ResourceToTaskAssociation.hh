@@ -4,6 +4,7 @@
 #include <type_traits>
 #include <utility>
 #include "../../integer-sequences/utilities.hh"
+#include "../../integer-sequences/Unique.hh"
 
 namespace smeg::kernel::tasks::config
 {
@@ -14,22 +15,6 @@ namespace smeg::kernel::tasks::config
 	{
 	private:
 		// TODO: ALL OF THIS NEEDS REFACTORING - IT CAN ALL BE SPLIT OUT AND TESTED INDEPENDENTLY...LOVELY.
-
-		template <typename T, T Head, T... Tail>
-		struct Unique
-		{
-			using Values = std::conditional<
-				((Head != Tail) && ...),
-				decltype(pushFront<Head>(typename Unique<T, Tail...>::Values{})),
-				typename Unique<T, Tail...>::Values
-			>::type;
-		};
-
-		template <typename T, T Head>
-		struct Unique<T, Head>
-		{
-			using Values = std::integer_sequence<T, Head>;
-		};
 
 		template <typename T, T Head, T... Tail>
 		class BubbleSorted

@@ -35,6 +35,7 @@ add_global_arguments(extra_cpp_args, language: 'cpp')
 # TODO: Disable the 'constructor parameter shadows member' warnings.
 # TODO: Disable the 'cxx11' ABI tag warnings for all projects, since everything will be built to the newer ABI ('-Wabi-tag') - this is generally an issue when using std::string
 # TODO: Disable the 'all member functions are private' warnings ('-Wctor-dtor-privacy').
+# TODO: Disable the '-Wstrict-overflow' warning - calling std::sort() seems to trigger it, which is beyond my control seeing how it's in the standard library
 
 if meson.is_cross_build()
 	cpp_link_args = ['-nostartfiles']
@@ -121,6 +122,7 @@ else
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerDataMemorySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerFiniArraySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerInitArraySectionTest.cc',
+			unit_tests_dir / kernel_integer_sequences_dir / 'UniqueTest.cc',
 			unit_tests_dir / kernel_integer_sequences_dir / 'UtilitiesTest.cc',
 			unit_tests_dir / kernel_tasks_dir / 'DefaultTaskFactoryTest.cc',
 			unit_tests_dir / kernel_tasks_dir / 'TaskLifecycleTest.cc',

@@ -1,4 +1,3 @@
-#include <array>
 #include <cstdint>
 #include <utility>
 
@@ -7,18 +6,14 @@
 
 #include "kernel/integer-sequences/utilities.hh"
 
+#include "../../IntegerSequenceUtilities.hh"
+
 using namespace mettle;
 
 using namespace smeg::kernel::integer_sequences;
 
 namespace smeg::tests::unit::kernel::integer_sequences
 {
-	template <typename T, T... Ints>
-	static auto asArray(std::integer_sequence<T, Ints...>)
-	{
-		return std::array{Ints...};
-	}
-
 	suite<> pushFrontTest("pushFront Test Suite", [](auto &unit)
 	{
 		unit.test("pushFront_calledWithEmptySequence_expectSingleElementSequenceOfSameValue", []()
