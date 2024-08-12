@@ -22,6 +22,7 @@ kernel_crt_crt0_linker_dir = kernel_crt_crt0_dir / 'linker'
 kernel_crt_crt0_mcu_dir = kernel_crt_crt0_dir / 'mcu'
 kernel_crt_crt0_mcu_st_dir = kernel_crt_crt0_mcu_dir / 'st'
 kernel_crt_picolibc_dir = kernel_crt_dir / 'picolibc'
+kernel_integer_sequences_dir = kernel_dir / 'integer-sequences'
 kernel_tasks_dir = kernel_dir / 'tasks'
 kernel_tasks_config_dir = kernel_tasks_dir / 'config'
 
@@ -111,7 +112,6 @@ else
 			unit_tests_dir / kernel_dir / 'ChainedInitialisationTest.cc',
 			unit_tests_dir / kernel_dir / 'ConstInitialisableTest.cc',
 			unit_tests_dir / kernel_dir / 'InitialisableTest.cc',
-			unit_tests_dir / kernel_dir / 'IntegerSequenceUtilitiesTest.cc',
 			unit_tests_dir / kernel_dir / 'NonConstInitialisableTest.cc',
 			unit_tests_dir / kernel_baremetal_dir / 'BitfieldTraitsTest.cc',
 			unit_tests_dir / kernel_baremetal_dir / 'BitmaskTest.cc',
@@ -121,6 +121,7 @@ else
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerDataMemorySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerFiniArraySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerInitArraySectionTest.cc',
+			unit_tests_dir / kernel_integer_sequences_dir / 'UtilitiesTest.cc',
 			unit_tests_dir / kernel_tasks_dir / 'DefaultTaskFactoryTest.cc',
 			unit_tests_dir / kernel_tasks_dir / 'TaskLifecycleTest.cc',
 			unit_tests_dir / kernel_tasks_config_dir / 'ResourceToTaskAssociationTest.cc',

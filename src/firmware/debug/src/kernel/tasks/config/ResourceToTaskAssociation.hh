@@ -3,10 +3,12 @@
 #include <cstdint>
 #include <type_traits>
 #include <utility>
-#include "../../IntegerSequenceUtilities.hh"
+#include "../../integer-sequences/utilities.hh"
 
 namespace smeg::kernel::tasks::config
 {
+	using namespace smeg::kernel::integer_sequences;
+
 	template <typename TResource, std::size_t HeadTaskId, std::size_t... TailTaskIds>
 	class ResourceToTaskAssociation
 	{

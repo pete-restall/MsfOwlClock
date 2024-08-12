@@ -5,13 +5,13 @@
 #include <mettle/suite.hpp>
 #include <mettle/matchers.hpp>
 
-#include "kernel/IntegerSequenceUtilities.hh"
+#include "kernel/integer-sequences/utilities.hh"
 
 using namespace mettle;
 
-using namespace smeg::kernel;
+using namespace smeg::kernel::integer_sequences;
 
-namespace smeg::tests::unit::kernel
+namespace smeg::tests::unit::kernel::integer_sequences
 {
 	template <typename T, T... Ints>
 	static auto asArray(std::integer_sequence<T, Ints...>)
@@ -19,7 +19,7 @@ namespace smeg::tests::unit::kernel
 		return std::array{Ints...};
 	}
 
-	suite<> integerSequenceUtilitiesTest("IntegerSequenceUtilities Test Suite", [](auto &unit)
+	suite<> pushFrontTest("pushFront Test Suite", [](auto &unit)
 	{
 		unit.test("pushFront_calledWithEmptySequence_expectSingleElementSequenceOfSameValue", []()
 		{
