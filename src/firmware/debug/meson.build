@@ -122,6 +122,7 @@ else
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerDataMemorySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerFiniArraySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerInitArraySectionTest.cc',
+			unit_tests_dir / kernel_integer_sequences_dir / 'BubbleSortedTest.cc',
 			unit_tests_dir / kernel_integer_sequences_dir / 'UniqueTest.cc',
 			unit_tests_dir / kernel_integer_sequences_dir / 'UtilitiesTest.cc',
 			unit_tests_dir / kernel_tasks_dir / 'DefaultTaskFactoryTest.cc',
