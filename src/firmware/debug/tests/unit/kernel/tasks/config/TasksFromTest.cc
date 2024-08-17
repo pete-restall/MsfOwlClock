@@ -3,8 +3,8 @@
 #include <mettle/suite.hpp>
 #include <mettle/matchers.hpp>
 
-#include "kernel/tasks/DefaultTaskStack.hh"
 #include "kernel/tasks/config/TasksFrom.hh"
+#include "kernel/tasks/config/dsl/DefaultTaskStack.hh"
 
 using namespace mettle;
 
