@@ -6,24 +6,14 @@
 #include "kernel/tasks/config/TasksFrom.hh"
 #include "kernel/tasks/config/dsl/DefaultTaskStack.hh"
 
+#include "DummyTask.hh"
+
 using namespace mettle;
 
 using namespace smeg::kernel::tasks::config;
 
 namespace smeg::tests::unit::kernel::tasks::config
 {
-	template <auto T>
-	struct DummyTask
-	{
-		DummyTask(void)
-		{
-		}
-
-		void run(void)
-		{
-		}
-	};
-
 	suite<> tasksFromTest("TasksFrom Test Suite", [](auto &unit)
 	{
 		unit.test("Types_getWhenPassedConfigWithEmptyTasks_expectEmptyTuple", []()

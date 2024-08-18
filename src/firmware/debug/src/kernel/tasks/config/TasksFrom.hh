@@ -5,6 +5,7 @@
 
 namespace smeg::kernel::tasks::config
 {
+	// TODO: Refactor this to use TaskConfigsFrom::PerTask, which will remove some duplication.
 	template <IHaveConfigForTasks TConfig>
 	class TasksFrom
 	{
@@ -24,10 +25,10 @@ namespace smeg::kernel::tasks::config
 			using Types = T::Types;
 		};
 
-		template <typename... TTasks>
-		static constexpr auto tasksFrom(std::tuple<TTasks...>)
+		template <typename... TTaskConfigs>
+		static constexpr auto tasksFrom(std::tuple<TTaskConfigs...>)
 		{
-			return std::tuple_cat((typename AsTuple<TTasks>::Types{}) ...);
+			return std::tuple_cat((typename AsTuple<TTaskConfigs>::Types{}) ...);
 		}
 
 	public:
