@@ -5,7 +5,6 @@
 
 namespace smeg::kernel::tasks::config
 {
-	// TODO: Refactor this to use TaskConfigsFrom::PerTask, which will remove some duplication.
 	template <IHaveConfigForTasks TConfig>
 	class TasksFrom
 	{
