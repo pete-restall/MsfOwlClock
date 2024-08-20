@@ -129,6 +129,7 @@ else
 			unit_tests_dir / kernel_tasks_dir / 'DefaultTaskFactoryTest.cc',
 			unit_tests_dir / kernel_tasks_dir / 'TaskLifecycleTest.cc',
 			unit_tests_dir / kernel_tasks_config_dir / 'ResourceToTaskAssociationTest.cc',
+			unit_tests_dir / kernel_tasks_config_dir / 'TaskConfigToResourceAssociationTest.cc',
 			unit_tests_dir / kernel_tasks_config_dir / 'TasksFromTest.cc',
 			unit_tests_dir / kernel_tasks_config_dir / 'TaskStacksFromTest.cc'
 		],
