@@ -36,6 +36,7 @@ add_global_arguments(extra_cpp_args, language: 'cpp')
 # TODO: Disable the 'cxx11' ABI tag warnings for all projects, since everything will be built to the newer ABI ('-Wabi-tag') - this is generally an issue when using std::string
 # TODO: Disable the 'all member functions are private' warnings ('-Wctor-dtor-privacy').
 # TODO: Disable the '-Wstrict-overflow' warning - calling std::sort() seems to trigger it, which is beyond my control seeing how it's in the standard library
+# TODO: Disable the '-Wunused-local-typedefs' warning, probably just for tests.
 
 if meson.is_cross_build()
 	cpp_link_args = ['-nostartfiles']

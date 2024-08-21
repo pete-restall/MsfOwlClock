@@ -38,17 +38,6 @@ namespace smeg::tests::unit::kernel::tasks::config
 		expect(TaskConfigToResourceAssociation<TaskId, SimpleTaskConfig>::nextTaskId, equal_to(TaskId + 1));
 	}
 
-	template <auto TaskId>
-	static void nextTaskId_getWhenPassedConfigForNoOverlaidTasks_expectSameTaskIdAsPassedToTemplate(void)
-	{
-		struct OverlaidTaskConfig
-		{
-			using Types = std::tuple<>;
-		};
-
-		expect(TaskConfigToResourceAssociation<TaskId, OverlaidTaskConfig>::nextTaskId, equal_to(TaskId));
-	}
-
 	template <auto FirstTaskId, typename... TTasks>
 	static void nextTaskId_getWhenPassedConfigForOverlaidTasks_expectTaskIdIncrementedByNumberOfTasks(void)
 	{
@@ -74,26 +63,6 @@ namespace smeg::tests::unit::kernel::tasks::config
 			nextTaskId_getWhenPassedConfigForSimpleTask_expectTaskIdIncrementedByOne<8, DummyTask<1253>>();
 		});
 
-/* TODO: When we allow ResourceToTaskAssociation with no associated tasks, we can uncomment this and it should compile...
-		unit.test("Type_getWhenPassedConfigForNoOverlaidTasks_expectResourceToTaskAssociationOfTaskConfigToNoTaskIds", []()
-		{
-			struct OverlaidTaskConfig
-			{
-				using Types = std::tuple<>;
-			};
-
-			expect(
-				typeid(typename TaskConfigToResourceAssociation<12, OverlaidTaskConfig>::Type) == typeid(ResourceToTaskAssociation<OverlaidTaskConfig>),
-				equal_to(true));
-		});
-
-		unit.test("nextTaskId_getWhenPassedConfigForNoOverlaidTasks_expectSameTaskIdAsPassedToTemplate", []()
-		{
-			nextTaskId_getWhenPassedConfigForNoOverlaidTasks_expectSameTaskIdAsPassedToTemplate<0>();
-			nextTaskId_getWhenPassedConfigForNoOverlaidTasks_expectSameTaskIdAsPassedToTemplate<91>();
-			nextTaskId_getWhenPassedConfigForNoOverlaidTasks_expectSameTaskIdAsPassedToTemplate<128974>();
-		});
-*/
 		unit.test("Type_getWhenPassedConfigForOverlaidTasks_expectResourceToTaskAssociationOfTaskConfigToIncrementingTaskId", []()
 		{
 			struct OverlaidTaskConfig
