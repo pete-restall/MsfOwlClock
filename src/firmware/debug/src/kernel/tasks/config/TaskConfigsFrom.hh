@@ -3,7 +3,6 @@
 #include <cstdint>
 #include <tuple>
 #include "IHaveConfigForTasks.hh"
-#include "ResourceToTaskAssociation.hh"
 #include "TaskConfigToResourceAssociation.hh"
 
 namespace smeg::kernel::tasks::config
