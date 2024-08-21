@@ -22,76 +22,91 @@ namespace smeg::tests::unit::kernel::tasks::config
 
 	suite<> resourceToTaskAssociationTest("ResourceToTaskAssociation Test Suite", [](auto &unit)
 	{
-		unit.test("isSharedResource_getWhenPassedSingleTaskId_expectFalse", []()
+		unit.test("hasMultipleTasks_getWhenPassedNoTasksId_expectFalse", []()
+		{
+			expect(ResourceToTaskAssociation<DummyResource>::hasMultipleTasks, equal_to(false));
+		});
+
+		unit.test("hasMultipleTasks_getWhenPassedSingleTaskId_expectFalse", []()
 		{
 			std::array assertions
 			{
-				ResourceToTaskAssociation<DummyResource, 1>::isSharedResource,
-				ResourceToTaskAssociation<DummyResource, 77>::isSharedResource,
-				ResourceToTaskAssociation<DummyResource, 1024>::isSharedResource
+				ResourceToTaskAssociation<DummyResource, 1>::hasMultipleTasks,
+				ResourceToTaskAssociation<DummyResource, 77>::hasMultipleTasks,
+				ResourceToTaskAssociation<DummyResource, 1024>::hasMultipleTasks
 			};
 
 			expect(assertions, each(equal_to(false)));
 		});
 
-		unit.test("isSharedResource_getWhenPassedMultipleTaskIds_expectTrue", []()
+		unit.test("hasMultipleTasks_getWhenPassedMultipleTaskIds_expectTrue", []()
 		{
 			std::array assertions
 			{
-				ResourceToTaskAssociation<DummyResource, 1, 2>::isSharedResource,
-				ResourceToTaskAssociation<DummyResource, 77, 33, 11>::isSharedResource,
-				ResourceToTaskAssociation<DummyResource, 0, 1, 1, 2, 3, 5, 8, 13>::isSharedResource
+				ResourceToTaskAssociation<DummyResource, 1, 2>::hasMultipleTasks,
+				ResourceToTaskAssociation<DummyResource, 77, 33, 11>::hasMultipleTasks,
+				ResourceToTaskAssociation<DummyResource, 0, 1, 1, 2, 3, 5, 8, 13>::hasMultipleTasks
 			};
 
 			expect(assertions, each(equal_to(true)));
 		});
 
-		unit.test("isSharedResource_getWhenPassedSingleDuplicatedTaskId_expectFalse", []()
+		unit.test("hasMultipleTasks_getWhenPassedSingleDuplicatedTaskId_expectFalse", []()
 		{
 			std::array assertions
 			{
-				ResourceToTaskAssociation<DummyResource, 1, 1>::isSharedResource,
-				ResourceToTaskAssociation<DummyResource, 2, 2, 2>::isSharedResource,
-				ResourceToTaskAssociation<DummyResource, 7, 7, 7, 7, 7, 7, 7>::isSharedResource
+				ResourceToTaskAssociation<DummyResource, 1, 1>::hasMultipleTasks,
+				ResourceToTaskAssociation<DummyResource, 2, 2, 2>::hasMultipleTasks,
+				ResourceToTaskAssociation<DummyResource, 7, 7, 7, 7, 7, 7, 7>::hasMultipleTasks
 			};
 
 			expect(assertions, each(equal_to(false)));
 		});
 
-		unit.test("IsSharedResource_getWhenPassedSingleTaskId_expectFalse", []()
+		unit.test("HasMultipleTasks_getWhenPassedNoTaskIds_expectFalse", []()
+		{
+			expect(typeid(ResourceToTaskAssociation<DummyResource>::HasMultipleTasks) == typeid(std::false_type), equal_to(true));
+		});
+
+		unit.test("HasMultipleTasks_getWhenPassedSingleTaskId_expectFalse", []()
 		{
 			std::array assertions
 			{
-				typeid(ResourceToTaskAssociation<DummyResource, 1>::IsSharedResource) == typeid(std::false_type),
-				typeid(ResourceToTaskAssociation<DummyResource, 77>::IsSharedResource) == typeid(std::false_type),
-				typeid(ResourceToTaskAssociation<DummyResource, 1024>::IsSharedResource) == typeid(std::false_type)
+				typeid(ResourceToTaskAssociation<DummyResource, 1>::HasMultipleTasks) == typeid(std::false_type),
+				typeid(ResourceToTaskAssociation<DummyResource, 77>::HasMultipleTasks) == typeid(std::false_type),
+				typeid(ResourceToTaskAssociation<DummyResource, 1024>::HasMultipleTasks) == typeid(std::false_type)
 			};
 
 			expect(assertions, each(equal_to(true)));
 		});
 
-		unit.test("IsSharedResource_getWhenPassedMultipleTaskIds_expectTrue", []()
+		unit.test("HasMultipleTasks_getWhenPassedMultipleTaskIds_expectTrue", []()
 		{
 			std::array assertions
 			{
-				typeid(ResourceToTaskAssociation<DummyResource, 1, 2>::IsSharedResource) == typeid(std::true_type),
-				typeid(ResourceToTaskAssociation<DummyResource, 77, 33, 11>::IsSharedResource) == typeid(std::true_type),
-				typeid(ResourceToTaskAssociation<DummyResource, 0, 1, 1, 2, 3, 5, 8, 13>::IsSharedResource) == typeid(std::true_type)
+				typeid(ResourceToTaskAssociation<DummyResource, 1, 2>::HasMultipleTasks) == typeid(std::true_type),
+				typeid(ResourceToTaskAssociation<DummyResource, 77, 33, 11>::HasMultipleTasks) == typeid(std::true_type),
+				typeid(ResourceToTaskAssociation<DummyResource, 0, 1, 1, 2, 3, 5, 8, 13>::HasMultipleTasks) == typeid(std::true_type)
 			};
 
 			expect(assertions, each(equal_to(true)));
 		});
 
-		unit.test("IsSharedResource_getWhenPassedSingleDuplicatedTaskId_expectFalse", []()
+		unit.test("HasMultipleTasks_getWhenPassedSingleDuplicatedTaskId_expectFalse", []()
 		{
 			std::array assertions
 			{
-				typeid(ResourceToTaskAssociation<DummyResource, 1, 1>::IsSharedResource) == typeid(std::false_type),
-				typeid(ResourceToTaskAssociation<DummyResource, 2, 2, 2>::IsSharedResource) == typeid(std::false_type),
-				typeid(ResourceToTaskAssociation<DummyResource, 7, 7, 7, 7, 7, 7, 7>::IsSharedResource) == typeid(std::false_type)
+				typeid(ResourceToTaskAssociation<DummyResource, 1, 1>::HasMultipleTasks) == typeid(std::false_type),
+				typeid(ResourceToTaskAssociation<DummyResource, 2, 2, 2>::HasMultipleTasks) == typeid(std::false_type),
+				typeid(ResourceToTaskAssociation<DummyResource, 7, 7, 7, 7, 7, 7, 7>::HasMultipleTasks) == typeid(std::false_type)
 			};
 
 			expect(assertions, each(equal_to(true)));
+		});
+
+		unit.test("TaskIds_getWhenPassedNoTaskIds_expectNoTaskIds", []()
+		{
+			expect(asVector(ResourceToTaskAssociation<DummyResource>::TaskIds{}), array());
 		});
 
 		unit.test("TaskIds_getWhenPassedSingleTaskId_expectSameTaskId", []()
