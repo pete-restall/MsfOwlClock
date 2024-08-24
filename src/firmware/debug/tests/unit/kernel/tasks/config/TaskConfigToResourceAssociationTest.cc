@@ -28,6 +28,17 @@ namespace smeg::tests::unit::kernel::tasks::config
 	}
 
 	template <auto TaskId, typename TTask>
+	static void numberOfTasks_getWhenPassedConfigForSimpleTask_expectOne(void)
+	{
+		struct SimpleTaskConfig
+		{
+			using Type = TTask;
+		};
+
+		expect(TaskConfigToResourceAssociation<TaskId, SimpleTaskConfig>::numberOfTasks, equal_to(1));
+	}
+
+	template <auto TaskId, typename TTask>
 	static void nextTaskId_getWhenPassedConfigForSimpleTask_expectTaskIdIncrementedByOne(void)
 	{
 		struct SimpleTaskConfig
@@ -36,6 +47,17 @@ namespace smeg::tests::unit::kernel::tasks::config
 		};
 
 		expect(TaskConfigToResourceAssociation<TaskId, SimpleTaskConfig>::nextTaskId, equal_to(TaskId + 1));
+	}
+
+	template <auto FirstTaskId, typename... TTasks>
+	static void numberOfTasks_getWhenPassedConfigForOverlaidTasks_expectSameNumberOfTasksAsOverlay(void)
+	{
+		struct OverlaidTaskConfig
+		{
+			using Types = std::tuple<TTasks...>;
+		};
+
+		expect(TaskConfigToResourceAssociation<FirstTaskId, OverlaidTaskConfig>::numberOfTasks, equal_to(sizeof...(TTasks)));
 	}
 
 	template <auto FirstTaskId, typename... TTasks>
@@ -57,6 +79,12 @@ namespace smeg::tests::unit::kernel::tasks::config
 			Type_getWhenPassedConfigForSimpleTask_expectResourceToTaskAssociationOfTaskConfigToTaskId<0, DummyTask<1>>();
 		});
 
+		unit.test("numberOfTasks_getWhenPassedConfigForSimpleTask_expectOne", []()
+		{
+			numberOfTasks_getWhenPassedConfigForSimpleTask_expectOne<0, DummyTask<15633>>();
+			numberOfTasks_getWhenPassedConfigForSimpleTask_expectOne<8, DummyTask<5>>();
+		});
+
 		unit.test("nextTaskId_getWhenPassedConfigForSimpleTask_expectTaskIdIncrementedByOne", []()
 		{
 			nextTaskId_getWhenPassedConfigForSimpleTask_expectTaskIdIncrementedByOne<0, DummyTask<828129>>();
@@ -74,6 +102,13 @@ namespace smeg::tests::unit::kernel::tasks::config
 				typeid(typename TaskConfigToResourceAssociation<18912, OverlaidTaskConfig>::Type) ==
 					typeid(ResourceToTaskAssociation<OverlaidTaskConfig, 18912, 18913, 18914, 18915, 18916, 18917>),
 				equal_to(true));
+		});
+
+		unit.test("numberOfTasks_getWhenPassedConfigForOverlaidTasks_expectSameNumberOfTasksAsOverlay", []()
+		{
+			numberOfTasks_getWhenPassedConfigForOverlaidTasks_expectSameNumberOfTasksAsOverlay<0, DummyTask<2>>();
+			numberOfTasks_getWhenPassedConfigForOverlaidTasks_expectSameNumberOfTasksAsOverlay<7, DummyTask<2345>, DummyTask<8075>>();
+			numberOfTasks_getWhenPassedConfigForOverlaidTasks_expectSameNumberOfTasksAsOverlay<34, DummyTask<2>, DummyTask<4>, DummyTask<6>>();
 		});
 
 		unit.test("nextTaskId_getWhenPassedConfigForOverlaidTasks_expectTaskIdIncrementedByNumberOfTasks", []()

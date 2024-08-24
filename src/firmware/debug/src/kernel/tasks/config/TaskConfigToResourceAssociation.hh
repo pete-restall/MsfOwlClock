@@ -14,9 +14,10 @@ namespace smeg::kernel::tasks::config
 	template <std::size_t FirstTaskId, IHaveConfigForSimpleTask TTaskConfig>
 	struct TaskConfigToResourceAssociation<FirstTaskId, TTaskConfig>
 	{
-		using Type = ResourceToTaskAssociation<TTaskConfig, FirstTaskId>;
-
+		static constexpr std::size_t numberOfTasks = 1;
 		static constexpr std::size_t nextTaskId = FirstTaskId + 1;
+
+		using Type = ResourceToTaskAssociation<TTaskConfig, FirstTaskId>;
 	};
 
 	template <std::size_t FirstTaskId, IHaveConfigForOverlaidTasks TTaskConfig>
@@ -29,12 +30,11 @@ namespace smeg::kernel::tasks::config
 			return ResourceToTaskAssociation<TTaskConfig, FirstTaskId + Seq...>();
 		}
 
-		static constexpr std::size_t numberOfTasks = std::tuple_size_v<typename TTaskConfig::Types>;
-
 	public:
-		using Type = decltype(asResourceToTaskAssociation(std::make_index_sequence<numberOfTasks>{}));
-
+		static constexpr std::size_t numberOfTasks = std::tuple_size_v<typename TTaskConfig::Types>;
 		static constexpr std::size_t nextTaskId = FirstTaskId + numberOfTasks;
+
+		using Type = decltype(asResourceToTaskAssociation(std::make_index_sequence<numberOfTasks>{}));
 	};
 }
 
