@@ -139,7 +139,7 @@ else
 			src_dir
 		])
 
-	test('kernel_unit_tests', mettle, args: [kernel_unit_tests])
+	test('kernel_unit_tests', mettle, args: ['--timeout 2000', kernel_unit_tests])
 
 	app_unit_tests_dir = unit_tests_dir / 'apps'
 	app_unit_tests = executable(

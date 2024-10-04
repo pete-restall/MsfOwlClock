@@ -88,7 +88,8 @@
 			"text_encoding": "cpp",
 			"cinttypes": "cpp",
 			"typeinfo": "cpp",
-			"variant": "cpp"
+			"variant": "cpp",
+			"list": "cpp"
 		}
 	},
 	"launch": {
@@ -126,108 +127,156 @@
 				"label": "Meson Setup (Native)",
 				"group": "build",
 				"type": "shell",
-				"command": "meson setup build/meson/out/native --native-file build/meson/common.ini --native-file build/meson/native.ini",
+				"command": "meson setup build/meson/out/native --native-file build/meson/common.ini --native-file build/meson/native.ini 2>&1 | build/fixpath",
 				"options": {
 					"cwd": "${workspaceRoot}"
+				},
+				"problemMatcher": {
+					"base": "$gcc",
+					"fileLocation": "absolute"
 				}
 			},
 			{
 				"label": "Meson Compile (Native)",
 				"group": "build",
 				"type": "shell",
-				"command": "meson compile -C build/meson/out/native",
+				"command": "meson compile -C build/meson/out/native 2>&1 | build/fixpath",
 				"options": {
 					"cwd": "${workspaceRoot}"
+				},
+				"problemMatcher": {
+					"base": "$gcc",
+					"fileLocation": "absolute"
 				}
 			},
 			{
 				"label": "Meson Clean (Native)",
 				"group": "build",
 				"type": "shell",
-				"command": "meson compile --clean -C build/meson/out/native",
+				"command": "meson compile --clean -C build/meson/out/native 2>&1 | build/fixpath",
 				"options": {
 					"cwd": "${workspaceRoot}"
+				},
+				"problemMatcher": {
+					"base": "$gcc",
+					"fileLocation": "absolute"
 				}
 			},
 			{
 				"label": "Meson Setup (PIC32CX1025SG41100)",
 				"group": "build",
 				"type": "shell",
-				"command": "meson setup build/meson/out/pic32cx1025sg41100 --cross-file build/meson/common.ini --cross-file build/meson/pic32cx1025sg41100.ini",
+				"command": "meson setup build/meson/out/pic32cx1025sg41100 --cross-file build/meson/common.ini --cross-file build/meson/pic32cx1025sg41100.ini 2>&1 | build/fixpath",
 				"options": {
 					"cwd": "${workspaceRoot}"
+				},
+				"problemMatcher": {
+					"base": "$gcc",
+					"fileLocation": "absolute"
 				}
 			},
 			{
 				"label": "Meson Compile (PIC32CX1025SG41100)",
 				"group": "build",
 				"type": "shell",
-				"command": "meson compile -C build/meson/out/pic32cx1025sg41100",
+				"command": "meson compile -C build/meson/out/pic32cx1025sg41100 2>&1 | build/fixpath",
 				"options": {
 					"cwd": "${workspaceRoot}"
+				},
+				"problemMatcher": {
+					"base": "$gcc",
+					"fileLocation": "absolute"
 				}
 			},
 			{
 				"label": "Meson Clean (PIC32CX1025SG41100)",
 				"group": "build",
 				"type": "shell",
-				"command": "meson compile --clean -C build/meson/out/pic32cx1025sg41100",
+				"command": "meson compile --clean -C build/meson/out/pic32cx1025sg41100 2>&1 | build/fixpath",
 				"options": {
 					"cwd": "${workspaceRoot}"
+				},
+				"problemMatcher": {
+					"base": "$gcc",
+					"fileLocation": "absolute"
 				}
 			},
 			{
 				"label": "Meson Setup (STM32L432KC)",
 				"group": "build",
 				"type": "shell",
-				"command": "meson setup build/meson/out/stm32l432kc --cross-file build/meson/common.ini --cross-file build/meson/stm32l432kc.ini",
+				"command": "meson setup build/meson/out/stm32l432kc --cross-file build/meson/common.ini --cross-file build/meson/stm32l432kc.ini 2>&1 | build/fixpath",
 				"options": {
 					"cwd": "${workspaceRoot}"
+				},
+				"problemMatcher": {
+					"base": "$gcc",
+					"fileLocation": "absolute"
 				}
 			},
 			{
 				"label": "Meson Compile (STM32L432KC)",
 				"group": "build",
 				"type": "shell",
-				"command": "meson compile -C build/meson/out/stm32l432kc",
+				"command": "meson compile -C build/meson/out/stm32l432kc 2>&1 | build/fixpath",
 				"options": {
 					"cwd": "${workspaceRoot}"
+				},
+				"problemMatcher": {
+					"base": "$gcc",
+					"fileLocation": "absolute"
 				}
 			},
 			{
 				"label": "Meson Clean (STM32L432KC)",
 				"group": "build",
 				"type": "shell",
-				"command": "meson compile --clean -C build/meson/out/stm32l432kc",
+				"command": "meson compile --clean -C build/meson/out/stm32l432kc 2>&1 | build/fixpath",
 				"options": {
 					"cwd": "${workspaceRoot}"
+				},
+				"problemMatcher": {
+					"base": "$gcc",
+					"fileLocation": "absolute"
 				}
 			},
 			{
 				"label": "Meson Test (All)",
 				"group": "build",
 				"type": "shell",
-				"command": "meson test -C build/meson/out/native --print-errorlogs",
+				"command": "meson test -C build/meson/out/native --print-errorlogs 2>&1 | build/fixpath",
 				"options": {
 					"cwd": "${workspaceRoot}"
+				},
+				"problemMatcher": {
+					"base": "$gcc",
+					"fileLocation": "absolute"
 				}
 			},
 			{
 				"label": "Meson Test (Kernel Unit Tests)",
 				"group": "build",
 				"type": "shell",
-				"command": "meson test -C build/meson/out/native --print-errorlogs kernel_unit_tests",
+				"command": "meson test -C build/meson/out/native --print-errorlogs kernel_unit_tests 2>&1 | build/fixpath",
 				"options": {
 					"cwd": "${workspaceRoot}"
+				},
+				"problemMatcher": {
+					"base": "$gcc",
+					"fileLocation": "absolute"
 				}
 			},
 			{
 				"label": "Meson Test (App Unit Tests)",
 				"group": "build",
 				"type": "shell",
-				"command": "meson test -C build/meson/out/native --print-errorlogs app_unit_tests",
+				"command": "meson test -C build/meson/out/native --print-errorlogs app_unit_tests 2>&1 | build/fixpath",
 				"options": {
 					"cwd": "${workspaceRoot}"
+				},
+				"problemMatcher": {
+					"base": "$gcc",
+					"fileLocation": "absolute"
 				}
 			}
 		]

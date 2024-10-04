@@ -1,0 +1,11 @@
+.DS_Store
+build*/*
+autom4*.cache/*
+config.h
+config.log
+config.status
+Makefile
+stamp-h1
+*.Po
+*.o
+fixpath
