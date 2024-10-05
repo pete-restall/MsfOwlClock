@@ -12,6 +12,7 @@ namespace smeg::kernel::tasks::config
 	template <typename TResource, std::size_t... AssociatedTaskIds>
 	struct ResourceToTaskAssociation
 	{
+		using ResourceType = TResource;
 		using TaskIds = SortedSet<std::size_t, AssociatedTaskIds...>::Ascending;
 
 		using HasMultipleTasks = std::conditional<(TaskIds::size() > 1), std::true_type, std::false_type>::type;
