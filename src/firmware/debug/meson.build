@@ -28,15 +28,29 @@ kernel_tasks_config_dir = kernel_tasks_dir / 'config'
 
 app_dir = 'apps/debug'
 
-extra_cpp_args = [] + meson.get_external_property('mcu_cpp_args', [])
-add_global_arguments(extra_cpp_args, language: 'cpp')
+disable_stdlib_warnings_cpp_args = [
+	# Mixing libraries compiled with different ABIs, so irrelevant to us (mainly an issue marshalling std::string across library calls)
+	'-Wno-abi-tag'] # 'T1' does not have the "cxx11" ABI tag that 'T2'
+
+disable_metaprogramming_false_positives_cpp_args = [
+	'-Wno-ctor-dtor-privacy', # all member functions in class 'T' are private
+	'-Wno-unused-local-typedefs'] # typedef 'T' locally defined but not used
+
+disable_stylistic_warnings_cpp_args = [
+	'-Wno-shadow'] # declaration of 'X' shadows a member of 'T'
 
 # TODO: Disable the 'noexcept' warnings for the tests, otherwise std::abort() is called on failure and that doesn't allow source / line numbers, etc.
-# TODO: Disable the 'constructor parameter shadows member' warnings.
-# TODO: Disable the 'cxx11' ABI tag warnings for all projects, since everything will be built to the newer ABI ('-Wabi-tag') - this is generally an issue when using std::string
-# TODO: Disable the 'all member functions are private' warnings ('-Wctor-dtor-privacy').
-# TODO: Disable the '-Wstrict-overflow' warning - calling std::sort() seems to trigger it, which is beyond my control seeing how it's in the standard library
-# TODO: Disable the '-Wunused-local-typedefs' warning, probably just for tests.
+# TODO: We will tolerate these warnings for now but they need looking into...
+todo_look_into_these_warnings_cpp_args = [
+	# TODO: The strict overflow is useful but std::sort() causes it; look into why / use a local pragma if necessary
+	'-Wno-strict-overflow'] # assuming signed overflow does not occur when changing X +- C1 cmp C2 to X cmp C2 -+ C1
+
+global_disable_warnings_cpp_args = disable_stdlib_warnings_cpp_args + disable_metaprogramming_false_positives_cpp_args + disable_stylistic_warnings_cpp_args
+test_disable_warnings_cpp_args = []
+
+extra_cpp_args = global_disable_warnings_cpp_args + meson.get_external_property('mcu_cpp_args', [])
+add_global_arguments(extra_cpp_args, language: 'cpp', native: true)
+add_global_arguments(extra_cpp_args, language: 'cpp', native: false)
 
 if meson.is_cross_build()
 	cpp_link_args = ['-nostartfiles']
@@ -106,6 +120,7 @@ else
 	kernel_unit_tests = executable(
 		'kernel_unit_tests',
 		native: true,
+		cpp_args: test_disable_warnings_cpp_args,
 		dependencies: [libmettle],
 		sources: [
 			unit_tests_dir / 'mettle.cc',
@@ -139,12 +154,13 @@ else
 			src_dir
 		])
 
-	test('kernel_unit_tests', mettle, args: ['--timeout 2000', kernel_unit_tests])
+	test('kernel_unit_tests', mettle, args: [kernel_unit_tests])
 
 	app_unit_tests_dir = unit_tests_dir / 'apps'
 	app_unit_tests = executable(
 		'app_unit_tests',
 		native: true,
+		cpp_args: test_disable_warnings_cpp_args,
 		dependencies: [libmettle],
 		sources: [
 			unit_tests_dir / 'mettle.cc',
