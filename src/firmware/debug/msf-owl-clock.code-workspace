@@ -25,7 +25,7 @@
 			"${workspaceRoot}/src"
 		],
 		"files.exclude": {
-			"build/meson/out": "explorerExcludedFiles"
+			"build/meson/out": true
 		},
 		"files.associations": {
 			"cstdint": "cpp",
@@ -341,10 +341,31 @@
 				"options": {
 					"cwd": "${workspaceRoot}"
 				},
-				"problemMatcher": {
-					"base": "$gcc",
-					"fileLocation": "absolute"
-				},
+				"problemMatcher": [
+					{
+						"base": "$gcc",
+						"fileLocation": "absolute"
+					},
+					{
+						"fileLocation": ["relative", "${workspaceRoot}/build/meson/out/native"],
+						"pattern": [
+							{
+								"regexp": "^.+ > (.+) FAILED$",
+								"code": 1
+							},
+							{
+								"regexp": "^    (.+):([0-9]+)$",
+								"file": 1,
+								"line": 2
+							},
+							{
+								"regexp": "^    ((expected|actual): +(.+))$",
+								"message": 1,
+								"loop": true
+							}
+						]
+					}
+				],
 				"presentation": {
 					"echo": true,
 					"reveal": "never",
@@ -362,10 +383,31 @@
 				"options": {
 					"cwd": "${workspaceRoot}"
 				},
-				"problemMatcher": {
-					"base": "$gcc",
-					"fileLocation": "absolute"
-				},
+				"problemMatcher": [
+					{
+						"base": "$gcc",
+						"fileLocation": "absolute"
+					},
+					{
+						"fileLocation": ["relative", "${workspaceRoot}/build/meson/out/native"],
+						"pattern": [
+							{
+								"regexp": "^.+ > (.+) FAILED$",
+								"code": 1
+							},
+							{
+								"regexp": "^    (.+):([0-9]+)$",
+								"file": 1,
+								"line": 2
+							},
+							{
+								"regexp": "^    ((expected|actual): +(.+))$",
+								"message": 1,
+								"loop": true
+							}
+						]
+					}
+				],
 				"presentation": {
 					"echo": true,
 					"reveal": "never",
