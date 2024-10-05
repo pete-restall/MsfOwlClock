@@ -47,7 +47,8 @@ namespace smeg::tests::unit::kernel::tasks
 			onExceptionReturnValues(std::make_tuple(
 				std::make_pair(dummy<const Exception &>(), std::list<bool>{}),
 				std::make_pair(dummy<const std::exception &>(), std::list<bool>{}))),
-			onUnknownExceptionCalls(onUnknownExceptionCalls)
+			onUnknownExceptionCalls(onUnknownExceptionCalls),
+			onUnknownExceptionReturnValues()
 		{
 		}
 
