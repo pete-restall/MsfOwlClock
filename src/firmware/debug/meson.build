@@ -25,25 +25,30 @@ kernel_crt_picolibc_dir = kernel_crt_dir / 'picolibc'
 kernel_integer_sequences_dir = kernel_dir / 'integer-sequences'
 kernel_tasks_dir = kernel_dir / 'tasks'
 kernel_tasks_config_dir = kernel_tasks_dir / 'config'
+kernel_tuples_dir = kernel_dir / 'tuples'
 
 app_dir = 'apps/debug'
 
 disable_stdlib_warnings_cpp_args = [
 	# Mixing libraries compiled with different ABIs, so irrelevant to us (mainly an issue marshalling std::string across library calls)
-	'-Wno-abi-tag'] # 'T1' does not have the "cxx11" ABI tag that 'T2'
+	'-Wno-abi-tag' # 'T1' does not have the "cxx11" ABI tag that 'T2'
+]
 
 disable_metaprogramming_false_positives_cpp_args = [
 	'-Wno-ctor-dtor-privacy', # all member functions in class 'T' are private
-	'-Wno-unused-local-typedefs'] # typedef 'T' locally defined but not used
+	'-Wno-unused-local-typedefs' # typedef 'T' locally defined but not used
+]
 
 disable_stylistic_warnings_cpp_args = [
-	'-Wno-shadow'] # declaration of 'X' shadows a member of 'T'
+	'-Wno-shadow' # declaration of 'X' shadows a member of 'T'
+]
 
 # TODO: Disable the 'noexcept' warnings for the tests, otherwise std::abort() is called on failure and that doesn't allow source / line numbers, etc.
 # TODO: We will tolerate these warnings for now but they need looking into...
 todo_look_into_these_warnings_cpp_args = [
 	# TODO: The strict overflow is useful but std::sort() causes it; look into why / use a local pragma if necessary
-	'-Wno-strict-overflow'] # assuming signed overflow does not occur when changing X +- C1 cmp C2 to X cmp C2 -+ C1
+	'-Wno-strict-overflow' # assuming signed overflow does not occur when changing X +- C1 cmp C2 to X cmp C2 -+ C1
+]
 
 global_disable_warnings_cpp_args = disable_stdlib_warnings_cpp_args + disable_metaprogramming_false_positives_cpp_args + disable_stylistic_warnings_cpp_args
 test_disable_warnings_cpp_args = []
@@ -60,7 +65,8 @@ if meson.is_cross_build()
 		native: false,
 		pic: false,
 		sources: [
-			src_dir / kernel_dir / '_entrypoint.cc'])
+			src_dir / kernel_dir / '_entrypoint.cc'
+		])
 
 	libcrt = library(
 		'crt',
@@ -70,7 +76,8 @@ if meson.is_cross_build()
 			src_dir / kernel_crt_picolibc_dir / '_exit.cc',
 			src_dir / kernel_crt_picolibc_dir / 'abort.cc',
 			src_dir / kernel_crt_picolibc_dir / 'atexit.cc',
-			src_dir / kernel_crt_picolibc_dir / 'sbrk.cc'])
+			src_dir / kernel_crt_picolibc_dir / 'sbrk.cc'
+		])
 
 	libcrt0 = library(
 		'crt0',
@@ -148,7 +155,9 @@ else
 			unit_tests_dir / kernel_tasks_config_dir / 'TaskConfigsFromTest.cc',
 			unit_tests_dir / kernel_tasks_config_dir / 'TaskConfigToResourceAssociationTest.cc',
 			unit_tests_dir / kernel_tasks_config_dir / 'TasksFromTest.cc',
-			unit_tests_dir / kernel_tasks_config_dir / 'TaskStacksFromTest.cc'
+			unit_tests_dir / kernel_tasks_config_dir / 'TaskStacksFromTest.cc',
+			unit_tests_dir / kernel_tuples_dir / 'TupleIndexZipTest.cc',
+			unit_tests_dir / kernel_tuples_dir / 'TupleProjectionTest.cc'
 		],
 		include_directories: [
 			src_dir

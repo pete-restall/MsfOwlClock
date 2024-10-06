@@ -2,30 +2,27 @@
 #define __SMEG_KERNEL_TASKS_CONFIG_TASKSTACKSFROM_HH
 #include <cstdint>
 #include <tuple>
+#include "../../tuples/TupleProjection.hh"
 #include "IHaveConfigForTasks.hh"
 #include "ResourceToTaskAssociation.hh"
 #include "TaskConfigsFrom.hh"
 
 namespace smeg::kernel::tasks::config
 {
+	using namespace smeg::kernel::tuples;
+
 	template <IHaveConfigForTasks TConfig>
 	class TaskStacksFrom
 	{
 	private:
-		template <typename TTaskConfig, std::size_t... TaskIds>
-		static consteval auto stackToTaskAssociationFrom(ResourceToTaskAssociation<TTaskConfig, TaskIds...>)
+		template <typename TTaskConfig>
+		struct StackConfigFromTaskConfig
 		{
-			return std::make_tuple(ResourceToTaskAssociation<typename TTaskConfig::Stack, TaskIds...>{});
-		}
-
-		template <typename... TTaskConfigs>
-		static consteval auto stackToTaskAssociationsFrom(std::tuple<TTaskConfigs...>)
-		{
-			return std::tuple_cat(stackToTaskAssociationFrom(TTaskConfigs{})...);
-		}
+			using AsTuple = std::tuple<typename TTaskConfig::WithResource<typename TTaskConfig::ResourceType::Stack>>;
+		};
 
 	public:
-		using PerStack = decltype(stackToTaskAssociationsFrom(typename TaskConfigsFrom<TConfig>::PerConfig{}));
+		using PerStack = TupleProjection<typename TaskConfigsFrom<TConfig>::PerConfig, StackConfigFromTaskConfig>::Output;
 	};
 }
 

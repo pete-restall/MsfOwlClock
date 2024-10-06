@@ -20,6 +20,10 @@ namespace smeg::tests::unit::kernel::tasks::config
 	{
 	};
 
+	struct AnotherDummyResource
+	{
+	};
+
 	suite<> resourceToTaskAssociationTest("ResourceToTaskAssociation Test Suite", [](auto &unit)
 	{
 		unit.test("hasMultipleTasks_getWhenPassedNoTasksId_expectFalse", []()
@@ -147,6 +151,13 @@ namespace smeg::tests::unit::kernel::tasks::config
 			};
 
 			expect(assertions, each(equal_to(true)));
+		});
+
+		unit.test("WithResource_get_expectSameAssociationButWithNewResourceType", []()
+		{
+			using Association = ResourceToTaskAssociation<DummyResource, 1, 2, 3>;
+			using NewAssociation = Association::WithResource<AnotherDummyResource>;
+			expect(typeid(NewAssociation) == typeid(ResourceToTaskAssociation<AnotherDummyResource, 1, 2, 3>), equal_to(true));
 		});
 	});
 }

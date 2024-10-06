@@ -18,6 +18,9 @@ namespace smeg::kernel::tasks::config
 		using HasMultipleTasks = std::conditional<(TaskIds::size() > 1), std::true_type, std::false_type>::type;
 
 		static constexpr bool hasMultipleTasks = HasMultipleTasks::value;
+
+		template <typename TNewResource>
+		using WithResource = ResourceToTaskAssociation<TNewResource, AssociatedTaskIds...>;
 	};
 }
 

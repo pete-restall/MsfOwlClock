@@ -2,79 +2,49 @@
 #define __SMEG_KERNEL_TASKS_CONFIG_TASKSFROM_HH
 #include <cstdint>
 #include <tuple>
+#include "../../tuples/TupleProjection.hh"
 #include "IHaveConfigForTasks.hh"
 #include "ResourceToTaskAssociation.hh"
 #include "TaskConfigsFrom.hh"
 
 namespace smeg::kernel::tasks::config
 {
+	using namespace smeg::kernel::tuples;
+
 	template <IHaveConfigForTasks TConfig>
 	class TasksFrom
 	{
 	private:
-		template <std::size_t TaskId, typename T>
-		struct AsTuple;
+		template <typename TTaskConfig, std::size_t InputIndex, std::size_t OutputIndex>
+		struct TaskConfigsToAssociations;
 
-		template <std::size_t TaskId, IHaveConfigForSimpleTask TTaskConfig>
-		struct AsTuple<TaskId, TTaskConfig>
+		template <IHaveConfigForSimpleTask TTaskConfig, std::size_t InputIndex, std::size_t OutputIndex>
+		struct TaskConfigsToAssociations<TTaskConfig, InputIndex, OutputIndex>
 		{
-			using Associations = std::tuple<ResourceToTaskAssociation<typename TTaskConfig::Type, TaskId>>;
+			using AsTuple = std::tuple<ResourceToTaskAssociation<typename TTaskConfig::Type, OutputIndex>>;
 		};
 
-		template <std::size_t FirstTaskId, IHaveConfigForOverlaidTasks TTaskConfig>
-		class AsTuple<FirstTaskId, TTaskConfig>
+		template <IHaveConfigForOverlaidTasks TTaskConfig, std::size_t InputIndex, std::size_t OutputIndex>
+		struct TaskConfigsToAssociations<TTaskConfig, InputIndex, OutputIndex>
 		{
-		private:
-			template <std::size_t TaskId, typename TTaskHead, typename... TTaskTail>
-			static consteval auto typesFromOverlayConfig(std::tuple<TTaskHead, TTaskTail...>)
+			template <typename TOverlayTask, std::size_t OverlayIndex>
+			struct OverlayToAssociation
 			{
-				return std::tuple_cat(
-					std::tuple<ResourceToTaskAssociation<TTaskHead, TaskId>>{},
-					typesFromOverlayConfig<TaskId + 1>(std::tuple<TTaskTail...>{}));
-			}
+				using AsTuple = std::tuple<ResourceToTaskAssociation<TOverlayTask, OutputIndex + OverlayIndex>>;
+			};
 
-			template <std::size_t TaskId>
-			static consteval auto typesFromOverlayConfig(std::tuple<>)
-			{
-				return std::tuple<>{};
-			}
-
-		public:
-			using Associations = decltype(typesFromOverlayConfig<FirstTaskId>(typename TTaskConfig::Types{}));
+			using AsTuple = TupleProjection<typename TTaskConfig::Types, OverlayToAssociation>::Output;
 		};
 
-		template <std::size_t TaskId, typename TTaskConfigHead, typename... TTaskConfigTail>
-		static consteval auto taskAssociationsFrom(std::tuple<TTaskConfigHead, TTaskConfigTail...>)
+		template <typename TTaskAssociation>
+		struct AssociationsToTypes
 		{
-			using TaskConfigHeadAssociations = typename AsTuple<TaskId, TTaskConfigHead>::Associations;
-			constexpr auto nextTaskId = TaskId + std::tuple_size_v<TaskConfigHeadAssociations>;
-			return std::tuple_cat(
-				TaskConfigHeadAssociations{},
-				taskAssociationsFrom<nextTaskId>(std::tuple<TTaskConfigTail...>{}));
-		}
-
-		template <std::size_t TaskId>
-		static consteval auto taskAssociationsFrom(std::tuple<>)
-		{
-			return std::tuple<>{};
-		}
-
-		template <typename TTaskAssociationHead, typename... TTaskAssociationTail>
-		static consteval auto tasksFrom(std::tuple<TTaskAssociationHead, TTaskAssociationTail...>)
-		{
-			return std::tuple_cat(
-				std::tuple<typename TTaskAssociationHead::ResourceType>{},
-				tasksFrom(std::tuple<TTaskAssociationTail...>{}));
-		}
-
-		static consteval auto tasksFrom(std::tuple<>)
-		{
-			return std::tuple<>{};
-		}
+			using AsTuple = std::tuple<typename TTaskAssociation::ResourceType>;
+		};
 
 	public:
-		using Associations = decltype(taskAssociationsFrom<0>(typename TConfig::Tasks{}));
-		using Types = decltype(tasksFrom(Associations{}));
+		using Associations = TupleProjection<typename TConfig::Tasks, TaskConfigsToAssociations>::Output;
+		using Types = TupleProjection<Associations, AssociationsToTypes>::Output;
 	};
 }
 
