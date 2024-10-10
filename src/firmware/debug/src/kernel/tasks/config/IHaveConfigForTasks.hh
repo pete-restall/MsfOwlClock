@@ -6,19 +6,19 @@
 namespace smeg::kernel::tasks::config
 {
 	template <typename... T>
-	struct IsTupleOfTaskConfigs
+	struct _IsTupleOfTaskConfigs
 	{
 		static constexpr bool value = false;
 	};
 
 	template <IHaveConfigForTask... T>
-	struct IsTupleOfTaskConfigs<std::tuple<T...>>
+	struct _IsTupleOfTaskConfigs<std::tuple<T...>>
 	{
 		static constexpr bool value = true;
 	};
 
 	template <typename T>
-	concept IHaveConfigForTasks = IsTupleOfTaskConfigs<typename T::Tasks>::value;
+	concept IHaveConfigForTasks = _IsTupleOfTaskConfigs<typename T::Tasks>::value;
 }
 
 #endif
