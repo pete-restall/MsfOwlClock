@@ -22,7 +22,6 @@ namespace smeg::kernel::tasks::config::stubs
 		template <IHaveAssociatedConfigForTaskStack TTaskStackConfig, std::size_t StackIndex>
 		using AppTaskStackConfigToRamBlock = TaskStackConfigToRamBlock<AppConfig, TTaskStackConfig, StackIndex, TaskStackNumberOfSlotsFor>;
 
-		// TODO: This projection can be refactored into a TaskStacksFrom for easier use by, for example, the code that will eventually build the Task Control Blocks
 		TupleProjection<typename TaskStackConfigsFrom<AppConfig>::PerStack, AppTaskStackConfigToRamBlock>::Output appTaskStacks;
 
 		template <typename... T>
