@@ -19,7 +19,7 @@ namespace smeg::kernel::tasks::config
 		static constexpr auto numberOfContextSwitchingSlots = 32; // TODO: Effectively a random number, just to get the compilation to pass until the context-switching config functionality is created
 
 	public:
-		static constexpr auto value = numberOfContextSwitchingSlots + TTaskStackConfig::ResourceType::numberOfSlots;
+		static constexpr auto value = numberOfContextSwitchingSlots + TTaskStackConfig::Resource::numberOfSlots;
 	};
 }
 

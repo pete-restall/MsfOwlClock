@@ -26,7 +26,7 @@ namespace smeg::kernel::tasks::config
 		using AsTuple = std::tuple<TaskStackRamBlock<
 			TConfig,
 			StackIndex,
-			typename TTaskStackConfig::ResourceType::MemorySection,
+			typename TTaskStackConfig::Resource::MemorySection,
 			TTaskStackNumberOfSlotsFor<TConfig, TTaskStackConfig>::value>>;
 	};
 

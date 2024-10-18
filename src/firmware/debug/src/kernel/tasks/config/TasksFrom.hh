@@ -39,7 +39,7 @@ namespace smeg::kernel::tasks::config
 		template <typename TTaskAssociation>
 		struct AssociationsToTypes
 		{
-			using AsTuple = std::tuple<typename TTaskAssociation::ResourceType>;
+			using AsTuple = std::tuple<typename TTaskAssociation::Resource>;
 		};
 
 	public:

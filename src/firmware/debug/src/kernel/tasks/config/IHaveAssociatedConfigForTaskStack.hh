@@ -5,10 +5,10 @@
 namespace smeg::kernel::tasks::config
 {
 	template <typename T>
-	concept IHaveAssociatedConfigForTaskStackWithMemorySection = IHaveConfigForTaskStackWithMemorySection<typename T::ResourceType>;
+	concept IHaveAssociatedConfigForTaskStackWithMemorySection = IHaveConfigForTaskStackWithMemorySection<typename T::Resource>;
 
 	template <typename T>
-	concept IHaveAssociatedConfigForTaskStackWithoutMemorySection = IHaveConfigForTaskStackWithoutMemorySection<typename T::ResourceType>;
+	concept IHaveAssociatedConfigForTaskStackWithoutMemorySection = IHaveConfigForTaskStackWithoutMemorySection<typename T::Resource>;
 
 	template <typename T>
 	concept IHaveAssociatedConfigForTaskStack = IHaveAssociatedConfigForTaskStackWithMemorySection<T> || IHaveAssociatedConfigForTaskStackWithoutMemorySection<T>;

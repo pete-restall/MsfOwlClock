@@ -141,19 +141,19 @@ namespace smeg::tests::unit::kernel::tasks::config
 			expect(asVector(ResourceToTaskAssociation<DummyResource, 5, 7, 100, 7, 23, 6, 652385, 5, 88, 652385>::TaskIds{}), array(5, 6, 7, 23, 88, 100, 652385));
 		});
 
-		unit.test("ResourceType_get_expectSameTypeAsTemplateArgument", []()
+		unit.test("Resource_get_expectSameTypeAsTemplateArgument", []()
 		{
 			std::array assertions
 			{
-				typeid(typename ResourceToTaskAssociation<DummyResource>::ResourceType) == typeid(DummyResource),
-				typeid(typename ResourceToTaskAssociation<DummyResource, 1, 2, 3>::ResourceType) == typeid(DummyResource),
-				typeid(typename ResourceToTaskAssociation<std::array<int, 73>>::ResourceType) == typeid(std::array<int, 73>)
+				typeid(typename ResourceToTaskAssociation<DummyResource>::Resource) == typeid(DummyResource),
+				typeid(typename ResourceToTaskAssociation<DummyResource, 1, 2, 3>::Resource) == typeid(DummyResource),
+				typeid(typename ResourceToTaskAssociation<std::array<int, 73>>::Resource) == typeid(std::array<int, 73>)
 			};
 
 			expect(assertions, each(equal_to(true)));
 		});
 
-		unit.test("WithResource_get_expectSameAssociationButWithNewResourceType", []()
+		unit.test("WithResource_get_expectSameAssociationButWithNewResource", []()
 		{
 			using Association = ResourceToTaskAssociation<DummyResource, 1, 2, 3>;
 			using NewAssociation = Association::WithResource<AnotherDummyResource>;

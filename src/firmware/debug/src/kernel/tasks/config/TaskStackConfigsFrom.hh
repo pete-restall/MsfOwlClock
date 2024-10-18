@@ -17,7 +17,7 @@ namespace smeg::kernel::tasks::config
 		template <typename TTaskConfig>
 		struct StackConfigFromTaskConfig
 		{
-			using AsTuple = std::tuple<typename TTaskConfig::WithResource<typename TTaskConfig::ResourceType::Stack>>;
+			using AsTuple = std::tuple<typename TTaskConfig::WithResource<typename TTaskConfig::Resource::Stack>>;
 		};
 
 	public:
