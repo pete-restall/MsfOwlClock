@@ -1,7 +1,8 @@
-#include "../../../../../Entrypoint.hh"
+#include "../../../../EntrypointFactory.hh"
+
 #include "Crt0Environment.hh"
 
-using namespace smeg::kernel::crt;
+using namespace smeg::kernel::crt::crt0;
 using namespace smeg::kernel::crt::crt0::mcu::microchip::pic32c::pic32cx1025sg41100;
 
 extern "C"
@@ -20,7 +21,7 @@ extern "C"
 		// store reset reason (BOR, POR, MCLR, software reset, fault, etc.) / flags / whatever - pass to constructor of Entrypoint
 		// set FPU mode for C compatibility - default FPCCR is fine but CPACR (full access to CP10 and CP11; p531 for default values); set FPDSCR - p37 ?
 		// necessary to set VTOR to flash ?
-		Entrypoint entrypoint((Crt0Environment()));
+		auto entrypoint(EntrypointFactory::create(Crt0Environment()));
 		entrypoint.run();
 		__asm__ volatile ("b.n __resetHandler"); // THIS SHOULD NEVER GET HIT - MAYBE WE JUST LOOP FOREVER INSTEAD, SEEING HOW THE Entrypoint::run() OUGHT TO BE APPLYING END-OF-LIFE POLICY
 		__builtin_unreachable();
