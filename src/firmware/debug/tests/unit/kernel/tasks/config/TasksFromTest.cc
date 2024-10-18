@@ -5,7 +5,6 @@
 
 #include "kernel/tasks/config/TasksFrom.hh"
 #include "kernel/tasks/config/ResourceToTaskAssociation.hh"
-#include "kernel/tasks/config/dsl/DefaultTaskStack.hh"
 
 #include "DummyTask.hh"
 

@@ -13,6 +13,7 @@ project(
 src_dir = 'src'
 tests_dir = 'tests'
 unit_tests_dir = tests_dir / 'unit'
+mcu_dir = meson.get_external_property('mcu_dir', 'error-undefined-mcu')
 
 kernel_dir = 'kernel'
 kernel_baremetal_dir = kernel_dir / 'bare-metal'
@@ -25,7 +26,12 @@ kernel_crt_picolibc_dir = kernel_crt_dir / 'picolibc'
 kernel_integer_sequences_dir = kernel_dir / 'integer-sequences'
 kernel_tasks_dir = kernel_dir / 'tasks'
 kernel_tasks_config_dir = kernel_tasks_dir / 'config'
+kernel_tasks_config_stubs_dir = kernel_tasks_config_dir / 'stubs'
 kernel_tuples_dir = kernel_dir / 'tuples'
+
+app_sources_from_kernel = [
+	src_dir / kernel_tasks_config_stubs_dir / 'app-task-stacks.cc'
+]
 
 app_dir = 'apps/debug'
 
@@ -65,7 +71,8 @@ if meson.is_cross_build()
 		native: false,
 		pic: false,
 		sources: [
-			src_dir / kernel_dir / '_entrypoint.cc'
+			src_dir / kernel_dir / '_entrypoint.cc',
+			src_dir / kernel_tasks_config_stubs_dir / 'kernel-task-stacks.cc'
 		])
 
 	libcrt = library(
@@ -99,7 +106,8 @@ if meson.is_cross_build()
 		link_depends: [meson.get_external_property('linker_script', native: false)],
 		link_args: ['-nostartfiles', '-T' + meson.project_source_root() / meson.get_external_property('linker_script', native: false)],
 		sources: [
-			src_dir / app_dir / 'blinky-blinky.cc'],
+			src_dir / app_dir / 'NopTask.cc'
+		] + app_sources_from_kernel,
 		include_directories: [
 			src_dir
 		])
@@ -155,7 +163,9 @@ else
 			unit_tests_dir / kernel_tasks_config_dir / 'TaskConfigsFromTest.cc',
 			unit_tests_dir / kernel_tasks_config_dir / 'TaskConfigToResourceAssociationTest.cc',
 			unit_tests_dir / kernel_tasks_config_dir / 'TasksFromTest.cc',
-			unit_tests_dir / kernel_tasks_config_dir / 'TaskStacksFromTest.cc',
+			unit_tests_dir / kernel_tasks_config_dir / 'TaskStackConfigsFromTest.cc',
+			unit_tests_dir / kernel_tasks_config_dir / 'TaskStackConfigToRamBlockTest.cc',
+			unit_tests_dir / kernel_tasks_config_dir / 'TaskStackRamBlockTest.cc',
 			unit_tests_dir / kernel_tuples_dir / 'TupleIndexZipTest.cc',
 			unit_tests_dir / kernel_tuples_dir / 'TupleProjectionTest.cc'
 		],

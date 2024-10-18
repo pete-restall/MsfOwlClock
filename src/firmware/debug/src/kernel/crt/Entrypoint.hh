@@ -65,7 +65,7 @@ namespace smeg::kernel::crt
 
 			kernelMemoryMap.getInitialiserForCodeSections().initialise();
 			appMemoryMap.getInitialiserForCodeSections().initialise();
-			blinkyBlinky();
+			//blinkyBlinky();
 
 			// need a big try...catch around this to comply with noexcept
 			while (1)

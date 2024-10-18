@@ -4,7 +4,6 @@
 #include <mettle/matchers.hpp>
 
 #include "kernel/tasks/config/TaskConfigToResourceAssociation.hh"
-#include "kernel/tasks/config/dsl/DefaultTaskStack.hh"
 
 #include "DummyTask.hh"
 

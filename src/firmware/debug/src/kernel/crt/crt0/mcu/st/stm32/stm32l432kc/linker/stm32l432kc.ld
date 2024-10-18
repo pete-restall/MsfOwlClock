@@ -53,7 +53,8 @@ SECTIONS {
 	.code.reserved.2 0x1fff7810 : { . += 0x87f0; }
 
 	.sram.stack.kernel (ORIGIN(SRAM) + SRAM1_SIZE_BYTES) : {
-		. = ALIGN(4);
+		. = ALIGN(8);
+		*libkernel.a: (.kernel.tasks.stacks.default* .kernel.tasks.stacks.default.*)
 		__linker_sram_stack_kernel_bottom = .;
 		. += (KERNEL_STACK_SIZE_WORDS - 1) * 4;
 		__linker_sram_stack_kernel_top = .;
@@ -138,8 +139,9 @@ SECTIONS {
 	__linker_sram_data_app_lmaPastEnd = __linker_sram_data_app_lmaStart + (__linker_sram_data_app_pastEnd - __linker_sram_data_app_start);
 
 	.sram.bss.app : {
-		. = ALIGN(4);
+		. = ALIGN(8);
 		__linker_sram_bss_app_start = .;
+		* (.app.tasks.stacks.default* .app.tasks.stacks.default.*)
 		* (.bss .bss*)
 		. = ALIGN(4);
 		__linker_sram_bss_app_pastEnd = .;
