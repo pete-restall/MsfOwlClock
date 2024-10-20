@@ -48,6 +48,14 @@ namespace smeg::kernel::crt
 			// 'libcrt' and 'libcrt0' self-contained (including exception tables, dependent libgcc / libstdc++ library code, etc.)
 
 
+			// can TDD this up:
+			// 1. expect crt0Environment.getBootloader() is called and run - ONLY IF NOT PREVIOUSLY INITIALISED (EG. MULTI-CORE CONFIGURATION)
+			// 2. expect kernel RAM sections from crt0Environment are initialised - ONLY IF NOT PREVIOUSLY INITIALISED (EG. MULTI-CORE CONFIGURATION)
+			// 3. expect kernel code sections from crt0Environment are initialised - ONLY IF NOT PREVIOUSLY INITIALISED (EG. MULTI-CORE CONFIGURATION)
+			// 4. expect TaskRunnerFor<TCrt0Environment::Config, 0>::run() is called
+			// 5. expect crt0Environment.reset(KernelResetReasons.UnexpectedTaskRunnerReturn) is called
+
+
 
 			// The plan...
 			// initialise the kernel (bss, data, init)
@@ -58,12 +66,11 @@ namespace smeg::kernel::crt
 
 			// TODO: WE'RE NOW AT A POINT WHERE THINGS RUN AGAIN IN HARDWARE - TIDY ALL THIS UP AND START TDD-ING IT...
 			auto kernelMemoryMap = this->environment.getLinkerMemoryMap().getLinkerMemoryMapForKernel();
-			auto appMemoryMap = this->environment.getLinkerMemoryMap().getLinkerMemoryMapForApp();
-
 			kernelMemoryMap.getInitialiserForRamSections().initialise();
-			appMemoryMap.getInitialiserForRamSections().initialise();
-
 			kernelMemoryMap.getInitialiserForCodeSections().initialise();
+
+			auto appMemoryMap = this->environment.getLinkerMemoryMap().getLinkerMemoryMapForApp();
+			appMemoryMap.getInitialiserForRamSections().initialise();
 			appMemoryMap.getInitialiserForCodeSections().initialise();
 			//blinkyBlinky();
 
@@ -95,20 +102,51 @@ The Kernel is a library comprising some modular parts:
 				* constructs the instance of ITask(env), calls ITask.run(), destructs the ITask instance; on termination (normal and exception), execute a termination strategy which may, for example, schedule the same task to be re-started
 
 			Task Execution Context Management
+				Kernel task stack (MSP in ARM) needs to be sufficiently large for (context saving space * irq priorities) for worst-case nested exception handling
+
+				Context Switcher (kspace)
+					* in ARM systems, assign syscall the highest interrupt priority so it will never be interrupted during context switching; reduce priority for non-context-switch syscalls
+
+		***** TODO - FIGURE OUT HOW THIS IS GOING TO WORK.  THIS ISN'T QUITE RIGHT...
+					* one instance of the context switcher per CPU (one Idle Task is also going to be required per CPU)
+					* constructed with a Task Control Block for the Idle Task
+					* constructed with an array of pointers (a queue) to Task Control Blocks
+					* one method - switchToNext() - to pop the next entry from the queue and switch contexts; if there is no next entry, run the Idle Task
+					* the scheduler needs to update the queue to include calls to itself
+
+*** HOW DOES SCHEDULER FIT INTO ALL OF THIS ?  ONE SCHEDULER TASK PER CPU, TOO ?
+
+				Bootstrapping the Context Switching (kspace)
+					* for ARM, leave MSP as-is; this is the current top-of-stack required for interrupts; make sure the MSP is sized as (irq priorities * context saving space + each irq stack requirement + bootstrapped auto variables); would be better to calculate this out rather than hard-code it in the linker
+					* call the TaskRunner with the first task in KernelConfig
+
+				TaskRunner (kspace)
+					* takes a TaskLifecycle and a TaskControlBlock
+					* for ARM, set the current SP to PSP and to the top of the first kernel task's stack
+					* for ARM, set the link register to an exit handler that does a svc (syscall on MIPS, etc.) to remove the task from the scheduling (disable it); another syscall should allow re-enabling the task if desired
+					* call a chain of (trusted) Kernel modules (ie. memory protection, power saving, etc.) for bootstrapping.  Basically driver-specific chain of method calls
+					* drop into uspace if the task has an unprivileged flag set
+					* create a TaskLifecycle for the task and run() it
+
 				Context Saving (kspace)
 					* needs to be able to call various other (trusted) Kernel modules (ie. memory protection, power saving, etc.)  Basically driver-specific chain of method calls
-					* the chain of context-saving routines to call is Task-specific
+					* the chain of context-saving routines to call is Task-specific but the first is the CPU register pushing
+					* this needs to be done via an svc or pendsvc
+
 				Context Restoration (kspace)
 					* needs to be able to call various other (trusted) Kernel modules (ie. memory protection, power saving, etc.)  Basically driver-specific chain of method calls
-					* the chain of context-restoring routines to call is Task-specific
+					* the chain of context-restoring routines to call is Task-specific but the last is the CPU register popping / PC load
+					* can assume never interrupted
+					* this needs to be done by an svc or pendsvc
 
 		Pre-emption (kspace)
-			* Tick Timer (not necessarily SysTick for ARM) - requires an ISR
+			* Tick Timer (not necessarily SysTick for ARM) - requires an ISR; last thing to be initialised by the kernel.  Also optional - time-slicing is an optional (KernelConfig) feature.
 			* define an SVCALL (or equivalent) for 'yield', which does the same thing as the Tick Timer ISR; other SVCALLs will be available, but a 'yield' jumps to the Scheduler prioritisation routine
 
 		Prioritisation (kspace)
 			* the Task priority is implicit in which queue the task is in (no explicit per-Task state needed)
-			* scheduler takes first runnable / not blocked Task from the head of the highest-priority queue
+			* context switcher takes first runnable / not blocked Task from the head of the highest-priority queue
+			* scheduler determines what the priority queues look like
 			Managing task priorities (uspace)
 
 	Memory Manager

@@ -1,7 +1,6 @@
 #include <tuple>
 
 #include "../../../../kernel-config.hh"
-#include "../../../IHaveValue.hh"
 #include "../../../tuples/TupleProjection.hh"
 #include "../dsl/DefaultMemorySection.hh"
 #include "../IHaveAssociatedConfigForTaskStack.hh"

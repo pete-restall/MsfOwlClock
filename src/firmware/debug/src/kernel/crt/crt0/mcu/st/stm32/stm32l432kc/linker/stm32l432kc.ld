@@ -3,7 +3,7 @@ FLASH_SIZE_BYTES = 256K;
 SRAM1_SIZE_BYTES = 48K;
 SRAM2_SIZE_BYTES = 16K;
 BSRAM_SIZE_BYTES = 8K;
-KERNEL_STACK_SIZE_WORDS = 128;
+KERNEL_STACK_SIZE_WORDS = 1;
 
 ENTRY(_resetHandler);
 
@@ -55,6 +55,7 @@ SECTIONS {
 	.sram.stack.kernel (ORIGIN(SRAM) + SRAM1_SIZE_BYTES) : {
 		. = ALIGN(8);
 		*libkernel.a: (.kernel.tasks.stacks.default* .kernel.tasks.stacks.default.*)
+		*libcrt0.a: (.kernel.tasks.stacks.isrs* .kernel.tasks.stacks.isrs.*)
 		__linker_sram_stack_kernel_bottom = .;
 		. += (KERNEL_STACK_SIZE_WORDS - 1) * 4;
 		__linker_sram_stack_kernel_top = .;

@@ -23,7 +23,7 @@ extern "C"
 		// necessary to set VTOR to flash ?
 		auto entrypoint(EntrypointFactory::create(Crt0Environment()));
 		entrypoint.run();
-		__asm__ volatile ("b.n __resetHandler"); // THIS SHOULD NEVER GET HIT - MAYBE WE JUST LOOP FOREVER INSTEAD, SEEING HOW THE Entrypoint::run() OUGHT TO BE APPLYING END-OF-LIFE POLICY
+		__asm__ volatile ("b.n __resetHandler"); // TODO: REMOVE THIS ONCE THE entrypoint IS MORE MATURE AS IT SHOULD NEVER GET HIT
 		__builtin_unreachable();
 	}
 };
