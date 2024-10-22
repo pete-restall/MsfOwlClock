@@ -57,8 +57,8 @@ namespace smeg::kernel::tasks::config
 		}
 
 	public:
-		using PerConfig = decltype(configsPerConfigFrom<0>(typename TConfig::Tasks{}));
-		using PerTask = decltype(configsPerTaskFrom<0>(typename TConfig::Tasks{}));
+		using PerConfig = decltype(configsPerConfigFrom<0>(std::tuple_cat(typename TConfig::Tasks{})));
+		using PerTask = decltype(configsPerTaskFrom<0>(std::tuple_cat(typename TConfig::Tasks{})));
 	};
 }
 

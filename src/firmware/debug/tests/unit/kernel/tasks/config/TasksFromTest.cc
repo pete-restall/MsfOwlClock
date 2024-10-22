@@ -1,3 +1,4 @@
+#include <array>
 #include <tuple>
 
 #include <mettle/suite.hpp>
@@ -7,6 +8,7 @@
 #include "kernel/tasks/config/ResourceToTaskAssociation.hh"
 
 #include "DummyTask.hh"
+#include "DummyTaskConfig.hh"
 
 using namespace mettle;
 
@@ -16,7 +18,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 {
 	suite<> tasksFromTest("TasksFrom Test Suite", [](auto &unit)
 	{
-		unit.test("Types_getWhenPassedConfigWithEmptyTasks_expectEmptyTuple", []()
+		unit.test("Types_getWhenPassedConfigWithEmptyTupleOfTasks_expectEmptyTuple", []()
 		{
 			struct EmptyConfig
 			{
@@ -26,7 +28,17 @@ namespace smeg::tests::unit::kernel::tasks::config
 			expect(std::tuple_size_v<typename TasksFrom<EmptyConfig>::Types>, equal_to(0));
 		});
 
-		unit.test("Types_getWhenPassedConfigWithSingleTask_expectTupleOfSameType", []()
+		unit.test("Types_getWhenPassedConfigWithEmptyArrayOfTasks_expectEmptyTuple", []()
+		{
+			struct EmptyConfig
+			{
+				using Tasks = std::array<DummyTaskConfig<1>, 0>;
+			};
+
+			expect(std::tuple_size_v<typename TasksFrom<EmptyConfig>::Types>, equal_to(0));
+		});
+
+		unit.test("Types_getWhenPassedConfigWithTupleOfSingleTask_expectTupleOfSameType", []()
 		{
 			struct Config
 			{
@@ -39,6 +51,36 @@ namespace smeg::tests::unit::kernel::tasks::config
 			};
 
 			expect(typeid(typename TasksFrom<Config>::Types) == typeid(std::tuple<DummyTask<1>>), equal_to(true));
+		});
+
+		unit.test("Types_getWhenPassedConfigWithArrayOfSingleTask_expectTupleOfSameType", []()
+		{
+			struct Config
+			{
+				struct LonelyTask
+				{
+					using Type = DummyTask<1>;
+				};
+
+				using Tasks = std::array<LonelyTask, 1>;
+			};
+
+			expect(typeid(typename TasksFrom<Config>::Types) == typeid(std::tuple<DummyTask<1>>), equal_to(true));
+		});
+
+		unit.test("Types_getWhenPassedConfigWithArrayOfMultipleTasks_expectTupleOfSameTypeRepeated", []()
+		{
+			struct Config
+			{
+				struct LonelyTask
+				{
+					using Type = DummyTask<1>;
+				};
+
+				using Tasks = std::array<LonelyTask, 3>;
+			};
+
+			expect(typeid(typename TasksFrom<Config>::Types) == typeid(std::tuple<DummyTask<1>, DummyTask<1>, DummyTask<1>>), equal_to(true));
 		});
 
 		unit.test("Types_getWhenPassedConfigWithMultipleTasks_expectTupleOfSameTypes", []()
@@ -73,7 +115,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 				equal_to(true));
 		});
 
-		unit.test("Types_getWhenPassedConfigWithOverlaidTasks_expectTupleOfFlattenedTypes", []()
+		unit.test("Types_getWhenPassedConfigWithTupleOfOverlaidTasks_expectTupleOfFlattenedTypes", []()
 		{
 			struct Config
 			{
@@ -86,6 +128,40 @@ namespace smeg::tests::unit::kernel::tasks::config
 			};
 
 			expect(typeid(typename TasksFrom<Config>::Types) == typeid(std::tuple<DummyTask<1>, DummyTask<2>, DummyTask<3>>), equal_to(true));
+		});
+
+		unit.test("Types_getWhenPassedConfigWithArrayOfSingleOverlaidTasks_expectTupleOfFlattenedTypes", []()
+		{
+			struct Config
+			{
+				struct OverlaidTasks
+				{
+					using Types = std::tuple<DummyTask<1>, DummyTask<2>, DummyTask<3>>;
+				};
+
+				using Tasks = std::array<OverlaidTasks, 1>;
+			};
+
+			expect(typeid(typename TasksFrom<Config>::Types) == typeid(std::tuple<DummyTask<1>, DummyTask<2>, DummyTask<3>>), equal_to(true));
+		});
+
+		unit.test("Types_getWhenPassedConfigWithArrayOfMultipleOverlaidTasks_expectTupleOfFlattenedTypes", []()
+		{
+			struct Config
+			{
+				struct OverlaidTasks
+				{
+					using Types = std::tuple<DummyTask<1>, DummyTask<2>, DummyTask<3>>;
+				};
+
+				using Tasks = std::array<OverlaidTasks, 2>;
+			};
+
+			expect(typeid(typename TasksFrom<Config>::Types) == typeid(
+				std::tuple<
+					DummyTask<1>, DummyTask<2>, DummyTask<3>,
+					DummyTask<1>, DummyTask<2>, DummyTask<3>>),
+				equal_to(true));
 		});
 
 		unit.test("Types_getWhenPassedConfigWithMixOfSimpleAndOverlaidTasks_expectTupleOfFlattenedTypes", []()
@@ -130,11 +206,21 @@ namespace smeg::tests::unit::kernel::tasks::config
 				equal_to(true));
 		});
 
-		unit.test("Associations_getWhenPassedConfigWithEmptyTasks_expectEmptyTuple", []()
+		unit.test("Associations_getWhenPassedConfigWithEmptyTupleOfTasks_expectEmptyTuple", []()
 		{
 			struct EmptyConfig
 			{
 				using Tasks = std::tuple<>;
+			};
+
+			expect(std::tuple_size_v<typename TasksFrom<EmptyConfig>::Associations>, equal_to(0));
+		});
+
+		unit.test("Associations_getWhenPassedConfigWithEmptyArrayOfTasks_expectEmptyTuple", []()
+		{
+			struct EmptyConfig
+			{
+				using Tasks = std::array<DummyTaskConfig<1>, 0>;
 			};
 
 			expect(std::tuple_size_v<typename TasksFrom<EmptyConfig>::Associations>, equal_to(0));
@@ -153,6 +239,41 @@ namespace smeg::tests::unit::kernel::tasks::config
 			};
 
 			expect(typeid(typename TasksFrom<Config>::Associations) == typeid(std::tuple<ResourceToTaskAssociation<DummyTask<14>, 0>>), equal_to(true));
+		});
+
+		unit.test("Associations_getWhenPassedConfigWithArrayOfSingleTask_expectTupleOfSameTypeWithIndex0", []()
+		{
+			struct Config
+			{
+				struct LonelyTask
+				{
+					using Type = DummyTask<14>;
+				};
+
+				using Tasks = std::array<LonelyTask, 1>;
+			};
+
+			expect(typeid(typename TasksFrom<Config>::Associations) == typeid(std::tuple<ResourceToTaskAssociation<DummyTask<14>, 0>>), equal_to(true));
+		});
+
+		unit.test("Associations_getWhenPassedConfigWithArrayOfMultipleTasks_expectTupleOfSameTypesWithIncrementingIndices", []()
+		{
+			struct Config
+			{
+				struct SomeTask
+				{
+					using Type = DummyTask<14>;
+				};
+
+				using Tasks = std::array<SomeTask, 3>;
+			};
+
+			expect(typeid(typename TasksFrom<Config>::Associations) == typeid(
+				std::tuple<
+					ResourceToTaskAssociation<DummyTask<14>, 0>,
+					ResourceToTaskAssociation<DummyTask<14>, 1>,
+					ResourceToTaskAssociation<DummyTask<14>, 2>>),
+				equal_to(true));
 		});
 
 		unit.test("Associations_getWhenPassedConfigWithMultipleTasks_expectTupleOfSameTypesWithIncrementingIndices", []()
@@ -187,7 +308,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 				equal_to(true));
 		});
 
-		unit.test("Associations_getWhenPassedConfigWithOverlaidTasks_expectTupleOfFlattenedTypesWithIncrementingIndices", []()
+		unit.test("Associations_getWhenPassedConfigWithTupleOfOverlaidTasks_expectTupleOfFlattenedTypesWithIncrementingIndices", []()
 		{
 			struct Config
 			{
@@ -204,6 +325,49 @@ namespace smeg::tests::unit::kernel::tasks::config
 					ResourceToTaskAssociation<DummyTask<2>, 0>,
 					ResourceToTaskAssociation<DummyTask<5>, 1>,
 					ResourceToTaskAssociation<DummyTask<7>, 2>>),
+				equal_to(true));
+		});
+
+		unit.test("Associations_getWhenPassedConfigWithArrayOfSingleOverlaidTasks_expectTupleOfFlattenedTypesWithIncrementingIndices", []()
+		{
+			struct Config
+			{
+				struct OverlaidTasks
+				{
+					using Types = std::tuple<DummyTask<2>, DummyTask<5>, DummyTask<7>>;
+				};
+
+				using Tasks = std::array<OverlaidTasks, 1>;
+			};
+
+			expect(typeid(typename TasksFrom<Config>::Associations) == typeid(
+				std::tuple<
+					ResourceToTaskAssociation<DummyTask<2>, 0>,
+					ResourceToTaskAssociation<DummyTask<5>, 1>,
+					ResourceToTaskAssociation<DummyTask<7>, 2>>),
+				equal_to(true));
+		});
+
+		unit.test("Associations_getWhenPassedConfigWithArrayOfMultipleOverlaidTasks_expectTupleOfFlattenedTypesWithIncrementingIndices", []()
+		{
+			struct Config
+			{
+				struct OverlaidTasks
+				{
+					using Types = std::tuple<DummyTask<2>, DummyTask<5>, DummyTask<7>>;
+				};
+
+				using Tasks = std::array<OverlaidTasks, 2>;
+			};
+
+			expect(typeid(typename TasksFrom<Config>::Associations) == typeid(
+				std::tuple<
+					ResourceToTaskAssociation<DummyTask<2>, 0>,
+					ResourceToTaskAssociation<DummyTask<5>, 1>,
+					ResourceToTaskAssociation<DummyTask<7>, 2>,
+					ResourceToTaskAssociation<DummyTask<2>, 3>,
+					ResourceToTaskAssociation<DummyTask<5>, 4>,
+					ResourceToTaskAssociation<DummyTask<7>, 5>>),
 				equal_to(true));
 		});
 

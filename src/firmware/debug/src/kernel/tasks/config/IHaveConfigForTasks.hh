@@ -1,6 +1,7 @@
 #ifndef __SMEG_KERNEL_TASKS_CONFIG_IHAVECONFIGFORTASKS_HH
 #define __SMEG_KERNEL_TASKS_CONFIG_IHAVECONFIGFORTASKS_HH
 #include <array>
+#include <cstdint>
 #include <tuple>
 #include "IHaveConfigForTask.hh"
 

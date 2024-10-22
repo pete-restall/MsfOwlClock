@@ -1,3 +1,4 @@
+#include <array>
 #include <tuple>
 
 #include <mettle/suite.hpp>
@@ -7,6 +8,8 @@
 #include "kernel/tasks/config/TaskStackConfigsFrom.hh"
 
 #include "DummyTask.hh"
+#include "DummyTaskConfig.hh"
+#include "DummyTaskStack.hh"
 
 using namespace mettle;
 
@@ -14,14 +17,9 @@ using namespace smeg::kernel::tasks::config;
 
 namespace smeg::tests::unit::kernel::tasks::config
 {
-	template <auto N>
-	struct DummyTaskStack
-	{
-	};
-
 	suite<> taskStackConfigsFromTest("TaskStackConfigsFrom Test Suite", [](auto &unit)
 	{
-		unit.test("PerStack_getWhenPassedConfigWithEmptyTasks_expectEmptyTuple", []()
+		unit.test("PerStack_getWhenPassedConfigWithEmptyTupleOfTasks_expectEmptyTuple", []()
 		{
 			struct EmptyConfig
 			{
@@ -31,7 +29,17 @@ namespace smeg::tests::unit::kernel::tasks::config
 			expect(std::tuple_size_v<typename TaskStackConfigsFrom<EmptyConfig>::PerStack>, equal_to(0));
 		});
 
-		unit.test("PerStack_getWhenPassedConfigWithSingleSimpleTask_expectStackConfigIsAssociatedWithFirstTask", []()
+		unit.test("PerStack_getWhenPassedConfigWithEmptyArrayOfTasks_expectEmptyTuple", []()
+		{
+			struct EmptyConfig
+			{
+				using Tasks = std::array<DummyTaskConfig<1>, 0>;
+			};
+
+			expect(std::tuple_size_v<typename TaskStackConfigsFrom<EmptyConfig>::PerStack>, equal_to(0));
+		});
+
+		unit.test("PerStack_getWhenPassedConfigWithTupleOfSingleSimpleTask_expectStackConfigIsAssociatedWithFirstTask", []()
 		{
 			struct Config
 			{
@@ -42,6 +50,25 @@ namespace smeg::tests::unit::kernel::tasks::config
 				};
 
 				using Tasks = std::tuple<LonelyTask>;
+			};
+
+			expect(
+				typeid(typename TaskStackConfigsFrom<Config>::PerStack) == typeid(std::tuple<
+					ResourceToTaskAssociation<typename Config::LonelyTask::Stack, 0>>),
+				equal_to(true));
+		});
+
+		unit.test("PerStack_getWhenPassedConfigWithArrayOfSingleSimpleTask_expectStackConfigIsAssociatedWithFirstTask", []()
+		{
+			struct Config
+			{
+				struct LonelyTask
+				{
+					using Type = DummyTask<1>;
+					using Stack = DummyTaskStack<42>;
+				};
+
+				using Tasks = std::array<LonelyTask, 1>;
 			};
 
 			expect(
@@ -73,6 +100,26 @@ namespace smeg::tests::unit::kernel::tasks::config
 				typeid(typename TaskStackConfigsFrom<Config>::PerStack) == typeid(std::tuple<
 					ResourceToTaskAssociation<typename Config::FirstTask::Stack, 0>,
 					ResourceToTaskAssociation<typename Config::SecondTask::Stack, 1>>),
+				equal_to(true));
+		});
+
+		unit.test("PerStack_getWhenPassedConfigWithArrayOfSimpleTasks_expectStackConfigsAreAssociatedWithTheirCorrespondingTask", []()
+		{
+			struct Config
+			{
+				struct SimpleTask
+				{
+					using Type = DummyTask<2>;
+					using Stack = DummyTaskStack<7>;
+				};
+
+				using Tasks = std::array<SimpleTask, 2>;
+			};
+
+			expect(
+				typeid(typename TaskStackConfigsFrom<Config>::PerStack) == typeid(std::tuple<
+					ResourceToTaskAssociation<typename Config::SimpleTask::Stack, 0>,
+					ResourceToTaskAssociation<typename Config::SimpleTask::Stack, 1>>),
 				equal_to(true));
 		});
 
@@ -118,6 +165,26 @@ namespace smeg::tests::unit::kernel::tasks::config
 			expect(
 				typeid(typename TaskStackConfigsFrom<Config>::PerStack) == typeid(std::tuple<
 					ResourceToTaskAssociation<typename Config::OverlaidTasks::Stack, 0, 1, 2>>),
+				equal_to(true));
+		});
+
+		unit.test("PerStack_getWhenPassedConfigWithArrayOfOverlayTasks_expectStackConfigIsAssociatedWithAllTasksInOverlay", []()
+		{
+			struct Config
+			{
+				struct OverlaidTasks
+				{
+					using Types = std::tuple<DummyTask<7>, DummyTask<5>, DummyTask<13>>;
+					using Stack = DummyTaskStack<12>;
+				};
+
+				using Tasks = std::array<OverlaidTasks, 2>;
+			};
+
+			expect(
+				typeid(typename TaskStackConfigsFrom<Config>::PerStack) == typeid(std::tuple<
+					ResourceToTaskAssociation<typename Config::OverlaidTasks::Stack, 0, 1, 2>,
+					ResourceToTaskAssociation<typename Config::OverlaidTasks::Stack, 3, 4, 5>>),
 				equal_to(true));
 		});
 

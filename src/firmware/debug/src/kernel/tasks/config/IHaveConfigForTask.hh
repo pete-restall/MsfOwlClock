@@ -1,5 +1,7 @@
 #ifndef __SMEG_KERNEL_TASKS_CONFIG_IHAVECONFIGFORTASK_HH
 #define __SMEG_KERNEL_TASKS_CONFIG_IHAVECONFIGFORTASK_HH
+#include <array>
+#include <cstdint>
 #include <tuple>
 #include "../ITask.hh"
 
@@ -15,6 +17,13 @@ namespace smeg::kernel::tasks::config
 	{
 	public:
 		static constexpr bool value = false;
+	};
+
+	template <_ITasklike T, std::size_t N>
+	class _IsTupleOfTasks<std::array<T, N>>
+	{
+	public:
+		static constexpr bool value = N > 0;
 	};
 
 	template <_ITasklike... T>
