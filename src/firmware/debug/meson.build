@@ -149,6 +149,7 @@ else
 			unit_tests_dir / kernel_baremetal_dir / 'BitmaskTest.cc',
 			unit_tests_dir / kernel_baremetal_dir / 'IntegerSequenceTest.cc',
 			unit_tests_dir / kernel_baremetal_dir / 'OffsetIntegerSequenceTest.cc',
+			unit_tests_dir / kernel_crt_crt0_dir / 'DefaultCrt0EnvironmentConfigTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerBssMemorySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerDataMemorySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerFiniArraySectionTest.cc',
