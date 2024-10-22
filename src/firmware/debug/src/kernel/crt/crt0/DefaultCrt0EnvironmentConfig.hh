@@ -1,12 +1,12 @@
 #ifndef __SMEG_KERNEL_CRT_CRT0_DEFAULTCRT0ENVIRONMENTCONFIG_HH
 #define __SMEG_KERNEL_CRT_CRT0_DEFAULTCRT0ENVIRONMENTCONFIG_HH
 #include <cstdint>
-#include "../../KernelPerCoreInitialisationTask.hh" // TODO: WE ALSO NEED A TRANSLATION UNIT TO DEFINE THE STACKS FOR THE CRT0 (LIKE THE stubs/kernel-task-stacks) - WILL NEED TO BE IN THE MCU-SPECIFIC SECTION
+#include "../../KernelPerCoreInitialisationTask.hh"
 #include "IsrStackMemorySection.hh"
 
 namespace smeg::kernel::crt::crt0
 {
-	template <std::size_t NumberOfCores, std::size_t IsrStackNumberOfSlots>
+	template <std::size_t NumberOfCores, std::size_t IsrStackNumberOfSlots, typename TMemorySection = IsrStackMemorySection>
 	class DefaultCrt0EnvironmentConfig
 	{
 	private:
@@ -18,13 +18,13 @@ namespace smeg::kernel::crt::crt0
 
 			struct Stack
 			{
-				using MemorySection = IsrStackMemorySection;
+				using MemorySection = TMemorySection;
 				static constexpr auto numberOfSlots = IsrStackNumberOfSlots;
 			};
 		};
 
 	public:
-		using Tasks = std::tuple<KernelInitialisation>; // TODO: REPEAT THIS NumberOfCores TIMES; this can be TDD'd
+		using Tasks = std::array<KernelInitialisation, NumberOfCores>;
 	};
 }
 
