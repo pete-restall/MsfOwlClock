@@ -78,7 +78,7 @@ namespace smeg::kernel::tuples
 	};
 
 	template <typename TTuple, template <typename, std::size_t...> typename TProjection>
-	using TupleProjection = _TupleProjection<true, TTuple, TProjection>;
+	using TupleProjection = _TupleProjection<true, decltype(std::tuple_cat(TTuple{})), TProjection>;
 }
 
 #endif

@@ -74,6 +74,11 @@ namespace smeg::tests::unit::kernel::tuples
 			expect(std::tuple_size_v<TupleProjection<std::tuple<>, StubProjectionWithNoIndices>::Input>, equal_to(0));
 		});
 
+		unit.test("Input_getWithEmptyArray_expectEmptyTuple", []()
+		{
+			expect(std::tuple_size_v<TupleProjection<std::array<int, 0>, StubProjectionWithNoIndices>::Input>, equal_to(0));
+		});
+
 		unit.test("Input_get_expectSameTypeAsFirstTemplateArgument", []()
 		{
 			using Input1 = std::tuple<int>;
@@ -143,6 +148,30 @@ namespace smeg::tests::unit::kernel::tuples
 					StubProjectedValue<double>>),
 				equal_to(true));
 		});
+
+		unit.test("Output_getWhenPassedArrayInsteadOfTuple_expectArrayIsTreatedAsTupleOfRepeatedTypes", []()
+		{
+			using CharArray1 = std::array<char, 1>;
+			using IntArray2 = std::array<int, 2>;
+			using DoubleArray3 = std::array<double, 3>;
+
+			expect(
+				typeid(TupleProjection<CharArray1, StubProjectionWithNoIndices>::Output) == typeid(std::tuple<StubProjectedValue<char>>),
+				equal_to(true));
+
+			expect(typeid(TupleProjection<IntArray2, StubProjectionWithNoIndices>::Output) == typeid(
+				std::tuple<
+					StubProjectedValue<int>,
+					StubProjectedValue<int>>),
+				equal_to(true));
+
+			expect(typeid(TupleProjection<DoubleArray3, StubProjectionWithNoIndices>::Output) == typeid(
+				std::tuple<
+					StubProjectedValue<double>,
+					StubProjectedValue<double>,
+					StubProjectedValue<double>>),
+				equal_to(true));
+		});
 	});
 
 	suite<> tupleProjectionWithInputIndexTest("TupleProjection (Input Index) Test Suite", [](auto &unit)
@@ -150,6 +179,11 @@ namespace smeg::tests::unit::kernel::tuples
 		unit.test("Input_getWithEmptyTuple_expectEmptyTuple", []()
 		{
 			expect(std::tuple_size_v<TupleProjection<std::tuple<>, StubProjectionWithInputIndex>::Input>, equal_to(0));
+		});
+
+		unit.test("Input_getWithEmptyArray_expectEmptyTuple", []()
+		{
+			expect(std::tuple_size_v<TupleProjection<std::array<int, 0>, StubProjectionWithInputIndex>::Input>, equal_to(0));
 		});
 
 		unit.test("Input_get_expectSameTypeAsFirstTemplateArgument", []()
@@ -224,6 +258,30 @@ namespace smeg::tests::unit::kernel::tuples
 					StubProjectedValue<double, 3>>),
 				equal_to(true));
 		});
+
+		unit.test("Output_getWhenPassedArrayInsteadOfTuple_expectArrayIsTreatedAsTupleOfRepeatedTypes", []()
+		{
+			using CharArray1 = std::array<char, 1>;
+			using IntArray2 = std::array<int, 2>;
+			using DoubleArray3 = std::array<double, 3>;
+
+			expect(
+				typeid(TupleProjection<CharArray1, StubProjectionWithInputIndex>::Output) == typeid(std::tuple<StubProjectedValue<char, 0>>),
+				equal_to(true));
+
+			expect(typeid(TupleProjection<IntArray2, StubProjectionWithInputIndex>::Output) == typeid(
+				std::tuple<
+					StubProjectedValue<int, 0>,
+					StubProjectedValue<int, 1>>),
+				equal_to(true));
+
+			expect(typeid(TupleProjection<DoubleArray3, StubProjectionWithInputIndex>::Output) == typeid(
+				std::tuple<
+					StubProjectedValue<double, 0>,
+					StubProjectedValue<double, 1>,
+					StubProjectedValue<double, 2>>),
+				equal_to(true));
+		});
 	});
 
 	suite<> tupleProjectionWithInputAndOutputIndicesTest("TupleProjection (Input and Output Indices) Test Suite", [](auto &unit)
@@ -231,6 +289,11 @@ namespace smeg::tests::unit::kernel::tuples
 		unit.test("Input_getWithEmptyTuple_expectEmptyTuple", []()
 		{
 			expect(std::tuple_size_v<TupleProjection<std::tuple<>, StubProjectionWithInputAndOutputIndices>::Input>, equal_to(0));
+		});
+
+		unit.test("Input_getWithEmptyArray_expectEmptyTuple", []()
+		{
+			expect(std::tuple_size_v<TupleProjection<std::array<int, 0>, StubProjectionWithInputAndOutputIndices>::Input>, equal_to(0));
 		});
 
 		unit.test("Input_get_expectSameTypeAsFirstTemplateArgument", []()
@@ -306,6 +369,30 @@ namespace smeg::tests::unit::kernel::tuples
 					StubProjectedValue<short, 2, 3>,
 					StubProjectedValue<int, 2, 3>,
 					StubProjectedValue<double, 3, 6>>),
+				equal_to(true));
+		});
+
+		unit.test("Output_getWhenPassedArrayInsteadOfTuple_expectArrayIsTreatedAsTupleOfRepeatedTypes", []()
+		{
+			using CharArray1 = std::array<char, 1>;
+			using IntArray2 = std::array<int, 2>;
+			using DoubleArray3 = std::array<double, 3>;
+
+			expect(
+				typeid(TupleProjection<CharArray1, StubProjectionWithInputAndOutputIndices>::Output) == typeid(std::tuple<StubProjectedValue<char, 0, 0>>),
+				equal_to(true));
+
+			expect(typeid(TupleProjection<IntArray2, StubProjectionWithInputAndOutputIndices>::Output) == typeid(
+				std::tuple<
+					StubProjectedValue<int, 0, 0>,
+					StubProjectedValue<int, 1, 1>>),
+				equal_to(true));
+
+			expect(typeid(TupleProjection<DoubleArray3, StubProjectionWithInputAndOutputIndices>::Output) == typeid(
+				std::tuple<
+					StubProjectedValue<double, 0, 0>,
+					StubProjectedValue<double, 1, 1>,
+					StubProjectedValue<double, 2, 2>>),
 				equal_to(true));
 		});
 	});
