@@ -1,11 +1,18 @@
 TODO - Make notes on architecture (high-level overviews), building, using, etc.  This README is currently just an ad-hoc collection of notes.
 
 The lowest level consists of three libraries:
-1. `libcrt0` - microcontroller-specific bootstrapping and linker scripts.  Named `crt0` because GCC expects a translation unit called `crt0.o` somewhere in the link files; requires `whole-archive` linking so do not include anything more than 100% necessary in this library.  The dependencies point to `libkernel`.
+1. `libcrt0` - microcontroller-specific bootstrapping and linker scripts.  Named `crt0` because GCC expects a translation unit called `crt0.o` somewhere in the link files; requires `whole-archive` linking so do not include anything more than 100% necessary in this library.  Basically the 'Composition Root' with the dependencies pointing to `libkernel`.
 2. `libcrt` - generic `picolibc`, `libstdc++`, `libsupc++` glue not tied to a specific microcontroller.  Requires `whole-archive` linking so do not include anything more than 100% necessary in this library.  The dependencies point to `libkernel`.
 3. `bare-metal` - standalone register maps and utilities for the specific microcontroller target; no dependencies since dependents point towards this.
 
 The next level is the kernel, `libkernel`.
+
+---
+
+There are three levels of config:
+* `Crt0Environment::Config` - low-level config that only changes due to the MCU / SoC / board target; no user-visible settings.  The tasks are overlaid and run once for initialisation.  Once the kernel has been initialised, the stacks are re-used for the (nested) ISR context saving.  Maybe it is better to merge all of the `Crt0Environment::Config` and `KernelConfig` tasks into a single overlay to free up memory, since some architectures (PIC32MZ) can implement, say, 7 shadow register sets so there can be 7 priorities of nested interrupts without having to use the stack.
+* `KernelConfig` - user configuration for the kernel; the task scheduling algorithm, the type of bootloader to use, etc.
+* `AppConfig` - app configuration, bundled with the app; task definitions, etc.  Only loaded once the kernel is fully operational.
 
 ---
 
