@@ -16,24 +16,34 @@ namespace smeg::tests::unit::kernel
 		using CallCountInt = FinaliseCallRecorder::CallCountInt;
 		std::atomic<CallCountInt> &callSequence;
 
-		using FinaliseCallRecorderPtr = std::shared_ptr<FinaliseCallRecorder>;
-
 	public:
 		FinalisableTestDoubles(std::atomic<CallCountInt> &callSequenceCounter) :
 			callSequence(callSequenceCounter)
 		{
 		}
 
-		MockNonConstFinalisable mockNonConst(void)
+		auto mockNonConst(void)
 		{
 			auto callRecorder = std::make_shared<FinaliseCallRecorder>(this->callSequence);
 			return MockNonConstFinalisable(callRecorder);
 		}
 
-		MockConstFinalisable mockConst(void)
+		auto mockConst(void)
 		{
 			auto callRecorder = std::make_shared<FinaliseCallRecorder>(this->callSequence);
 			return MockConstFinalisable(callRecorder);
+		}
+
+		auto dummy(void) const
+		{
+			struct Dummy
+			{
+				void finalise(void) const
+				{
+				}
+			};
+
+			return Dummy();
 		}
 	};
 }

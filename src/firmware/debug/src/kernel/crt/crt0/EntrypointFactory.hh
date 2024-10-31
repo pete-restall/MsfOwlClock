@@ -13,7 +13,16 @@ namespace smeg::kernel::crt::crt0
 			// TODO: The factory abstraction now serves as the Composition Root and frees up the individual MCU-specific reset handlers from knowing
 			// about all the other non-MCU-specific dependencies of the Entrypoint, such as those derived from the KernelConfig.  Start working those
 			// into the application.
-			return Entrypoint(crt0Environment);
+			struct DummyTaskRunner
+			{
+				static void run(void) noexcept
+				{
+					while (true)
+						;;
+				}
+			};
+			using FirstTaskRunner = DummyTaskRunner;// TODO: SOMETHING LIKE... TaskRunnerFor<TCrt0Environment::Config, 0>;
+			return Entrypoint<FirstTaskRunner>(crt0Environment);
 		}
 	};
 }

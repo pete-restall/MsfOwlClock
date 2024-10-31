@@ -16,7 +16,7 @@ extern "C"
 	void _resetHandler(void) noexcept
 	{
 		// TODO
-		// load stack pointer (doesn't appear necessary, but seems other people (like ST) do - investigate why they do)
+		// stack pointer load is not necessary for this processor - but for multi-core setups like the RP2040, we will need to adjust the MSP to be the appropriate ISR stack
 
 		// store reset reason (BOR, POR, MCLR, software reset, fault, etc.) / flags / whatever - pass to constructor of Entrypoint
 		// set FPU mode for C compatibility - default FPCCR is fine but CPACR (full access to CP10 and CP11; p531 for default values); set FPDSCR - p37 ?

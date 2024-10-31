@@ -16,24 +16,34 @@ namespace smeg::tests::unit::kernel
 		using CallCountInt = InitialiseCallRecorder::CallCountInt;
 		std::atomic<CallCountInt> &callSequence;
 
-		using InitialiseCallRecorderPtr = std::shared_ptr<InitialiseCallRecorder>;
-
 	public:
 		InitialisableTestDoubles(std::atomic<CallCountInt> &callSequenceCounter) :
 			callSequence(callSequenceCounter)
 		{
 		}
 
-		MockNonConstInitialisable mockNonConst(void)
+		auto mockNonConst(void)
 		{
 			auto callRecorder = std::make_shared<InitialiseCallRecorder>(this->callSequence);
 			return MockNonConstInitialisable(callRecorder);
 		}
 
-		MockConstInitialisable mockConst(void)
+		auto mockConst(void)
 		{
 			auto callRecorder = std::make_shared<InitialiseCallRecorder>(this->callSequence);
 			return MockConstInitialisable(callRecorder);
+		}
+
+		auto dummy(void) const
+		{
+			struct Dummy
+			{
+				void initialise(void) const
+				{
+				}
+			};
+
+			return Dummy();
 		}
 	};
 }

@@ -14,7 +14,7 @@ namespace smeg::kernel::crt::crt0
 
 		struct KernelInitialisation
 		{
-			using Types = std::tuple<KernelPerCoreInitialisationTask>;
+			using Types = std::tuple<KernelPerCoreInitialisationTask>; // TODO: For Types (overlay only), allow an alternative called Configs, so that we can customise each task in the overlay individually - inside each entry we will require a Type.  For non-overlays this extra level is not necessary.
 
 			struct Stack
 			{
@@ -24,7 +24,7 @@ namespace smeg::kernel::crt::crt0
 		};
 
 	public:
-		using Tasks = std::array<KernelInitialisation, NumberOfCores>;
+		using Tasks = std::array<KernelInitialisation, NumberOfCores>; // TODO: Maybe we need to parameterise KernelInitialisation<CoreId> so we can have a task-based SchedulingConfig.CoreAffinity and then the Entrypoint can determine which core it is running on and execute the appropriate core-specific task.
 	};
 }
 
