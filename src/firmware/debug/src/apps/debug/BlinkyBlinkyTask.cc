@@ -15,9 +15,11 @@ namespace restall::msf_owl_clock::debug
 		GpioSharedPin<DigitalOutput, 81> led;
 
 	public:
-		BlinkyBlinkyTask(KernelApi<GpioDriver, SoftwareDelayDriver> &&kernel) :
-			delay(kernel.usingSoftwareDelayDriver().createFrom<decltype(delay)>()),
-			led(kernel.usingGpioDriver().getPinFrom<decltype(led)>())
+		using KernelApi = AppToDriverApis<GpioDriver, SoftwareDelayDriver>;
+
+		BlinkyBlinkyTask(KernelApi &&kernel) :
+			delay(kernel.using<SoftwareDelayDriver>().createFrom<decltype(delay)>()),
+			led(kernel.using<GpioDriver>().getPinFrom<decltype(led)>())
 		{
 		}
 
