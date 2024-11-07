@@ -1,6 +1,7 @@
 #ifndef __SMEG_TESTS_UNIT_KERNEL_TASKS_TASKTESTDOUBLES_HH
 #define __SMEG_TESTS_UNIT_KERNEL_TASKS_TASKTESTDOUBLES_HH
 #include <stdexcept>
+#include <type_traits>
 #include "../../TypeUtilities.hh"
 #include "StubExceptions.hh"
 
@@ -13,10 +14,22 @@ namespace smeg::tests::unit::kernel::tasks
 		}
 	};
 
-	template <typename TKernelApi>
-	struct StubTaskWithKernelApiConstructor
+	template <typename TRequiredApis>
+	struct StubTaskWithRequiredApisAndDefaultConstructor
 	{
-		StubTaskWithKernelApiConstructor(TKernelApi &&)
+		using RequiredApis = TRequiredApis;
+
+		void run(void)
+		{
+		}
+	};
+
+	template <typename TRequiredApis>
+	struct StubTaskWithRequiredApisConstructor
+	{
+		using RequiredApis = std::remove_cvref_t<TRequiredApis>;
+
+		StubTaskWithRequiredApisConstructor(RequiredApis &&)
 		{
 		}
 
@@ -25,21 +38,23 @@ namespace smeg::tests::unit::kernel::tasks
 		}
 	};
 
-	template <typename TKernelApi>
-	struct MockTaskWithBothDefaultAndKernelApiConstructors
+	template <typename TRequiredApis>
+	struct MockTaskWithBothDefaultAndRequiredApisConstructors
 	{
-		bool wasDefaultConstructorCalled;
-		bool wasKernelApiConstructorCalled;
+		using RequiredApis = std::remove_cvref_t<TRequiredApis>;
 
-		MockTaskWithBothDefaultAndKernelApiConstructors(void) :
+		bool wasDefaultConstructorCalled;
+		bool wasRequiredApisConstructorCalled;
+
+		MockTaskWithBothDefaultAndRequiredApisConstructors(void) :
 			wasDefaultConstructorCalled(true),
-			wasKernelApiConstructorCalled(false)
+			wasRequiredApisConstructorCalled(false)
 		{
 		}
 
-		MockTaskWithBothDefaultAndKernelApiConstructors(TKernelApi &&) :
+		MockTaskWithBothDefaultAndRequiredApisConstructors(RequiredApis &&) :
 			wasDefaultConstructorCalled(false),
-			wasKernelApiConstructorCalled(true)
+			wasRequiredApisConstructorCalled(true)
 		{
 		}
 
@@ -80,19 +95,21 @@ namespace smeg::tests::unit::kernel::tasks
 		}
 	};
 
-	template <typename TException, typename TKernelApi>
-	struct StubTaskKernelApiConstructorToThrow
+	template <typename TException, typename TRequiredApis>
+	struct StubTaskConstructorRequiringApisToThrow
 	{
+		using RequiredApis = std::remove_cvref_t<TRequiredApis>;
+
 		static const char *what(void)
 		{
 			static auto value =
 				nameof<TException>() + " thrown from " +
-				nameof<StubTaskKernelApiConstructorToThrow>() + "::ctor(" + nameof<TKernelApi>() + " &)";
+				nameof<StubTaskConstructorRequiringApisToThrow>() + "::ctor(" + nameof<RequiredApis>() + " &)";
 
 			return value.c_str();
 		}
 
-		StubTaskKernelApiConstructorToThrow(TKernelApi &&)
+		StubTaskConstructorRequiringApisToThrow(RequiredApis &&)
 		{
 			throw TException(what());
 		}
@@ -102,9 +119,15 @@ namespace smeg::tests::unit::kernel::tasks
 		}
 	};
 
-	template <typename TKernelApi>
-	struct StubTaskKernelApiConstructorToThrow<StubUnknownException, TKernelApi>
+	template <typename TRequiredApis>
+	struct StubTaskConstructorRequiringApisToThrow<StubUnknownException, TRequiredApis>
 	{
+		using RequiredApis = std::remove_cvref_t<TRequiredApis>;
+
+		StubTaskConstructorRequiringApisToThrow(RequiredApis &&)
+		{
+		}
+
 		void run(void)
 		{
 			throw StubUnknownException();

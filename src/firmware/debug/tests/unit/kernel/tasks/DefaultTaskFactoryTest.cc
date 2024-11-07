@@ -13,41 +13,40 @@ using namespace smeg::kernel::tasks;
 
 namespace smeg::tests::unit::kernel::tasks
 {
-	struct DummyKernelApi
+	struct DummyRequiredApi
 	{
 	};
 
-	using StubTaskWithDummyKernelApiConstructor = StubTaskWithKernelApiConstructor<DummyKernelApi>;
-
-	using MockTaskWithBothDefaultAndDummyKernelApiConstructors = MockTaskWithBothDefaultAndKernelApiConstructors<DummyKernelApi>;
-
-	suite<> defaultTaskFactoryTest("DefaultTaskFactory Test Suite", [](auto &unit)
+	suite<AppToDriverApis<DummyRequiredApi>, DriverToDriverApis<DummyRequiredApi>, DriverToKernelApis<DummyRequiredApi>> defaultTaskFactoryTest("DefaultTaskFactory Test Suite", [](auto &unit)
 	{
-		unit.test("createTask_calledWhenFactoryHasNoKernelApiAndTaskHasDefaultConstructor_expectTaskCanBeCreated", []()
+		unit.test("createTask_calledWhenTaskHasNoRequiredApisAndHasDefaultConstructor_expectTaskCanBeCreated", [](auto)
 		{
 			auto task(DefaultTaskFactory<StubTaskWithDefaultConstructor>::createTask());
 			auto isTaskExpectedType = typeid(task) == typeid(StubTaskWithDefaultConstructor);
 			expect(isTaskExpectedType, equal_to(true));
 		});
 
-		unit.test("createTask_calledWhenFactoryHasKernelApiAndTaskHasDefaultConstructor_expectTaskCanBeCreated", []()
+		unit.test("createTask_calledWhenTaskHasRequiredApisButOnlyHasDefaultConstructor_expectTaskCanBeCreated", [](auto fixture)
 		{
-			auto task(DefaultTaskFactory<StubTaskWithDefaultConstructor, DummyKernelApi>::createTask());
-			auto isTaskExpectedType = typeid(task) == typeid(StubTaskWithDefaultConstructor);
+			using StubTask = StubTaskWithRequiredApisAndDefaultConstructor<decltype(fixture)>;
+			auto task(DefaultTaskFactory<StubTask>::createTask());
+			auto isTaskExpectedType = typeid(task) == typeid(StubTask);
 			expect(isTaskExpectedType, equal_to(true));
 		});
 
-		unit.test("createTask_calledWhenFactoryHasKernelApiAndTaskHasKernelApiConstructor_expectTaskCanBeCreated", []()
+		unit.test("createTask_calledWhenTaskHasRequiredApisAndHasMatchingConstructor_expectTaskCanBeCreated", [](auto fixture)
 		{
-			auto task(DefaultTaskFactory<StubTaskWithDummyKernelApiConstructor, DummyKernelApi>::createTask());
-			auto isTaskExpectedType = typeid(task) == typeid(StubTaskWithDummyKernelApiConstructor);
+			using StubTask = StubTaskWithRequiredApisConstructor<decltype(fixture)>;
+			auto task(DefaultTaskFactory<StubTask>::createTask());
+			auto isTaskExpectedType = typeid(task) == typeid(StubTask);
 			expect(isTaskExpectedType, equal_to(true));
 		});
 
-		unit.test("createTask_calledWhenTaskHasBothDefaultAndKernelApiConstructors_expectTaskIsCreatedWithKernelApi", []()
+		unit.test("createTask_calledWhenTaskHasBothDefaultAndRequiredApisConstructors_expectTaskIsCreatedWithRequiredApis", [](auto fixture)
 		{
-			auto task(DefaultTaskFactory<MockTaskWithBothDefaultAndDummyKernelApiConstructors, DummyKernelApi>::createTask());
-			expect(task.wasKernelApiConstructorCalled, equal_to(true));
+			using MockTask = MockTaskWithBothDefaultAndRequiredApisConstructors<decltype(fixture)>;
+			auto task(DefaultTaskFactory<MockTask>::createTask());
+			expect(task.wasRequiredApisConstructorCalled, equal_to(true));
 		});
 	});
 }
