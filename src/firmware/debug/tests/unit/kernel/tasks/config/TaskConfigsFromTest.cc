@@ -64,7 +64,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 			expect(std::tuple_size_v<typename TaskConfigsFrom<EmptyTupleConfig>::PerConfig>, equal_to(0));
 		});
 
-		unit.test("PerConfig_getWhenPassedConfigWithemptyArrayOfTasks_expectEmptyTuple", []()
+		unit.test("PerConfig_getWhenPassedConfigWithEmptyArrayOfTasks_expectEmptyTuple", []()
 		{
 			expect(std::tuple_size_v<typename TaskConfigsFrom<EmptyArrayConfig>::PerConfig>, equal_to(0));
 		});
