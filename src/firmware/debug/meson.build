@@ -23,6 +23,8 @@ kernel_crt_crt0_linker_dir = kernel_crt_crt0_dir / 'linker'
 kernel_crt_crt0_mcu_dir = kernel_crt_crt0_dir / 'mcu'
 kernel_crt_crt0_mcu_st_dir = kernel_crt_crt0_mcu_dir / 'st'
 kernel_crt_picolibc_dir = kernel_crt_dir / 'picolibc'
+kernel_drivers_dir = kernel_dir / 'drivers'
+kernel_drivers_config_dir = kernel_drivers_dir / 'config'
 kernel_integer_sequences_dir = kernel_dir / 'integer-sequences'
 kernel_tasks_dir = kernel_dir / 'tasks'
 kernel_tasks_config_dir = kernel_tasks_dir / 'config'
@@ -155,6 +157,7 @@ else
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerDataMemorySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerFiniArraySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerInitArraySectionTest.cc',
+			unit_tests_dir / kernel_drivers_config_dir / 'DriverConfigsFromTest.cc',
 			unit_tests_dir / kernel_integer_sequences_dir / 'BubbleSortedTest.cc',
 			unit_tests_dir / kernel_integer_sequences_dir / 'SortedSetTest.cc',
 			unit_tests_dir / kernel_integer_sequences_dir / 'UniqueTest.cc',

@@ -1,8 +1,9 @@
 #ifndef __SMEG_KERNEL_TASKS_CONFIG_IHAVECONFIGFORTASKS_HH
 #define __SMEG_KERNEL_TASKS_CONFIG_IHAVECONFIGFORTASKS_HH
 #include <array>
-#include <cstdint>
+#include <cstddef>
 #include <tuple>
+
 #include "IHaveConfigForTask.hh"
 
 namespace smeg::kernel::tasks::config
