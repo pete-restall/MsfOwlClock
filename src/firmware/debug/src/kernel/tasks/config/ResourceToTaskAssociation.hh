@@ -1,8 +1,9 @@
 #ifndef __SMEG_KERNEL_TASKS_CONFIG_RESOURCETOTASKASSOCIATION_HH
 #define __SMEG_KERNEL_TASKS_CONFIG_RESOURCETOTASKASSOCIATION_HH
-#include <cstdint>
+#include <cstddef>
 #include <type_traits>
 #include <utility>
+
 #include "../../integer-sequences/SortedSet.hh"
 
 namespace smeg::kernel::tasks::config

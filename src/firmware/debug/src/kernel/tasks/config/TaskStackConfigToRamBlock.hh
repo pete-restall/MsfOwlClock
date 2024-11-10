@@ -1,7 +1,8 @@
 #ifndef __SMEG_KERNEL_TASKS_CONFIG_TASKSTACKCONFIGTORAMBLOCK_HH
 #define __SMEG_KERNEL_TASKS_CONFIG_TASKSTACKCONFIGTORAMBLOCK_HH
-#include <cstdint>
+#include <cstddef>
 #include <tuple>
+
 #include "dsl/DefaultMemorySection.hh"
 #include "IHaveAssociatedConfigForTaskStack.hh"
 #include "IHaveConfigForTasks.hh"

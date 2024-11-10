@@ -1,6 +1,8 @@
 #ifndef __RESTALL_MSFOWLCLOCK_CONFIG_TASKS_HH
 #define __RESTALL_MSFOWLCLOCK_CONFIG_TASKS_HH
+#include <cstddef>
 #include <tuple>
+
 #include "../kernel/public/config.hh"
 
 namespace restall::msf_owl_clock::debug { struct NopTask { void run(void) {  } }; } // TODO: TEMPORARY DEBUGGING...

@@ -1,6 +1,7 @@
 #ifndef __SMEG_KERNEL_CRT_CRT0_DEFAULTCRT0ENVIRONMENTCONFIG_HH
 #define __SMEG_KERNEL_CRT_CRT0_DEFAULTCRT0ENVIRONMENTCONFIG_HH
-#include <cstdint>
+#include <cstddef>
+
 #include "../../KernelPerCoreInitialisationTask.hh"
 #include "IsrStackMemorySection.hh"
 

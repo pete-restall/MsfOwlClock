@@ -1,5 +1,5 @@
 #include <array>
-#include <cstdint>
+#include <cstddef>
 #include <utility>
 
 #include <mettle/suite.hpp>

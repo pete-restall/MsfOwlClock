@@ -1,6 +1,6 @@
 #ifndef __SMEG_KERNEL_TUPLES_TUPLEPROJECTION_HH
 #define __SMEG_KERNEL_TUPLES_TUPLEPROJECTION_HH
-#include <cstdint>
+#include <cstddef>
 #include <tuple>
 
 namespace smeg::kernel::tuples

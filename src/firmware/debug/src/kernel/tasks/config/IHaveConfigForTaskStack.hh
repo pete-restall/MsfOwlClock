@@ -1,7 +1,7 @@
 #ifndef __SMEG_KERNEL_TASKS_CONFIG_IHAVECONFIGFORTASKSTACK_HH
 #define __SMEG_KERNEL_TASKS_CONFIG_IHAVECONFIGFORTASKSTACK_HH
 #include <concepts>
-#include <cstdint>
+#include <cstddef>
 #include <type_traits>
 
 namespace smeg::kernel::tasks::config

@@ -1,8 +1,10 @@
 #ifndef __SMEG_KERNEL_INTEGERSEQUENCES_BUBBLESORTED_HH
 #define __SMEG_KERNEL_INTEGERSEQUENCES_BUBBLESORTED_HH
+#include <cstddef>
 #include <concepts>
 #include <type_traits>
 #include <utility>
+
 #include "utilities.hh"
 
 namespace smeg::kernel::integer_sequences

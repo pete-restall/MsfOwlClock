@@ -1,7 +1,8 @@
 #ifndef __SMEG_KERNEL_TASKS_CONFIG_TASKSFROM_HH
 #define __SMEG_KERNEL_TASKS_CONFIG_TASKSFROM_HH
-#include <cstdint>
+#include <cstddef>
 #include <tuple>
+
 #include "../../tuples/TupleProjection.hh"
 #include "IHaveConfigForTasks.hh"
 #include "ResourceToTaskAssociation.hh"

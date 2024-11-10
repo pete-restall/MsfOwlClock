@@ -2,8 +2,9 @@
 #define __SMEG_KERNEL_TASKS_CONFIG_IHAVECONFIGFORTASK_HH
 #include <array>
 #include <concepts>
-#include <cstdint>
+#include <cstddef>
 #include <tuple>
+
 #include "../ITask.hh"
 
 namespace smeg::kernel::tasks::config

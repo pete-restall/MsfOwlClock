@@ -9,7 +9,7 @@
 
 namespace smeg::kernel::bare_metal::mcu::arm::cortex::m4
 {
-	struct Scs
+	struct Scs // TODO: SEE PAGE B3-595 OF ARMV7 REFERENCE MANUAL - THERE'S MORE IN THIS BANK !
 	{
 		RegisterU32 _reserved_0;
 		RegisterU32 ICTR;

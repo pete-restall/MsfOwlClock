@@ -2,6 +2,8 @@
 #define __SMEG_KERNEL_TASKS_CONFIG_TASKSTACKRAMBLOCK_HH
 #include <array>
 #include <cstdint>
+#include <cstddef>
+
 #include "IHaveConfigForTasks.hh"
 
 namespace smeg::kernel::tasks::config

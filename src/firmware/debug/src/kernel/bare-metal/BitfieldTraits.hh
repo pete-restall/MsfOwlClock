@@ -1,6 +1,7 @@
 #ifndef __SMEG_KERNEL_BAREMETAL_BITFIELDTRAITS_HH
 #define __SMEG_KERNEL_BAREMETAL_BITFIELDTRAITS_HH
 #include <concepts>
+#include <cstddef>
 #include <limits>
 #include <type_traits>
 #include <utility>
