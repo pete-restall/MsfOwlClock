@@ -22,7 +22,7 @@ namespace smeg::kernel::crt::crt0
 				}
 			};
 			using FirstTaskRunner = DummyTaskRunner;// TODO: SOMETHING LIKE... TaskRunnerFor<TCrt0Environment::Config, 0>;
-			return Entrypoint<FirstTaskRunner>(crt0Environment);
+			return Entrypoint<TCrt0Environment, FirstTaskRunner>(crt0Environment);
 		}
 	};
 }
