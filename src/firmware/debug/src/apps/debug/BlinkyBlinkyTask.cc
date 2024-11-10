@@ -11,15 +11,17 @@ namespace restall::msf_owl_clock::debug
 	class BlinkyBlinkyTask
 	{
 	private:
+		RequiredApis apis;
 		BlockingSoftwareDelay<500ms> delay;
 		GpioSharedPin<DigitalOutput, 81> led;
 
 	public:
-		using RequiredApis = AppToDriverApis<GpioDriver, SoftwareDelayDriver>;
+		using RequiredApis = AppToDriverApis<GpioDriverApi, SoftwareDelayDriverApi>;
 
 		BlinkyBlinkyTask(RequiredApis &&apis) :
-			delay(apis.using<SoftwareDelayDriver>().createFrom<decltype(delay)>()),
-			led(apis.using<GpioDriver>().getPinFrom<decltype(led)>())
+			apis(apis),
+			delay(apis.get<SoftwareDelayDriverApi>().createDelayFrom<decltype(delay)>()),
+			led(apis.get<GpioDriverApi>().getPinFrom<decltype(led)>())
 		{
 		}
 
