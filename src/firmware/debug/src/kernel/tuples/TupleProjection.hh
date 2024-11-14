@@ -3,6 +3,8 @@
 #include <cstddef>
 #include <tuple>
 
+#include "TupleCat.hh"
+
 namespace smeg::kernel::tuples
 {
 	template <bool TDummyForSpecialisation, typename TTuple, template <typename, std::size_t...> typename TProjection>
@@ -12,73 +14,109 @@ namespace smeg::kernel::tuples
 	class _TupleProjection<true, TTuple, TProjection>
 	{
 	private:
-		template <typename THead, typename... TTail>
-		static consteval auto project(std::tuple<THead, TTail...>)
-		{
-			return std::tuple_cat(
-				typename TProjection<THead>::AsTuple{},
-				project(std::tuple<TTail...>{}));
-		}
+		template <bool TDummyForSpecialisation, typename... T>
+		struct Project;
 
-		static consteval auto project(std::tuple<>)
+		template <bool TDummyForSpecialisation, typename THead, typename... TTail>
+		struct Project<TDummyForSpecialisation, THead, TTail...>
 		{
-			return std::tuple<>{};
-		}
+			using AsTuple = TupleCat<typename TProjection<THead>::AsTuple, typename Project<TDummyForSpecialisation, TTail...>::AsTuple>;
+		};
+
+		template <bool TDummyForSpecialisation>
+		struct Project<TDummyForSpecialisation>
+		{
+			using AsTuple = std::tuple<>;
+		};
+
+		template <typename... T>
+		struct _Output;
+
+		template <typename... T>
+		struct _Output<std::tuple<T...>>
+		{
+			using AsTuple = typename Project<true, T...>::AsTuple;
+		};
 
 	public:
 		using Input = TTuple;
-		using Output = decltype(project(TTuple{}));
+		using Output = typename _Output<TTuple>::AsTuple;
 	};
 
 	template <typename TTuple, template <typename, std::size_t> typename TProjection>
 	class _TupleProjection<true, TTuple, TProjection>
 	{
 	private:
+		template <std::size_t InputIndex, typename... T>
+		struct Project;
+
 		template <std::size_t InputIndex, typename THead, typename... TTail>
-		static consteval auto project(std::tuple<THead, TTail...>)
+		struct Project<InputIndex, THead, TTail...>
 		{
-			return std::tuple_cat(
-				typename TProjection<THead, InputIndex>::AsTuple{},
-				project<InputIndex + 1>(std::tuple<TTail...>{}));
-		}
+			using AsTuple = TupleCat<
+				typename TProjection<THead, InputIndex>::AsTuple,
+				typename Project<InputIndex + 1, TTail...>::AsTuple>;
+		};
 
 		template <std::size_t InputIndex>
-		static consteval auto project(std::tuple<>)
+		struct Project<InputIndex>
 		{
-			return std::tuple<>{};
-		}
+			using AsTuple = std::tuple<>;
+		};
+
+		template <typename... T>
+		struct _Output;
+
+		template <typename... T>
+		struct _Output<std::tuple<T...>>
+		{
+			using AsTuple = typename Project<0, T...>::AsTuple;
+		};
 
 	public:
 		using Input = TTuple;
-		using Output = decltype(project<0>(TTuple{}));
+		using Output = typename _Output<TTuple>::AsTuple;
 	};
 
 	template <typename TTuple, template <typename, std::size_t, std::size_t> typename TProjection>
 	class _TupleProjection<true, TTuple, TProjection>
 	{
 	private:
+		template <std::size_t InputIndex, std::size_t OutputIndex, typename... T>
+		struct Project;
+
 		template <std::size_t InputIndex, std::size_t OutputIndex, typename THead, typename... TTail>
-		static consteval auto project(std::tuple<THead, TTail...>)
+		struct Project<InputIndex, OutputIndex, THead, TTail...>
 		{
 			using ProjectedAsTuple = typename TProjection<THead, InputIndex, OutputIndex>::AsTuple;
-			return std::tuple_cat(
-				ProjectedAsTuple{},
-				project<InputIndex + 1, OutputIndex + std::tuple_size_v<ProjectedAsTuple>>(std::tuple<TTail...>{}));
-		}
+			using AsTuple = TupleCat<
+				ProjectedAsTuple,
+				typename Project<InputIndex + 1, OutputIndex + std::tuple_size_v<ProjectedAsTuple>, TTail...>::AsTuple>;
+		};
 
 		template <std::size_t InputIndex, std::size_t OutputIndex>
-		static consteval auto project(std::tuple<>)
+		struct Project<InputIndex, OutputIndex>
 		{
-			return std::tuple<>{};
-		}
+			using AsTuple = std::tuple<>;
+		};
+
+		template <typename... T>
+		struct _Output;
+
+		template <typename... T>
+		struct _Output<std::tuple<T...>>
+		{
+			using AsTuple = typename Project<0, 0, T...>::AsTuple;
+		};
+
 
 	public:
 		using Input = TTuple;
-		using Output = decltype(project<0, 0>(TTuple{}));
+		using Output = typename _Output<TTuple>::AsTuple;
 	};
 
 	template <typename TTuple, template <typename, std::size_t...> typename TProjection>
-	using TupleProjection = _TupleProjection<true, decltype(std::tuple_cat(TTuple{})), TProjection>;
+	using TupleProjection = _TupleProjection<true, TupleCat<TTuple>, TProjection>;
 }
 
 #endif

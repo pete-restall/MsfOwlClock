@@ -3,12 +3,16 @@
 #include <cstddef>
 #include <tuple>
 
+#include "../../tuples/AsTuple.hh"
+#include "../../tuples/TupleCat.hh"
 #include "IHaveConfigForTasks.hh"
 #include "ResourceToTaskAssociation.hh"
 #include "TaskConfigToResourceAssociation.hh"
 
 namespace smeg::kernel::tasks::config
 {
+	using namespace smeg::kernel::tuples;
+
 	template <IHaveConfigForTasks TConfig>
 	class TaskConfigsFrom
 	{
@@ -16,50 +20,76 @@ namespace smeg::kernel::tasks::config
 		template <std::size_t N, std::size_t TaskId, typename TTaskConfig>
 		struct Repeated
 		{
-			using Tuple = decltype(std::tuple_cat(
-				std::tuple<ResourceToTaskAssociation<TTaskConfig, TaskId>>{},
-				typename Repeated<N - 1, TaskId + 1, TTaskConfig>::Tuple{}));
+			using AsTuple = TupleCat<
+				std::tuple<ResourceToTaskAssociation<TTaskConfig, TaskId>>,
+				typename Repeated<N - 1, TaskId + 1, TTaskConfig>::AsTuple>;
 		};
 
 		template <std::size_t TaskId, typename TTaskConfig>
 		struct Repeated<0, TaskId, TTaskConfig>
 		{
-			using Tuple = std::tuple<>;
+			using AsTuple = std::tuple<>;
 		};
 
-		template <std::size_t TaskId, typename TTaskConfigHead, typename... TTaskConfigTail>
-		static consteval auto configsPerTaskFrom(std::tuple<TTaskConfigHead, TTaskConfigTail...>)
-		{
-			using Association = TaskConfigToResourceAssociation<TaskId, TTaskConfigHead>;
-			return std::tuple_cat(
-				typename Repeated<Association::numberOfTasks, TaskId, TTaskConfigHead>::Tuple{},
-				configsPerTaskFrom<Association::nextTaskId>(std::tuple<TTaskConfigTail...>{}));
-		}
-
-		template <std::size_t TaskId>
-		static consteval auto configsPerTaskFrom(std::tuple<>)
-		{
-			return std::tuple<>{};
-		}
+		template <std::size_t TaskId, typename... TTaskConfigs>
+		struct ConfigsPerConfigFrom;
 
 		template <std::size_t TaskId, typename TTaskConfigHead, typename... TTaskConfigTail>
-		static consteval auto configsPerConfigFrom(std::tuple<TTaskConfigHead, TTaskConfigTail...>)
+		struct ConfigsPerConfigFrom<TaskId, TTaskConfigHead, TTaskConfigTail...>
 		{
 			using Association = TaskConfigToResourceAssociation<TaskId, TTaskConfigHead>;
-			return std::tuple_cat(
-				std::tuple<typename Association::Type>{},
-				configsPerConfigFrom<Association::nextTaskId>(std::tuple<TTaskConfigTail...>{}));
-		}
+			using AsTuple = TupleCat<
+				std::tuple<typename Association::Type>,
+				typename ConfigsPerConfigFrom<Association::nextTaskId, TTaskConfigTail...>::AsTuple>;
+		};
 
 		template <std::size_t TaskId>
-		static consteval auto configsPerConfigFrom(std::tuple<>)
+		struct ConfigsPerConfigFrom<TaskId>
 		{
-			return std::tuple<>{};
-		}
+			using AsTuple = std::tuple<>;
+		};
+
+		template <typename... T>
+		struct _PerConfig;
+
+		template <typename... T>
+		struct _PerConfig<std::tuple<T...>>
+		{
+			using AsTuple = typename ConfigsPerConfigFrom<0, T...>::AsTuple;
+		};
+
+		template <std::size_t TaskId, typename... TTaskConfigs>
+		struct ConfigsPerTaskFrom;
+
+		template <std::size_t TaskId, typename TTaskConfigHead, typename... TTaskConfigTail>
+		struct ConfigsPerTaskFrom<TaskId, TTaskConfigHead, TTaskConfigTail...>
+		{
+			using Association = TaskConfigToResourceAssociation<TaskId, TTaskConfigHead>;
+			using AsTuple = TupleCat<
+				typename Repeated<Association::numberOfTasks, TaskId, TTaskConfigHead>::AsTuple,
+				typename ConfigsPerTaskFrom<Association::nextTaskId, TTaskConfigTail...>::AsTuple>;
+		};
+
+		template <std::size_t TaskId>
+		struct ConfigsPerTaskFrom<TaskId>
+		{
+			using AsTuple = std::tuple<>;
+		};
+
+		template <typename... T>
+		struct _PerTask;
+
+		template <typename... T>
+		struct _PerTask<std::tuple<T...>>
+		{
+			using AsTuple = typename ConfigsPerTaskFrom<0, T...>::AsTuple;
+		};
+
+		using TaskConfigsAsTuple = AsTuple<typename TConfig::Tasks>;
 
 	public:
-		using PerConfig = decltype(configsPerConfigFrom<0>(std::tuple_cat(typename TConfig::Tasks{})));
-		using PerTask = decltype(configsPerTaskFrom<0>(std::tuple_cat(typename TConfig::Tasks{})));
+		using PerConfig = typename _PerConfig<TaskConfigsAsTuple>::AsTuple;
+		using PerTask = typename _PerTask<TaskConfigsAsTuple>::AsTuple;
 	};
 }
 
