@@ -174,6 +174,7 @@ else
 			unit_tests_dir / kernel_tasks_config_dir / 'TaskStackConfigsFromTest.cc',
 			unit_tests_dir / kernel_tasks_config_dir / 'TaskStackConfigToRamBlockTest.cc',
 			unit_tests_dir / kernel_tasks_config_dir / 'TaskStackRamBlockTest.cc',
+			unit_tests_dir / kernel_tuples_dir / 'AsTupleTest.cc',
 			unit_tests_dir / kernel_tuples_dir / 'TupleIndexZipTest.cc',
 			unit_tests_dir / kernel_tuples_dir / 'TupleProjectionTest.cc'
 		],
