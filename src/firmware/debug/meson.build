@@ -177,7 +177,8 @@ else
 			unit_tests_dir / kernel_tuples_dir / 'AsTupleTest.cc',
 			unit_tests_dir / kernel_tuples_dir / 'TupleCatTest.cc',
 			unit_tests_dir / kernel_tuples_dir / 'TupleIndexZipTest.cc',
-			unit_tests_dir / kernel_tuples_dir / 'TupleProjectionTest.cc'
+			unit_tests_dir / kernel_tuples_dir / 'TupleProjectionTest.cc',
+			unit_tests_dir / kernel_tuples_dir / 'UniqueTest.cc'
 		],
 		include_directories: [
 			src_dir
