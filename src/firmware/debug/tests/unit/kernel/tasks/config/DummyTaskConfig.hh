@@ -1,7 +1,7 @@
 #ifndef __SMEG_TESTS_UNIT_KERNEL_TASKS_CONFIG_DUMMYTASKCONFIG_HH
 #define __SMEG_TESTS_UNIT_KERNEL_TASKS_CONFIG_DUMMYTASKCONFIG_HH
 #include "DummyTask.hh"
-#include "DummyTaskStack.hh"
+#include "DummyTaskStackConfig.hh"
 
 namespace smeg::tests::unit::kernel::tasks::config
 {
@@ -9,7 +9,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 	struct DummyTaskConfig
 	{
 		using Type = DummyTask<X>;
-		using Stack = DummyTaskStack<X + 42>;
+		using Stack = DummyTaskStackConfig<X + 42>;
 	};
 }
 

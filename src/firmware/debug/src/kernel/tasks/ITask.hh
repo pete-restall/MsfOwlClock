@@ -2,39 +2,50 @@
 #define __SMEG_KERNEL_TASKS_ITASK_HH
 #include <concepts>
 #include <type_traits>
+#include <utility>
+
 #include "AppToDriverApis.hh"
 #include "DriverToDriverApis.hh"
 #include "DriverToKernelApis.hh"
 
 namespace smeg::kernel::tasks
 {
-	template <typename... T>
-	struct _IsTaskRequiredApis { static constexpr bool value = false; };
+	template <template <typename...> typename TOpenRequired, typename TClosedRequired, typename... TApis>
+	struct _IsTaskRequiredApis
+	{
+		static constexpr bool value = false;
+	};
 
-	template <typename... T>
-	struct _IsTaskRequiredApis<AppToDriverApis<T...>> { static constexpr bool value = true; };
-
-	template <typename... T>
-	struct _IsTaskRequiredApis<DriverToDriverApis<T...>> { static constexpr bool value = true; };
-
-	template <typename... T>
-	struct _IsTaskRequiredApis<DriverToKernelApis<T...>> { static constexpr bool value = true; };
-
-	template <typename TTask, typename TRequiredApis>
-	concept IHaveTaskConstructorRequiringApiInjection =
-		std::same_as<std::remove_cvref_t<TRequiredApis>, typename TTask::RequiredApis> &&
-		std::constructible_from<TTask, std::remove_cvref_t<TRequiredApis> &&>;
+	template <template <typename...> typename TOpenRequired, typename... TApis>
+	struct _IsTaskRequiredApis<TOpenRequired, TOpenRequired<TApis...>>
+	{
+		static constexpr bool value = true;
+	};
 
 	template <typename TTask>
-	concept IHaveTaskConstructorRequiringAnyApiInjection =
-		_IsTaskRequiredApis<std::remove_cvref_t<typename TTask::RequiredApis>>::value &&
-		IHaveTaskConstructorRequiringApiInjection<TTask, typename TTask::RequiredApis>;
+	concept _IHaveTaskConstructorRequiringAnyApiInjection =
+		!std::is_default_constructible_v<TTask> &&
+		requires(std::remove_cvref_t<typename TTask::RequiredApis> &apis)
+		{
+			{ TTask(std::move(apis)) } -> std::same_as<TTask>;
+		};
+
+	template <typename TTask, template <typename...> typename TRequiredApis>
+	concept _IHaveTaskConstructorRequiringApiInjection =
+		_IHaveTaskConstructorRequiringAnyApiInjection<TTask> &&
+		_IsTaskRequiredApis<TRequiredApis, typename TTask::RequiredApis>::value;
 
 	template <typename TTask>
-	concept IHaveDefaultTaskConstructor = std::constructible_from<TTask>;
+	concept _IHaveRequiredApisTypedef = std::same_as<typename TTask::RequiredApis, typename TTask::RequiredApis>;
 
 	template <typename TTask>
-	concept IHaveAnyTaskConstructor = IHaveDefaultTaskConstructor<TTask> || IHaveTaskConstructorRequiringAnyApiInjection<TTask>;
+	concept _IHaveDefaultTaskConstructor =
+		std::is_default_constructible_v<TTask> &&
+		!_IHaveTaskConstructorRequiringAnyApiInjection<TTask> &&
+		!_IHaveRequiredApisTypedef<TTask>;
+
+	template <typename TTask>
+	concept _IHaveAnyTaskConstructor = _IHaveDefaultTaskConstructor<TTask> || _IHaveTaskConstructorRequiringAnyApiInjection<TTask>;
 
 	template <typename TTask>
 	concept IRunVoidTask = requires(TTask &task)
@@ -48,11 +59,45 @@ namespace smeg::kernel::tasks
 		{ task.run() } -> std::convertible_to<bool>;
 	};
 
-	template <typename TTask, typename TRequiredApis>
-	concept ITaskRequiringApiInjection = IHaveTaskConstructorRequiringApiInjection<TTask, TRequiredApis> && (IRunVoidTask<TTask> || IRunBooleanTask<TTask>);
+	template <typename TTask>
+	concept IRunAnyTask = IRunVoidTask<TTask> || IRunBooleanTask<TTask>;
+
+	template <typename TTask, template <typename...> typename TRequiredApis>
+	concept ITaskWithRequiredApis =
+		!_IHaveDefaultTaskConstructor<TTask> &&
+		_IHaveTaskConstructorRequiringApiInjection<TTask, TRequiredApis> &&
+		IRunAnyTask<TTask>;
 
 	template <typename TTask>
-	concept ITask = IHaveAnyTaskConstructor<TTask> && (IRunVoidTask<TTask> || IRunBooleanTask<TTask>);
+	concept ITaskWithAnyRequiredApis =
+		!_IHaveDefaultTaskConstructor<TTask> &&
+		_IHaveTaskConstructorRequiringAnyApiInjection<TTask> &&
+		IRunAnyTask<TTask>;
+
+	template <typename TTask, template <typename...> typename TNotRequiredApis>
+	concept ITaskWithAnyRequiredApisExcept = ITaskWithAnyRequiredApis<TTask> && !ITaskWithRequiredApis<TTask, TNotRequiredApis>;
+
+	template <typename TTask>
+	concept ITaskWithoutRequiredApis =
+		_IHaveDefaultTaskConstructor<TTask> &&
+		!_IHaveTaskConstructorRequiringAnyApiInjection<TTask> &&
+		IRunAnyTask<TTask>;
+
+	template <typename TTask>
+	concept ITask = _IHaveAnyTaskConstructor<TTask> && IRunAnyTask<TTask>;
+
+	template <typename TTask, template <typename...> typename TRequiredApis>
+	concept ITaskWithDefaultConstructorOrRequiringApiInjection = ITask<TTask> && (
+		ITaskWithRequiredApis<TTask, TRequiredApis> ||
+		_IHaveDefaultTaskConstructor<TTask>);
+
+	template <typename TTask>
+	concept IAppTask = ITaskWithDefaultConstructorOrRequiringApiInjection<TTask, AppToDriverApis>;
+
+	template <typename TTask>
+	concept IDriverTask =
+		ITaskWithDefaultConstructorOrRequiringApiInjection<TTask, DriverToDriverApis> ||
+		ITaskWithDefaultConstructorOrRequiringApiInjection<TTask, DriverToKernelApis>;
 }
 
 #endif

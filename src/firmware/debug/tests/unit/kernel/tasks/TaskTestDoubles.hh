@@ -38,31 +38,6 @@ namespace smeg::tests::unit::kernel::tasks
 		}
 	};
 
-	template <typename TRequiredApis>
-	struct MockTaskWithBothDefaultAndRequiredApisConstructors
-	{
-		using RequiredApis = std::remove_cvref_t<TRequiredApis>;
-
-		bool wasDefaultConstructorCalled;
-		bool wasRequiredApisConstructorCalled;
-
-		MockTaskWithBothDefaultAndRequiredApisConstructors(void) :
-			wasDefaultConstructorCalled(true),
-			wasRequiredApisConstructorCalled(false)
-		{
-		}
-
-		MockTaskWithBothDefaultAndRequiredApisConstructors(RequiredApis &&) :
-			wasDefaultConstructorCalled(false),
-			wasRequiredApisConstructorCalled(true)
-		{
-		}
-
-		void run(void)
-		{
-		}
-	};
-
 	template <typename TException>
 	struct StubTaskDefaultConstructorToThrow
 	{

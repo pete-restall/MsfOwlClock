@@ -9,6 +9,7 @@
 
 #include "DummyTask.hh"
 #include "DummyTaskConfig.hh"
+#include "DummyTaskStackConfig.hh"
 
 using namespace mettle;
 
@@ -45,6 +46,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 				struct LonelyTask
 				{
 					using Type = DummyTask<1>;
+					using Stack = DummyTaskStackConfig<1>;
 				};
 
 				using Tasks = std::tuple<LonelyTask>;
@@ -60,6 +62,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 				struct LonelyTask
 				{
 					using Type = DummyTask<1>;
+					using Stack = DummyTaskStackConfig<2>;
 				};
 
 				using Tasks = std::array<LonelyTask, 1>;
@@ -75,6 +78,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 				struct LonelyTask
 				{
 					using Type = DummyTask<1>;
+					using Stack = DummyTaskStackConfig<3>;
 				};
 
 				using Tasks = std::array<LonelyTask, 3>;
@@ -90,16 +94,19 @@ namespace smeg::tests::unit::kernel::tasks::config
 				struct FirstTask
 				{
 					using Type = DummyTask<1>;
+					using Stack = DummyTaskStackConfig<4>;
 				};
 
 				struct RepeatedTask
 				{
 					using Type = DummyTask<2>;
+					using Stack = DummyTaskStackConfig<5>;
 				};
 
 				struct ThirdTask
 				{
 					using Type = DummyTask<3>;
+					using Stack = DummyTaskStackConfig<6>;
 				};
 
 				using Tasks = std::tuple<FirstTask, RepeatedTask, ThirdTask, RepeatedTask, RepeatedTask>;
@@ -122,6 +129,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 				struct OverlaidTasks
 				{
 					using Types = std::tuple<DummyTask<1>, DummyTask<2>, DummyTask<3>>;
+					using Stack = DummyTaskStackConfig<7>;
 				};
 
 				using Tasks = std::tuple<OverlaidTasks>;
@@ -137,6 +145,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 				struct OverlaidTasks
 				{
 					using Types = std::tuple<DummyTask<1>, DummyTask<2>, DummyTask<3>>;
+					using Stack = DummyTaskStackConfig<8>;
 				};
 
 				using Tasks = std::array<OverlaidTasks, 1>;
@@ -152,6 +161,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 				struct OverlaidTasks
 				{
 					using Types = std::tuple<DummyTask<1>, DummyTask<2>, DummyTask<3>>;
+					using Stack = DummyTaskStackConfig<9>;
 				};
 
 				using Tasks = std::array<OverlaidTasks, 2>;
@@ -171,21 +181,25 @@ namespace smeg::tests::unit::kernel::tasks::config
 				struct FirstSimpleTask
 				{
 					using Type = DummyTask<10>;
+					using Stack = DummyTaskStackConfig<10>;
 				};
 
 				struct OverlaidTasks
 				{
 					using Types = std::tuple<DummyTask<9>, DummyTask<8>, DummyTask<7>>;
+					using Stack = DummyTaskStackConfig<11>;
 				};
 
 				struct SecondSimpleTask
 				{
 					using Type = DummyTask<6>;
+					using Stack = DummyTaskStackConfig<12>;
 				};
 
 				struct ThirdSimpleTask
 				{
 					using Type = DummyTask<5>;
+					using Stack = DummyTaskStackConfig<13>;
 				};
 
 				using Tasks = std::tuple<FirstSimpleTask, OverlaidTasks, SecondSimpleTask, ThirdSimpleTask, OverlaidTasks, SecondSimpleTask>;
@@ -233,6 +247,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 				struct LonelyTask
 				{
 					using Type = DummyTask<14>;
+					using Stack = DummyTaskStackConfig<14>;
 				};
 
 				using Tasks = std::tuple<LonelyTask>;
@@ -248,6 +263,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 				struct LonelyTask
 				{
 					using Type = DummyTask<14>;
+					using Stack = DummyTaskStackConfig<15>;
 				};
 
 				using Tasks = std::array<LonelyTask, 1>;
@@ -263,6 +279,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 				struct SomeTask
 				{
 					using Type = DummyTask<14>;
+					using Stack = DummyTaskStackConfig<16>;
 				};
 
 				using Tasks = std::array<SomeTask, 3>;
@@ -283,16 +300,19 @@ namespace smeg::tests::unit::kernel::tasks::config
 				struct FirstTask
 				{
 					using Type = DummyTask<5>;
+					using Stack = DummyTaskStackConfig<17>;
 				};
 
 				struct RepeatedTask
 				{
 					using Type = DummyTask<-12>;
+					using Stack = DummyTaskStackConfig<18>;
 				};
 
 				struct ThirdTask
 				{
 					using Type = DummyTask<3>;
+					using Stack = DummyTaskStackConfig<19>;
 				};
 
 				using Tasks = std::tuple<FirstTask, RepeatedTask, ThirdTask, RepeatedTask, RepeatedTask>;
@@ -315,6 +335,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 				struct OverlaidTasks
 				{
 					using Types = std::tuple<DummyTask<2>, DummyTask<5>, DummyTask<7>>;
+					using Stack = DummyTaskStackConfig<20>;
 				};
 
 				using Tasks = std::tuple<OverlaidTasks>;
@@ -335,6 +356,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 				struct OverlaidTasks
 				{
 					using Types = std::tuple<DummyTask<2>, DummyTask<5>, DummyTask<7>>;
+					using Stack = DummyTaskStackConfig<21>;
 				};
 
 				using Tasks = std::array<OverlaidTasks, 1>;
@@ -355,6 +377,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 				struct OverlaidTasks
 				{
 					using Types = std::tuple<DummyTask<2>, DummyTask<5>, DummyTask<7>>;
+					using Stack = DummyTaskStackConfig<22>;
 				};
 
 				using Tasks = std::array<OverlaidTasks, 2>;
@@ -378,21 +401,25 @@ namespace smeg::tests::unit::kernel::tasks::config
 				struct FirstSimpleTask
 				{
 					using Type = DummyTask<101>;
+					using Stack = DummyTaskStackConfig<23>;
 				};
 
 				struct OverlaidTasks
 				{
 					using Types = std::tuple<DummyTask<493>, DummyTask<88>, DummyTask<173789>>;
+					using Stack = DummyTaskStackConfig<24>;
 				};
 
 				struct SecondSimpleTask
 				{
 					using Type = DummyTask<0>;
+					using Stack = DummyTaskStackConfig<25>;
 				};
 
 				struct ThirdSimpleTask
 				{
 					using Type = DummyTask<-1>;
+					using Stack = DummyTaskStackConfig<26>;
 				};
 
 				using Tasks = std::tuple<FirstSimpleTask, OverlaidTasks, SecondSimpleTask, ThirdSimpleTask, OverlaidTasks, SecondSimpleTask>;

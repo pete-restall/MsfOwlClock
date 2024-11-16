@@ -6,6 +6,7 @@
 #include "kernel/tasks/config/TaskConfigToResourceAssociation.hh"
 
 #include "DummyTask.hh"
+#include "DummyTaskStackConfig.hh"
 
 using namespace mettle;
 
@@ -19,6 +20,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 		struct SimpleTaskConfig
 		{
 			using Type = TTask;
+			using Stack = DummyTaskStackConfig<1>;
 		};
 
 		expect(
@@ -32,6 +34,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 		struct SimpleTaskConfig
 		{
 			using Type = TTask;
+			using Stack = DummyTaskStackConfig<2>;
 		};
 
 		expect(TaskConfigToResourceAssociation<TaskId, SimpleTaskConfig>::numberOfTasks, equal_to(1));
@@ -43,6 +46,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 		struct SimpleTaskConfig
 		{
 			using Type = TTask;
+			using Stack = DummyTaskStackConfig<3>;
 		};
 
 		expect(TaskConfigToResourceAssociation<TaskId, SimpleTaskConfig>::nextTaskId, equal_to(TaskId + 1));
@@ -54,6 +58,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 		struct OverlaidTaskConfig
 		{
 			using Types = std::tuple<TTasks...>;
+			using Stack = DummyTaskStackConfig<4>;
 		};
 
 		expect(TaskConfigToResourceAssociation<FirstTaskId, OverlaidTaskConfig>::numberOfTasks, equal_to(sizeof...(TTasks)));
@@ -65,6 +70,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 		struct OverlaidTaskConfig
 		{
 			using Types = std::tuple<TTasks...>;
+			using Stack = DummyTaskStackConfig<5>;
 		};
 
 		expect(TaskConfigToResourceAssociation<FirstTaskId, OverlaidTaskConfig>::nextTaskId, equal_to(FirstTaskId + sizeof...(TTasks)));
@@ -95,6 +101,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 			struct OverlaidTaskConfig
 			{
 				using Types = std::tuple<DummyTask<1>, DummyTask<1>, DummyTask<2>, DummyTask<3>, DummyTask<5>, DummyTask<8>>;
+				using Stack = DummyTaskStackConfig<6>;
 			};
 
 			expect(

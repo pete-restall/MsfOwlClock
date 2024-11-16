@@ -23,7 +23,7 @@ namespace smeg::kernel::tasks
 	public:
 		static constexpr TTask createTask(void)
 		{
-			if constexpr (IHaveTaskConstructorRequiringAnyApiInjection<TTask>)
+			if constexpr (ITaskWithAnyRequiredApis<TTask>)
 			{
 				using RequiredApis = typename TTask::RequiredApis;
 				using TupleOfApis = typename RequiredApis::AsTuple;
