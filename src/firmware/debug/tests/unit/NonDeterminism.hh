@@ -60,7 +60,7 @@ namespace smeg::tests::unit
 	template <std::integral T>
 	std::span<T> anySpanInClosedRangeSize(std::vector<T> &range, typename std::vector<T>::size_type size)
 	{
-		auto startIndex = anyInClosedRange<typename std::vector<T>::size_type>(0, range.size() - size - 1);
+		auto startIndex = anyInClosedRange<typename std::vector<T>::size_type>(0, range.size() - size);
 		return std::span(range.begin() + startIndex, size);
 	}
 
