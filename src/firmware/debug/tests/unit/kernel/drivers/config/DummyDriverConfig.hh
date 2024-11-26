@@ -1,13 +1,13 @@
-#ifndef __SMEG_TESTS_UNIT_KERNEL_DRIVERS_DUMMYTASKCONFIG_HH
-#define __SMEG_TESTS_UNIT_KERNEL_DRIVERS_DUMMYTASKCONFIG_HH
+#ifndef __SMEG_TESTS_UNIT_KERNEL_DRIVERS_DUMMYDRIVERCONFIG_HH
+#define __SMEG_TESTS_UNIT_KERNEL_DRIVERS_DUMMYDRIVERCONFIG_HH
 #include <tuple>
 
 namespace smeg::tests::unit::kernel::drivers::config
 {
 	template <auto X>
-	struct StubDriverConfig
+	struct DummyDriverConfig
 	{
-		struct DummyApi
+		struct UselessApiConfig
 		{
 			template <typename TApi>
 			struct Interface
@@ -19,7 +19,55 @@ namespace smeg::tests::unit::kernel::drivers::config
 			};
 		};
 
-		using ProvidedApis = std::tuple<DummyApi>;
+		struct UselessIsrConfig
+		{
+			struct Handler
+			{
+				static void onInterrupt(void) noexcept
+				{
+				}
+			};
+
+			static constexpr auto irq = 23;
+		};
+
+		struct UselessSyscallConfig
+		{
+			struct UselessSyscallContext
+			{
+			};
+
+			struct UselessSyscall
+			{
+			};
+
+			struct Handler
+			{
+				void onSyscall(UselessSyscallContext &, UselessSyscall &)
+				{
+				}
+			};
+		};
+
+		struct UselessTaskConfig
+		{
+			struct Type
+			{
+				void run(void)
+				{
+				}
+			};
+
+			struct Stack
+			{
+				static constexpr auto numberOfSlots = 16;
+			};
+		};
+
+		using ProvidedApis = std::tuple<UselessApiConfig>;
+		using ProvidedIsrs = std::tuple<UselessIsrConfig>;
+		using ProvidedSyscalls = std::tuple<UselessSyscallConfig>;
+		using Tasks = std::tuple<UselessTaskConfig>;
 	};
 }
 

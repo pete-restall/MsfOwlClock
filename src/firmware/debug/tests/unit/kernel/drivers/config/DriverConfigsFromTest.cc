@@ -31,7 +31,7 @@ namespace smeg::tests::unit::kernel::drivers::config
 		{
 			struct Config
 			{
-				using Drivers = std::tuple<StubDriverConfig<1>>;
+				using Drivers = std::tuple<DummyDriverConfig<1>>;
 			};
 
 			expect(std::same_as<typename DriverConfigsFrom<Config>::PerConfig, typename Config::Drivers>, equal_to(true));
@@ -41,7 +41,7 @@ namespace smeg::tests::unit::kernel::drivers::config
 		{
 			struct Config
 			{
-				using Drivers = std::tuple<StubDriverConfig<1>, StubDriverConfig<2>, StubDriverConfig<3>>;
+				using Drivers = std::tuple<DummyDriverConfig<1>, DummyDriverConfig<2>, DummyDriverConfig<3>>;
 			};
 
 			expect(std::same_as<typename DriverConfigsFrom<Config>::PerConfig, typename Config::Drivers>, equal_to(true));
