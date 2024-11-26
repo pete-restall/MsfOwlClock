@@ -172,6 +172,7 @@ else
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerInitArraySectionTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'IIsrTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'DriverConfigsFromTest.cc',
+			unit_tests_dir / kernel_drivers_config_dir / 'DriverProvidedIsrConfigsFromTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'IDriverConfigTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'IHaveConfigForDriversTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'IHaveConfigForProvidedApisTest.cc',
