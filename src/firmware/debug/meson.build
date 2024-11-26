@@ -17,6 +17,7 @@ mcu_dir = meson.get_external_property('mcu_dir', 'error-undefined-mcu')
 
 kernel_dir = 'kernel'
 kernel_baremetal_dir = kernel_dir / 'bare-metal'
+kernel_config_dir = kernel_dir / 'config'
 kernel_crt_dir = kernel_dir / 'crt'
 kernel_crt_crt0_dir = kernel_crt_dir / 'crt0'
 kernel_crt_crt0_linker_dir = kernel_crt_crt0_dir / 'linker'
@@ -75,6 +76,9 @@ if meson.is_cross_build()
 		sources: [
 			src_dir / kernel_dir / '_entrypoint.cc',
 			src_dir / kernel_tasks_config_stubs_dir / 'kernel-task-stacks.cc'
+		],
+		include_directories: [
+			src_dir
 		])
 
 	libcrt = library(
@@ -86,13 +90,19 @@ if meson.is_cross_build()
 			src_dir / kernel_crt_picolibc_dir / 'abort.cc',
 			src_dir / kernel_crt_picolibc_dir / 'atexit.cc',
 			src_dir / kernel_crt_picolibc_dir / 'sbrk.cc'
+		],
+		include_directories: [
+			src_dir
 		])
 
 	libcrt0 = library(
 		'crt0',
 		native: false,
 		pic: false,
-		sources: meson.get_external_property('libcrt0_mcu_srcfiles', native: false))
+		sources: meson.get_external_property('libcrt0_mcu_srcfiles', native: false),
+		include_directories: [
+			src_dir
+		])
 
 	# TODO: We really need to create something self-contained for the kernel, with all of the libgcc / libc++ support code.  Otherwise we cannot
 	# separate the kernel's .init from the app's .init, and also a bootloader would not function because some of the libc++ code the kernel depended
@@ -151,13 +161,30 @@ else
 			unit_tests_dir / kernel_baremetal_dir / 'BitmaskTest.cc',
 			unit_tests_dir / kernel_baremetal_dir / 'IntegerSequenceTest.cc',
 			unit_tests_dir / kernel_baremetal_dir / 'OffsetIntegerSequenceTest.cc',
+			unit_tests_dir / kernel_config_dir / 'IKernelConfigTest.cc',
+			unit_tests_dir / kernel_config_dir / 'IHaveTupleOfKernelConfigsTest.cc',
+			unit_tests_dir / kernel_config_dir / 'ITupleOfKernelConfigsTest.cc',
 			unit_tests_dir / kernel_crt_dir / 'EntrypointTest.cc',
-			unit_tests_dir / kernel_crt_crt0_dir / 'DefaultCrt0EnvironmentConfigTest.cc',
+			unit_tests_dir / kernel_crt_crt0_dir / 'DefaultCrt0KernelConfigTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerBssMemorySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerDataMemorySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerFiniArraySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerInitArraySectionTest.cc',
+			unit_tests_dir / kernel_drivers_dir / 'IIsrTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'DriverConfigsFromTest.cc',
+			unit_tests_dir / kernel_drivers_config_dir / 'IDriverConfigTest.cc',
+			unit_tests_dir / kernel_drivers_config_dir / 'IHaveConfigForDriversTest.cc',
+			unit_tests_dir / kernel_drivers_config_dir / 'IHaveConfigForProvidedApisTest.cc',
+			unit_tests_dir / kernel_drivers_config_dir / 'IHaveConfigForProvidedIsrsTest.cc',
+			unit_tests_dir / kernel_drivers_config_dir / 'IHaveConfigForProvidedSyscallsTest.cc',
+			unit_tests_dir / kernel_drivers_config_dir / 'IProvidedApiConfigTest.cc',
+			unit_tests_dir / kernel_drivers_config_dir / 'IProvidedIsrConfigTest.cc',
+			unit_tests_dir / kernel_drivers_config_dir / 'IProvidedSyscallConfigTest.cc',
+			unit_tests_dir / kernel_drivers_config_dir / 'IsrOrDefaultByIrqFromTest.cc',
+			unit_tests_dir / kernel_drivers_config_dir / 'ITupleOfDriverConfigsTest.cc',
+			unit_tests_dir / kernel_drivers_config_dir / 'ITupleOfProvidedIsrConfigsTest.cc',
+			unit_tests_dir / kernel_drivers_config_dir / 'ITupleOfProvidedApiConfigsTest.cc',
+			unit_tests_dir / kernel_drivers_config_dir / 'ITupleOfProvidedSyscallConfigsTest.cc',
 			unit_tests_dir / kernel_integer_sequences_dir / 'BubbleSortedTest.cc',
 			unit_tests_dir / kernel_integer_sequences_dir / 'SortedSetTest.cc',
 			unit_tests_dir / kernel_integer_sequences_dir / 'UniqueTest.cc',

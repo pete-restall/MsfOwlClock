@@ -2,7 +2,7 @@
 #define __SMEG_KERNEL_CRT_CRT0_MCU_ST_STM32_STM32L432KC_CRT0ENVIRONMENT_HH
 #include "../../../../../ICrt0Environment.hh"
 #include "../../../../../NoBootloader.hh" // TODO: This is temporary; bootloader needs to be derived from KernelConfig (if present) and probably needs MCU-specific injections - default to a sensible MCU-specific default if not specified explicitly in KernelConfig; there's always NoBootloader but it's not ideal
-#include "../../../../DefaultCrt0EnvironmentConfig.hh"
+#include "../../../../IsrStackMemorySection.hh"
 #include "linker/LinkerMemoryMap.hh"
 
 namespace smeg::kernel::crt::crt0::mcu::st::stm32::stm32l432kc
@@ -10,8 +10,6 @@ namespace smeg::kernel::crt::crt0::mcu::st::stm32::stm32l432kc
 	class Crt0Environment
 	{
 	public:
-		using Config = DefaultCrt0EnvironmentConfig<1, 32>; // TODO: figure this out; (maximum number of ISR priorities * register context saving + any stack space used by individual ISRs)
-
 		auto getLinkerMemoryMap(void) const
 		{
 			return linker::LinkerMemoryMap();

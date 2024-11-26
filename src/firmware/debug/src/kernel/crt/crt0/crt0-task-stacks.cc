@@ -1,3 +1,5 @@
+/* This is not a translation unit - it is intended to be #include'd by MCU-specific crt0 boilerplate */
+
 #include <cstddef>
 #include <tuple>
 
@@ -12,7 +14,7 @@
 using namespace smeg::kernel::crt::crt0;
 using namespace smeg::kernel::tasks::config;
 
-DEFINE_TASK_STACK_LINKER_SECTION_FOR(Crt0Config, IsrStackMemorySection, ".kernel.tasks.stacks.isrs")
+DEFINE_TASK_STACK_LINKER_SECTION_FOR(Crt0KernelConfig, IsrStackMemorySection, ".kernel.tasks.stacks.isrs")
 
 namespace smeg::kernel::crt::crt0
 {
@@ -21,9 +23,9 @@ namespace smeg::kernel::crt::crt0
 	namespace
 	{
 		template <IHaveAssociatedConfigForTaskStack TTaskStackConfig, std::size_t StackIndex>
-		using Crt0TaskStackConfigToRamBlock = TaskStackConfigToRamBlock<Crt0Config, TTaskStackConfig, StackIndex, TaskStackNumberOfSlotsFor>;
+		using Crt0TaskStackConfigToRamBlock = TaskStackConfigToRamBlock<Crt0KernelConfig, TTaskStackConfig, StackIndex, TaskStackNumberOfSlotsFor>;
 
-		TupleProjection<typename TaskStackConfigsFrom<Crt0Config>::PerStack, Crt0TaskStackConfigToRamBlock>::Output crt0TaskStacks;
+		TupleProjection<typename TaskStackConfigsFrom<Crt0KernelConfig>::PerStack, Crt0TaskStackConfigToRamBlock>::Output crt0TaskStacks;
 
 		template <typename... T>
 		[[gnu::section(".discard")]]

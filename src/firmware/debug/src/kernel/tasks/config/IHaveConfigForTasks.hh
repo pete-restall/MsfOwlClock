@@ -1,33 +1,11 @@
 #ifndef __SMEG_KERNEL_TASKS_CONFIG_IHAVECONFIGFORTASKS_HH
 #define __SMEG_KERNEL_TASKS_CONFIG_IHAVECONFIGFORTASKS_HH
-#include <array>
-#include <cstddef>
-#include <tuple>
-
-#include "IHaveConfigForTask.hh"
+#include "ITupleOfTaskConfigs.hh"
 
 namespace smeg::kernel::tasks::config
 {
-	template <typename... T>
-	struct _IsTupleOfTaskConfigs
-	{
-		static constexpr bool value = false;
-	};
-
-	template <IHaveConfigForTask... T>
-	struct _IsTupleOfTaskConfigs<std::tuple<T...>>
-	{
-		static constexpr bool value = true;
-	};
-
-	template <IHaveConfigForTask T, std::size_t N>
-	struct _IsTupleOfTaskConfigs<std::array<T, N>>
-	{
-		static constexpr bool value = true;
-	};
-
 	template <typename T>
-	concept IHaveConfigForTasks = _IsTupleOfTaskConfigs<typename T::Tasks>::value;
+	concept IHaveConfigForTasks = ITupleOfTaskConfigs<typename T::Tasks>;
 }
 
 #endif

@@ -3,18 +3,14 @@
 #include <concepts>
 #include <tuple>
 
-#include "../tasks/config/DummyTaskConfig.hh"
 #include "BootloaderTestDoubles.hh"
 #include "LinkerMemoryMapTestDoubles.hh"
 
 namespace smeg::tests::unit::kernel::crt
 {
-	using namespace smeg::tests::unit::kernel::tasks::config;
-
 	template <
 		typename TLinkerMemoryMap = LinkerMemoryMapTestDoubles,
-		typename TBootloader = BootloaderTestDoubles,
-		typename TTasks = std::tuple<DummyTaskConfig<1>>>
+		typename TBootloader = BootloaderTestDoubles>
 	class Crt0EnvironmentSubstitute
 	{
 	private:
@@ -30,11 +26,6 @@ namespace smeg::tests::unit::kernel::crt
 		{
 		}
 
-		struct Config
-		{
-			using Tasks = TTasks;
-		};
-
 		auto getLinkerMemoryMap(void) const
 		{
 			if constexpr (std::same_as<TLinkerMemoryMap, LinkerMemoryMapTestDoubles>)
@@ -46,7 +37,7 @@ namespace smeg::tests::unit::kernel::crt
 		template <typename T>
 		auto withLinkerMemoryMap(T linkerMemoryMap) const
 		{
-			return Crt0EnvironmentSubstitute<T, TBootloader, TTasks>(linkerMemoryMap, this->bootloaderOrFactory);
+			return Crt0EnvironmentSubstitute<T, TBootloader>(linkerMemoryMap, this->bootloaderOrFactory);
 		}
 
 		auto getBootloader(void) const
@@ -60,7 +51,7 @@ namespace smeg::tests::unit::kernel::crt
 		template <typename T>
 		auto withBootloader(T bootloader) const
 		{
-			return Crt0EnvironmentSubstitute<TLinkerMemoryMap, T, TTasks>(this->linkerMemoryMapOrFactory, bootloader);
+			return Crt0EnvironmentSubstitute<TLinkerMemoryMap, T>(this->linkerMemoryMapOrFactory, bootloader);
 		}
 	};
 }

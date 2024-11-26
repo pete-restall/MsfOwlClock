@@ -6,8 +6,6 @@
 
 namespace smeg::tests::unit::kernel::crt
 {
-	using namespace smeg::tests::unit::kernel::tasks::config;
-
 	class Crt0EnvironmentTestDoubles
 	{
 	private:

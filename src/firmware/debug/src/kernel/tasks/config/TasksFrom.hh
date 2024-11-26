@@ -4,8 +4,8 @@
 #include <tuple>
 
 #include "../../tuples/TupleProjection.hh"
-#include "IHaveConfigForTask.hh"
 #include "IHaveConfigForTasks.hh"
+#include "ITaskConfig.hh"
 #include "ResourceToTaskAssociation.hh"
 
 namespace smeg::kernel::tasks::config
@@ -19,13 +19,13 @@ namespace smeg::kernel::tasks::config
 		template <typename TTaskConfig, std::size_t InputIndex, std::size_t OutputIndex>
 		struct TaskConfigsToAssociations;
 
-		template <IHaveConfigForSimpleTask TTaskConfig, std::size_t InputIndex, std::size_t OutputIndex>
+		template <ISimpleTaskConfig TTaskConfig, std::size_t InputIndex, std::size_t OutputIndex>
 		struct TaskConfigsToAssociations<TTaskConfig, InputIndex, OutputIndex>
 		{
 			using AsTuple = std::tuple<ResourceToTaskAssociation<typename TTaskConfig::Type, OutputIndex>>;
 		};
 
-		template <IHaveConfigForSimpleOverlaidTasks TTaskConfig, std::size_t InputIndex, std::size_t OutputIndex>
+		template <ISimpleOverlaidTasksConfig TTaskConfig, std::size_t InputIndex, std::size_t OutputIndex>
 		struct TaskConfigsToAssociations<TTaskConfig, InputIndex, OutputIndex>
 		{
 			template <typename TOverlayTask, std::size_t OverlayIndex>
@@ -37,7 +37,7 @@ namespace smeg::kernel::tasks::config
 			using AsTuple = TupleProjection<typename TTaskConfig::Types, OverlayToAssociation>::Output;
 		};
 
-		template <IHaveConfigForConfiguredOverlaidTasks TTaskConfig, std::size_t InputIndex, std::size_t OutputIndex>
+		template <IConfiguredOverlaidTasksConfig TTaskConfig, std::size_t InputIndex, std::size_t OutputIndex>
 		struct TaskConfigsToAssociations<TTaskConfig, InputIndex, OutputIndex>
 		{
 			template <typename TOverlayTaskConfig, std::size_t OverlayIndex>

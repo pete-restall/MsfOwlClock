@@ -9,8 +9,8 @@
 #include "kernel/tasks/DriverToDriverApis.hh"
 #include "kernel/tasks/DriverToKernelApis.hh"
 #include "kernel/tasks/ITask.hh"
+#include "kernel/tasks/config/ITaskConfig.hh"
 #include "kernel/tasks/config/RequiredApisFrom.hh"
-#include "kernel/tasks/config/IHaveConfigForTask.hh"
 
 #include "../../../TupleUtilities.hh"
 #include "../TaskTestDoubles.hh"
@@ -156,8 +156,8 @@ namespace smeg::tests::unit::kernel::tasks::config
 		};
 
 		static_assert(
-			IHaveConfigForOverlaidTasks<StubOverlaidSimpleTupleOfTasksConfig<TTasks...>>,
-			"StubOverlaidSimpleTupleOfTasksConfig must be an IHaveConfigForOverlaidTasks");
+			IOverlaidTasksConfig<StubOverlaidSimpleTupleOfTasksConfig<TTasks...>>,
+			"StubOverlaidSimpleTupleOfTasksConfig must be an IOverlaidTasksConfig");
 	};
 
 	template <ITask TTask, auto NumberOfTasks>
@@ -170,11 +170,11 @@ namespace smeg::tests::unit::kernel::tasks::config
 		};
 
 		static_assert(
-			IHaveConfigForOverlaidTasks<StubOverlaidSimpleArrayOfTasksConfig<TTask, NumberOfTasks>>,
-			"StubOverlaidSimpleArrayOfTasksConfig must be an IHaveConfigForOverlaidTasks");
+			IOverlaidTasksConfig<StubOverlaidSimpleArrayOfTasksConfig<TTask, NumberOfTasks>>,
+			"StubOverlaidSimpleArrayOfTasksConfig must be an IOverlaidTasksConfig");
 	};
 
-	template <IHaveConfigForOverlaidTask... TTaskConfigs>
+	template <IOverlaidTaskConfig... TTaskConfigs>
 	struct StubOverlaidConfiguredTasksConfig
 	{
 		using Configs = std::tuple<TTaskConfigs...>;
@@ -184,8 +184,8 @@ namespace smeg::tests::unit::kernel::tasks::config
 		};
 
 		static_assert(
-			IHaveConfigForOverlaidTasks<StubOverlaidConfiguredTasksConfig<TTaskConfigs...>>,
-			"StubOverlaidConfiguredTasksConfig must be an IHaveConfigForOverlaidTasks");
+			IOverlaidTasksConfig<StubOverlaidConfiguredTasksConfig<TTaskConfigs...>>,
+			"StubOverlaidConfiguredTasksConfig must be an IOverlaidTasksConfig");
 	};
 
 	template <typename TTask>
@@ -194,7 +194,7 @@ namespace smeg::tests::unit::kernel::tasks::config
 		using Type = TTask;
 	};
 
-	suite<> requiredApisFromIHaveConfigForOverlaidTasksTest("RequiredApisFrom (IHaveConfigForOverlaidTasks) Test Suite", [](auto &unit)
+	suite<> requiredApisFromIOverlaidTasksConfigTest("RequiredApisFrom (IOverlaidTasksConfig) Test Suite", [](auto &unit)
 	{
 		unit.test("RequiredAppToDriverApisFrom_getForOverlaidSimpleTasks_expectAliasWithBoundAppToDriverApisArgument", []()
 		{

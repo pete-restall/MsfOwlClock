@@ -17,7 +17,7 @@ namespace smeg::kernel::tasks::config::stubs
 
 	namespace
 	{
-		using KernelConfig = ::smeg::config::KernelConfig;
+		using KernelConfig = ::smeg::config::KernelConfig; // TODO: See comments in crt0-task-stacks; the whole concept of needing files for each layer of Tasks should really vanish if that can be accomplished
 
 		template <IHaveAssociatedConfigForTaskStack TTaskStackConfig, std::size_t StackIndex>
 		using KernelTaskStackConfigToRamBlock = TaskStackConfigToRamBlock<KernelConfig, TTaskStackConfig, StackIndex, TaskStackNumberOfSlotsFor>;

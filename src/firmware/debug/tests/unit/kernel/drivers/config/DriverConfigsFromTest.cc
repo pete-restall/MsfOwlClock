@@ -1,3 +1,4 @@
+#include <concepts>
 #include <tuple>
 #include <utility>
 
@@ -30,20 +31,20 @@ namespace smeg::tests::unit::kernel::drivers::config
 		{
 			struct Config
 			{
-				using Drivers = std::tuple<DummyDriverConfig<1>>;
+				using Drivers = std::tuple<StubDriverConfig<1>>;
 			};
 
-			expect(typeid(typename DriverConfigsFrom<Config>::PerConfig) == typeid(typename Config::Drivers), equal_to(true));
+			expect(std::same_as<typename DriverConfigsFrom<Config>::PerConfig, typename Config::Drivers>, equal_to(true));
 		});
 
 		unit.test("PerConfig_getWhenPassedConfigWithMultipleDrivers_expectTupleOfSameDrivers", []()
 		{
 			struct Config
 			{
-				using Drivers = std::tuple<DummyDriverConfig<1>, DummyDriverConfig<2>, DummyDriverConfig<3>>;
+				using Drivers = std::tuple<StubDriverConfig<1>, StubDriverConfig<2>, StubDriverConfig<3>>;
 			};
 
-			expect(typeid(typename DriverConfigsFrom<Config>::PerConfig) == typeid(typename Config::Drivers), equal_to(true));
+			expect(std::same_as<typename DriverConfigsFrom<Config>::PerConfig, typename Config::Drivers>, equal_to(true));
 		});
 	});
 }

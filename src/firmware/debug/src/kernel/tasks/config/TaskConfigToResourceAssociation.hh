@@ -4,7 +4,7 @@
 #include <tuple>
 #include <utility>
 
-#include "IHaveConfigForTasks.hh"
+#include "ITaskConfig.hh"
 #include "ResourceToTaskAssociation.hh"
 
 namespace smeg::kernel::tasks::config
@@ -12,7 +12,7 @@ namespace smeg::kernel::tasks::config
 	template <std::size_t FirstTaskId, typename TTaskConfig>
 	struct TaskConfigToResourceAssociation;
 
-	template <std::size_t FirstTaskId, IHaveConfigForSimpleTask TTaskConfig>
+	template <std::size_t FirstTaskId, ISimpleTaskConfig TTaskConfig>
 	struct TaskConfigToResourceAssociation<FirstTaskId, TTaskConfig>
 	{
 		static constexpr std::size_t numberOfTasks = 1;
@@ -21,7 +21,7 @@ namespace smeg::kernel::tasks::config
 		using Type = ResourceToTaskAssociation<TTaskConfig, FirstTaskId>;
 	};
 
-	template <std::size_t FirstTaskId, IHaveConfigForOverlaidTasks TTaskConfig>
+	template <std::size_t FirstTaskId, IOverlaidTasksConfig TTaskConfig>
 	class TaskConfigToResourceAssociation<FirstTaskId, TTaskConfig>
 	{
 	private:

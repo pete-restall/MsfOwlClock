@@ -18,7 +18,9 @@
 			"-mcpu=cortex-m4",
 			"-mthumb",
 			"-mfpu=fpv4-sp-d16",
-			"-mfloat-abi=hard"
+			"-mfloat-abi=hard",
+			"-DSMEG_MCU_RELATIVE_PATH=mcu/native",
+			"-DSMEG_MCU_RELATIVE_NAMESPACE=mcu::native"
 		],
 		"C_Cpp.default.includePath": [
 			"/usr/local/include",
@@ -89,7 +91,8 @@
 			"cinttypes": "cpp",
 			"typeinfo": "cpp",
 			"variant": "cpp",
-			"list": "cpp"
+			"list": "cpp",
+			"iostream": "cpp"
 		}
 	},
 	"launch": {

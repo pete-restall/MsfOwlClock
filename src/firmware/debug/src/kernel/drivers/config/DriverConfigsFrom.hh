@@ -10,7 +10,7 @@ namespace smeg::kernel::drivers::config
 	class DriverConfigsFrom
 	{
 	public:
-		using PerConfig = typename TConfig::Drivers;
+		using PerConfig = TConfig::Drivers;
 	};
 }
 

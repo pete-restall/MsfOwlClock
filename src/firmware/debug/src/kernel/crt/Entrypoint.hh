@@ -3,7 +3,7 @@
 #include "../IStaticVoidRunnable.hh"
 #include "ICrt0Environment.hh"
 
-#ifndef MCU_IS_NATIVE
+#ifndef SMEG_MCU_IS_NATIVE
 #define NO_RETURN noreturn
 #define UNREACHABLE __builtin_unreachable()
 #else

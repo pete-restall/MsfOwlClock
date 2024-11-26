@@ -8,8 +8,8 @@
 #include "../DriverToDriverApis.hh"
 #include "../DriverToKernelApis.hh"
 #include "../ITask.hh"
-#include "IHaveConfigForTask.hh"
 #include "IHaveConfigForTasks.hh"
+#include "ITaskConfig.hh"
 
 namespace smeg::kernel::tasks::config
 {
@@ -49,14 +49,14 @@ namespace smeg::kernel::tasks::config
 		using Types = Unique<typename From<typename TTask::RequiredApis>::AsTuple>;
 	};
 
-	template <template <typename...> typename TRequiredApis, IHaveConfigForSimpleTask TTaskConfig>
+	template <template <typename...> typename TRequiredApis, ISimpleTaskConfig TTaskConfig>
 	class RequiredApisFrom<TRequiredApis, TTaskConfig>
 	{
 	public:
 		using Types = Unique<typename RequiredApisFrom<TRequiredApis, typename TTaskConfig::Type>::Types>;
 	};
 
-	template <template <typename...> typename TRequiredApis, IHaveConfigForSimpleOverlaidTasks TTaskConfig>
+	template <template <typename...> typename TRequiredApis, ISimpleOverlaidTasksConfig TTaskConfig>
 	class RequiredApisFrom<TRequiredApis, TTaskConfig>
 	{
 	private:
@@ -70,11 +70,11 @@ namespace smeg::kernel::tasks::config
 		using Types = Unique<typename TupleProjection<typename TTaskConfig::Types, FromTypes>::Output>;
 	};
 
-	template <template <typename...> typename TRequiredApis, IHaveConfigForConfiguredOverlaidTasks TTaskConfig>
+	template <template <typename...> typename TRequiredApis, IConfiguredOverlaidTasksConfig TTaskConfig>
 	class RequiredApisFrom<TRequiredApis, TTaskConfig>
 	{
 	private:
-		template <IHaveConfigForOverlaidTask TConfig>
+		template <IOverlaidTaskConfig TConfig>
 		struct FromConfigs
 		{
 			using AsTuple = typename RequiredApisFrom<TRequiredApis, typename TConfig::Type>::Types;
@@ -88,7 +88,7 @@ namespace smeg::kernel::tasks::config
 	class RequiredApisFrom<TRequiredApis, TConfig>
 	{
 	private:
-		template <IHaveConfigForTask TTaskConfig>
+		template <ITaskConfig TTaskConfig>
 		struct FromTaskConfigs
 		{
 			using AsTuple = typename RequiredApisFrom<TRequiredApis, TTaskConfig>::Types;
