@@ -26,6 +26,10 @@ namespace smeg::kernel::drivers::kernel::syscall::mcu::arm::cortex::m4
 	}
 }
 
+// TODO: Dirty hack that breaks the dependency-injection of TKernelConfigs; hopefully modules will solve this one for us, too...
+#include "kernel/crt/crt0/KernelConfigs.hh"
+template class smeg::kernel::drivers::kernel::syscall::mcu::arm::cortex::m4::SvcallIsr<smeg::kernel::crt::crt0::KernelConfigs>;
+
 /*
 Thoughts on dispatching Syscalls to handlers in a generic fashion, although this includes the no-arg and integer-arg variants which are no longer desired:
 

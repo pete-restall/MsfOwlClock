@@ -26,6 +26,8 @@ kernel_crt_crt0_mcu_st_dir = kernel_crt_crt0_mcu_dir / 'st'
 kernel_crt_picolibc_dir = kernel_crt_dir / 'picolibc'
 kernel_drivers_dir = kernel_dir / 'drivers'
 kernel_drivers_config_dir = kernel_drivers_dir / 'config'
+kernel_drivers_kernel_dir = kernel_drivers_dir / 'kernel'
+kernel_drivers_peripherals_dir = kernel_drivers_dir / 'peripherals'
 kernel_integer_sequences_dir = kernel_dir / 'integer-sequences'
 kernel_tasks_dir = kernel_dir / 'tasks'
 kernel_tasks_config_dir = kernel_tasks_dir / 'config'
@@ -75,7 +77,11 @@ if meson.is_cross_build()
 		pic: false,
 		sources: [
 			src_dir / kernel_dir / '_entrypoint.cc',
-			src_dir / kernel_tasks_config_stubs_dir / 'kernel-task-stacks.cc'
+			src_dir / kernel_tasks_config_stubs_dir / 'kernel-task-stacks.cc',
+
+			# TODO: The drivers ought to have their own libdrv-XXX.a, built using Meson sub-projects.  Should also give them their own 'src' and 'tests'
+			# directories so that they are entirely self-contained, drop-in source libraries.  This is a temporary hack:
+			src_dir / kernel_drivers_kernel_dir / 'syscall/mcu/arm/cortex/m4/SvcallIsr.cc'
 		],
 		include_directories: [
 			src_dir

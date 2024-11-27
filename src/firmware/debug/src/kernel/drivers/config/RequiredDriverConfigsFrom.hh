@@ -19,7 +19,7 @@ namespace smeg::kernel::drivers::config
 	class RequiredDriverConfigsFrom
 	{
 	public:
-		using PerConfig = std::tuple<>;
+		using PerConfig = TKernelConfigs::AsTuple; //std::tuple<>;
 	};
 }
 
