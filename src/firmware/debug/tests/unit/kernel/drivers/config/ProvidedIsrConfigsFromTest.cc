@@ -5,7 +5,7 @@
 #include <mettle/suite.hpp>
 #include <mettle/matchers.hpp>
 
-#include "kernel/drivers/config/DriverProvidedIsrConfigsFrom.hh"
+#include "kernel/drivers/config/ProvidedIsrConfigsFrom.hh"
 
 #include "DummyDriverConfig.hh"
 #include "DummyProvidedIsrConfig.hh"
@@ -16,7 +16,7 @@ using namespace smeg::kernel::drivers::config;
 
 namespace smeg::tests::unit::kernel::drivers::config
 {
-	suite<> driverIsrConfigsFromIDriverConfigTest("DriverProvidedIsrConfigsFrom (IDriverConfig) Test Suite", [](auto &unit)
+	suite<> providedIsrConfigsFromIDriverConfigTest("ProvidedIsrConfigsFrom (IDriverConfig) Test Suite", [](auto &unit)
 	{
 		unit.test("PerConfig_getWhenPassedConfigWithNoProvidedIsrs_expectEmptyTuple", []()
 		{
@@ -25,7 +25,7 @@ namespace smeg::tests::unit::kernel::drivers::config
 				using Tasks = std::tuple<>;
 			};
 
-			expect(std::tuple_size_v<typename DriverProvidedIsrConfigsFrom<NoTupleConfig>::PerConfig>, equal_to(0));
+			expect(std::tuple_size_v<typename ProvidedIsrConfigsFrom<NoTupleConfig>::PerConfig>, equal_to(0));
 		});
 
 		unit.test("PerConfig_getWhenPassedConfigWithEmptyTupleOfIsrs_expectEmptyTuple", []()
@@ -35,7 +35,7 @@ namespace smeg::tests::unit::kernel::drivers::config
 				using ProvidedIsrs = std::tuple<>;
 			};
 
-			expect(std::tuple_size_v<typename DriverProvidedIsrConfigsFrom<EmptyTupleConfig>::PerConfig>, equal_to(0));
+			expect(std::tuple_size_v<typename ProvidedIsrConfigsFrom<EmptyTupleConfig>::PerConfig>, equal_to(0));
 		});
 
 		unit.test("PerConfig_getWhenPassedConfigWithSingleIsr_expectTupleOfSameDriver", []()
@@ -45,7 +45,7 @@ namespace smeg::tests::unit::kernel::drivers::config
 				using ProvidedIsrs = std::tuple<DummyProvidedIsrConfig<1>>;
 			};
 
-			expect(std::same_as<typename DriverProvidedIsrConfigsFrom<Config>::PerConfig, typename Config::ProvidedIsrs>, equal_to(true));
+			expect(std::same_as<typename ProvidedIsrConfigsFrom<Config>::PerConfig, typename Config::ProvidedIsrs>, equal_to(true));
 		});
 
 		unit.test("PerConfig_getWhenPassedConfigWithMultipleIsrs_expectTupleOfSameIsrs", []()
@@ -55,15 +55,15 @@ namespace smeg::tests::unit::kernel::drivers::config
 				using ProvidedIsrs = std::tuple<DummyProvidedIsrConfig<1>, DummyProvidedIsrConfig<2>, DummyProvidedIsrConfig<3>>;
 			};
 
-			expect(std::same_as<typename DriverProvidedIsrConfigsFrom<Config>::PerConfig, typename Config::ProvidedIsrs>, equal_to(true));
+			expect(std::same_as<typename ProvidedIsrConfigsFrom<Config>::PerConfig, typename Config::ProvidedIsrs>, equal_to(true));
 		});
 	});
 
-	suite<> driverIsrConfigsFromITupleOfDriverConfigsTest("DriverProvidedIsrConfigsFrom (ITupleOfDriverConfigs) Test Suite", [](auto &unit)
+	suite<> providedIsrConfigsFromITupleOfDriverConfigsTest("ProvidedIsrConfigsFrom (ITupleOfDriverConfigs) Test Suite", [](auto &unit)
 	{
 		unit.test("PerConfig_getWhenPassedEmptyTupleOfConfigs_expectEmptyTuple", []()
 		{
-			expect(std::tuple_size_v<typename DriverProvidedIsrConfigsFrom<std::tuple<>>::PerConfig>, equal_to(0));
+			expect(std::tuple_size_v<typename ProvidedIsrConfigsFrom<std::tuple<>>::PerConfig>, equal_to(0));
 		});
 
 		unit.test("PerConfig_getWhenPassedTupleOfSingleDriverConfig_expectTupleOfSameIsrsInDriverConfig", []()
@@ -75,7 +75,7 @@ namespace smeg::tests::unit::kernel::drivers::config
 
 			expect(
 				std::same_as<
-					typename DriverProvidedIsrConfigsFrom<std::tuple<DriverConfig>>::PerConfig,
+					typename ProvidedIsrConfigsFrom<std::tuple<DriverConfig>>::PerConfig,
 					typename DriverConfig::ProvidedIsrs>,
 				equal_to(true));
 		});
@@ -99,7 +99,7 @@ namespace smeg::tests::unit::kernel::drivers::config
 
 			expect(
 				std::same_as<
-					typename DriverProvidedIsrConfigsFrom<std::tuple<DriverConfig1, DriverConfig2, DriverConfig3>>::PerConfig,
+					typename ProvidedIsrConfigsFrom<std::tuple<DriverConfig1, DriverConfig2, DriverConfig3>>::PerConfig,
 					decltype(std::tuple_cat(
 						typename DriverConfig1::ProvidedIsrs{},
 						typename DriverConfig2::ProvidedIsrs{},
@@ -126,13 +126,13 @@ namespace smeg::tests::unit::kernel::drivers::config
 
 			expect(
 				std::same_as<
-					typename DriverProvidedIsrConfigsFrom<std::tuple<DriverConfig1, DriverConfig2, DriverConfig3>>::PerConfig,
+					typename ProvidedIsrConfigsFrom<std::tuple<DriverConfig1, DriverConfig2, DriverConfig3>>::PerConfig,
 					decltype(std::tuple_cat(typename DriverConfig1::ProvidedIsrs{}, typename DriverConfig3::ProvidedIsrs{}))>,
 				equal_to(true));
 		});
 	});
 
-	suite<> driverIsrConfigsFromIKernelConfigTest("DriverProvidedIsrConfigsFrom (IKernelConfig) Test Suite", [](auto &unit)
+	suite<> providedIsrConfigsFromIKernelConfigTest("ProvidedIsrConfigsFrom (IKernelConfig) Test Suite", [](auto &unit)
 	{
 		unit.test("PerConfig_getWhenPassedConfigWithNoDrivers_expectEmptyTuple", []()
 		{
@@ -141,7 +141,7 @@ namespace smeg::tests::unit::kernel::drivers::config
 				using Tasks = typename DummyDriverConfig<123>::Tasks;
 			};
 
-			expect(std::tuple_size_v<typename DriverProvidedIsrConfigsFrom<NoDriversKernelConfig>::PerConfig>, equal_to(0));
+			expect(std::tuple_size_v<typename ProvidedIsrConfigsFrom<NoDriversKernelConfig>::PerConfig>, equal_to(0));
 		});
 
 		unit.test("PerConfig_getWhenPassedConfigWithEmptyTupleOfDrivers_expectEmptyTuple", []()
@@ -151,7 +151,7 @@ namespace smeg::tests::unit::kernel::drivers::config
 				using Drivers = std::tuple<>;
 			};
 
-			expect(std::tuple_size_v<typename DriverProvidedIsrConfigsFrom<EmptyDriversKernelConfig>::PerConfig>, equal_to(0));
+			expect(std::tuple_size_v<typename ProvidedIsrConfigsFrom<EmptyDriversKernelConfig>::PerConfig>, equal_to(0));
 		});
 
 		unit.test("PerConfig_getWhenPassedConfigWithSingleDriverWithoutProvidedIsrs_expectEmptyTuple", []()
@@ -166,7 +166,7 @@ namespace smeg::tests::unit::kernel::drivers::config
 				using Drivers = std::tuple<DriverWithNoIsrs>;
 			};
 
-			expect(std::tuple_size_v<typename DriverProvidedIsrConfigsFrom<NoIsrsKernelConfig>::PerConfig>, equal_to(0));
+			expect(std::tuple_size_v<typename ProvidedIsrConfigsFrom<NoIsrsKernelConfig>::PerConfig>, equal_to(0));
 		});
 
 		unit.test("PerConfig_getWhenPassedConfigWithDriversContainingProvidedIsrs_expectTupleOfConcatenatedIsrsFromDriverConfigs", []()
@@ -198,7 +198,7 @@ namespace smeg::tests::unit::kernel::drivers::config
 
 			expect(
 				std::same_as<
-					typename DriverProvidedIsrConfigsFrom<KernelConfig>::PerConfig,
+					typename ProvidedIsrConfigsFrom<KernelConfig>::PerConfig,
 					decltype(std::tuple_cat(
 						typename KernelConfig::DriverConfig1::ProvidedIsrs{},
 						typename KernelConfig::DriverConfig2::ProvidedIsrs{},
@@ -231,7 +231,7 @@ namespace smeg::tests::unit::kernel::drivers::config
 
 			expect(
 				std::same_as<
-					typename DriverProvidedIsrConfigsFrom<KernelConfig>::PerConfig,
+					typename ProvidedIsrConfigsFrom<KernelConfig>::PerConfig,
 					decltype(std::tuple_cat(
 						typename KernelConfig::DriverConfig1::ProvidedIsrs{},
 						typename KernelConfig::DriverConfig3::ProvidedIsrs{}))>,
@@ -239,11 +239,11 @@ namespace smeg::tests::unit::kernel::drivers::config
 		});
 	});
 
-	suite<> driverIsrConfigsFromITupleOfKernelConfigsTest("DriverProvidedIsrConfigsFrom (ITupleOfKernelConfigs) Test Suite", [](auto &unit)
+	suite<> providedIsrConfigsFromITupleOfKernelConfigsTest("ProvidedIsrConfigsFrom (ITupleOfKernelConfigs) Test Suite", [](auto &unit)
 	{
 		unit.test("PerConfig_getWhenPassedEmptyTuple_expectEmptyTuple", []()
 		{
-			expect(std::tuple_size_v<typename DriverProvidedIsrConfigsFrom<std::tuple<>>::PerConfig>, equal_to(0));
+			expect(std::tuple_size_v<typename ProvidedIsrConfigsFrom<std::tuple<>>::PerConfig>, equal_to(0));
 		});
 
 		unit.test("PerConfig_getWhenPassedSingleConfigWithEmptyTupleOfDrivers_expectEmptyTuple", []()
@@ -253,7 +253,7 @@ namespace smeg::tests::unit::kernel::drivers::config
 				using Drivers = std::tuple<>;
 			};
 
-			expect(std::tuple_size_v<typename DriverProvidedIsrConfigsFrom<std::tuple<EmptyDriversKernelConfig>>::PerConfig>, equal_to(0));
+			expect(std::tuple_size_v<typename ProvidedIsrConfigsFrom<std::tuple<EmptyDriversKernelConfig>>::PerConfig>, equal_to(0));
 		});
 
 		unit.test("PerConfig_getWhenPassedSingleConfigWithSingleTupleOfDrivers_expectSameTupleFromDriverConfig", []()
@@ -270,7 +270,7 @@ namespace smeg::tests::unit::kernel::drivers::config
 
 			expect(
 				std::same_as<
-					typename DriverProvidedIsrConfigsFrom<std::tuple<KernelConfig>>::PerConfig,
+					typename ProvidedIsrConfigsFrom<std::tuple<KernelConfig>>::PerConfig,
 					typename KernelConfig::DriverConfig::ProvidedIsrs>,
 				equal_to(true));
 		});
@@ -314,7 +314,7 @@ namespace smeg::tests::unit::kernel::drivers::config
 
 			expect(
 				std::same_as<
-					typename DriverProvidedIsrConfigsFrom<std::tuple<
+					typename ProvidedIsrConfigsFrom<std::tuple<
 						KernelConfigWithDriversAndProvidedIsrs,
 						KernelConfigWithDriversAndNoProvidedIsrs,
 						KernelConfigWithoutDrivers,

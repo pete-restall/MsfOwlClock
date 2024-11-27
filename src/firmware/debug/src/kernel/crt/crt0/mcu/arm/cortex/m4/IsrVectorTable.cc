@@ -1,7 +1,7 @@
 #include <array>
 
-#include "../../../../../../drivers/config/DriverProvidedIsrConfigsFrom.hh"
 #include "../../../../../../drivers/config/IsrOrDefaultByIrqFrom.hh"
+#include "../../../../../../drivers/config/ProvidedIsrConfigsFrom.hh"
 #include "../../../../../../drivers/config/RequiredDriverConfigsFrom.hh"
 #include "../../../../KernelConfigs.hh"
 #include "IsrVectorTable.hh"
@@ -20,7 +20,7 @@ extern "C"
 namespace smeg::kernel::crt::crt0::mcu::arm::cortex::m4
 {
 	using RequiredDriverConfigs = RequiredDriverConfigsFrom<KernelConfigs>::PerConfig;
-	using IsrConfigs = DriverProvidedIsrConfigsFrom<RequiredDriverConfigs>::PerConfig;
+	using IsrConfigs = ProvidedIsrConfigsFrom<RequiredDriverConfigs>::PerConfig;
 
 	using UnhandledNmiIsr = UnhandledIsr;
 	using UnhandledHardFaultIsr = UnhandledIsr;

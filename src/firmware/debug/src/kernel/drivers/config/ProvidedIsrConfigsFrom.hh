@@ -1,5 +1,5 @@
-#ifndef __SMEG_KERNEL_DRIVERS_CONFIG_DRIVERISRCONFIGSFROM_HH
-#define __SMEG_KERNEL_DRIVERS_CONFIG_DRIVERISRCONFIGSFROM_HH
+#ifndef __SMEG_KERNEL_DRIVERS_CONFIG_PROVIDEDISRCONFIGSFROM_HH
+#define __SMEG_KERNEL_DRIVERS_CONFIG_PROVIDEDISRCONFIGSFROM_HH
 #include <tuple>
 
 #include "../../tuples/TupleProjection.hh"
@@ -12,34 +12,34 @@ namespace smeg::kernel::drivers::config
 	using namespace smeg::kernel::tuples;
 
 	template <typename TConfig>
-	class DriverProvidedIsrConfigsFrom
+	class ProvidedIsrConfigsFrom
 	{
 	public:
 		using PerConfig = std::tuple<>;
 	};
 
 	template <>
-	class DriverProvidedIsrConfigsFrom<std::tuple<>>
+	class ProvidedIsrConfigsFrom<std::tuple<>>
 	{
 	public:
 		using PerConfig = std::tuple<>;
 	};
 
 	template <IHaveConfigForProvidedIsrs TDriverConfig>
-	class DriverProvidedIsrConfigsFrom<TDriverConfig>
+	class ProvidedIsrConfigsFrom<TDriverConfig>
 	{
 	public:
 		using PerConfig = TDriverConfig::ProvidedIsrs;
 	};
 
 	template <IDriverConfig... TDriverConfigs>
-	class DriverProvidedIsrConfigsFrom<std::tuple<TDriverConfigs...>>
+	class ProvidedIsrConfigsFrom<std::tuple<TDriverConfigs...>>
 	{
 	private:
 		template <typename T>
 		struct FromDriverConfig
 		{
-			using AsTuple = DriverProvidedIsrConfigsFrom<T>::PerConfig;
+			using AsTuple = ProvidedIsrConfigsFrom<T>::PerConfig;
 		};
 
 	public:
@@ -47,13 +47,13 @@ namespace smeg::kernel::drivers::config
 	};
 
 	template <IHaveConfigForDrivers TKernelConfig>
-	class DriverProvidedIsrConfigsFrom<TKernelConfig>
+	class ProvidedIsrConfigsFrom<TKernelConfig>
 	{
 	private:
 		template <typename T>
 		struct FromKernelConfig
 		{
-			using AsTuple = DriverProvidedIsrConfigsFrom<T>::PerConfig;
+			using AsTuple = ProvidedIsrConfigsFrom<T>::PerConfig;
 		};
 
 	public:
@@ -61,13 +61,13 @@ namespace smeg::kernel::drivers::config
 	};
 
 	template <typename... TKernelConfigs>
-	class DriverProvidedIsrConfigsFrom<std::tuple<TKernelConfigs...>>
+	class ProvidedIsrConfigsFrom<std::tuple<TKernelConfigs...>>
 	{
 	private:
 		template <typename T>
 		struct FromKernelConfig
 		{
-			using AsTuple = DriverProvidedIsrConfigsFrom<T>::PerConfig;
+			using AsTuple = ProvidedIsrConfigsFrom<T>::PerConfig;
 		};
 
 	public:

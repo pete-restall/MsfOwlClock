@@ -1,7 +1,7 @@
 #include <array>
 
-#include "../../../../../../drivers/config/DriverProvidedIsrConfigsFrom.hh"
 #include "../../../../../../drivers/config/IsrOrDefaultByIrqFrom.hh"
+#include "../../../../../../drivers/config/ProvidedIsrConfigsFrom.hh"
 #include "../../../../../../drivers/config/RequiredDriverConfigsFrom.hh"
 #include "../../../arm/cortex/m4/IsrVectorTable.hh"
 #include "../../../arm/cortex/m4/ReservedIsr.hh"
@@ -14,7 +14,7 @@ using namespace smeg::kernel::drivers::config;
 namespace smeg::kernel::crt::crt0::mcu::st::stm32::stm32l432kc
 {
 	using RequiredDriverConfigs = RequiredDriverConfigsFrom<KernelConfigs>::PerConfig;
-	using IsrConfigs = DriverProvidedIsrConfigsFrom<RequiredDriverConfigs>::PerConfig;
+	using IsrConfigs = ProvidedIsrConfigsFrom<RequiredDriverConfigs>::PerConfig;
 
 	using UnhandledWwdgIsr = UnhandledIsr;
 	using UnhandledPvdPvmIsr = UnhandledIsr;
