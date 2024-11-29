@@ -19,7 +19,7 @@ namespace smeg::kernel::drivers::kernel::syscall::mcu::arm::cortex::m4
 
 		// exceptions, invalid syscall IDs and memory access errors should result in a call to something that logs and terminates the task (a 'default handler' ?)
 
-		// each processor will have its own tuple of Syscall Handlers for holding processor-specific state.
+		// each processor will have its own tuple of Syscall Handlers for holding processor-specific state.  HOWEVER - this can be handled transparently by the kernel's ISR creation mechanism now that we've got the concept of 'naked ISRs' and 'per-core ISRs', the former being 'static onInterrupt()' and the latter being 'isrs[coreNumber].onInterrupt()' - we can examine the injected config and create a private member variable with all Syscalls and it will be guaranteed to be a per-core array, meaning all we need to do is look up the entry based on r7 and forget about multi-core concerns.
 
 		// most of this functionality can be written in a platform-agnostic (ie. easily tested) way; for ARM we just need to extract the values of the two
 		// registers and pass them to an injected delegate (which can live outside the MCU-specific directory).

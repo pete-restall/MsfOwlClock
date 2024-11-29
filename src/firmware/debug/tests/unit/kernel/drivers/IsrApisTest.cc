@@ -1,4 +1,3 @@
-// TODO: The DriverToKernelApis class will be removed.  In its place will be AppTaskApis and KernelTaskApis, plus, in Drivers, SyscallApis, IsrApis and ApiApis.
 #include <array>
 #include <concepts>
 #include <tuple>
@@ -6,15 +5,15 @@
 #include <mettle/suite.hpp>
 #include <mettle/matchers.hpp>
 
-#include "kernel/tasks/DriverToKernelApis.hh"
+#include "kernel/drivers/IsrApis.hh"
 
 #include "../../NonDeterminism.hh"
 
 using namespace mettle;
 
-using namespace smeg::kernel::tasks;
+using namespace smeg::kernel::drivers;
 
-namespace smeg::tests::unit::kernel::tasks
+namespace smeg::tests::unit::kernel::drivers
 {
 	template <auto X>
 	struct DummyRequiredApi
@@ -67,15 +66,15 @@ namespace smeg::tests::unit::kernel::tasks
 		}
 	};
 
-	suite<> driverToKernelApisTest("DriverToKernelApis Test Suite", [](auto &unit)
+	suite<> isrApisTest("IsrApis Test Suite", [](auto &unit)
 	{
 		unit.test("AsTuple_get_expectTupleOfApisPassedAsClassTemplateArguments", []()
 		{
 			std::array assertions
 			{
-				std::same_as<typename DriverToKernelApis<DummyRequiredApi<1>>::AsTuple, std::tuple<DummyRequiredApi<1>>>,
-				std::same_as<typename DriverToKernelApis<DummyRequiredApi<2>, DummyRequiredApi<3>>::AsTuple, std::tuple<DummyRequiredApi<2>, DummyRequiredApi<3>>>,
-				std::same_as<typename DriverToKernelApis<DummyRequiredApi<4>, DummyRequiredApi<5>, DummyRequiredApi<6>>::AsTuple, std::tuple<DummyRequiredApi<4>, DummyRequiredApi<5>, DummyRequiredApi<6>>>
+				std::same_as<typename IsrApis<DummyRequiredApi<1>>::AsTuple, std::tuple<DummyRequiredApi<1>>>,
+				std::same_as<typename IsrApis<DummyRequiredApi<2>, DummyRequiredApi<3>>::AsTuple, std::tuple<DummyRequiredApi<2>, DummyRequiredApi<3>>>,
+				std::same_as<typename IsrApis<DummyRequiredApi<4>, DummyRequiredApi<5>, DummyRequiredApi<6>>::AsTuple, std::tuple<DummyRequiredApi<4>, DummyRequiredApi<5>, DummyRequiredApi<6>>>
 			};
 
 			expect(assertions, each(equal_to(true)));
@@ -85,7 +84,7 @@ namespace smeg::tests::unit::kernel::tasks
 		{
 			StubRequiredApi apiFromFactory(anyValueOf<int>());
 			StubFactory apiFactory(apiFromFactory);
-			DriverToKernelApis<StubRequiredApi> apis(apiFactory);
+			IsrApis<StubRequiredApi> apis(apiFactory);
 			auto api(apis.get<StubRequiredApi>());
 			expect(api.token, equal_to(apiFromFactory.token));
 		});
@@ -93,7 +92,7 @@ namespace smeg::tests::unit::kernel::tasks
 		unit.test("get_calledMultipleTimes_expectSameApiInstanceIsReturned", []()
 		{
 			StubFactoryReturningDifferentInstances<StubRequiredApi> apiFactory;
-			DriverToKernelApis<StubRequiredApi> apis(apiFactory);
+			IsrApis<StubRequiredApi> apis(apiFactory);
 			std::array apiPtrs{&apis.get<StubRequiredApi>(), &apis.get<StubRequiredApi>()};
 			expect(apiPtrs[0], equal_to(apiPtrs[1]));
 		});

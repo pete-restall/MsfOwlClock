@@ -1,3 +1,5 @@
+// TODO: The AppToDriverApis class will be removed.  In its place will be AppTaskApis and KernelTaskApis, plus, in Drivers, SyscallApis, IsrApis and ApiApis.
+#include <array>
 #include <concepts>
 #include <tuple>
 
@@ -7,7 +9,6 @@
 #include "kernel/tasks/AppToDriverApis.hh"
 
 #include "../../NonDeterminism.hh"
-#include "TaskTestDoubles.hh"
 
 using namespace mettle;
 
@@ -72,9 +73,9 @@ namespace smeg::tests::unit::kernel::tasks
 		{
 			std::array assertions
 			{
-				typeid(typename AppToDriverApis<DummyRequiredApi<123>>::AsTuple) == typeid(std::tuple<DummyRequiredApi<123>>),
-				typeid(typename AppToDriverApis<DummyRequiredApi<456>, DummyRequiredApi<789>>::AsTuple) == typeid(std::tuple<DummyRequiredApi<456>, DummyRequiredApi<789>>),
-				typeid(typename AppToDriverApis<DummyRequiredApi<2>, DummyRequiredApi<4>, DummyRequiredApi<6>>::AsTuple) == typeid(std::tuple<DummyRequiredApi<2>, DummyRequiredApi<4>, DummyRequiredApi<6>>)
+				std::same_as<typename AppToDriverApis<DummyRequiredApi<123>>::AsTuple, std::tuple<DummyRequiredApi<123>>>,
+				std::same_as<typename AppToDriverApis<DummyRequiredApi<456>, DummyRequiredApi<789>>::AsTuple, std::tuple<DummyRequiredApi<456>, DummyRequiredApi<789>>>,
+				std::same_as<typename AppToDriverApis<DummyRequiredApi<2>, DummyRequiredApi<4>, DummyRequiredApi<6>>::AsTuple, std::tuple<DummyRequiredApi<2>, DummyRequiredApi<4>, DummyRequiredApi<6>>>
 			};
 
 			expect(assertions, each(equal_to(true)));
