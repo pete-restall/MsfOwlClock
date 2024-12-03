@@ -15,9 +15,9 @@ namespace smeg::kernel::tasks
 	public:
 		using AsTuple = decltype(apis);
 
-		template <template <IAppToDriverApi...> typename TApiFactory>
-		AppToDriverApis(TApiFactory<TApis...> apiFactory) :
-			apis((apiFactory.template create<TApis>(), ...))
+		template <typename TConfig, template <typename, IAppToDriverApi...> typename TApiFactory>
+		AppToDriverApis(TApiFactory<TConfig, TApis...> apiFactory) :
+			apis((apiFactory.template createApi<TApis>(), ...))
 		{
 		}
 

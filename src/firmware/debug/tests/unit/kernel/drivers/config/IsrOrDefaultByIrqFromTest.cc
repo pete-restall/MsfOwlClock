@@ -32,45 +32,45 @@ namespace smeg::tests::unit::kernel::drivers::config
 
 	suite<> isrOrDefaultByIrqFromTupleTest("IsrOrDefaultByIrqFrom (std::tuple<>) Test Suite", [](auto &unit)
 	{
-		unit.test("Handler_getWhenGivenEmptyTupleOfConfigs_expectDefaultIsr", []()
+		unit.test("Config_getWhenGivenEmptyTupleOfConfigs_expectConfigWithDefaultIsrIsReturned", []()
 		{
 			using NoConfigs = std::tuple<>;
 			using DefaultIsr = DummyIsr<1>;
-			using ReturnedIsr = IsrOrDefaultByIrqFrom<NoConfigs, 0, DefaultIsr>::Handler;
-			expect(std::same_as<ReturnedIsr, DefaultIsr>, equal_to(true));
+			using ReturnedConfig = IsrOrDefaultByIrqFrom<NoConfigs, 0, DefaultIsr>::Config;
+			expect(std::same_as<typename ReturnedConfig::Handler, DefaultIsr>, equal_to(true));
 		});
 
-		unit.test("Handler_getWhenGivenTupleOfSingleConfigWhoseIrqDoesNotMatch_expectDefaultIsr", []()
+		unit.test("Config_getWhenGivenTupleOfSingleConfigWhoseIrqDoesNotMatch_expectConfigWithDefaultIsrIsReturned", []()
 		{
 			using DefaultIsr = DummyIsr<1>;
-			using ReturnedIsr = IsrOrDefaultByIrqFrom<std::tuple<StubIsrConfig<7>>, 8, DefaultIsr>::Handler;
-			expect(std::same_as<ReturnedIsr, DefaultIsr>, equal_to(true));
+			using ReturnedConfig = IsrOrDefaultByIrqFrom<std::tuple<StubIsrConfig<7>>, 8, DefaultIsr>::Config;
+			expect(std::same_as<typename ReturnedConfig::Handler, DefaultIsr>, equal_to(true));
 		});
 
-		unit.test("Handler_getWhenGivenTupleOfSingleConfigWhoseIrqMatches_expectIsrWithMatchingIrq", []()
+		unit.test("Config_getWhenGivenTupleOfSingleConfigWhoseIrqMatches_expectSameConfigIsReturned", []()
 		{
 			using MatchingIsrConfig = StubIsrConfig<7>;
 			using DefaultIsr = DummyIsr<1>;
-			using ReturnedIsr = IsrOrDefaultByIrqFrom<std::tuple<MatchingIsrConfig>, MatchingIsrConfig::irq, DefaultIsr>::Handler;
-			expect(std::same_as<ReturnedIsr, typename MatchingIsrConfig::Handler>, equal_to(true));
+			using ReturnedConfig = IsrOrDefaultByIrqFrom<std::tuple<MatchingIsrConfig>, MatchingIsrConfig::irq, DefaultIsr>::Config;
+			expect(std::same_as<ReturnedConfig, MatchingIsrConfig>, equal_to(true));
 		});
 
-		unit.test("Handler_getWhenGivenTupleOfConfigsContainingOneWhoseIrqMatches_expectIsrWithMatchingIrq", []()
+		unit.test("Config_getWhenGivenTupleOfConfigsContainingOneWhoseIrqMatches_expectConfigWithMatchingIrqIsReturned", []()
 		{
 			using MatchingIsrConfig = StubIsrConfig<872>;
 			using DefaultIsr = DummyIsr<19>;
-			using ReturnedIsr = IsrOrDefaultByIrqFrom<
+			using ReturnedConfig = IsrOrDefaultByIrqFrom<
 				std::tuple<
 					NonMatchingIsrConfig<2>,
-					NonMatchingIsrConfig<29>,
+					NonMatchingIsrConfig<-29>,
 					NonMatchingIsrConfig<17>,
 					MatchingIsrConfig,
 					NonMatchingIsrConfig<13>,
 					NonMatchingIsrConfig<3>>,
 				MatchingIsrConfig::irq,
-				DefaultIsr>::Handler;
+				DefaultIsr>::Config;
 
-			expect(std::same_as<ReturnedIsr, typename MatchingIsrConfig::Handler>, equal_to(true));
+			expect(std::same_as<ReturnedConfig, MatchingIsrConfig>, equal_to(true));
 		});
 	});
 }

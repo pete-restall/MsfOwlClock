@@ -77,11 +77,10 @@ if meson.is_cross_build()
 		pic: false,
 		sources: [
 			src_dir / kernel_dir / '_entrypoint.cc',
-			src_dir / kernel_tasks_config_stubs_dir / 'kernel-task-stacks.cc',
+			src_dir / kernel_tasks_config_stubs_dir / 'kernel-task-stacks.cc'
 
 			# TODO: The drivers ought to have their own libdrv-XXX.a, built using Meson sub-projects.  Should also give them their own 'src' and 'tests'
-			# directories so that they are entirely self-contained, drop-in source libraries.  This is a temporary hack:
-			src_dir / kernel_drivers_kernel_dir / 'syscall/mcu/arm/cortex/m4/SvcallIsr.cc'
+			# directories so that they are entirely self-contained, drop-in source libraries.  List them here as a temporary hack:
 		],
 		include_directories: [
 			src_dir
@@ -161,6 +160,8 @@ else
 			unit_tests_dir / kernel_dir / 'ChainedFinalisationTest.cc',
 			unit_tests_dir / kernel_dir / 'ChainedInitialisationTest.cc',
 			unit_tests_dir / kernel_dir / 'ConstInitialisableTest.cc',
+			unit_tests_dir / kernel_dir / 'DefaultApiFactoryTest.cc',
+			unit_tests_dir / kernel_dir / 'IMcuCoreTraitsTest.cc',
 			unit_tests_dir / kernel_dir / 'InitialisableTest.cc',
 			unit_tests_dir / kernel_dir / 'NonConstInitialisableTest.cc',
 			unit_tests_dir / kernel_baremetal_dir / 'BitfieldTraitsTest.cc',
@@ -172,10 +173,12 @@ else
 			unit_tests_dir / kernel_config_dir / 'ITupleOfKernelConfigsTest.cc',
 			unit_tests_dir / kernel_crt_dir / 'EntrypointTest.cc',
 			unit_tests_dir / kernel_crt_crt0_dir / 'DefaultCrt0KernelConfigTest.cc',
+			unit_tests_dir / kernel_crt_crt0_dir / 'McuSingleCoreTraitsTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerBssMemorySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerDataMemorySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerFiniArraySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerInitArraySectionTest.cc',
+			unit_tests_dir / kernel_drivers_dir / 'DefaultPerCoreIsrFactoryTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'IIsrTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'IsrApisTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'DriverConfigsFromTest.cc',
@@ -188,10 +191,12 @@ else
 			unit_tests_dir / kernel_drivers_config_dir / 'IProvidedIsrConfigTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'IProvidedSyscallConfigTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'IsrOrDefaultByIrqFromTest.cc',
+			unit_tests_dir / kernel_drivers_config_dir / 'IsrWithDefaultTrampolineTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'ITupleOfDriverConfigsTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'ITupleOfProvidedIsrConfigsTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'ITupleOfProvidedApiConfigsTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'ITupleOfProvidedSyscallConfigsTest.cc',
+			unit_tests_dir / kernel_drivers_config_dir / 'NakedToPerCoreIsrAdapterTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'ProvidedIsrConfigsFromTest.cc',
 			unit_tests_dir / kernel_integer_sequences_dir / 'BubbleSortedTest.cc',
 			unit_tests_dir / kernel_integer_sequences_dir / 'SortedSetTest.cc',

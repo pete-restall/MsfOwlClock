@@ -22,6 +22,7 @@ namespace smeg::kernel::drivers::config
 		struct DefaultIsrAsConfig
 		{
 			using Handler = TDefaultIsr;
+			static constexpr auto irq = 12345; // TODO: NEEDS A TEST TO MAKE SURE THIS IS SET TO Irq
 		};
 
 		template <IProvidedIsrConfig TIsrConfig>
@@ -36,7 +37,7 @@ namespace smeg::kernel::drivers::config
 		static_assert(std::tuple_size_v<MatchingIsrConfigs> <= 1, "Ambiguous configuration; there cannot be more than one ISR that matches any given IRQ");
 
 	public:
-		using Handler = std::tuple_element_t<0, MatchingIsrConfigOrDefault>::Handler;
+		using Config = std::tuple_element_t<0, MatchingIsrConfigOrDefault>;
 	};
 }
 

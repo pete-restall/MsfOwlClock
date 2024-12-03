@@ -36,7 +36,11 @@ namespace smeg::tests::unit::kernel::tasks
 		}
 	};
 
-	template <typename TApi>
+	struct DummyConfig
+	{
+	};
+
+	template <typename TConfig, typename TApi>
 	class StubFactory
 	{
 	private:
@@ -49,19 +53,19 @@ namespace smeg::tests::unit::kernel::tasks
 		}
 
 		template <typename T>
-		auto create(void) const
+		auto createApi(void) const
 		{
 			if constexpr (std::same_as<T, TApi>)
 				return this->api;
 		}
 	};
 
-	template <typename TApi>
+	template <typename TConfig, typename TApi>
 	class StubFactoryReturningDifferentInstances
 	{
 	public:
 		template <typename T>
-		auto create(void) const
+		auto createApi(void) const
 		{
 			return T();
 		}
@@ -84,7 +88,7 @@ namespace smeg::tests::unit::kernel::tasks
 		unit.test("get_called_expectApiInstanceCreatedByFactoryPassedToConstructorIsReturned", []()
 		{
 			StubRequiredApi apiFromFactory(anyValueOf<int>());
-			StubFactory apiFactory(apiFromFactory);
+			StubFactory<DummyConfig, StubRequiredApi> apiFactory(apiFromFactory);
 			AppToDriverApis<StubRequiredApi> apis(apiFactory);
 			auto api(apis.get<StubRequiredApi>());
 			expect(api.token, equal_to(apiFromFactory.token));
@@ -92,7 +96,7 @@ namespace smeg::tests::unit::kernel::tasks
 
 		unit.test("get_calledMultipleTimes_expectSameApiInstanceIsReturned", []()
 		{
-			StubFactoryReturningDifferentInstances<StubRequiredApi> apiFactory;
+			StubFactoryReturningDifferentInstances<DummyConfig, StubRequiredApi> apiFactory;
 			AppToDriverApis<StubRequiredApi> apis(apiFactory);
 			std::array apiPtrs{&apis.get<StubRequiredApi>(), &apis.get<StubRequiredApi>()};
 			expect(apiPtrs[0], equal_to(apiPtrs[1]));

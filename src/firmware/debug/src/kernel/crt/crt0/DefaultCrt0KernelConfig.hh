@@ -4,19 +4,18 @@
 #include <cstddef>
 #include <tuple>
 
-#include "../../drivers/config/ITupleOfDriverConfigs.hh"
+#include "../../IMcuCoreTraits.hh"
 #include "../../KernelPerCoreInitialisationTask.hh"
+#include "../../drivers/config/ITupleOfDriverConfigs.hh"
 
 namespace smeg::kernel::crt::crt0
 {
 	using namespace smeg::kernel::drivers::config;
 
-	template <std::size_t NumberOfCores, std::size_t IsrStackNumberOfSlots, typename TMemorySection, ITupleOfDriverConfigs TDriverConfigs>
+	template <IMcuCoreTraits TMcuCoreTraits, std::size_t IsrStackNumberOfSlots, typename TMemorySection, ITupleOfDriverConfigs TDriverConfigs>
 	class DefaultCrt0KernelConfig
 	{
 	private:
-		static_assert(NumberOfCores > 0, "The microcontroller must have at least 1 core (CPU)");
-
 		struct KernelInitialisation
 		{
 			using Types = std::tuple<KernelPerCoreInitialisationTask>;
@@ -29,7 +28,7 @@ namespace smeg::kernel::crt::crt0
 		};
 
 	public:
-		using Tasks = std::array<KernelInitialisation, NumberOfCores>; // TODO: Maybe we need to parameterise KernelInitialisation<CoreId> so we can have a task-based SchedulingConfig.CoreAffinity and then the Entrypoint can determine which core it is running on and execute the appropriate core-specific task.
+		using Tasks = std::array<KernelInitialisation, TMcuCoreTraits::numberOfMcuCores>; // TODO: Maybe we need to parameterise KernelInitialisation<CoreId> so we can have a task-based SchedulingConfig.CoreAffinity and then the Entrypoint can determine which core it is running on and execute the appropriate core-specific task.
 		using Drivers = TDriverConfigs;
 	};
 }

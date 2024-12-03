@@ -3,11 +3,16 @@
 #include "../../../../DefaultCrt0KernelConfig.hh"
 #include "../../../../IsrStackMemorySection.hh"
 #include "DriverConfigs.hh"
+#include "McuCoreTraits.hh"
 
 namespace smeg::kernel::crt::crt0::mcu::st::stm32::stm32l432kc
 {
 	template <typename TKernelConfigs>
-	using Crt0KernelConfig = DefaultCrt0KernelConfig<1, 32, IsrStackMemorySection, DriverConfigs<TKernelConfigs>>; // TODO: figure this out; (maximum number of ISR priorities * register context saving + any stack space used by individual ISRs)
+	using Crt0KernelConfig = DefaultCrt0KernelConfig<
+		McuCoreTraits,
+		32,
+		IsrStackMemorySection,
+		DriverConfigs<TKernelConfigs>>; // TODO: figure this out; (maximum number of ISR priorities * register context saving + any stack space used by individual ISRs)
 }
 
 #endif

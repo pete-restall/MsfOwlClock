@@ -52,7 +52,7 @@ namespace smeg::tests::unit::kernel::tasks
 	struct DummyApiFactory
 	{
 		template <typename T>
-		constexpr auto create(void) const;
+		constexpr auto createApi(void) const;
 	};
 
 	template <typename TRequiredApis>
@@ -76,7 +76,7 @@ namespace smeg::tests::unit::kernel::tasks
 	struct StubApiFactory
 	{
 		template <typename T>
-		constexpr auto create(void) const
+		constexpr auto createApi(void) const
 		{
 			if constexpr (std::same_as<T, StubRequiredApi>)
 				return StubRequiredApi(token);
@@ -130,7 +130,7 @@ namespace smeg::tests::unit::kernel::tasks
 			using SpyTask = SpyTaskWithRequiredApisConstructor<typename decltype(fixture)::Apis>;
 			auto task(DefaultTaskFactory<SpyTask, StubApiFactory>::createTask());
 			auto resolvedApi(task.apis.template get<StubRequiredApi>());
-			expect(resolvedApi.token, equal_to(StubApiFactory<StubRequiredApi>::token));
+			expect(resolvedApi.token, equal_to(StubApiFactory<SpyTask, StubRequiredApi>::token));
 		});
 
 		unit.test("createTask_called_expectSameInstanceOfApiIsReturnedForEachGet", [](auto fixture)

@@ -5,7 +5,7 @@
 namespace smeg::kernel::drivers
 {
 	template <typename T>
-	concept IIsrApi = std::is_class_v<T>; // TODO: Needs to be determined; what should the API look like ?
+	concept IIsrApi = std::is_class_v<T>; // TODO: Needs to be determined; what should the API look like ?  Should have a 'noexcept' constructor to prevent leakage during initialisation of per-core statics...
 }
 
 #endif

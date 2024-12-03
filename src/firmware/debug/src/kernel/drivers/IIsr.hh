@@ -32,8 +32,8 @@ namespace smeg::kernel::drivers
 			{ T::onInterrupt() } noexcept -> std::same_as<void>;
 		};
 
-	template <typename T>
-	concept _$IPerCoreIsrWithRequiredApis =
+	template <typename T> // TODO: This is now public; needs to be tested - for symmetry, ensure IPerCoreIsrWithoutRequiredApis is also public / tested
+	concept IPerCoreIsrWithRequiredApis =
 		_$IIsrHasTypedefForRequiredApis<T> &&
 		!std::is_default_constructible_v<T> &&
 		std::is_nothrow_constructible_v<T, std::decay_t<typename T::RequiredApis>> &&
@@ -54,7 +54,7 @@ namespace smeg::kernel::drivers
 		};
 
 	template <typename T>
-	concept IPerCoreIsr = _$IPerCoreIsrWithoutRequiredApis<T> || _$IPerCoreIsrWithRequiredApis<T>;
+	concept IPerCoreIsr = _$IPerCoreIsrWithoutRequiredApis<T> || IPerCoreIsrWithRequiredApis<T>;
 
 	template <typename T>
 	concept IIsr = INakedIsr<T> || IPerCoreIsr<T>;

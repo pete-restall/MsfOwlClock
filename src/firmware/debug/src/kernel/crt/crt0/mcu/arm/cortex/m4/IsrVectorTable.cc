@@ -1,14 +1,8 @@
 #include <array>
 
-#include "../../../../../../drivers/config/IsrOrDefaultByIrqFrom.hh"
-#include "../../../../../../drivers/config/ProvidedIsrConfigsFrom.hh"
-#include "../../../../../../drivers/config/RequiredDriverConfigsFrom.hh"
-#include "../../../../KernelConfigs.hh"
-#include "IsrVectorTable.hh"
+#include "isrs.hh"
 #include "ReservedIsr.hh"
 #include "UnhandledIsr.hh"
-
-using namespace smeg::kernel::drivers::config;
 
 extern "C"
 {
@@ -19,9 +13,6 @@ extern "C"
 
 namespace smeg::kernel::crt::crt0::mcu::arm::cortex::m4
 {
-	using RequiredDriverConfigs = RequiredDriverConfigsFrom<KernelConfigs>::PerConfig;
-	using IsrConfigs = ProvidedIsrConfigsFrom<RequiredDriverConfigs>::PerConfig;
-
 	using UnhandledNmiIsr = UnhandledIsr;
 	using UnhandledHardFaultIsr = UnhandledIsr;
 	using UnhandledMemManageIsr = UnhandledIsr;
@@ -37,20 +28,20 @@ namespace smeg::kernel::crt::crt0::mcu::arm::cortex::m4
 	static const std::array<IsrVector, 15> isrVectorTable
 	{
 		&_resetHandler,
-		&IsrOrDefaultByIrqFrom<IsrConfigs, 2, UnhandledNmiIsr>::Handler::onInterrupt,
-		&IsrOrDefaultByIrqFrom<IsrConfigs, 3, UnhandledHardFaultIsr>::Handler::onInterrupt,
-		&IsrOrDefaultByIrqFrom<IsrConfigs, 4, UnhandledMemManageIsr>::Handler::onInterrupt,
-		&IsrOrDefaultByIrqFrom<IsrConfigs, 5, UnhandledBusFaultIsr>::Handler::onInterrupt,
-		&IsrOrDefaultByIrqFrom<IsrConfigs, 6, UnhandledUsageFaultIsr>::Handler::onInterrupt,
-		&IsrOrDefaultByIrqFrom<IsrConfigs, 7, ReservedIsr>::Handler::onInterrupt,
-		&IsrOrDefaultByIrqFrom<IsrConfigs, 8, ReservedIsr>::Handler::onInterrupt,
-		&IsrOrDefaultByIrqFrom<IsrConfigs, 9, ReservedIsr>::Handler::onInterrupt,
-		&IsrOrDefaultByIrqFrom<IsrConfigs, 10, ReservedIsr>::Handler::onInterrupt,
-		&IsrOrDefaultByIrqFrom<IsrConfigs, 11, UnhandledSvcallIsr>::Handler::onInterrupt,
-		&IsrOrDefaultByIrqFrom<IsrConfigs, 12, UnhandledDebugMonitorIsr>::Handler::onInterrupt,
-		&IsrOrDefaultByIrqFrom<IsrConfigs, 13, ReservedIsr>::Handler::onInterrupt,
-		&IsrOrDefaultByIrqFrom<IsrConfigs, 14, UnhandledPendsvIsr>::Handler::onInterrupt,
-		&IsrOrDefaultByIrqFrom<IsrConfigs, 15, UnhandledSysTickIsr>::Handler::onInterrupt
+		&IsrOrDefaultByIrq<2, UnhandledNmiIsr>::onInterrupt,
+		&IsrOrDefaultByIrq<3, UnhandledHardFaultIsr>::onInterrupt,
+		&IsrOrDefaultByIrq<4, UnhandledMemManageIsr>::onInterrupt,
+		&IsrOrDefaultByIrq<5, UnhandledBusFaultIsr>::onInterrupt,
+		&IsrOrDefaultByIrq<6, UnhandledUsageFaultIsr>::onInterrupt,
+		&IsrOrDefaultByIrq<7, ReservedIsr>::onInterrupt,
+		&IsrOrDefaultByIrq<8, ReservedIsr>::onInterrupt,
+		&IsrOrDefaultByIrq<9, ReservedIsr>::onInterrupt,
+		&IsrOrDefaultByIrq<10, ReservedIsr>::onInterrupt,
+		&IsrOrDefaultByIrq<11, UnhandledSvcallIsr>::onInterrupt,
+		&IsrOrDefaultByIrq<12, UnhandledDebugMonitorIsr>::onInterrupt,
+		&IsrOrDefaultByIrq<13, ReservedIsr>::onInterrupt,
+		&IsrOrDefaultByIrq<14, UnhandledPendsvIsr>::onInterrupt,
+		&IsrOrDefaultByIrq<15, UnhandledSysTickIsr>::onInterrupt
 	};
 
 	static_assert(sizeof(IsrVector) == 4, "The Cortex M4 ISR Vectors must be 32-bit pointers");

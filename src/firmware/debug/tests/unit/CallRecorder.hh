@@ -44,6 +44,11 @@ namespace smeg::tests::unit
 		{
 			return this->calls | std::views::transform([](auto &&x) noexcept { return popFront(x); });
 		}
+
+		void resetCalls(void)
+		{
+			this->calls.clear();
+		}
 	};
 }
 

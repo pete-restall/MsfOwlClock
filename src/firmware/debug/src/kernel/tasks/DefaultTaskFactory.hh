@@ -2,12 +2,12 @@
 #define __SMEG_KERNEL_TASKS_DEFAULTTASKFACTORY_HH
 #include <tuple>
 
-#include "DefaultApiFactory.hh"
+#include "../DefaultApiFactory.hh"
 #include "ITask.hh"
 
 namespace smeg::kernel::tasks
 {
-	template <ITask TTask, template <typename...> typename TApiFactory = DefaultApiFactory>
+	template <ITask TTask, template <typename, typename...> typename TApiFactory = DefaultApiFactory>
 	class DefaultTaskFactory
 	{
 	private:
@@ -17,7 +17,7 @@ namespace smeg::kernel::tasks
 		template <typename... TApis>
 		struct ApiFactory<std::tuple<TApis...>>
 		{
-			using Type = TApiFactory<TApis...>;
+			using Type = TApiFactory</* TODO: Wants to be TTaskConfig, when that is added to the DefaultTaskFactory signature */TTask, TApis...>;
 		};
 
 	public:
@@ -25,8 +25,8 @@ namespace smeg::kernel::tasks
 		{
 			if constexpr (ITaskWithAnyRequiredApis<TTask>)
 			{
-				using RequiredApis = typename TTask::RequiredApis;
-				using TupleOfApis = typename RequiredApis::AsTuple;
+				using RequiredApis = TTask::RequiredApis;
+				using TupleOfApis = RequiredApis::AsTuple;
 				return TTask((RequiredApis(typename ApiFactory<TupleOfApis>::Type())));
 			}
 			else

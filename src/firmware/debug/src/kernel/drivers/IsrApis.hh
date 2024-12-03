@@ -15,9 +15,9 @@ namespace smeg::kernel::drivers
 	public:
 		using AsTuple = decltype(apis);
 
-		template <template <IIsrApi...> typename TApiFactory>
-		IsrApis(TApiFactory<TApis...> apiFactory) :
-			apis((apiFactory.template create<TApis>(), ...))
+		template <typename TConfig, template <typename, IIsrApi...> typename TApiFactory>
+		IsrApis(TApiFactory<TConfig, TApis...> apiFactory) :
+			apis((apiFactory.template createApi<TApis>(), ...))
 		{
 		}
 
