@@ -90,7 +90,7 @@ namespace smeg::tests::unit::kernel::tasks
 	template <typename... TRequiredApis>
 	thread_local int StubApiFactory<TRequiredApis...>::token(anyValueOf<int>());
 
-	suite<Stub<AppToDriverApis>, Stub<DriverToDriverApis>, Stub<DriverToKernelApis>> defaultTaskFactoryTest("DefaultTaskFactory (Default API Factory) Test Suite", [](auto &unit)
+	suite<Stub<AppTaskApis>, Stub<DriverToDriverApis>, Stub<DriverToKernelApis>> defaultTaskFactoryTest("DefaultTaskFactory (Default API Factory) Test Suite", [](auto &unit)
 	{
 		unit.test("createTask_calledWhenTaskHasNoRequiredApisAndHasDefaultConstructor_expectTaskCanBeCreated", [](auto)
 		{
@@ -116,7 +116,7 @@ namespace smeg::tests::unit::kernel::tasks
 		});
 	});
 
-	suite<Stub<AppToDriverApis>, Stub<DriverToDriverApis>, Stub<DriverToKernelApis>> defaultTaskFactoryWithSpecifiedApiFactoryTest("DefaultTaskFactory (Specified API Factory) Test Suite", [](auto &unit)
+	suite<Stub<AppTaskApis>, Stub<DriverToDriverApis>, Stub<DriverToKernelApis>> defaultTaskFactoryWithSpecifiedApiFactoryTest("DefaultTaskFactory (Specified API Factory) Test Suite", [](auto &unit)
 	{
 		unit.test("createTask_calledWhenTaskHasNoRequiredApisAndHasDefaultConstructor_expectTaskCanBeCreated", [](auto)
 		{

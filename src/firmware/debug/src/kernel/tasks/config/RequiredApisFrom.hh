@@ -4,7 +4,7 @@
 
 #include "../../tuples/TupleProjection.hh"
 #include "../../tuples/Unique.hh"
-#include "../AppToDriverApis.hh"
+#include "../AppTaskApis.hh"
 #include "../DriverToDriverApis.hh"
 #include "../DriverToKernelApis.hh"
 #include "../ITask.hh"
@@ -99,7 +99,7 @@ namespace smeg::kernel::tasks::config
 	};
 
 	template <typename T>
-	using RequiredAppToDriverApisFrom = RequiredApisFrom<AppToDriverApis, T>;
+	using RequiredAppTaskApisFrom = RequiredApisFrom<AppTaskApis, T>;
 
 	template <typename T>
 	using RequiredDriverToDriverApisFrom = RequiredApisFrom<DriverToDriverApis, T>;

@@ -202,7 +202,7 @@ else
 			unit_tests_dir / kernel_integer_sequences_dir / 'SortedSetTest.cc',
 			unit_tests_dir / kernel_integer_sequences_dir / 'UniqueTest.cc',
 			unit_tests_dir / kernel_integer_sequences_dir / 'UtilitiesTest.cc',
-			unit_tests_dir / kernel_tasks_dir / 'AppToDriverApisTest.cc',
+			unit_tests_dir / kernel_tasks_dir / 'AppTaskApisTest.cc',
 			unit_tests_dir / kernel_tasks_dir / 'DefaultTaskFactoryTest.cc',
 			unit_tests_dir / kernel_tasks_dir / 'DriverToDriverApisTest.cc',
 			unit_tests_dir / kernel_tasks_dir / 'DriverToKernelApisTest.cc',

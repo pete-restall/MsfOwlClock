@@ -16,7 +16,7 @@ namespace restall::msf_owl_clock::debug
 		GpioSharedPin<DigitalOutput, 81> led;
 
 	public:
-		using RequiredApis = AppToDriverApis<GpioDriverApi, SoftwareDelayDriverApi>;
+		using RequiredApis = AppTaskApis<GpioDriverApi, SoftwareDelayDriverApi>;
 
 		BlinkyBlinkyTask(RequiredApis &&apis) :
 			apis(apis),

@@ -89,12 +89,12 @@ namespace smeg::tests::unit::kernel::tasks
 	suite<
 		IsTask<StubTaskWithDefaultConstructor>,
 		IsTask<StubTaskWithBooleanReturn>,
-		IsNotTask<StubTaskWithRequiredApisAndDefaultConstructor<AppToDriverApis<DummyApi>>>,
-		IsTask<StubTaskWithRequiredApisConstructor<AppToDriverApis<DummyApi>>>,
+		IsNotTask<StubTaskWithRequiredApisAndDefaultConstructor<AppTaskApis<DummyApi>>>,
+		IsTask<StubTaskWithRequiredApisConstructor<AppTaskApis<DummyApi>>>,
 		IsNotTask<StubTaskWithRequiredApisConstructor<DummyRequiredApis>>,
 		IsNotTask<StubTaskWithRequiredApisConstructor<DriverToDriverApis<DummyApi>>>,
 		IsNotTask<StubTaskWithRequiredApisConstructor<DriverToKernelApis<DummyApi>>>,
-		IsNotTask<StubTaskWithBothRequiredApisConstructorAndDefaultConstructor<AppToDriverApis<DummyApi>>>> iAppTaskTest("IAppTask Test Suite", [](auto &unit)
+		IsNotTask<StubTaskWithBothRequiredApisConstructorAndDefaultConstructor<AppTaskApis<DummyApi>>>> iAppTaskTest("IAppTask Test Suite", [](auto &unit)
 	{
 		unit.test("IAppTask_conceptPassedAppTasklikeType_expectTrueIsReturned", [](auto potentialTask)
 		{
@@ -114,11 +114,11 @@ namespace smeg::tests::unit::kernel::tasks
 	suite<
 		IsTask<StubTaskWithDefaultConstructor>,
 		IsTask<StubTaskWithBooleanReturn>,
-		IsNotTask<StubTaskWithRequiredApisAndDefaultConstructor<AppToDriverApis<DummyApi>>>,
+		IsNotTask<StubTaskWithRequiredApisAndDefaultConstructor<AppTaskApis<DummyApi>>>,
 		IsTask<StubTaskWithRequiredApisConstructor<DriverToDriverApis<DummyApi>>>,
 		IsTask<StubTaskWithRequiredApisConstructor<DriverToKernelApis<DummyApi>>>,
 		IsNotTask<StubTaskWithRequiredApisConstructor<DummyRequiredApis>>,
-		IsNotTask<StubTaskWithRequiredApisConstructor<AppToDriverApis<DummyApi>>>,
+		IsNotTask<StubTaskWithRequiredApisConstructor<AppTaskApis<DummyApi>>>,
 		IsNotTask<StubTaskWithBothRequiredApisConstructorAndDefaultConstructor<DriverToDriverApis<DummyApi>>>,
 		IsNotTask<StubTaskWithBothRequiredApisConstructorAndDefaultConstructor<DriverToKernelApis<DummyApi>>>> iDriverTaskTest("IDriverTask Test Suite", [](auto &unit)
 	{

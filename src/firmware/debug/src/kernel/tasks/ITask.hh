@@ -4,7 +4,7 @@
 #include <type_traits>
 #include <utility>
 
-#include "AppToDriverApis.hh"
+#include "AppTaskApis.hh"
 #include "DriverToDriverApis.hh"
 #include "DriverToKernelApis.hh"
 
@@ -92,7 +92,7 @@ namespace smeg::kernel::tasks
 		_IHaveDefaultTaskConstructor<TTask>);
 
 	template <typename TTask>
-	concept IAppTask = ITaskWithDefaultConstructorOrRequiringApiInjection<TTask, AppToDriverApis>;
+	concept IAppTask = ITaskWithDefaultConstructorOrRequiringApiInjection<TTask, AppTaskApis>;
 
 	template <typename TTask>
 	concept IDriverTask =

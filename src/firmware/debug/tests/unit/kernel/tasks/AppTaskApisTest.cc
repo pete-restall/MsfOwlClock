@@ -1,4 +1,3 @@
-// TODO: The AppToDriverApis class will be removed.  In its place will be AppTaskApis and KernelTaskApis, plus, in Drivers, SyscallApis, IsrApis and ApiApis.
 #include <array>
 #include <concepts>
 #include <tuple>
@@ -6,7 +5,7 @@
 #include <mettle/suite.hpp>
 #include <mettle/matchers.hpp>
 
-#include "kernel/tasks/AppToDriverApis.hh"
+#include "kernel/tasks/AppTaskApis.hh"
 
 #include "../../NonDeterminism.hh"
 
@@ -71,15 +70,15 @@ namespace smeg::tests::unit::kernel::tasks
 		}
 	};
 
-	suite<> appToDriverApisTest("AppToDriverApis Test Suite", [](auto &unit)
+	suite<> appTaskApisTest("AppTaskApis Test Suite", [](auto &unit)
 	{
 		unit.test("AsTuple_get_expectTupleOfApisPassedAsClassTemplateArguments", []()
 		{
 			std::array assertions
 			{
-				std::same_as<typename AppToDriverApis<DummyRequiredApi<123>>::AsTuple, std::tuple<DummyRequiredApi<123>>>,
-				std::same_as<typename AppToDriverApis<DummyRequiredApi<456>, DummyRequiredApi<789>>::AsTuple, std::tuple<DummyRequiredApi<456>, DummyRequiredApi<789>>>,
-				std::same_as<typename AppToDriverApis<DummyRequiredApi<2>, DummyRequiredApi<4>, DummyRequiredApi<6>>::AsTuple, std::tuple<DummyRequiredApi<2>, DummyRequiredApi<4>, DummyRequiredApi<6>>>
+				std::same_as<typename AppTaskApis<DummyRequiredApi<123>>::AsTuple, std::tuple<DummyRequiredApi<123>>>,
+				std::same_as<typename AppTaskApis<DummyRequiredApi<456>, DummyRequiredApi<789>>::AsTuple, std::tuple<DummyRequiredApi<456>, DummyRequiredApi<789>>>,
+				std::same_as<typename AppTaskApis<DummyRequiredApi<2>, DummyRequiredApi<4>, DummyRequiredApi<6>>::AsTuple, std::tuple<DummyRequiredApi<2>, DummyRequiredApi<4>, DummyRequiredApi<6>>>
 			};
 
 			expect(assertions, each(equal_to(true)));
@@ -89,7 +88,7 @@ namespace smeg::tests::unit::kernel::tasks
 		{
 			StubRequiredApi apiFromFactory(anyValueOf<int>());
 			StubFactory<DummyConfig, StubRequiredApi> apiFactory(apiFromFactory);
-			AppToDriverApis<StubRequiredApi> apis(apiFactory);
+			AppTaskApis<StubRequiredApi> apis(apiFactory);
 			auto api(apis.get<StubRequiredApi>());
 			expect(api.token, equal_to(apiFromFactory.token));
 		});
@@ -97,7 +96,7 @@ namespace smeg::tests::unit::kernel::tasks
 		unit.test("get_calledMultipleTimes_expectSameApiInstanceIsReturned", []()
 		{
 			StubFactoryReturningDifferentInstances<DummyConfig, StubRequiredApi> apiFactory;
-			AppToDriverApis<StubRequiredApi> apis(apiFactory);
+			AppTaskApis<StubRequiredApi> apis(apiFactory);
 			std::array apiPtrs{&apis.get<StubRequiredApi>(), &apis.get<StubRequiredApi>()};
 			expect(apiPtrs[0], equal_to(apiPtrs[1]));
 		});
