@@ -1,17 +1,14 @@
-#ifndef __SMEG_KERNEL_DRIVERS_DEFAULTPERCOREISRFACTORY_HH
-#define __SMEG_KERNEL_DRIVERS_DEFAULTPERCOREISRFACTORY_HH
+#ifndef __SMEG_KERNEL_DRIVERS_COMPOSITION_DEFAULTPERCOREISRFACTORY_HH
+#define __SMEG_KERNEL_DRIVERS_COMPOSITION_DEFAULTPERCOREISRFACTORY_HH
 #include <cstddef>
 #include <tuple>
 
-#include "../DefaultApiFactory.hh"
-#include "IIsr.hh"
-#include "config/IProvidedIsrConfig.hh" // TODO: WRONG DIRECTION...
+#include "../../../DefaultApiFactory.hh"
+#include "../../IIsr.hh"
+#include "../IProvidedIsrConfig.hh"
 
-namespace smeg::kernel::drivers
+namespace smeg::kernel::drivers::config::composition
 {
-	using namespace smeg::kernel::drivers::config; // TODO: SHOULDN'T BE REQUIRED ONCE DEPENDENCY DIRECTION IS FIXED
-// TODO: THE FACTORY REALLY NEEDS TO TAKE CONFIG...WHICH MEANS WE ALSO NEED TO MODIFY THE LOCATION OF THIS, TO AVOID POINTING INTO 'config'.
-// TODO: THE API FACTORY ALSO OUGHT TO TAKE THE CONFIG, SO THAT IT CAN EXAMINE IT IF IT NEEDS TO.
 	template <IProvidedIsrConfig TIsrConfig, std::size_t McuCoreId, template <typename, typename...> typename TApiFactory = DefaultApiFactory>
 	class DefaultPerCoreIsrFactory
 	{

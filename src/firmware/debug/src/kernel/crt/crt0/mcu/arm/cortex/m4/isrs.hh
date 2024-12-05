@@ -1,13 +1,13 @@
 #ifndef __SMEG_KERNEL_CRT_CRT0_MCU_ARM_CORTEX_M4_ISRS_HH
 #define __SMEG_KERNEL_CRT_CRT0_MCU_ARM_CORTEX_M4_ISRS_HH
-#include "../../../../../../drivers/DefaultPerCoreIsrFactory.hh"
 #include "../../../../../../drivers/IIsr.hh"
 #include "../../../../../../drivers/config/IProvidedIsrConfig.hh"
 #include "../../../../../../drivers/config/ITupleOfProvidedIsrConfigs.hh"
 #include "../../../../../../drivers/config/IsrOrDefaultByIrqFrom.hh"
-#include "../../../../../../drivers/config/IsrWithDefaultTrampoline.hh"
 #include "../../../../../../drivers/config/ProvidedIsrConfigsFrom.hh"
 #include "../../../../../../drivers/config/RequiredDriverConfigsFrom.hh"
+#include "../../../../../../drivers/config/composition/DefaultPerCoreIsrFactory.hh"
+#include "../../../../../../drivers/config/composition/IsrWithDefaultTrampoline.hh"
 #include "../../../../KernelConfigs.hh"
 #include "../../../../McuCoreTraits.hh"
 #include "NakedToPerCoreIsrTrampoline.hh"
@@ -15,6 +15,7 @@
 namespace smeg::kernel::crt::crt0::mcu::arm::cortex::m4
 {
 	using namespace smeg::kernel::drivers::config;
+	using namespace smeg::kernel::drivers::config::composition;
 
 	using IsrVector = void (*const)(void) noexcept;
 

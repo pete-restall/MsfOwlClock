@@ -26,6 +26,7 @@ kernel_crt_crt0_mcu_st_dir = kernel_crt_crt0_mcu_dir / 'st'
 kernel_crt_picolibc_dir = kernel_crt_dir / 'picolibc'
 kernel_drivers_dir = kernel_dir / 'drivers'
 kernel_drivers_config_dir = kernel_drivers_dir / 'config'
+kernel_drivers_config_composition_dir = kernel_drivers_config_dir / 'composition'
 kernel_drivers_kernel_dir = kernel_drivers_dir / 'kernel'
 kernel_drivers_peripherals_dir = kernel_drivers_dir / 'peripherals'
 kernel_integer_sequences_dir = kernel_dir / 'integer-sequences'
@@ -178,7 +179,6 @@ else
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerDataMemorySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerFiniArraySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerInitArraySectionTest.cc',
-			unit_tests_dir / kernel_drivers_dir / 'DefaultPerCoreIsrFactoryTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'DriverTaskApisTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'IDriverTaskTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'IIsrTest.cc',
@@ -193,13 +193,14 @@ else
 			unit_tests_dir / kernel_drivers_config_dir / 'IProvidedIsrConfigTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'IProvidedSyscallConfigTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'IsrOrDefaultByIrqFromTest.cc',
-			unit_tests_dir / kernel_drivers_config_dir / 'IsrWithDefaultTrampolineTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'ITupleOfDriverConfigsTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'ITupleOfProvidedIsrConfigsTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'ITupleOfProvidedApiConfigsTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'ITupleOfProvidedSyscallConfigsTest.cc',
-			unit_tests_dir / kernel_drivers_config_dir / 'NakedToPerCoreIsrAdapterTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'ProvidedIsrConfigsFromTest.cc',
+			unit_tests_dir / kernel_drivers_config_composition_dir / 'DefaultPerCoreIsrFactoryTest.cc',
+			unit_tests_dir / kernel_drivers_config_composition_dir / 'IsrWithDefaultTrampolineTest.cc',
+			unit_tests_dir / kernel_drivers_config_composition_dir / 'NakedToPerCoreIsrAdapterTest.cc',
 			unit_tests_dir / kernel_integer_sequences_dir / 'BubbleSortedTest.cc',
 			unit_tests_dir / kernel_integer_sequences_dir / 'SortedSetTest.cc',
 			unit_tests_dir / kernel_integer_sequences_dir / 'UniqueTest.cc',

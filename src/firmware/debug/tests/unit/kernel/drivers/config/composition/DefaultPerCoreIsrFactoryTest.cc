@@ -6,16 +6,18 @@
 #include <mettle/suite.hpp>
 #include <mettle/matchers.hpp>
 
-#include "kernel/drivers/DefaultPerCoreIsrFactory.hh"
+#include "kernel/drivers/IsrApis.hh"
+#include "kernel/drivers/config/composition/DefaultPerCoreIsrFactory.hh"
 
-#include "../../NonDeterminism.hh"
-#include "PerCoreIsrTestDoubles.hh"
+#include "../../../../NonDeterminism.hh"
+#include "../../PerCoreIsrTestDoubles.hh"
 
 using namespace mettle;
 
 using namespace smeg::kernel::drivers;
+using namespace smeg::kernel::drivers::config::composition;
 
-namespace smeg::tests::unit::kernel::drivers
+namespace smeg::tests::unit::kernel::drivers::config::composition
 {
 	struct DummyRequiredApi
 	{

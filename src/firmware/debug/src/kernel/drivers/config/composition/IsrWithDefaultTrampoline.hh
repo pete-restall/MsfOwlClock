@@ -1,9 +1,9 @@
-#ifndef __SMEG_KERNEL_DRIVERS_CONFIG_ISRWITHDEFAULTTRAMPOLINE_HH
-#define __SMEG_KERNEL_DRIVERS_CONFIG_ISRWITHDEFAULTTRAMPOLINE_HH
-#include "../IIsr.hh"
-#include "IProvidedIsrConfig.hh"
+#ifndef __SMEG_KERNEL_DRIVERS_CONFIG_COMPOSITION_ISRWITHDEFAULTTRAMPOLINE_HH
+#define __SMEG_KERNEL_DRIVERS_CONFIG_COMPOSITION_ISRWITHDEFAULTTRAMPOLINE_HH
+#include "../../IIsr.hh"
+#include "../IProvidedIsrConfig.hh"
 
-namespace smeg::kernel::drivers::config
+namespace smeg::kernel::drivers::config::composition
 {
 	template <template <IProvidedIsrConfig> typename TIsrTrampoline>
 	class IsrWithDefaultTrampoline

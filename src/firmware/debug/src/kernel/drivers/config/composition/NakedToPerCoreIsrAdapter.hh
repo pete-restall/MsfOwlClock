@@ -1,13 +1,13 @@
-#ifndef __SMEG_KERNEL_DRIVERS_CONFIG_NAKEDTOPERCODEISRADAPTER_HH
-#define __SMEG_KERNEL_DRIVERS_CONFIG_NAKEDTOPERCODEISRADAPTER_HH
+#ifndef __SMEG_KERNEL_DRIVERS_CONFIG_COMPOSITION_NAKEDTOPERCODEISRADAPTER_HH
+#define __SMEG_KERNEL_DRIVERS_CONFIG_COMPOSITION_NAKEDTOPERCODEISRADAPTER_HH
 #include <array>
 #include <cstddef>
 #include <utility>
 
-#include "../../IMcuCoreTraits.hh"
-#include "IProvidedIsrConfig.hh"
+#include "../../../IMcuCoreTraits.hh"
+#include "../IProvidedIsrConfig.hh"
 
-namespace smeg::kernel::drivers::config
+namespace smeg::kernel::drivers::config::composition
 {
 	template <typename T, typename TIsrConfig>
 	concept _$IHavePerCoreIsrFactory = requires

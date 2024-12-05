@@ -4,13 +4,13 @@
 #include <mettle/suite.hpp>
 #include <mettle/matchers.hpp>
 
-#include "kernel/drivers/config/IsrWithDefaultTrampoline.hh"
+#include "kernel/drivers/config/composition/IsrWithDefaultTrampoline.hh"
 
 using namespace mettle;
 
-using namespace smeg::kernel::drivers::config;
+using namespace smeg::kernel::drivers::config::composition;
 
-namespace smeg::tests::unit::kernel::drivers::config
+namespace smeg::tests::unit::kernel::drivers::config::composition
 {
 	struct StubNakedIsrConfig
 	{

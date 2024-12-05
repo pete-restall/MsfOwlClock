@@ -9,18 +9,20 @@
 #include <mettle/matchers.hpp>
 
 #include "kernel/drivers/IIsr.hh"
-#include "kernel/drivers/config/NakedToPerCoreIsrAdapter.hh"
+#include "kernel/drivers/config/IProvidedIsrConfig.hh"
+#include "kernel/drivers/config/composition/NakedToPerCoreIsrAdapter.hh"
 
-#include "../../../CallRecorder.hh"
-#include "../../../NonDeterminism.hh"
-#include "../PerCoreIsrTestDoubles.hh"
+#include "../../../../CallRecorder.hh"
+#include "../../../../NonDeterminism.hh"
+#include "../../PerCoreIsrTestDoubles.hh"
 
 using namespace mettle;
 
 using namespace smeg::kernel::drivers;
 using namespace smeg::kernel::drivers::config;
+using namespace smeg::kernel::drivers::config::composition;
 
-namespace smeg::tests::unit::kernel::drivers::config
+namespace smeg::tests::unit::kernel::drivers::config::composition
 {
 	struct DummyMcuCoreTraits
 	{
