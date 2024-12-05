@@ -4,9 +4,6 @@
 
 #include "../../tuples/TupleProjection.hh"
 #include "../../tuples/Unique.hh"
-#include "../AppTaskApis.hh"
-#include "../DriverToDriverApis.hh"
-#include "../DriverToKernelApis.hh"
 #include "../ITask.hh"
 #include "IHaveConfigForTasks.hh"
 #include "ITaskConfig.hh"
@@ -97,15 +94,6 @@ namespace smeg::kernel::tasks::config
 	public:
 		using Types = Unique<typename TupleProjection<typename TConfig::Tasks, FromTaskConfigs>::Output>;
 	};
-
-	template <typename T>
-	using RequiredAppTaskApisFrom = RequiredApisFrom<AppTaskApis, T>;
-
-	template <typename T>
-	using RequiredDriverToDriverApisFrom = RequiredApisFrom<DriverToDriverApis, T>;
-
-	template <typename T>
-	using RequiredDriverToKernelApisFrom = RequiredApisFrom<DriverToKernelApis, T>;
 }
 
 #endif

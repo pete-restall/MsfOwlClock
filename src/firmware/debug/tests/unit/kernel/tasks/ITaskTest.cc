@@ -28,15 +28,11 @@ namespace smeg::tests::unit::kernel::tasks
 	};
 
 	template <typename... TApis>
-	struct _DummyRequiredApis
+	struct _$DummyRequiredApis
 	{
 	};
 
-	using DummyRequiredApis = _DummyRequiredApis<>;
-
-	struct DummyApi
-	{
-	};
+	using DummyRequiredApis = _$DummyRequiredApis<>;
 
 	struct StubTaskWithBooleanReturn
 	{
@@ -83,57 +79,6 @@ namespace smeg::tests::unit::kernel::tasks
 			using Task = decltype(potentialTask);
 			if constexpr (!Task::isTask)
 				expect(typeid(typename Task::Type).name(), ITask<typename Task::Type>, equal_to(false));
-		});
-	});
-
-	suite<
-		IsTask<StubTaskWithDefaultConstructor>,
-		IsTask<StubTaskWithBooleanReturn>,
-		IsNotTask<StubTaskWithRequiredApisAndDefaultConstructor<AppTaskApis<DummyApi>>>,
-		IsTask<StubTaskWithRequiredApisConstructor<AppTaskApis<DummyApi>>>,
-		IsNotTask<StubTaskWithRequiredApisConstructor<DummyRequiredApis>>,
-		IsNotTask<StubTaskWithRequiredApisConstructor<DriverToDriverApis<DummyApi>>>,
-		IsNotTask<StubTaskWithRequiredApisConstructor<DriverToKernelApis<DummyApi>>>,
-		IsNotTask<StubTaskWithBothRequiredApisConstructorAndDefaultConstructor<AppTaskApis<DummyApi>>>> iAppTaskTest("IAppTask Test Suite", [](auto &unit)
-	{
-		unit.test("IAppTask_conceptPassedAppTasklikeType_expectTrueIsReturned", [](auto potentialTask)
-		{
-			using Task = decltype(potentialTask);
-			if constexpr (Task::isTask)
-				expect(typeid(typename Task::Type).name(), IAppTask<typename Task::Type>, equal_to(true));
-		});
-
-		unit.test("IAppTask_conceptPassedNonAppTasklikeType_expectFalseIsReturned", [](auto potentialTask)
-		{
-			using Task = decltype(potentialTask);
-			if constexpr (!Task::isTask)
-				expect(typeid(typename Task::Type).name(), IAppTask<typename Task::Type>, equal_to(false));
-		});
-	});
-
-	suite<
-		IsTask<StubTaskWithDefaultConstructor>,
-		IsTask<StubTaskWithBooleanReturn>,
-		IsNotTask<StubTaskWithRequiredApisAndDefaultConstructor<AppTaskApis<DummyApi>>>,
-		IsTask<StubTaskWithRequiredApisConstructor<DriverToDriverApis<DummyApi>>>,
-		IsTask<StubTaskWithRequiredApisConstructor<DriverToKernelApis<DummyApi>>>,
-		IsNotTask<StubTaskWithRequiredApisConstructor<DummyRequiredApis>>,
-		IsNotTask<StubTaskWithRequiredApisConstructor<AppTaskApis<DummyApi>>>,
-		IsNotTask<StubTaskWithBothRequiredApisConstructorAndDefaultConstructor<DriverToDriverApis<DummyApi>>>,
-		IsNotTask<StubTaskWithBothRequiredApisConstructorAndDefaultConstructor<DriverToKernelApis<DummyApi>>>> iDriverTaskTest("IDriverTask Test Suite", [](auto &unit)
-	{
-		unit.test("IDriverTask_conceptPassedDriverTasklikeType_expectTrueIsReturned", [](auto potentialTask)
-		{
-			using Task = decltype(potentialTask);
-			if constexpr (Task::isTask)
-				expect(typeid(typename Task::Type).name(), IDriverTask<typename Task::Type>, equal_to(true));
-		});
-
-		unit.test("IDriverTask_conceptPassedNonDriverTasklikeType_expectFalseIsReturned", [](auto potentialTask)
-		{
-			using Task = decltype(potentialTask);
-			if constexpr (!Task::isTask)
-				expect(typeid(typename Task::Type).name(), IDriverTask<typename Task::Type>, equal_to(false));
 		});
 	});
 }

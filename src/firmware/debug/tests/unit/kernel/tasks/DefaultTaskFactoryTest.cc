@@ -6,6 +6,7 @@
 #include <mettle/suite.hpp>
 #include <mettle/matchers.hpp>
 
+#include "kernel/tasks/AppTaskApis.hh"
 #include "kernel/tasks/DefaultTaskFactory.hh"
 
 #include "../../NonDeterminism.hh"
@@ -90,7 +91,29 @@ namespace smeg::tests::unit::kernel::tasks
 	template <typename... TRequiredApis>
 	thread_local int StubApiFactory<TRequiredApis...>::token(anyValueOf<int>());
 
-	suite<Stub<AppTaskApis>, Stub<DriverToDriverApis>, Stub<DriverToKernelApis>> defaultTaskFactoryTest("DefaultTaskFactory (Default API Factory) Test Suite", [](auto &unit)
+	template <typename... TApis>
+	class StubTaskApis
+	{
+	private:
+		std::tuple<TApis...> apis;
+
+	public:
+		using AsTuple = decltype(apis);
+
+		template <typename TConfig, template <typename, typename...> typename TApiFactory>
+		StubTaskApis(TApiFactory<TConfig, TApis...> apiFactory) :
+			apis((apiFactory.template createApi<TApis>(), ...))
+		{
+		}
+
+		template <typename TApi>
+		auto &get(void)
+		{
+			return std::get<TApi>(this->apis);
+		}
+	};
+
+	suite<Stub<AppTaskApis>, Stub<StubTaskApis>> defaultTaskFactoryTest("DefaultTaskFactory (Default API Factory) Test Suite", [](auto &unit)
 	{
 		unit.test("createTask_calledWhenTaskHasNoRequiredApisAndHasDefaultConstructor_expectTaskCanBeCreated", [](auto)
 		{
@@ -116,7 +139,7 @@ namespace smeg::tests::unit::kernel::tasks
 		});
 	});
 
-	suite<Stub<AppTaskApis>, Stub<DriverToDriverApis>, Stub<DriverToKernelApis>> defaultTaskFactoryWithSpecifiedApiFactoryTest("DefaultTaskFactory (Specified API Factory) Test Suite", [](auto &unit)
+	suite<Stub<AppTaskApis>, Stub<StubTaskApis>> defaultTaskFactoryWithSpecifiedApiFactoryTest("DefaultTaskFactory (Specified API Factory) Test Suite", [](auto &unit)
 	{
 		unit.test("createTask_calledWhenTaskHasNoRequiredApisAndHasDefaultConstructor_expectTaskCanBeCreated", [](auto)
 		{

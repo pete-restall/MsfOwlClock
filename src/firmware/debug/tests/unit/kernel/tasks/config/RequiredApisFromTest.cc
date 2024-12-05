@@ -5,9 +5,6 @@
 #include <mettle/suite.hpp>
 #include <mettle/matchers.hpp>
 
-#include "kernel/tasks/AppTaskApis.hh"
-#include "kernel/tasks/DriverToDriverApis.hh"
-#include "kernel/tasks/DriverToKernelApis.hh"
 #include "kernel/tasks/ITask.hh"
 #include "kernel/tasks/config/ITaskConfig.hh"
 #include "kernel/tasks/config/RequiredApisFrom.hh"
@@ -40,21 +37,6 @@ namespace smeg::tests::unit::kernel::tasks::config
 
 	suite<> requiredApisFromITaskTest("RequiredApisFrom (ITask) Test Suite", [](auto &unit)
 	{
-		unit.test("RequiredAppTaskApisFrom_get_expectAliasWithBoundAppTaskApisArgument", []()
-		{
-			expect(std::same_as<RequiredAppTaskApisFrom<DummyTask<1>>, RequiredApisFrom<AppTaskApis, DummyTask<1>>>, equal_to(true));
-		});
-
-		unit.test("RequiredDriverToDriverApisFrom_get_expectAliasWithBoundDriverToDriverApisArgument", []()
-		{
-			expect(std::same_as<RequiredDriverToDriverApisFrom<DummyTask<2>>, RequiredApisFrom<DriverToDriverApis, DummyTask<2>>>, equal_to(true));
-		});
-
-		unit.test("RequiredDriverToKernelApisFrom_get_expectAliasWithBoundDriverToKernelApisArgument", []()
-		{
-			expect(std::same_as<RequiredDriverToKernelApisFrom<DummyTask<3>>, RequiredApisFrom<DriverToKernelApis, DummyTask<3>>>, equal_to(true));
-		});
-
 		unit.test("Types_getWhenPassedTaskWithDefaultConstructor_expectEmptyTuple", []()
 		{
 			expect(std::tuple_size_v<typename RequiredApisFrom<StubRequiredApis, StubTaskWithDefaultConstructor>::Types>, equal_to(0));
@@ -118,24 +100,6 @@ namespace smeg::tests::unit::kernel::tasks::config
 
 	suite<> requiredApisFromIHaveConfigForSimpleTaskTest("RequiredApisFrom (IHaveConfigForSimpleTask) Test Suite", [](auto &unit)
 	{
-		unit.test("RequiredAppTaskApisFrom_get_expectAliasWithBoundAppTaskApisArgument", []()
-		{
-			using TaskConfig = StubSimpleTaskConfig<DummyTask<1>>;
-			expect(std::same_as<RequiredAppTaskApisFrom<TaskConfig>, RequiredApisFrom<AppTaskApis, TaskConfig>>, equal_to(true));
-		});
-
-		unit.test("RequiredDriverToDriverApisFrom_get_expectAliasWithBoundDriverToDriverApisArgument", []()
-		{
-			using TaskConfig = StubSimpleTaskConfig<DummyTask<2>>;
-			expect(std::same_as<RequiredDriverToDriverApisFrom<TaskConfig>, RequiredApisFrom<DriverToDriverApis, TaskConfig>>, equal_to(true));
-		});
-
-		unit.test("RequiredDriverToKernelApisFrom_get_expectAliasWithBoundDriverToKernelApisArgument", []()
-		{
-			using TaskConfig = StubSimpleTaskConfig<DummyTask<3>>;
-			expect(std::same_as<RequiredDriverToKernelApisFrom<TaskConfig>, RequiredApisFrom<DriverToKernelApis, TaskConfig>>, equal_to(true));
-		});
-
 		unit.test("RequiredApisFrom_get_expectAliasToITaskSpecialisationUsingTypeFromSimpleTaskConfig", []()
 		{
 			using Task = StubTaskWithRequiredApisConstructor<StubRequiredApis<DummyApi<1>>>;
@@ -196,42 +160,6 @@ namespace smeg::tests::unit::kernel::tasks::config
 
 	suite<> requiredApisFromIOverlaidTasksConfigTest("RequiredApisFrom (IOverlaidTasksConfig) Test Suite", [](auto &unit)
 	{
-		unit.test("RequiredAppTaskApisFrom_getForOverlaidSimpleTasks_expectAliasWithBoundAppTaskApisArgument", []()
-		{
-			using TaskConfig = StubOverlaidSimpleTupleOfTasksConfig<DummyTask<1>, DummyTask<2>>;
-			expect(std::same_as<RequiredAppTaskApisFrom<TaskConfig>, RequiredApisFrom<AppTaskApis, TaskConfig>>, equal_to(true));
-		});
-
-		unit.test("RequiredAppTaskApisFrom_getForOverlaidConfiguredTasks_expectAliasWithBoundAppTaskApisArgument", []()
-		{
-			using TaskConfig = StubOverlaidConfiguredTasksConfig<StubOverlaidTaskConfig<DummyTask<1>>, StubOverlaidTaskConfig<DummyTask<2>>>;
-			expect(std::same_as<RequiredAppTaskApisFrom<TaskConfig>, RequiredApisFrom<AppTaskApis, TaskConfig>>, equal_to(true));
-		});
-
-		unit.test("RequiredDriverToDriverApisFrom_getForOverlaidSimpleTasks_expectAliasWithBoundDriverToDriverApisArgument", []()
-		{
-			using TaskConfig = StubOverlaidSimpleTupleOfTasksConfig<DummyTask<3>, DummyTask<4>>;
-			expect(std::same_as<RequiredDriverToDriverApisFrom<TaskConfig>, RequiredApisFrom<DriverToDriverApis, TaskConfig>>, equal_to(true));
-		});
-
-		unit.test("RequiredDriverToDriverApisFrom_getForOverlaidConfiguredTasks_expectAliasWithBoundDriverToDriverApisArgument", []()
-		{
-			using TaskConfig = StubOverlaidConfiguredTasksConfig<StubOverlaidTaskConfig<DummyTask<3>>, StubOverlaidTaskConfig<DummyTask<4>>>;
-			expect(std::same_as<RequiredDriverToDriverApisFrom<TaskConfig>, RequiredApisFrom<DriverToDriverApis, TaskConfig>>, equal_to(true));
-		});
-
-		unit.test("RequiredDriverToKernelApisFrom_getForOverlaidTupleOfSimpleTasks_expectAliasWithBoundDriverToKernelApisArgument", []()
-		{
-			using TaskConfig = StubOverlaidSimpleTupleOfTasksConfig<DummyTask<5>, DummyTask<6>>;
-			expect(std::same_as<RequiredDriverToKernelApisFrom<TaskConfig>, RequiredApisFrom<DriverToKernelApis, TaskConfig>>, equal_to(true));
-		});
-
-		unit.test("RequiredDriverToKernelApisFrom_getForOverlaidConfiguredTasks_expectAliasWithBoundDriverToKernelApisArgument", []()
-		{
-			using TaskConfig = StubOverlaidConfiguredTasksConfig<StubOverlaidTaskConfig<DummyTask<5>>, StubOverlaidTaskConfig<DummyTask<6>>>;
-			expect(std::same_as<RequiredDriverToKernelApisFrom<TaskConfig>, RequiredApisFrom<DriverToKernelApis, TaskConfig>>, equal_to(true));
-		});
-
 		unit.test("Types_getWhenPassedSimpleOverlayWithTupleOfTasksRequiringSpecifiedAndUnspecifiedApis_expectTupleOfSpecifiedApisInNoParticularOrder", []()
 		{
 			using Config = StubOverlaidSimpleTupleOfTasksConfig<
@@ -372,36 +300,6 @@ namespace smeg::tests::unit::kernel::tasks::config
 
 	suite<> requiredApisFromIHaveConfigForTasksTest("RequiredApisFrom (IHaveConfigForTasks) Test Suite", [](auto &unit)
 	{
-		unit.test("RequiredAppTaskApisFrom_getForTopLevelConfig_expectAliasWithBoundAppTaskApisArgument", []()
-		{
-			struct Config
-			{
-				using Tasks = std::tuple<StubSimpleTaskConfig<DummyTask<1>>, StubSimpleTaskConfig<DummyTask<2>>>;
-			};
-
-			expect(std::same_as<RequiredAppTaskApisFrom<Config>, RequiredApisFrom<AppTaskApis, Config>>, equal_to(true));
-		});
-
-		unit.test("RequiredAppTaskApisFrom_getForTopLevelConfig_expectAliasWithBoundAppTaskApisArgument", []()
-		{
-			struct Config
-			{
-				using Tasks = std::tuple<StubSimpleTaskConfig<DummyTask<3>>, StubSimpleTaskConfig<DummyTask<4>>>;
-			};
-
-			expect(std::same_as<RequiredAppTaskApisFrom<Config>, RequiredApisFrom<AppTaskApis, Config>>, equal_to(true));
-		});
-
-		unit.test("RequiredDriverToDriverApisFrom_getForTopLevelConfig_expectAliasWithBoundDriverToDriverApisArgument", []()
-		{
-			struct Config
-			{
-				using Tasks = std::tuple<StubSimpleTaskConfig<DummyTask<5>>, StubSimpleTaskConfig<DummyTask<6>>>;
-			};
-
-			expect(std::same_as<RequiredDriverToDriverApisFrom<Config>, RequiredApisFrom<DriverToDriverApis, Config>>, equal_to(true));
-		});
-
 		unit.test("Types_getWhenPassedConfigWithEmptyTupleOfTasks_expectEmptyTuple", []()
 		{
 			struct Config
