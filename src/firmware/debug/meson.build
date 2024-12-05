@@ -206,7 +206,6 @@ else
 			unit_tests_dir / kernel_integer_sequences_dir / 'UtilitiesTest.cc',
 			unit_tests_dir / kernel_tasks_dir / 'AppTaskApisTest.cc',
 			unit_tests_dir / kernel_tasks_dir / 'DefaultTaskFactoryTest.cc',
-			unit_tests_dir / kernel_tasks_dir / 'DriverToKernelApisTest.cc',
 			unit_tests_dir / kernel_tasks_dir / 'IAppTaskTest.cc',
 			unit_tests_dir / kernel_tasks_dir / 'ITaskTest.cc',
 			unit_tests_dir / kernel_tasks_dir / 'TaskLifecycleTest.cc',

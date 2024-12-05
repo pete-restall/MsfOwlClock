@@ -2,10 +2,10 @@
 #define __SMEG_KERNEL_DRIVERS_KERNEL_SYSCALL_MCU_ARM_CORTEX_M4_SYSCALLDRIVERCONFIG_HH
 #include <tuple>
 
-#include "kernel/tasks/DriverToKernelApis.hh"
+#include "kernel/tasks/AppTaskApis.hh"
 
 #include "../../../../SyscallFor.hh"
-#include "DefaultSyscallApi.hh"
+#include "DefaultSyscallTaskApi.hh"
 #include "SvcallIsr.hh"
 #include "SyscallPrimitive.hh"
 
@@ -17,7 +17,7 @@ namespace smeg::kernel::drivers::kernel::syscall::mcu::arm::cortex::m4
 	class DefaultSyscallDriverConfig
 	{
 	private:
-		class DriverToKernelApiConfig
+		class AppTaskApiConfig
 		{
 		private:
 			template <typename TSyscall>
@@ -25,9 +25,9 @@ namespace smeg::kernel::drivers::kernel::syscall::mcu::arm::cortex::m4
 
 		public:
 			template <typename TApi>
-			using Interface = DriverToKernelApis<TApi>;
+			using Interface = AppTaskApis<TApi>;
 
-			using Type = DefaultSyscallApi<SyscallPrimitive<SyscallFor>, SyscallFor>;
+			using Type = DefaultSyscallTaskApi<SyscallPrimitive<SyscallFor>, SyscallFor>;
 		};
 
 	public:
@@ -37,7 +37,7 @@ namespace smeg::kernel::drivers::kernel::syscall::mcu::arm::cortex::m4
 			static constexpr auto irq = 11;
 		};
 
-		using ProvidedApis = std::tuple<DriverToKernelApiConfig>;
+		using ProvidedApis = std::tuple<AppTaskApiConfig>;
 		using ProvidedIsrs = std::tuple<SvcallIsrConfig>;
 	};
 }
