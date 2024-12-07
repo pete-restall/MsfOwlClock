@@ -17,13 +17,11 @@ namespace smeg::kernel::drivers::kernel::syscall::mcu::arm::cortex::m4
 	class DefaultSyscallDriverConfig
 	{
 	private:
-		class AppTaskApiConfig
-		{
-		private:
-			template <typename TSyscall>
-			using SyscallFor = TSyscallFor<TKernelConfigs, TSyscall>;
+		template <typename TSyscall>
+		using SyscallFor = TSyscallFor<TKernelConfigs, TSyscall>;
 
-		public:
+		struct AppTaskApiConfig
+		{
 			template <typename TApi>
 			using Interface = AppTaskApis<TApi>;
 

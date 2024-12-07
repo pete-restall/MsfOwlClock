@@ -16,11 +16,11 @@ namespace smeg::kernel::drivers::kernel::syscall::mcu::arm::cortex::m4
 		static inline constexpr void invoke(T &arg) noexcept
 		{
 			register T *r0 asm("r0") = &arg;
-			register std::uint32_t r7 asm("r7") = TSyscallFor<std::remove_cv_t<T>>::id;
+			register std::uint32_t r1 asm("r1") = TSyscallFor<std::remove_cv_t<T>>::id;
 			__asm__ volatile("svc #0x00"
 				: /* no outputs */
 				: /* inputs */
-					"syscallId" "r" (r7),
+					"syscallId" "r" (r1),
 					"syscallArg" "r" (r0)
 				: /* clobbers */
 					"cc",

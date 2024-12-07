@@ -33,12 +33,11 @@ namespace smeg::kernel::drivers::config::composition
 			return std::array{TIsrConfig::template Factory<TIsrConfig, McuCoreIds>::createPerCoreIsr() ...};
 		}
 
-		static auto initialiser(void)
+		[[gnu::section(".bss.isrs.per_core")]]
+		static inline std::array<typename TIsrConfig::Handler, TMcuCoreTraits::numberOfMcuCores> perCoreIsrs
 		{
-			return createIsrForEachMcuCoreUsingFactory<TIsrConfig>(McuCoreIds());
-		}
-
-		static std::array<typename TIsrConfig::Handler, TMcuCoreTraits::numberOfMcuCores> perCoreIsrs;
+			createIsrForEachMcuCoreUsingFactory<TIsrConfig>(McuCoreIds())
+		};
 
 	public:
 		static void onInterrupt(void) noexcept
@@ -48,11 +47,6 @@ namespace smeg::kernel::drivers::config::composition
 			perCoreIsrs[TMcuCoreTraits::getMcuCoreId()].onInterrupt();
 		}
 	};
-
-	template <IMcuCoreTraits TMcuCoreTraits, IProvidedIsrConfig TIsrConfig, template <typename, auto> typename TPerCoreIsrFactory>
-	[[gnu::section(".bss.isrs.per_core")]]
-	std::array<typename TIsrConfig::Handler, TMcuCoreTraits::numberOfMcuCores> NakedToPerCoreIsrAdapter<TMcuCoreTraits, TIsrConfig, TPerCoreIsrFactory>::perCoreIsrs(
-		NakedToPerCoreIsrAdapter<TMcuCoreTraits, TIsrConfig, TPerCoreIsrFactory>::initialiser());
 }
 
 #endif
