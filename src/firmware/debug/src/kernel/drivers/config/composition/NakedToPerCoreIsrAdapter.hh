@@ -21,23 +21,20 @@ namespace smeg::kernel::drivers::config::composition
 	private:
 		using McuCoreIds = std::make_index_sequence<TMcuCoreTraits::numberOfMcuCores>;
 
-		template <typename T, auto... McuCoreIds>
+		template <typename, auto... McuCoreIds>
 		static auto createIsrForEachMcuCoreUsingFactory(std::index_sequence<McuCoreIds...>)
 		{
 			return std::array{TPerCoreIsrFactory<TIsrConfig, McuCoreIds>::createPerCoreIsr() ...};
 		}
 
-		template <_$IHavePerCoreIsrFactory<TIsrConfig> T, auto... McuCoreIds>
+		template <_$IHavePerCoreIsrFactory<TIsrConfig>, auto... McuCoreIds>
 		static auto createIsrForEachMcuCoreUsingFactory(std::index_sequence<McuCoreIds...>)
 		{
 			return std::array{TIsrConfig::template Factory<TIsrConfig, McuCoreIds>::createPerCoreIsr() ...};
 		}
 
 		[[gnu::section(".bss.isrs.per_core")]]
-		static inline std::array<typename TIsrConfig::Handler, TMcuCoreTraits::numberOfMcuCores> perCoreIsrs
-		{
-			createIsrForEachMcuCoreUsingFactory<TIsrConfig>(McuCoreIds())
-		};
+		static inline std::array perCoreIsrs{createIsrForEachMcuCoreUsingFactory<TIsrConfig>(McuCoreIds())};
 
 	public:
 		static void onInterrupt(void) noexcept

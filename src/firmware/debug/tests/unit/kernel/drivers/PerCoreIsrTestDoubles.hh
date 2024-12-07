@@ -4,8 +4,6 @@
 #include <memory>
 #include <type_traits>
 
-#include "kernel/drivers/IIsrApi.hh"
-
 #include "../../CallRecorder.hh"
 #include "MockPerCoreIsr.hh"
 
@@ -24,7 +22,7 @@ namespace smeg::tests::unit::kernel::drivers
 		{
 		}
 
-		auto mockPerCoreIsr(void)
+		auto mock(void)
 		{
 			auto callRecorder = std::make_shared<OnInterruptCallRecorder>(this->callSequence);
 			return MockPerCoreIsr(callRecorder);

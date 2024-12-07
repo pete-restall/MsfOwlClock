@@ -13,8 +13,8 @@ namespace smeg::tests::unit::kernel::drivers
 		std::shared_ptr<CallRecorder<>> onInterruptCalls;
 
 	public:
-		MockPerCoreIsr(std::shared_ptr<CallRecorder<>> initialiseCallRecorder) :
-			onInterruptCalls(initialiseCallRecorder)
+		MockPerCoreIsr(std::shared_ptr<CallRecorder<>> onInterruptCalls) :
+			onInterruptCalls(onInterruptCalls)
 		{
 		}
 

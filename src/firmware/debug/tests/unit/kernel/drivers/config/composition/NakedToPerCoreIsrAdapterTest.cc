@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <array>
 #include <cstddef>
 #include <mutex>
 #include <type_traits>
@@ -46,7 +45,7 @@ namespace smeg::tests::unit::kernel::drivers::config::composition
 		};
 	};
 
-	template <IProvidedIsrConfig TIsrConfig, auto CoreId>
+	template <IProvidedIsrConfig TIsrConfig, auto McuCoreId>
 	struct DummyPerCoreIsrFactory
 	{
 		static auto createPerCoreIsr(void) noexcept
@@ -75,7 +74,7 @@ namespace smeg::tests::unit::kernel::drivers::config::composition
 		{
 			std::vector<MockPerCoreIsr> initialisedMockIsrs;
 			for (auto i = 0; i < NumberOfMcuCores; i++)
-				initialisedMockIsrs.push_back(perCoreIsrTestDoubles.mockPerCoreIsr());
+				initialisedMockIsrs.push_back(perCoreIsrTestDoubles.mock());
 
 			return initialisedMockIsrs;
 		}
@@ -103,16 +102,16 @@ namespace smeg::tests::unit::kernel::drivers::config::composition
 			return isrs;
 		}
 
-		template <IProvidedIsrConfig TIsrConfig, std::size_t CoreId>
-		struct StubPerCoreIsrFactoryForMockIsrs
+		template <IProvidedIsrConfig TIsrConfig, std::size_t McuCoreId>
+		struct StubPerCoreIsrFactoryForMocks
 		{
 			static auto createPerCoreIsr(void) noexcept
 			{
-				return mockIsrs.at(CoreId);
+				return mockIsrs.at(McuCoreId);
 			}
 		};
 
-		template <IProvidedIsrConfig TIsrConfig, std::size_t CoreId>
+		template <IProvidedIsrConfig TIsrConfig, std::size_t McuCoreId>
 		struct StubPerCoreIsrFactoryForDummies
 		{
 			static auto createPerCoreIsr(void) noexcept
@@ -143,7 +142,7 @@ namespace smeg::tests::unit::kernel::drivers::config::composition
 			using Handler = MockPerCoreIsr;
 
 			template <typename TIsrConfig, auto McuCoreId>
-			using Factory = StubPerCoreIsrFactoryForMockIsrs<TIsrConfig, McuCoreId>;
+			using Factory = StubPerCoreIsrFactoryForMocks<TIsrConfig, McuCoreId>;
 		};
 	};
 
@@ -176,7 +175,7 @@ namespace smeg::tests::unit::kernel::drivers::config::composition
 			using Adapter = NakedToPerCoreIsrAdapter<
 				McuCoreTraits,
 				typename Fixture::StubPerCoreIsrConfigForMockIsr,
-				Fixture::template StubPerCoreIsrFactoryForMockIsrs>;
+				Fixture::template StubPerCoreIsrFactoryForMocks>;
 
 			for (auto mcuCoreId = 0; mcuCoreId < McuCoreTraits::numberOfMcuCores; mcuCoreId++)
 			{
@@ -218,7 +217,7 @@ namespace smeg::tests::unit::kernel::drivers::config::composition
 			using Adapter = NakedToPerCoreIsrAdapter<
 				McuCoreTraits,
 				typename Fixture::StubPerCoreIsrConfigForMockIsr,
-				Fixture::template StubPerCoreIsrFactoryForMockIsrs>;
+				Fixture::template StubPerCoreIsrFactoryForMocks>;
 
 			std::vector<int> numberOfCalls;
 			for (auto mcuCoreId = 0; mcuCoreId < McuCoreTraits::numberOfMcuCores; mcuCoreId++)
