@@ -28,8 +28,9 @@ namespace smeg::kernel::crt::crt0
 		};
 
 	public:
-		using Tasks = std::array<KernelInitialisation, TMcuCoreTraits::numberOfMcuCores>; // TODO: Maybe we need to parameterise KernelInitialisation<CoreId> so we can have a task-based SchedulingConfig.CoreAffinity and then the Entrypoint can determine which core it is running on and execute the appropriate core-specific task.
+		using McuCoreTraits = TMcuCoreTraits;
 		using Drivers = TDriverConfigs;
+		using Tasks = std::array<KernelInitialisation, TMcuCoreTraits::numberOfMcuCores>; // TODO: Maybe we need to parameterise KernelInitialisation<CoreId> so we can have a task-based SchedulingConfig.CoreAffinity and then the Entrypoint can determine which core it is running on and execute the appropriate core-specific task.
 	};
 }
 

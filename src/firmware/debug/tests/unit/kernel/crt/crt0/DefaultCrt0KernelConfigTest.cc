@@ -108,5 +108,14 @@ namespace smeg::tests::unit::kernel::crt::crt0
 					StubDriverConfigs>,
 				equal_to(true));
 		});
+
+		unit.test("McuCoreTraits_get_expectSameTypeAsTemplateArgument", []()
+		{
+			expect(
+				std::same_as<
+					typename DefaultCrt0KernelConfig<DummyMcuCoreTraits, 0, DummyMemorySection, DummyDriverConfigs>::McuCoreTraits,
+					DummyMcuCoreTraits>,
+				equal_to(true));
+		});
 	});
 }
