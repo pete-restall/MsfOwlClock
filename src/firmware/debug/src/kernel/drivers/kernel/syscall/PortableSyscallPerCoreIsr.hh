@@ -1,18 +1,21 @@
-#ifndef __SMEG_KERNEL_DRIVERS_KERNEL_SYSCALL_SYSCALLISRPORTABLE_HH
-#define __SMEG_KERNEL_DRIVERS_KERNEL_SYSCALL_SYSCALLISRPORTABLE_HH
+#ifndef __SMEG_KERNEL_DRIVERS_KERNEL_SYSCALL_PORTABLESYSCALLPERCOREISR_HH
+#define __SMEG_KERNEL_DRIVERS_KERNEL_SYSCALL_PORTABLESYSCALLPERCOREISR_HH
 #include <cstdint>
 
-#include "kernel/config/IHaveTupleOfKernelConfigs.hh"
+#include "kernel/IHandleSyscall.hh"
 
 namespace smeg::kernel::drivers::kernel::syscall
 {
-	using namespace smeg::kernel::config;
+	using namespace smeg::kernel;
 
-	template <IHaveTupleOfKernelConfigs TKernelConfigs>
-	class SyscallIsrPortable
+	template <typename TSyscallHandlers>
+	class PortableSyscallPerCoreIsr;
+
+	template <IHandleSyscallWithAnyArg... TSyscallHandlers>
+	class PortableSyscallPerCoreIsr<std::tuple<TSyscallHandlers...>>
 	{
 	public:
-		static void onInterrupt(void *argsPtr, std::uint32_t id) noexcept
+		void onInterrupt(void *argsPtr, std::uint32_t id) noexcept
 		{
 		// argsPtr will contain a pointer to the TSyscall instance; this should be checked prior to dispatch to ensure it is within the current task's stack /
 		// memory area; this test also includes the size of the structure (but by necessity, this method cannot extend to validating the contents).  Basically
@@ -22,7 +25,7 @@ namespace smeg::kernel::drivers::kernel::syscall
 
 		// exceptions, invalid syscall IDs and memory access errors should result in a call to something that logs and terminates the task (a 'default handler' ?)
 
-		// each processor will have its own tuple of Syscall Handlers for holding processor-specific state.  HOWEVER - this can be handled transparently by the kernel's ISR creation mechanism now that we've got the concept of 'naked ISRs' and 'per-core ISRs', the former being 'static onInterrupt()' and the latter being 'isrs[coreNumber].onInterrupt()' - we can examine the injected config and create a private member variable with all Syscalls and it will be guaranteed to be a per-core array, meaning all we need to do is look up the entry based on r1 and forget about multi-core concerns.
+		// each core has its own tuple of Syscall Handlers for holding processor-specific state.
 
 		// all of this functionality can be written in a platform-agnostic (ie. easily tested) way.
 

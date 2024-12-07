@@ -28,6 +28,7 @@ kernel_drivers_dir = kernel_dir / 'drivers'
 kernel_drivers_config_dir = kernel_drivers_dir / 'config'
 kernel_drivers_config_composition_dir = kernel_drivers_config_dir / 'composition'
 kernel_drivers_kernel_dir = kernel_drivers_dir / 'kernel'
+kernel_drivers_kernel_syscall_dir = kernel_drivers_kernel_dir / 'syscall'
 kernel_drivers_peripherals_dir = kernel_drivers_dir / 'peripherals'
 kernel_integer_sequences_dir = kernel_dir / 'integer-sequences'
 kernel_tasks_dir = kernel_dir / 'tasks'
@@ -224,7 +225,11 @@ else
 			unit_tests_dir / kernel_tuples_dir / 'TupleCatTest.cc',
 			unit_tests_dir / kernel_tuples_dir / 'TupleIndexZipTest.cc',
 			unit_tests_dir / kernel_tuples_dir / 'TupleProjectionTest.cc',
-			unit_tests_dir / kernel_tuples_dir / 'UniqueTest.cc'
+			unit_tests_dir / kernel_tuples_dir / 'UniqueTest.cc',
+
+			# TODO: The drivers ought to have their own unit test executable, built using Meson sub-projects.  Should also give them their own 'src' and 'tests'
+			# directories so that they are entirely self-contained, drop-in source libraries.  List them here as a temporary hack:
+			unit_tests_dir / kernel_drivers_kernel_syscall_dir / 'PortableSyscallIsrTest.cc'
 		],
 		include_directories: [
 			src_dir
