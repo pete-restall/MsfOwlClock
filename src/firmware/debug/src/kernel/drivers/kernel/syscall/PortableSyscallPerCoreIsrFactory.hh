@@ -1,7 +1,8 @@
 #ifndef __SMEG_KERNEL_DRIVERS_KERNEL_SYSCALL_PORTABLESYSCALLPERCOREISRFACTORY_HH
 #define __SMEG_KERNEL_DRIVERS_KERNEL_SYSCALL_PORTABLESYSCALLPERCOREISRFACTORY_HH
-#include <cstdint>
 #include <tuple>
+
+#include "PortableSyscallPerCoreIsr.hh"
 
 namespace smeg::kernel::drivers::kernel::syscall
 {
@@ -12,10 +13,11 @@ namespace smeg::kernel::drivers::kernel::syscall
 	class PortableSyscallPerCoreIsrFactory<McuCoreId, std::tuple<TSyscallHandlers...>>
 	{
 	public:
-//		static auto createSyscallPerCoreIsr(void) noexcept
-//		{
-// TODO: Don't forget to create a SyscallApis to allow injection as well
-//		}
+		static consteval auto createPortableSyscallPerCoreIsr(void) noexcept
+		{
+			// TODO: Write the (non-stub) functionality for this - don't forget to create a SyscallApis to allow injection as well
+			return PortableSyscallPerCoreIsr<std::tuple<>>();
+		}
 	};
 }
 

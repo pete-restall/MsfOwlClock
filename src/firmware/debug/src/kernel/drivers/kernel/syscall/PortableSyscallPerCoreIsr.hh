@@ -1,6 +1,7 @@
 #ifndef __SMEG_KERNEL_DRIVERS_KERNEL_SYSCALL_PORTABLESYSCALLPERCOREISR_HH
 #define __SMEG_KERNEL_DRIVERS_KERNEL_SYSCALL_PORTABLESYSCALLPERCOREISR_HH
 #include <cstdint>
+#include <tuple>
 
 #include "kernel/IHandleSyscall.hh"
 

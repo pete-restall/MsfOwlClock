@@ -10,7 +10,7 @@ namespace smeg::kernel::drivers::kernel::syscall::mcu::arm::cortex::m4
 {
 	using namespace smeg::kernel::config;
 
-	template <IHaveTupleOfKernelConfigs TKernelConfigs>
+	template <IMcuCoreTraits TMcuCoreTraits, template <auto> typename TPerCoreIsrFactory>
 	class SvcallIsr
 	{
 	public:
@@ -18,7 +18,7 @@ namespace smeg::kernel::drivers::kernel::syscall::mcu::arm::cortex::m4
 		{
 			register void *argsPtr asm("r0");
 			register std::uint32_t id asm("r1");
-			PortableSyscallIsr<TKernelConfigs>::onInterrupt(argsPtr, id);
+			PortableSyscallIsr<TMcuCoreTraits, TPerCoreIsrFactory>::onInterrupt(argsPtr, id);
 		}
 	};
 }

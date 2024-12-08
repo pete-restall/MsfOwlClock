@@ -8,7 +8,7 @@ namespace smeg::kernel::crt::crt0
 	{
 		static constexpr auto numberOfMcuCores = 1;
 
-		static auto getMcuCoreId(void) noexcept
+		static consteval auto getMcuCoreId(void) noexcept
 		{
 			return 0;
 		}
