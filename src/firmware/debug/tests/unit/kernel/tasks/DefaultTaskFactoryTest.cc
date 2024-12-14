@@ -102,7 +102,7 @@ namespace smeg::tests::unit::kernel::tasks
 
 		template <typename TConfig, template <typename, typename...> typename TApiFactory>
 		StubTaskApis(TApiFactory<TConfig, TApis...> apiFactory) :
-			apis((apiFactory.template createApi<TApis>(), ...))
+			apis(apiFactory.template createApi<TApis>() ...)
 		{
 		}
 

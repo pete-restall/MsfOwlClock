@@ -163,6 +163,7 @@ else
 			unit_tests_dir / kernel_dir / 'ChainedInitialisationTest.cc',
 			unit_tests_dir / kernel_dir / 'ConstInitialisableTest.cc',
 			unit_tests_dir / kernel_dir / 'DefaultApiFactoryTest.cc',
+			unit_tests_dir / kernel_dir / 'DefaultPerCoreApiFactoryTest.cc',
 			unit_tests_dir / kernel_dir / 'IMcuCoreTraitsTest.cc',
 			unit_tests_dir / kernel_dir / 'InitialisableTest.cc',
 			unit_tests_dir / kernel_dir / 'NonConstInitialisableTest.cc',

@@ -17,7 +17,7 @@ namespace smeg::kernel::drivers
 
 		template <typename TConfig, template <typename, IDriverTaskApi...> typename TApiFactory>
 		DriverTaskApis(TApiFactory<TConfig, TApis...> apiFactory) :
-			apis((apiFactory.template createApi<TApis>(), ...))
+			apis(apiFactory.template createApi<TApis>() ...)
 		{
 		}
 

@@ -3,13 +3,16 @@
 #include <cstddef>
 #include <tuple>
 
-#include "../../../DefaultApiFactory.hh"
+#include "../../../DefaultPerCoreApiFactory.hh"
 #include "../../IIsr.hh"
 #include "../IProvidedIsrConfig.hh"
 
 namespace smeg::kernel::drivers::config::composition
 {
-	template <IProvidedIsrConfig TIsrConfig, std::size_t McuCoreId, template <typename, typename...> typename TApiFactory = DefaultApiFactory>
+	template <
+		IProvidedIsrConfig TIsrConfig,
+		std::size_t McuCoreId,
+		template <IProvidedIsrConfig, std::size_t, typename...> typename TApiFactory = DefaultPerCoreApiFactory>
 	class DefaultPerCoreIsrFactory
 	{
 	private:
@@ -19,7 +22,7 @@ namespace smeg::kernel::drivers::config::composition
 		template <typename... TApis>
 		struct ApiFactory<std::tuple<TApis...>>
 		{
-			using Type = TApiFactory<TIsrConfig, TApis...>;
+			using Type = TApiFactory<TIsrConfig, McuCoreId, TApis...>;
 		};
 
 	public:

@@ -1,4 +1,5 @@
 #include <concepts>
+#include <cstddef>
 #include <stdexcept>
 #include <type_traits>
 #include <typeinfo>
@@ -10,7 +11,6 @@
 #include "kernel/drivers/config/composition/DefaultPerCoreIsrFactory.hh"
 
 #include "../../../../NonDeterminism.hh"
-#include "../../PerCoreIsrTestDoubles.hh"
 
 using namespace mettle;
 
@@ -27,12 +27,12 @@ namespace smeg::tests::unit::kernel::drivers::config::composition
 	{
 		const int token;
 
-		StubRequiredApi(void) :
+		StubRequiredApi(void) noexcept :
 			token(0)
 		{
 		}
 
-		StubRequiredApi(int token) :
+		StubRequiredApi(int token) noexcept :
 			token(token)
 		{
 		}
@@ -50,21 +50,22 @@ namespace smeg::tests::unit::kernel::drivers::config::composition
 		using Apis = TApis<StubRequiredApi>;
 	};
 
-	template <typename... TRequiredApis>
-	struct DummyApiFactory
+	template <typename, std::size_t>
+	struct StubPerCoreIsrWithDefaultConstructor
 	{
-		template <typename T>
-		constexpr auto createApi(void) const;
+		void onInterrupt(void) noexcept
+		{
+		}
 	};
 
-	template <typename TRequiredApis>
-	struct SpyPerCoreIsrWithRequiredApisConstructor
+	template <typename, std::size_t, typename TRequiredApis>
+	struct StubPerCoreIsrWithRequiredApisConstructor
 	{
 		using RequiredApis = std::remove_cvref_t<TRequiredApis>;
 
 		RequiredApis apis;
 
-		SpyPerCoreIsrWithRequiredApisConstructor(RequiredApis &&apis) noexcept :
+		StubPerCoreIsrWithRequiredApisConstructor(RequiredApis &&apis) noexcept :
 			apis(apis)
 		{
 		}
@@ -74,11 +75,14 @@ namespace smeg::tests::unit::kernel::drivers::config::composition
 		}
 	};
 
-	template <typename TConfig, typename... TRequiredApis>
+	template <typename TConfig, std::size_t McuCoreId, typename TRequiredApis>
+	using SpyPerCoreIsrWithRequiredApisConstructor = StubPerCoreIsrWithRequiredApisConstructor<TConfig, McuCoreId, TRequiredApis>;
+
+	template <typename, std::size_t, typename... TRequiredApis>
 	struct StubApiFactory
 	{
 		template <typename T>
-		constexpr auto createApi(void) const
+		constexpr auto createApi(void) const noexcept(std::same_as<T, StubRequiredApi>)
 		{
 			if constexpr (std::same_as<T, StubRequiredApi>)
 				return StubRequiredApi(token);
@@ -86,43 +90,53 @@ namespace smeg::tests::unit::kernel::drivers::config::composition
 				throw std::runtime_error("StubApiFactory.create<T>() is only stubbed for T=StubRequiredApi");
 		}
 
-		static thread_local int token;
+		static thread_local inline int token = anyValueOf<int>();
 	};
 
-	template <typename TConfig, typename... TRequiredApis>
-	thread_local int StubApiFactory<TConfig, TRequiredApis...>::token(anyValueOf<int>());
+	template <template <typename, std::size_t, typename...> typename TIsr, std::size_t McuCoreId, typename...>
+	struct ConfigFor;
 
-	template <typename TIsr>
-	struct ConfigFor
+	template <template <typename, std::size_t> typename TIsr, std::size_t McuCoreId>
+	struct ConfigFor<TIsr, McuCoreId>
 	{
-		using Handler = TIsr;
+		using Handler = TIsr<ConfigFor<TIsr, McuCoreId>, McuCoreId>;
 		static constexpr auto irq = 0;
 	};
 
-	static constexpr auto DummyMcuCoreId = 0;
+	template <template <typename, std::size_t, typename> typename TIsr, std::size_t McuCoreId, typename TRequiredApis>
+	struct ConfigFor<TIsr, McuCoreId, TRequiredApis>
+	{
+		using Handler = TIsr<ConfigFor<TIsr, McuCoreId, TRequiredApis>, McuCoreId, TRequiredApis>;
+		static constexpr auto irq = 0;
+	};
 
 	suite<Stub<IsrApis>> defaultPerCoreIsrFactoryTest("DefaultPerCoreIsrFactory (Default API Factory) Test Suite", [](auto &unit)
 	{
 		unit.test("createPerCoreIsr_calledWhenIsrHasNoRequiredApisAndHasDefaultConstructor_expectIsrCanBeCreated", [](auto)
 		{
-			using IsrConfig = ConfigFor<StubPerCoreIsrWithDefaultConstructor>;
-			auto isr(DefaultPerCoreIsrFactory<IsrConfig, DummyMcuCoreId>::createPerCoreIsr());
-			auto isIsrExpectedType(typeid(isr) == typeid(StubPerCoreIsrWithDefaultConstructor));
+			constexpr std::size_t mcuCoreId = 7;
+			using IsrConfig = ConfigFor<StubPerCoreIsrWithDefaultConstructor, mcuCoreId>;
+			auto isr(DefaultPerCoreIsrFactory<IsrConfig, mcuCoreId>::createPerCoreIsr());
+			auto isIsrExpectedType(typeid(isr) == typeid(StubPerCoreIsrWithDefaultConstructor<IsrConfig, mcuCoreId>));
 			expect(isIsrExpectedType, equal_to(true));
 		});
 
 		unit.test("createPerCoreIsr_calledWhenIsrHasRequiredApisAndHasMatchingConstructor_expectIsrCanBeCreated", [](auto fixture)
 		{
-			using StubIsr = StubPerCoreIsrWithRequiredApisConstructor<typename decltype(fixture)::Apis>;
-			auto isr(DefaultPerCoreIsrFactory<ConfigFor<StubIsr>, DummyMcuCoreId>::createPerCoreIsr());
-			auto isIsrExpectedType(typeid(isr) == typeid(StubIsr));
+			constexpr std::size_t mcuCoreId = 4;
+			using RequiredApis = decltype(fixture)::Apis;
+			using IsrConfig = ConfigFor<StubPerCoreIsrWithRequiredApisConstructor, mcuCoreId, RequiredApis>;
+			auto isr(DefaultPerCoreIsrFactory<IsrConfig, mcuCoreId>::createPerCoreIsr());
+			auto isIsrExpectedType(typeid(isr) == typeid(StubPerCoreIsrWithRequiredApisConstructor<IsrConfig, mcuCoreId, RequiredApis>));
 			expect(isIsrExpectedType, equal_to(true));
 		});
 
 		unit.test("createPerCoreIsr_called_expectSameInstanceOfApiIsReturnedForEachGet", [](auto fixture)
 		{
-			using SpyIsr = SpyPerCoreIsrWithRequiredApisConstructor<typename decltype(fixture)::Apis>;
-			auto isr(DefaultPerCoreIsrFactory<ConfigFor<SpyIsr>, DummyMcuCoreId>::createPerCoreIsr());
+			constexpr std::size_t mcuCoreId = 3;
+			using RequiredApis = decltype(fixture)::Apis;
+			using IsrConfig = ConfigFor<SpyPerCoreIsrWithRequiredApisConstructor, mcuCoreId, RequiredApis>;
+			auto isr(DefaultPerCoreIsrFactory<IsrConfig, mcuCoreId>::createPerCoreIsr());
 			std::array resolvedApiPtrs{&isr.apis.template get<StubRequiredApi>(), &isr.apis.template get<StubRequiredApi>()};
 			expect(resolvedApiPtrs[0], equal_to(resolvedApiPtrs[1]));
 		});
@@ -132,25 +146,29 @@ namespace smeg::tests::unit::kernel::drivers::config::composition
 	{
 		unit.test("createPerCoreIsr_calledWhenIsrHasNoRequiredApisAndHasDefaultConstructor_expectIsrCanBeCreated", [](auto)
 		{
-			using IsrConfig = ConfigFor<StubPerCoreIsrWithDefaultConstructor>;
-			auto isr(DefaultPerCoreIsrFactory<IsrConfig, DummyMcuCoreId, DummyApiFactory>::createPerCoreIsr());
-			auto isIsrExpectedType(typeid(isr) == typeid(StubPerCoreIsrWithDefaultConstructor));
+			constexpr std::size_t mcuCoreId = 73;
+			using IsrConfig = ConfigFor<StubPerCoreIsrWithDefaultConstructor, mcuCoreId>;
+			auto isr(DefaultPerCoreIsrFactory<IsrConfig, mcuCoreId, StubApiFactory>::createPerCoreIsr());
+			auto isIsrExpectedType(typeid(isr) == typeid(StubPerCoreIsrWithDefaultConstructor<IsrConfig, mcuCoreId>));
 			expect(isIsrExpectedType, equal_to(true));
 		});
 
 		unit.test("createPerCoreIsr_calledWhenIsrHasRequiredApisAndHasMatchingConstructor_expectIsrIsCreatedWithApisFromFactory", [](auto fixture)
 		{
-			using SpyIsr = SpyPerCoreIsrWithRequiredApisConstructor<typename decltype(fixture)::Apis>;
-			using Config = ConfigFor<SpyIsr>;
-			auto isr(DefaultPerCoreIsrFactory<Config, DummyMcuCoreId, StubApiFactory>::createPerCoreIsr());
+			constexpr std::size_t mcuCoreId = 12;
+			using RequiredApis = decltype(fixture)::Apis;
+			using IsrConfig = ConfigFor<SpyPerCoreIsrWithRequiredApisConstructor, mcuCoreId, RequiredApis>;
+			auto isr(DefaultPerCoreIsrFactory<IsrConfig, mcuCoreId, StubApiFactory>::createPerCoreIsr());
 			auto resolvedApi(isr.apis.template get<StubRequiredApi>());
-			expect(resolvedApi.token, equal_to(StubApiFactory<Config, StubRequiredApi>::token));
+			expect(resolvedApi.token, equal_to(StubApiFactory<IsrConfig, mcuCoreId, StubRequiredApi>::token));
 		});
 
 		unit.test("createPerCoreIsr_called_expectSameInstanceOfApiIsReturnedForEachGet", [](auto fixture)
 		{
-			using SpyIsr = SpyPerCoreIsrWithRequiredApisConstructor<typename decltype(fixture)::Apis>;
-			auto isr(DefaultPerCoreIsrFactory<ConfigFor<SpyIsr>, DummyMcuCoreId, StubApiFactory>::createPerCoreIsr());
+			constexpr std::size_t mcuCoreId = 2;
+			using RequiredApis = decltype(fixture)::Apis;
+			using IsrConfig = ConfigFor<SpyPerCoreIsrWithRequiredApisConstructor, mcuCoreId, RequiredApis>;
+			auto isr(DefaultPerCoreIsrFactory<IsrConfig, mcuCoreId, StubApiFactory>::createPerCoreIsr());
 			std::array resolvedApiPtrs{&isr.apis.template get<StubRequiredApi>(), &isr.apis.template get<StubRequiredApi>()};
 			expect(resolvedApiPtrs[0], equal_to(resolvedApiPtrs[1]));
 		});

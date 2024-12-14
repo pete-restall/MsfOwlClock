@@ -1,5 +1,6 @@
 #include <array>
 #include <concepts>
+#include <cstddef>
 #include <tuple>
 
 #include <mettle/suite.hpp>
@@ -15,7 +16,7 @@ using namespace smeg::kernel::drivers;
 
 namespace smeg::tests::unit::kernel::drivers
 {
-	template <auto X>
+	template <auto>
 	struct DummyRequiredApi
 	{
 	};
@@ -39,7 +40,17 @@ namespace smeg::tests::unit::kernel::drivers
 	{
 	};
 
-	template <typename TConfig, typename TApi>
+	template <typename, std::size_t, typename...>
+	struct DummyFactory
+	{
+		template <typename T>
+		auto createApi(void) const noexcept
+		{
+			return T();
+		}
+	};
+
+	template <typename, std::size_t, typename TApi>
 	class StubFactory
 	{
 	private:
@@ -52,19 +63,19 @@ namespace smeg::tests::unit::kernel::drivers
 		}
 
 		template <typename T>
-		auto createApi(void) const /* TODO: NEEDS TO BE noexcept */
+		auto createApi(void) const noexcept
 		{
 			if constexpr (std::same_as<T, TApi>)
 				return this->api;
 		}
 	};
 
-	template <typename TConfig, typename TApi>
+	template <typename, std::size_t, typename...>
 	class StubFactoryReturningDifferentInstances
 	{
 	public:
 		template <typename T>
-		auto createApi(void) const /* TODO: NEEDS TO BE noexcept */
+		auto createApi(void) const noexcept
 		{
 			return T();
 		}
@@ -84,10 +95,18 @@ namespace smeg::tests::unit::kernel::drivers
 			expect(assertions, each(equal_to(true)));
 		});
 
+		unit.test("constructor_testedForExceptions_expectQualifiedWithNoexcept", []()
+		{
+			using Apis = IsrApis<DummyRequiredApi<-1>>;
+			using DummyFactory = DummyFactory<DummyConfig, 2, DummyRequiredApi<-1>>;
+			expect(noexcept(Apis(DummyFactory())), equal_to(true));
+		});
+
 		unit.test("get_called_expectApiInstanceCreatedByFactoryPassedToConstructorIsReturned", []()
 		{
+			constexpr std::size_t mcuCoreId = 3;
 			StubRequiredApi apiFromFactory(anyValueOf<int>());
-			StubFactory<DummyConfig, StubRequiredApi> apiFactory(apiFromFactory);
+			StubFactory<DummyConfig, mcuCoreId, StubRequiredApi> apiFactory(apiFromFactory);
 			IsrApis<StubRequiredApi> apis(apiFactory);
 			auto api(apis.get<StubRequiredApi>());
 			expect(api.token, equal_to(apiFromFactory.token));
@@ -95,7 +114,8 @@ namespace smeg::tests::unit::kernel::drivers
 
 		unit.test("get_calledMultipleTimes_expectSameApiInstanceIsReturned", []()
 		{
-			StubFactoryReturningDifferentInstances<DummyConfig, StubRequiredApi> apiFactory;
+			constexpr std::size_t mcuCoreId = 1;
+			StubFactoryReturningDifferentInstances<DummyConfig, mcuCoreId, StubRequiredApi> apiFactory;
 			IsrApis<StubRequiredApi> apis(apiFactory);
 			std::array apiPtrs{&apis.get<StubRequiredApi>(), &apis.get<StubRequiredApi>()};
 			expect(apiPtrs[0], equal_to(apiPtrs[1]));

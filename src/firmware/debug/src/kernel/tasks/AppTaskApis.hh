@@ -17,7 +17,7 @@ namespace smeg::kernel::tasks
 
 		template <typename TConfig, template <typename, IAppTaskApi...> typename TApiFactory>
 		AppTaskApis(TApiFactory<TConfig, TApis...> apiFactory) :
-			apis((apiFactory.template createApi<TApis>(), ...))
+			apis(apiFactory.template createApi<TApis>() ...)
 		{
 		}
 
