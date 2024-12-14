@@ -7,9 +7,9 @@ namespace smeg::kernel
 	template <typename T>
 	concept ISyscallHandlerContext = std::is_class_v<T>; // TODO: Need to define what goes into this; probably things like a pointer to the current Task Control Block, etc.
 
-	struct _DummySyscallHandlerContext
+	struct _$DummySyscallHandlerContext
 	{
-		static_assert(ISyscallHandlerContext<_DummySyscallHandlerContext>, "_DummySyscallHandlerContext must be an ISyscallHandlerContext");
+		static_assert(ISyscallHandlerContext<_$DummySyscallHandlerContext>, "_$DummySyscallHandlerContext must be an ISyscallHandlerContext");
 	};
 }
 

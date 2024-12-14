@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <tuple>
 
+#include "kernel/CurrentTaskSyscallApi.hh"
 #include "kernel/IHandleSyscall.hh"
 
 namespace smeg::kernel::drivers::kernel::syscall
@@ -15,14 +16,29 @@ namespace smeg::kernel::drivers::kernel::syscall
 	template <IHandleSyscallWithAnyArg... TSyscallHandlers>
 	class PortableSyscallPerCoreIsr<std::tuple<TSyscallHandlers...>>
 	{
+static inline volatile void *xxx; // TODO: Temporary debugging to prevent elision of class / easy inspection of generated assembly
+static inline volatile std::uint32_t yyy; // TODO: Temporary debugging to prevent elision of class / easy inspection of generated assembly
 	public:
+		using RequiredApis = SyscallApis<CurrentTaskSyscallApi>;
+
+		PortableSyscallPerCoreIsr(RequiredApis apis, std::tuple<TSyscallHandlers...> handlers) noexcept
+		{
+			// can use 'apis' for something like:
+			//   .ctor { currentTask(apis.get<CurrentTaskSyscallApi>()); }
+			//   this->currentTask.onBadSyscall(argsPtr, id);
+		}
+
 		void onInterrupt(void *argsPtr, std::uint32_t id) noexcept
 		{
+xxx = argsPtr; // TODO: Temporary debugging to prevent elision of class / easy inspection of generated assembly
+yyy = id; // TODO: Temporary debugging to prevent elision of class / easy inspection of generated assembly
 		// argsPtr will contain a pointer to the TSyscall instance; this should be checked prior to dispatch to ensure it is within the current task's stack /
 		// memory area; this test also includes the size of the structure (but by necessity, this method cannot extend to validating the contents).  Basically
 		// encapsulate this in some form of 'currentTaskControlBlock.isValidUserspaceMemoryBlock(argsPtr, sizeOfArgsInBytes)'.
 
 		// id will contain the ID of the Syscall, which is used for dispatching to the relevant Syscall Handler - can also be used for type size lookup.
+
+		// if id is invalid, or the pointer is incorrect, then we need to do something such as 'currentTaskControlBlock.onBadSyscall(argsPtr, id)', which can terminate the task with a log.
 
 		// exceptions, invalid syscall IDs and memory access errors should result in a call to something that logs and terminates the task (a 'default handler' ?)
 

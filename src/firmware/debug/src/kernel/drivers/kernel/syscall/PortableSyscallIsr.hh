@@ -17,8 +17,12 @@ namespace smeg::kernel::drivers::kernel::syscall
 		using McuCoreIds = std::make_index_sequence<TMcuCoreTraits::numberOfMcuCores>;
 
 		template <auto... McuCoreIds>
-		static auto createIsrForEachMcuCoreUsingFactory(std::index_sequence<McuCoreIds...>)
+		static auto createIsrForEachMcuCoreUsingFactory(std::index_sequence<McuCoreIds...>) noexcept
 		{
+			static_assert(
+				noexcept(std::array{TPerCoreIsrFactory<McuCoreIds>::createPortableSyscallPerCoreIsr() ...}),
+				"ISR factories must not throw exceptions because they are used to initialise global variables");
+
 			return std::array{TPerCoreIsrFactory<McuCoreIds>::createPortableSyscallPerCoreIsr() ...};
 		}
 

@@ -8,14 +8,14 @@ namespace smeg::kernel
 {
 	template <typename T, template <typename> typename TSyscallFor>
 	concept _$ISyscallWithConstStructArg =
-		requires(const T &arg, typename TSyscallFor<T>::Handler &handler, _DummySyscallHandlerContext &context)
+		requires(const T &arg, typename TSyscallFor<T>::Handler &handler, _$DummySyscallHandlerContext &context)
 		{
 			{ handler.onSyscall(context, arg) } -> std::same_as<void>;
 		};
 
 	template <typename T, template <typename> typename TSyscallFor>
 	concept _$ISyscallWithNonConstStructArg =
-		requires(T &arg, typename TSyscallFor<T>::Handler &handler, _DummySyscallHandlerContext &context)
+		requires(T &arg, typename TSyscallFor<T>::Handler &handler, _$DummySyscallHandlerContext &context)
 		{
 			{ handler.onSyscall(context, arg) } -> std::same_as<void>;
 		};

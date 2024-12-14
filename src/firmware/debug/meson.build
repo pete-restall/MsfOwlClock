@@ -187,6 +187,7 @@ else
 			unit_tests_dir / kernel_drivers_dir / 'IDriverTaskTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'IIsrTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'IsrApisTest.cc',
+			unit_tests_dir / kernel_drivers_dir / 'SyscallApisTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'DriverConfigsFromTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'IDriverConfigTest.cc',
 			unit_tests_dir / kernel_drivers_config_dir / 'IHaveConfigForDriversTest.cc',
@@ -230,7 +231,9 @@ else
 
 			# TODO: The drivers ought to have their own unit test executable, built using Meson sub-projects.  Should also give them their own 'src' and 'tests'
 			# directories so that they are entirely self-contained, drop-in source libraries.  List them here as a temporary hack:
-			unit_tests_dir / kernel_drivers_kernel_syscall_dir / 'PortableSyscallIsrTest.cc'
+			unit_tests_dir / kernel_drivers_kernel_syscall_dir / 'PortableSyscallIsrTest.cc',
+			unit_tests_dir / kernel_drivers_kernel_syscall_dir / 'PortableSyscallPerCoreIsrTest.cc',
+			unit_tests_dir / kernel_drivers_kernel_syscall_dir / 'PortableSyscallPerCoreIsrFactoryTest.cc'
 		],
 		include_directories: [
 			src_dir

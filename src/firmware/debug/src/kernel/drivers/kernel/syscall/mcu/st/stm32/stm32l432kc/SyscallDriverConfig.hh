@@ -7,8 +7,15 @@ namespace smeg::kernel::drivers::kernel::syscall::mcu::st::stm32::stm32l432kc
 {
 	using namespace smeg::kernel::drivers::kernel::syscall::mcu::arm::cortex::m4;
 
-	template <typename TKernelConfigs>
-	using SyscallDriverConfig = DefaultSyscallDriverConfig<TKernelConfigs>;
+	template <
+		typename TKernelConfigs,
+		template <typename, std::size_t, typename...> typename TPerCoreApiFactory,
+		template <typename, std::size_t, typename...> typename TSyscallHandlerFactory>
+	using SyscallDriverConfig = DefaultSyscallDriverConfig<
+		TKernelConfigs,
+		TPerCoreApiFactory,
+		TSyscallHandlerFactory,
+		SyscallFor>;
 }
 
 #endif

@@ -2,6 +2,8 @@
 #define __SMEG_KERNEL_CRT_CRT0_MCU_MICROCHIP_PIC32C_PIC32CX1025SG41100_DRIVERCONFIGS_HH
 #include <tuple>
 
+#include "../../../../../../DefaultPerCoreApiFactory.hh"
+#include "../../../../../../drivers/kernel/syscall/DefaultSyscallHandlerFactory.hh"
 #include "../../../../../../drivers/kernel/syscall/mcu/microchip/pic32c/pic32cx1025sg41100/SyscallDriverConfig.hh"
 
 namespace smeg::kernel::crt::crt0::mcu::microchip::pic32c::pic32cx1025sg41100
@@ -10,7 +12,10 @@ namespace smeg::kernel::crt::crt0::mcu::microchip::pic32c::pic32cx1025sg41100
 
 	template <typename TKernelConfigs>
 	using DriverConfigs = std::tuple<
-		drivers::syscall::mcu::microchip::pic32c::pic32cx1025sg41100::SyscallDriverConfig<TKernelConfigs>>;
+		drivers::syscall::mcu::microchip::pic32c::pic32cx1025sg41100::SyscallDriverConfig<
+			TKernelConfigs,
+			DefaultPerCoreApiFactory,
+			drivers::syscall::DefaultSyscallHandlerFactory>>;
 }
 
 #endif

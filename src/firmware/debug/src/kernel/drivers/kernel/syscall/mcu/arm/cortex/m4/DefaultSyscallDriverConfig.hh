@@ -5,6 +5,7 @@
 #include "kernel/config/McuCoreTraitsFrom.hh"
 #include "kernel/tasks/AppTaskApis.hh"
 
+#include "../../../../PortableSyscallPerCoreIsrFactory.hh"
 #include "../../../../SyscallFor.hh"
 #include "DefaultSyscallTaskApi.hh"
 #include "SvcallIsr.hh"
@@ -15,7 +16,11 @@ namespace smeg::kernel::drivers::kernel::syscall::mcu::arm::cortex::m4
 	using namespace smeg::kernel::config;
 	using namespace smeg::kernel::tasks;
 
-	template <typename TKernelConfigs, template <typename, typename> typename TSyscallFor = SyscallFor>
+	template <
+		typename TKernelConfigs,
+		template <typename, std::size_t, typename...> typename TPerCoreApiFactory,
+		template <typename, std::size_t, typename...> typename TSyscallHandlerFactory,
+		template <typename, typename> typename TSyscallFor = SyscallFor>
 	class DefaultSyscallDriverConfig
 	{
 	private:
@@ -30,9 +35,16 @@ namespace smeg::kernel::drivers::kernel::syscall::mcu::arm::cortex::m4
 			using Type = DefaultSyscallTaskApi<SyscallPrimitive<SyscallFor>, SyscallFor>;
 		};
 
+	public:
+		struct SvcallIsrConfig;
+
+	private:
 		template <auto McuCoreId>
 		using PortableSyscallPerCoreIsrFactoryWithDependencies = PortableSyscallPerCoreIsrFactory<
+			SvcallIsrConfig,
 			McuCoreId,
+			TPerCoreApiFactory,
+			TSyscallHandlerFactory,
 			std::tuple<>>; // TODO: RequiredSyscallHandlersFrom<TKernelConfigs> or something like that...
 
 	public:

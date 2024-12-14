@@ -5,6 +5,7 @@
 
 #include "../../../DefaultPerCoreApiFactory.hh"
 #include "../../IIsr.hh"
+#include "../../IIsrApi.hh"
 #include "../IProvidedIsrConfig.hh"
 
 namespace smeg::kernel::drivers::config::composition
@@ -12,7 +13,7 @@ namespace smeg::kernel::drivers::config::composition
 	template <
 		IProvidedIsrConfig TIsrConfig,
 		std::size_t McuCoreId,
-		template <IProvidedIsrConfig, std::size_t, typename...> typename TApiFactory = DefaultPerCoreApiFactory>
+		template <IProvidedIsrConfig, std::size_t, IIsrApi...> typename TApiFactory = DefaultPerCoreApiFactory>
 	class DefaultPerCoreIsrFactory
 	{
 	private:
@@ -26,17 +27,24 @@ namespace smeg::kernel::drivers::config::composition
 		};
 
 	public:
-		static auto createPerCoreIsr(void) noexcept // TODO: THIS OUGHT TO BE DETERMINED BASED ON ALL OF THE noexcepts OF THE APIs...
+		static auto createPerCoreIsr(void) noexcept
 		{
 			using Isr = TIsrConfig::Handler;
 			if constexpr (IPerCoreIsrWithRequiredApis<Isr>)
 			{
 				using RequiredApis = Isr::RequiredApis;
 				using TupleOfApis = RequiredApis::AsTuple;
-				return Isr((RequiredApis(typename ApiFactory<TupleOfApis>::Type())));
+				static_assert(
+					noexcept(Isr(RequiredApis(typename ApiFactory<TupleOfApis>::Type()))),
+					"ISR constructors must not throw exceptions because they are used to initialise global variables");
+
+				return Isr(RequiredApis(typename ApiFactory<TupleOfApis>::Type()));
 			}
 			else
+			{
+				static_assert(noexcept(Isr()), "ISR constructors must not throw exceptions because they are used to initialise global variables");
 				return Isr();
+			}
 		}
 	};
 }

@@ -1,5 +1,6 @@
 #ifndef __SMEG_KERNEL_CRT_CRT0_MCU_ARM_CORTEX_M4_ISRS_HH
 #define __SMEG_KERNEL_CRT_CRT0_MCU_ARM_CORTEX_M4_ISRS_HH
+#include "../../../../../../DefaultPerCoreApiFactory.hh"
 #include "../../../../../../drivers/IIsr.hh"
 #include "../../../../../../drivers/config/IProvidedIsrConfig.hh"
 #include "../../../../../../drivers/config/ITupleOfProvidedIsrConfigs.hh"
@@ -20,7 +21,7 @@ namespace smeg::kernel::crt::crt0::mcu::arm::cortex::m4
 	using IsrVector = void (*const)(void) noexcept;
 
 	template <IProvidedIsrConfig TConfig, auto McuCoreId>
-	using PerCoreIsrFactory = DefaultPerCoreIsrFactory<TConfig, McuCoreId, DefaultApiFactory>;
+	using PerCoreIsrFactory = DefaultPerCoreIsrFactory<TConfig, McuCoreId, DefaultPerCoreApiFactory>;
 
 	template <IProvidedIsrConfig TIsrConfig>
 	using NakedToPerCoreIsrTrampolineWithMcuCoreTraits = NakedToPerCoreIsrTrampoline<McuCoreTraits, TIsrConfig, PerCoreIsrFactory>;
