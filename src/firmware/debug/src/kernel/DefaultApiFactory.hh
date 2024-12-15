@@ -23,7 +23,7 @@ namespace smeg::kernel
 		constexpr auto createApi(void) const noexcept(std::is_nothrow_default_constructible_v<TApi>)
 		{
 			if constexpr (Ensure<TApi>::isExplicitlyRequiredForInjection)
-				return TApi();
+				return TApi(); // TODO: If TApi() also requires APIs, then we'll need some way to descend into its dependencies for creation, too
 		}
 	};
 }

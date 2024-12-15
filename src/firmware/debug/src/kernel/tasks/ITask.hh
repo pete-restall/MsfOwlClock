@@ -6,6 +6,7 @@
 
 namespace smeg::kernel::tasks
 {
+	// TODO: These can be generalised to leverage the new IHaveRequiredApis concept, but we need to put some tests around it, too...
 	template <template <typename...> typename TOpenRequired, typename TClosedRequired, typename... TApis>
 	struct _$IsTaskRequiredApis
 	{

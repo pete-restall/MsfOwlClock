@@ -18,10 +18,6 @@ using namespace smeg::kernel::tasks;
 
 namespace smeg::tests::unit::kernel::tasks
 {
-	struct DummyRequiredApi
-	{
-	};
-
 	struct StubRequiredApi
 	{
 		const int token;
@@ -35,12 +31,6 @@ namespace smeg::tests::unit::kernel::tasks
 			token(token)
 		{
 		}
-	};
-
-	template <template <typename...> typename TApis>
-	struct Dummy
-	{
-		using Apis = TApis<DummyRequiredApi>;
 	};
 
 	template <template <typename...> typename TApis>
@@ -85,11 +75,8 @@ namespace smeg::tests::unit::kernel::tasks
 				throw std::runtime_error("StubApiFactory.create<T>() is only stubbed for T=StubRequiredApi");
 		}
 
-		static thread_local int token;
+		static thread_local inline int token = anyValueOf<int>();
 	};
-
-	template <typename... TRequiredApis>
-	thread_local int StubApiFactory<TRequiredApis...>::token(anyValueOf<int>());
 
 	template <typename... TApis>
 	class StubTaskApis
@@ -113,33 +100,7 @@ namespace smeg::tests::unit::kernel::tasks
 		}
 	};
 
-	suite<Stub<AppTaskApis>, Stub<StubTaskApis>> defaultTaskFactoryTest("DefaultTaskFactory (Default API Factory) Test Suite", [](auto &unit)
-	{
-		unit.test("createTask_calledWhenTaskHasNoRequiredApisAndHasDefaultConstructor_expectTaskCanBeCreated", [](auto)
-		{
-			auto task(DefaultTaskFactory<StubTaskWithDefaultConstructor>::createTask());
-			auto isTaskExpectedType(typeid(task) == typeid(StubTaskWithDefaultConstructor));
-			expect(isTaskExpectedType, equal_to(true));
-		});
-
-		unit.test("createTask_calledWhenTaskHasRequiredApisAndHasMatchingConstructor_expectTaskCanBeCreated", [](auto fixture)
-		{
-			using StubTask = StubTaskWithRequiredApisConstructor<typename decltype(fixture)::Apis>;
-			auto task(DefaultTaskFactory<StubTask>::createTask());
-			auto isTaskExpectedType(typeid(task) == typeid(StubTask));
-			expect(isTaskExpectedType, equal_to(true));
-		});
-
-		unit.test("createTask_called_expectSameInstanceOfApiIsReturnedForEachGet", [](auto fixture)
-		{
-			using SpyTask = SpyTaskWithRequiredApisConstructor<typename decltype(fixture)::Apis>;
-			auto task(DefaultTaskFactory<SpyTask>::createTask());
-			std::array resolvedApiPtrs{&task.apis.template get<StubRequiredApi>(), &task.apis.template get<StubRequiredApi>()};
-			expect(resolvedApiPtrs[0], equal_to(resolvedApiPtrs[1]));
-		});
-	});
-
-	suite<Stub<AppTaskApis>, Stub<StubTaskApis>> defaultTaskFactoryWithSpecifiedApiFactoryTest("DefaultTaskFactory (Specified API Factory) Test Suite", [](auto &unit)
+	suite<Stub<AppTaskApis>, Stub<StubTaskApis>> defaultTaskFactoryTest("DefaultTaskFactory Test Suite", [](auto &unit)
 	{
 		unit.test("createTask_calledWhenTaskHasNoRequiredApisAndHasDefaultConstructor_expectTaskCanBeCreated", [](auto)
 		{

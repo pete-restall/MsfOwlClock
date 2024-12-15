@@ -164,6 +164,7 @@ else
 			unit_tests_dir / kernel_dir / 'ConstInitialisableTest.cc',
 			unit_tests_dir / kernel_dir / 'DefaultApiFactoryTest.cc',
 			unit_tests_dir / kernel_dir / 'DefaultPerCoreApiFactoryTest.cc',
+			unit_tests_dir / kernel_dir / 'IHaveRequiredApisTest.cc',
 			unit_tests_dir / kernel_dir / 'IMcuCoreTraitsTest.cc',
 			unit_tests_dir / kernel_dir / 'InitialisableTest.cc',
 			unit_tests_dir / kernel_dir / 'NonConstInitialisableTest.cc',
@@ -231,6 +232,7 @@ else
 
 			# TODO: The drivers ought to have their own unit test executable, built using Meson sub-projects.  Should also give them their own 'src' and 'tests'
 			# directories so that they are entirely self-contained, drop-in source libraries.  List them here as a temporary hack:
+			unit_tests_dir / kernel_drivers_kernel_syscall_dir / 'DefaultSyscallHandlerFactoryTest.cc',
 			unit_tests_dir / kernel_drivers_kernel_syscall_dir / 'PortableSyscallIsrTest.cc',
 			unit_tests_dir / kernel_drivers_kernel_syscall_dir / 'PortableSyscallPerCoreIsrTest.cc',
 			unit_tests_dir / kernel_drivers_kernel_syscall_dir / 'PortableSyscallPerCoreIsrFactoryTest.cc'

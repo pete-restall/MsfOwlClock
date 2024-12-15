@@ -3,9 +3,9 @@
 #include <cstddef>
 #include <tuple>
 
-#include "../../../DefaultPerCoreApiFactory.hh"
-#include "../../IIsr.hh"
+#include "../../../IHaveRequiredApis.hh"
 #include "../../IIsrApi.hh"
+#include "../../IsrApis.hh"
 #include "../IProvidedIsrConfig.hh"
 
 namespace smeg::kernel::drivers::config::composition
@@ -13,7 +13,7 @@ namespace smeg::kernel::drivers::config::composition
 	template <
 		IProvidedIsrConfig TIsrConfig,
 		std::size_t McuCoreId,
-		template <IProvidedIsrConfig, std::size_t, IIsrApi...> typename TApiFactory = DefaultPerCoreApiFactory>
+		template <IProvidedIsrConfig, std::size_t, IIsrApi...> typename TApiFactory>
 	class DefaultPerCoreIsrFactory
 	{
 	private:
@@ -30,7 +30,8 @@ namespace smeg::kernel::drivers::config::composition
 		static auto createPerCoreIsr(void) noexcept
 		{
 			using Isr = TIsrConfig::Handler;
-			if constexpr (IPerCoreIsrWithRequiredApis<Isr>)
+			// TODO: if TIsrConfig::Factory, then return TIsrConfig::Factory<TIsrConfig, McuCoreId, TApiFactory>::createPerCoreIsr()
+			if constexpr (IHaveRequiredApis<Isr, IsrApis>)
 			{
 				using RequiredApis = Isr::RequiredApis;
 				using TupleOfApis = RequiredApis::AsTuple;
