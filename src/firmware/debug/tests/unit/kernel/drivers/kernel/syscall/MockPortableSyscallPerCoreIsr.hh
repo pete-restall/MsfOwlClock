@@ -18,12 +18,12 @@ namespace smeg::tests::unit::kernel::drivers::kernel::syscall
 		{
 		}
 
-		void onInterrupt(void *argsPtr, std::uint32_t id) noexcept
+		void onInterrupt(void *argPtr, std::uint32_t id) noexcept
 		{
 			if (!this->onInterruptCalls)
 				return;
 
-			this->onInterruptCalls->calledWith(argsPtr, id);
+			this->onInterruptCalls->calledWith(argPtr, id);
 		}
 
 		const CallRecorder<void *, std::uint32_t> &callsToOnInterrupt(void) const

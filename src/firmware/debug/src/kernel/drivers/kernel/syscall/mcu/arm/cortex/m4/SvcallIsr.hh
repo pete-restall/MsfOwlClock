@@ -16,9 +16,9 @@ namespace smeg::kernel::drivers::kernel::syscall::mcu::arm::cortex::m4
 	public:
 		static void onInterrupt(void) noexcept
 		{
-			register void *argsPtr asm("r0");
+			register void *argPtr asm("r0");
 			register std::uint32_t id asm("r1");
-			PortableSyscallIsr<TMcuCoreTraits, TPerCoreIsrFactory>::onInterrupt(argsPtr, id);
+			PortableSyscallIsr<TMcuCoreTraits, TPerCoreIsrFactory>::onInterrupt(argPtr, id);
 		}
 	};
 }

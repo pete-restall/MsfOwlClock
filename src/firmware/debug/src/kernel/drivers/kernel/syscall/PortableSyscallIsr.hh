@@ -28,9 +28,9 @@ namespace smeg::kernel::drivers::kernel::syscall
 		static inline std::array perCoreIsrs{createIsrForEachMcuCoreUsingFactory(McuCoreIds())};
 
 	public:
-		static void onInterrupt(void *argsPtr, std::uint32_t id) noexcept
+		static void onInterrupt(void *argPtr, std::uint32_t id) noexcept
 		{
-			perCoreIsrs[TMcuCoreTraits::getMcuCoreId()].onInterrupt(argsPtr, id);
+			perCoreIsrs[TMcuCoreTraits::getMcuCoreId()].onInterrupt(argPtr, id);
 		}
 	};
 }
