@@ -35,10 +35,8 @@ namespace smeg::kernel::drivers::kernel::syscall::mcu::arm::cortex::m4
 			using Type = DefaultSyscallTaskApi<SyscallPrimitive<SyscallFor>, SyscallFor>;
 		};
 
-	public:
 		struct SvcallIsrConfig;
 
-	private:
 		template <auto McuCoreId>
 		using PortableSyscallPerCoreIsrFactoryWithDependencies = PortableSyscallPerCoreIsrFactory<
 			SvcallIsrConfig,
@@ -47,7 +45,6 @@ namespace smeg::kernel::drivers::kernel::syscall::mcu::arm::cortex::m4
 			TSyscallHandlerFactory,
 			std::tuple<>>; // TODO: RequiredSyscallHandlersFrom<TKernelConfigs> or something like that...
 
-	public:
 		struct SvcallIsrConfig
 		{
 			using Handler = SvcallIsr<
@@ -57,6 +54,7 @@ namespace smeg::kernel::drivers::kernel::syscall::mcu::arm::cortex::m4
 			static constexpr auto irq = 11;
 		};
 
+	public:
 		using ProvidedApis = std::tuple<AppTaskApiConfig>;
 		using ProvidedIsrs = std::tuple<SvcallIsrConfig>;
 	};
