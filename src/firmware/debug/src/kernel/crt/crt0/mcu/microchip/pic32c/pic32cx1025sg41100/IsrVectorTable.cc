@@ -20,21 +20,21 @@ namespace smeg::kernel::crt::crt0::mcu::microchip::pic32c::pic32cx1025sg41100
 	using UnhandledSupcBoddetIsr = UnhandledIsr;
 	using UnhandledWdtIsr = UnhandledIsr;
 	using UnhandledRtcIsr = UnhandledIsr;
-	using UnhandledeicExtint0Isr = UnhandledIsr;
-	using UnhandledeicExtint1Isr = UnhandledIsr;
-	using UnhandledeicExtint2Isr = UnhandledIsr;
-	using UnhandledeicExtint3Isr = UnhandledIsr;
-	using UnhandledeicExtint4Isr = UnhandledIsr;
-	using UnhandledeicExtint5Isr = UnhandledIsr;
-	using UnhandledeicExtint6Isr = UnhandledIsr;
-	using UnhandledeicExtint7Isr = UnhandledIsr;
-	using UnhandledeicExtint8Isr = UnhandledIsr;
-	using UnhandledeicExtint9Isr = UnhandledIsr;
-	using UnhandledeicExtint10Isr = UnhandledIsr;
-	using UnhandledeicExtint11Isr = UnhandledIsr;
-	using UnhandledeicExtint12Isr = UnhandledIsr;
-	using UnhandledeicExtint13Isr = UnhandledIsr;
-	using UnhandledeicExtint14Isr = UnhandledIsr;
+	using UnhandledEicExtint0Isr = UnhandledIsr;
+	using UnhandledEicExtint1Isr = UnhandledIsr;
+	using UnhandledEicExtint2Isr = UnhandledIsr;
+	using UnhandledEicExtint3Isr = UnhandledIsr;
+	using UnhandledEicExtint4Isr = UnhandledIsr;
+	using UnhandledEicExtint5Isr = UnhandledIsr;
+	using UnhandledEicExtint6Isr = UnhandledIsr;
+	using UnhandledEicExtint7Isr = UnhandledIsr;
+	using UnhandledEicExtint8Isr = UnhandledIsr;
+	using UnhandledEicExtint9Isr = UnhandledIsr;
+	using UnhandledEicExtint10Isr = UnhandledIsr;
+	using UnhandledEicExtint11Isr = UnhandledIsr;
+	using UnhandledEicExtint12Isr = UnhandledIsr;
+	using UnhandledEicExtint13Isr = UnhandledIsr;
+	using UnhandledEicExtint14Isr = UnhandledIsr;
 	using UnhandledEicExtint15Isr = UnhandledIsr;
 	using UnhandledFreqmIsr = UnhandledIsr;
 	using UnhandledNvmctrl0Isr = UnhandledIsr;
@@ -157,21 +157,21 @@ namespace smeg::kernel::crt::crt0::mcu::microchip::pic32c::pic32cx1025sg41100
 		&IsrOrDefaultByIrq<25, UnhandledSupcBoddetIsr>::onInterrupt,
 		&IsrOrDefaultByIrq<26, UnhandledWdtIsr>::onInterrupt,
 		&IsrOrDefaultByIrq<27, UnhandledRtcIsr>::onInterrupt,
-		&IsrOrDefaultByIrq<28, UnhandledeicExtint0Isr>::onInterrupt,
-		&IsrOrDefaultByIrq<29, UnhandledeicExtint1Isr>::onInterrupt,
-		&IsrOrDefaultByIrq<30, UnhandledeicExtint2Isr>::onInterrupt,
-		&IsrOrDefaultByIrq<31, UnhandledeicExtint3Isr>::onInterrupt,
-		&IsrOrDefaultByIrq<32, UnhandledeicExtint4Isr>::onInterrupt,
-		&IsrOrDefaultByIrq<33, UnhandledeicExtint5Isr>::onInterrupt,
-		&IsrOrDefaultByIrq<34, UnhandledeicExtint6Isr>::onInterrupt,
-		&IsrOrDefaultByIrq<35, UnhandledeicExtint7Isr>::onInterrupt,
-		&IsrOrDefaultByIrq<36, UnhandledeicExtint8Isr>::onInterrupt,
-		&IsrOrDefaultByIrq<37, UnhandledeicExtint9Isr>::onInterrupt,
-		&IsrOrDefaultByIrq<38, UnhandledeicExtint10Isr>::onInterrupt,
-		&IsrOrDefaultByIrq<39, UnhandledeicExtint11Isr>::onInterrupt,
-		&IsrOrDefaultByIrq<40, UnhandledeicExtint12Isr>::onInterrupt,
-		&IsrOrDefaultByIrq<41, UnhandledeicExtint13Isr>::onInterrupt,
-		&IsrOrDefaultByIrq<42, UnhandledeicExtint14Isr>::onInterrupt,
+		&IsrOrDefaultByIrq<28, UnhandledEicExtint0Isr>::onInterrupt,
+		&IsrOrDefaultByIrq<29, UnhandledEicExtint1Isr>::onInterrupt,
+		&IsrOrDefaultByIrq<30, UnhandledEicExtint2Isr>::onInterrupt,
+		&IsrOrDefaultByIrq<31, UnhandledEicExtint3Isr>::onInterrupt,
+		&IsrOrDefaultByIrq<32, UnhandledEicExtint4Isr>::onInterrupt,
+		&IsrOrDefaultByIrq<33, UnhandledEicExtint5Isr>::onInterrupt,
+		&IsrOrDefaultByIrq<34, UnhandledEicExtint6Isr>::onInterrupt,
+		&IsrOrDefaultByIrq<35, UnhandledEicExtint7Isr>::onInterrupt,
+		&IsrOrDefaultByIrq<36, UnhandledEicExtint8Isr>::onInterrupt,
+		&IsrOrDefaultByIrq<37, UnhandledEicExtint9Isr>::onInterrupt,
+		&IsrOrDefaultByIrq<38, UnhandledEicExtint10Isr>::onInterrupt,
+		&IsrOrDefaultByIrq<39, UnhandledEicExtint11Isr>::onInterrupt,
+		&IsrOrDefaultByIrq<40, UnhandledEicExtint12Isr>::onInterrupt,
+		&IsrOrDefaultByIrq<41, UnhandledEicExtint13Isr>::onInterrupt,
+		&IsrOrDefaultByIrq<42, UnhandledEicExtint14Isr>::onInterrupt,
 		&IsrOrDefaultByIrq<43, UnhandledEicExtint15Isr>::onInterrupt,
 		&IsrOrDefaultByIrq<44, UnhandledFreqmIsr>::onInterrupt,
 		&IsrOrDefaultByIrq<45, UnhandledNvmctrl0Isr>::onInterrupt,
