@@ -8,8 +8,6 @@
 
 namespace smeg::kernel::drivers::kernel::syscall
 {
-	using namespace smeg::kernel;
-
 	template <IMcuCoreTraits TMcuCoreTraits, template <auto> typename TPerCoreIsrFactory>
 	class PortableSyscallIsr
 	{
