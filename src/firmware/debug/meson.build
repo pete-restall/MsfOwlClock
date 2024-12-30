@@ -24,6 +24,7 @@ kernel_crt_crt0_linker_dir = kernel_crt_crt0_dir / 'linker'
 kernel_crt_crt0_mcu_dir = kernel_crt_crt0_dir / 'mcu'
 kernel_crt_crt0_mcu_st_dir = kernel_crt_crt0_mcu_dir / 'st'
 kernel_crt_picolibc_dir = kernel_crt_dir / 'picolibc'
+kernel_di_dir = kernel_dir / 'di'
 kernel_drivers_dir = kernel_dir / 'drivers'
 kernel_drivers_config_dir = kernel_drivers_dir / 'config'
 kernel_drivers_config_composition_dir = kernel_drivers_config_dir / 'composition'
@@ -184,6 +185,7 @@ else
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerDataMemorySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerFiniArraySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerInitArraySectionTest.cc',
+			unit_tests_dir / kernel_di_dir / 'ConstructorParametersTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'DriverTaskApisTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'IDriverTaskTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'IIsrTest.cc',

@@ -92,7 +92,12 @@
 			"typeinfo": "cpp",
 			"variant": "cpp",
 			"list": "cpp",
-			"iostream": "cpp"
+			"iostream": "cpp",
+			"condition_variable": "cpp",
+			"mutex": "cpp",
+			"semaphore": "cpp",
+			"stop_token": "cpp",
+			"thread": "cpp"
 		}
 	},
 	"launch": {
