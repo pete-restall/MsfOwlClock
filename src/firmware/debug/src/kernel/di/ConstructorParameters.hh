@@ -137,6 +137,12 @@ namespace smeg::kernel::di
 		template <typename T>
 		struct From
 		{
+			using AsTuple = std::tuple<>;
+		};
+
+		template <typename T> requires std::is_class_v<T>
+		struct From<T>
+		{
 			using AsTuple = DeduceParameters<T, std::make_index_sequence<numberOfConstructorParametersFor<T>(0)>>::AsTuple;
 		};
 

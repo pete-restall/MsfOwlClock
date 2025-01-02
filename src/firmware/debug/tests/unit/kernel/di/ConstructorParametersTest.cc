@@ -129,6 +129,19 @@ namespace smeg::tests::unit::kernel::di
 
 	suite<
 		TypeOf<int>,
+		TypeOf<Dummy<123> &>,
+		TypeOf<Dummy<456> *>
+	> constructorParametersNonClassTest("ConstructorParameters (non-class) Tests", [](auto &unit)
+	{
+		unit.test("For_getWhenPassedNonClass_expectEmptyTuple", [](auto fixture)
+		{
+			using NonClass = decltype(fixture)::Type;
+			expect(std::same_as<ConstructorParameters::For<NonClass>, std::tuple<>>, equal_to(true));
+		});
+	});
+
+	suite<
+		TypeOf<int>,
 		TypeOf<float>,
 		TypeOf<Dummy<123>>,
 		TypeOf<Dummy<123> &>,
