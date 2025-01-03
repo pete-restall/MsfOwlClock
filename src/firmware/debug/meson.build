@@ -186,6 +186,7 @@ else
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerFiniArraySectionTest.cc',
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerInitArraySectionTest.cc',
 			unit_tests_dir / kernel_di_dir / 'ConstructorParametersTest.cc',
+			unit_tests_dir / kernel_di_dir / 'ContainerTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'DriverTaskApisTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'IDriverTaskTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'IIsrTest.cc',
