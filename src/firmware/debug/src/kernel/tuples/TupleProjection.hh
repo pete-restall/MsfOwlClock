@@ -7,14 +7,14 @@
 
 namespace smeg::kernel::tuples
 {
-	template <bool TDummyForSpecialisation, typename TTuple, template <typename, std::size_t...> typename TProjection>
-	struct _TupleProjection;
+	template <bool, typename, template <typename, std::size_t...> typename>
+	struct _$TupleProjection;
 
 	template <typename TTuple, template <typename> typename TProjection>
-	class _TupleProjection<true, TTuple, TProjection>
+	class _$TupleProjection<true, TTuple, TProjection>
 	{
 	private:
-		template <bool TDummyForSpecialisation, typename... T>
+		template <bool, typename...>
 		struct Project;
 
 		template <bool TDummyForSpecialisation, typename THead, typename... TTail>
@@ -29,25 +29,25 @@ namespace smeg::kernel::tuples
 			using AsTuple = std::tuple<>;
 		};
 
-		template <typename... T>
-		struct _Output;
+		template <typename...>
+		struct _$Output;
 
 		template <typename... T>
-		struct _Output<std::tuple<T...>>
+		struct _$Output<std::tuple<T...>> // TODO: we should change _$Output to _$Output, plus the same for the others...
 		{
-			using AsTuple = typename Project<true, T...>::AsTuple;
+			using AsTuple = Project<true, T...>::AsTuple; // TODO: We can tidy this up by removing 'typename' - check the others, too.
 		};
 
 	public:
 		using Input = TTuple;
-		using Output = typename _Output<TTuple>::AsTuple;
+		using Output = _$Output<TTuple>::AsTuple;
 	};
 
 	template <typename TTuple, template <typename, std::size_t> typename TProjection>
-	class _TupleProjection<true, TTuple, TProjection>
+	class _$TupleProjection<true, TTuple, TProjection>
 	{
 	private:
-		template <std::size_t InputIndex, typename... T>
+		template <std::size_t, typename...>
 		struct Project;
 
 		template <std::size_t InputIndex, typename THead, typename... TTail>
@@ -64,31 +64,31 @@ namespace smeg::kernel::tuples
 			using AsTuple = std::tuple<>;
 		};
 
-		template <typename... T>
-		struct _Output;
+		template <typename...>
+		struct _$Output;
 
 		template <typename... T>
-		struct _Output<std::tuple<T...>>
+		struct _$Output<std::tuple<T...>>
 		{
-			using AsTuple = typename Project<0, T...>::AsTuple;
+			using AsTuple = Project<0, T...>::AsTuple;
 		};
 
 	public:
 		using Input = TTuple;
-		using Output = typename _Output<TTuple>::AsTuple;
+		using Output = _$Output<TTuple>::AsTuple;
 	};
 
 	template <typename TTuple, template <typename, std::size_t, std::size_t> typename TProjection>
-	class _TupleProjection<true, TTuple, TProjection>
+	class _$TupleProjection<true, TTuple, TProjection>
 	{
 	private:
-		template <std::size_t InputIndex, std::size_t OutputIndex, typename... T>
+		template <std::size_t, std::size_t, typename...>
 		struct Project;
 
 		template <std::size_t InputIndex, std::size_t OutputIndex, typename THead, typename... TTail>
 		struct Project<InputIndex, OutputIndex, THead, TTail...>
 		{
-			using ProjectedAsTuple = typename TProjection<THead, InputIndex, OutputIndex>::AsTuple;
+			using ProjectedAsTuple = TProjection<THead, InputIndex, OutputIndex>::AsTuple;
 			using AsTuple = TupleCat<
 				ProjectedAsTuple,
 				typename Project<InputIndex + 1, OutputIndex + std::tuple_size_v<ProjectedAsTuple>, TTail...>::AsTuple>;
@@ -100,23 +100,23 @@ namespace smeg::kernel::tuples
 			using AsTuple = std::tuple<>;
 		};
 
-		template <typename... T>
-		struct _Output;
+		template <typename...>
+		struct _$Output;
 
 		template <typename... T>
-		struct _Output<std::tuple<T...>>
+		struct _$Output<std::tuple<T...>>
 		{
-			using AsTuple = typename Project<0, 0, T...>::AsTuple;
+			using AsTuple = Project<0, 0, T...>::AsTuple;
 		};
 
 
 	public:
 		using Input = TTuple;
-		using Output = typename _Output<TTuple>::AsTuple;
+		using Output = _$Output<TTuple>::AsTuple;
 	};
 
 	template <typename TTuple, template <typename, std::size_t...> typename TProjection>
-	using TupleProjection = _TupleProjection<true, TupleCat<TTuple>, TProjection>;
+	using TupleProjection = _$TupleProjection<true, TupleCat<TTuple>, TProjection>;
 }
 
 #endif
