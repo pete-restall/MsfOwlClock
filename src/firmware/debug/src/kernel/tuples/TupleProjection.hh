@@ -33,9 +33,9 @@ namespace smeg::kernel::tuples
 		struct _$Output;
 
 		template <typename... T>
-		struct _$Output<std::tuple<T...>> // TODO: we should change _$Output to _$Output, plus the same for the others...
+		struct _$Output<std::tuple<T...>>
 		{
-			using AsTuple = Project<true, T...>::AsTuple; // TODO: We can tidy this up by removing 'typename' - check the others, too.
+			using AsTuple = Project<true, T...>::AsTuple;
 		};
 
 	public:
