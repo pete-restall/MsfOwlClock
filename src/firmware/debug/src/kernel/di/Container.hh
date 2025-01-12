@@ -125,50 +125,182 @@ namespace smeg::kernel::di
 			{
 			}
 
-			template <typename T>
-			static constexpr bool matchesParameterType = std::is_same_v<std::remove_cvref_t<TFrom>, std::remove_cvref_t<T>>;
+			template <typename TTo>
+			static constexpr bool matchesParameterType = std::is_same_v<std::remove_cvref_t<TFrom>, std::remove_cvref_t<TTo>>;
 
-			template <typename TTo, typename = std::enable_if_t<matchesParameterType<TTo> && containerHasRegistrationFor<TTo &>>> // TODO: plus the other stuff like if TFrom has no copy constructor and a registration of TFrom & is present, then what happens for a parameter of type 'TTo' ?  In this case we should fall back to 'container.resolve<TTo>' instead of 'TTo &'...
+			template <typename TTo, typename = std::enable_if_t<matchesParameterType<TTo> && containerHasRegistrationFor<TTo &>>>
 			constexpr operator TTo&(void) const
 			{
 				return this->container.resolve<TTo &>();
 			}
 
+			template <typename TTo, typename = std::enable_if_t<
+				matchesParameterType<TTo> && (
+					containerHasRegistrationFor<TTo &> ||
+					containerHasRegistrationFor<const TTo &>)>>
+			constexpr operator const TTo&(void) const
+			{
+				if constexpr (containerHasRegistrationFor<const TTo &>)
+					return this->container.resolve<const TTo &>();
+				else
+					return this->container.resolve<TTo &>();
+			}
+
+			template <typename TTo, typename = std::enable_if_t<
+				matchesParameterType<TTo> && (
+					containerHasRegistrationFor<TTo &> ||
+					containerHasRegistrationFor<volatile TTo &>)>>
+			constexpr operator volatile TTo&(void) const
+			{
+				if constexpr (containerHasRegistrationFor<volatile TTo &>)
+					return this->container.resolve<volatile TTo &>();
+				else
+					return this->container.resolve<TTo &>();
+			}
+
+			template <typename TTo, typename = std::enable_if_t<
+				matchesParameterType<TTo> && (
+					containerHasRegistrationFor<TTo &> ||
+					containerHasRegistrationFor<const volatile TTo &> ||
+					containerHasRegistrationFor<const TTo &> ||
+					containerHasRegistrationFor<volatile TTo &>)>>
+			constexpr operator const volatile TTo&(void) const
+			{
+				if constexpr (containerHasRegistrationFor<const volatile TTo &>)
+					return this->container.resolve<const volatile TTo &>();
+				else if constexpr (containerHasRegistrationFor<const TTo &>)
+					return this->container.resolve<const TTo &>();
+				else if constexpr (containerHasRegistrationFor<volatile TTo &>)
+					return this->container.resolve<volatile TTo &>();
+				else
+					return this->container.resolve<TTo &>();
+			}
+
 // TODO: Add an operator TTo&& for when there is a registration...
 
-			template <typename TTo, typename = std::enable_if_t<matchesParameterType<TTo> && !containerHasRegistrationFor<TTo &>>>
+			template <typename TTo>
+			constexpr operator TTo*(void) const
+			{
+				return this->container.resolve<TTo *>();
+			}
+
+			template <typename TTo>
+			constexpr operator const TTo*(void) const
+			{
+				if constexpr (containerHasRegistrationFor<const TTo *>)
+					return this->container.resolve<const TTo *>();
+				else
+					return this->container.resolve<TTo *>();
+			}
+
+			template <typename TTo>
+			constexpr operator volatile TTo*(void) const
+			{
+				if constexpr (containerHasRegistrationFor<volatile TTo *>)
+					return this->container.resolve<volatile TTo *>();
+				else
+					return this->container.resolve<TTo *>();
+			}
+
+			template <typename TTo>
+			constexpr operator const volatile TTo*(void) const
+			{
+				if constexpr (containerHasRegistrationFor<const volatile TTo *>)
+					return this->container.resolve<const volatile TTo *>();
+				else if constexpr (containerHasRegistrationFor<volatile TTo *>)
+					return this->container.resolve<volatile TTo *>();
+				else if constexpr (containerHasRegistrationFor<const TTo *>)
+					return this->container.resolve<const TTo *>();
+				else
+					return this->container.resolve<TTo *>();
+			}
+
+			template <typename TTo, typename = std::enable_if_t<matchesParameterType<TTo> && !std::is_pointer_v<TTo> && !containerHasRegistrationFor<TTo &>>> // TODO: && !containerHasRegistrationFor<const TTo &> as well ???
 			constexpr operator TTo(void) const
 			{
 				return this->container.resolve<TTo>();
 			}
 		};
 
-		template <typename TClass, typename... TParameters>
-		struct FactoryFor;
+		struct NoneRegistered
+		{
+		};
+
+		template <typename...>
+		struct FirstContainerRegistrationFor
+		{
+			using Type = NoneRegistered;
+		};
+
+		template <typename TClass, typename... TClasses>
+		struct FirstContainerRegistrationFor<TClass, TClasses...>
+		{
+			using Type = std::conditional_t<containerHasRegistrationFor<TClass>, TClass, typename FirstContainerRegistrationFor<TClasses...>::Type>;
+		};
+
+		template <typename, typename...>
+		struct DeducingFactoryFor;
 
 		template <typename TClass, typename... TParameters>
-		struct FactoryFor<TClass, std::tuple<TParameters...>>
+		struct DeducingFactoryFor<TClass, std::tuple<TParameters...>>
 		{
 			static auto createUsing(const Container<TRegistrations...> &container)
 			{
-				// TODO: resolving 'const T &' should look for a registration first, then _iff_ the T is copy- or move-constructible then just create a new instance of T
-
-				if constexpr (containerHasRegistrationFor<TClass>)
-					return std::get<ContainerRegistrationFor<TClass>>(container.registrations).create();
-				else
-					return TClass(Deduce<TParameters>(container) ...);
+				return TClass(Deduce<TParameters>(container) ...);
 			}
 		};
 
 		template <typename TClass>
-		struct FactoryFor<TClass &, std::tuple<>>
+		struct FactoryFor
+		{
+			static auto createUsing(const Container<TRegistrations...> &container)
+			{
+				if constexpr (containerHasRegistrationFor<TClass>)
+					return std::get<ContainerRegistrationFor<TClass>>(container.registrations).create(); // TODO: then try const TClass and volatile TClass and const volatile TClass _iff_ there is a copy constructor...
+				else
+					return DeducingFactoryFor<TClass, ConstructorParameters::For<TClass>>::createUsing(container); // TODO: this ought to be a call to a default factory really, to allow the user to determine whether to implicitly create classes or not
+			}
+		};
+
+		template <typename TClass> // TODO: repeat this for the other CV qualifications
+		struct FactoryFor<TClass *>
+		{
+			static auto createUsing(const Container<TRegistrations...> &container)
+			{
+				using RegisteredType = FirstContainerRegistrationFor<TClass *, const TClass *>::Type;
+				static_assert(
+					!std::same_as<RegisteredType, NoneRegistered>,
+					"TODO: rather than a static assertion, this really ought to be a call to a default factory to allow the user to specify whether to implicitly create classes or not");
+
+				return std::get<ContainerRegistrationFor<RegisteredType>>(container.registrations).create();
+			}
+		};
+
+		template <typename TClass> // TODO: repeat this for the other CV qualifications
+		struct FactoryFor<TClass *const>
+		{
+			static auto createUsing(const Container<TRegistrations...> &container)
+			{
+				using RegisteredType = FirstContainerRegistrationFor<TClass *const, const TClass *const, TClass *, const TClass *>::Type;
+				static_assert(
+					!std::same_as<RegisteredType, NoneRegistered>,
+					"TODO: rather than a static assertion, this really ought to be a call to a default factory to allow the user to specify whether to implicitly create classes or not");
+
+				return std::get<ContainerRegistrationFor<RegisteredType>>(container.registrations).create();
+			}
+		};
+
+		template <typename TClass>
+		struct FactoryFor<TClass &> // TODO: we'll need more of these specialisations for CV-qualified refs that are passed directly to the public container.resolve<cv T &>(), rather than injected into a class (test this theory...)
 		{
 			static auto &createUsing(const Container<TRegistrations...> &container)
 			{
-				if constexpr (containerHasRegistrationFor<TClass &>)
-					return std::get<ContainerRegistrationFor<TClass &>>(container.registrations).create();
+				using RegisteredType = FirstContainerRegistrationFor<TClass &>::Type;
+				static_assert(
+					!std::same_as<RegisteredType, NoneRegistered>,
+					"TODO: rather than a static assertion, this really ought to be a call to a default factory to allow the user to specify whether to implicitly create classes or not");
 
-				//static_assert(false, "TODO: THIS NEEDS TO BE TESTED / CODED FOR...");
+				return std::get<ContainerRegistrationFor<RegisteredType>>(container.registrations).create();
 			}
 		};
 
@@ -194,16 +326,15 @@ namespace smeg::kernel::di
 		}
 
 		// TODO: Add a convenience signature...
-		// template <ILambdaFactory... TFactories
+		// template <ILambdaFactory... TFactories>
 		// auto registerFactories(TFactories... factories) const
 
 		// can we resolve factories from the DI container ?
 
-		template <typename T> requires (std::is_class_v<T> || containerHasRegistrationFor<T>)
+		template <typename T>
 		T resolve(void) const
 		{
-			using ConstructorParameters = ConstructorParameters::For<T>;
-			return FactoryFor<T, ConstructorParameters>::createUsing(*this);
+			return FactoryFor<T>::createUsing(*this);
 		}
 	};
 }

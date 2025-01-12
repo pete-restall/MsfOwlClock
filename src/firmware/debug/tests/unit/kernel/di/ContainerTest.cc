@@ -16,6 +16,12 @@ using namespace smeg::kernel::di;
 
 namespace smeg::tests::unit::kernel::di
 {
+	template <typename T>
+	struct TypeOf
+	{
+		using Type = T;
+	};
+
 	struct ClassWithDefaultConstructor
 	{
 	};
@@ -52,7 +58,7 @@ namespace smeg::tests::unit::kernel::di
 		const std::uint32_t token;
 	};
 
-	suite<> containerTest("Container Tests", [](auto &unit)
+	suite<> containerResolveWithoutKeyTest("Container (Resolve Without Key) Tests", [](auto &unit)
 	{
 		// all factories should be able to take up to the following:
 		// factory<TContainer, T, TKey, ResolutionContext<TContext>>(container, context)
@@ -62,6 +68,8 @@ namespace smeg::tests::unit::kernel::di
 
 		// resolve<T>(TContext &)
 		// resolve<T, TKey>(TContext &)
+
+		// Don't forget to test for const (instances, references, pointers and pointers-to) and volatile (references, and pointers-to) and the valid combinations thereof
 
 		unit.test("resolve_calledWithUnregisteredClassWithDefaultConstructor_expectClassIsConstructed", []()
 		{
@@ -217,5 +225,226 @@ namespace smeg::tests::unit::kernel::di
 			std::tuple injected{&std::get<0>(resolved.injected).value, &std::get<1>(resolved.injected).value};
 			expect(injected, tuple(&std::get<1>(tokens), &std::get<0>(tokens)));
 		});
+
+		unit.test("resolve_calledWithClassRequiringRegisteredMixOfConstVolatileReferences_expectSameExactRegisteredReferences", []()
+		{
+			using Class = ClassRequiringInjection<
+				volatile ClassWithDefaultConstructor &,
+				const ClassWithDefaultConstructor &,
+				ClassWithDefaultConstructor &,
+				const volatile ClassWithDefaultConstructor &>;
+
+			std::array<ClassWithDefaultConstructor, 4> registered;
+			const auto container(Container<>()
+				.registerFactory([&registered]() -> const auto & { return registered[0]; })
+				.registerFactory([&registered]() -> volatile auto & { return registered[1]; })
+				.registerFactory([&registered]() -> const volatile auto & { return registered[2]; })
+				.registerFactory([&registered]() -> auto & { return registered[3]; }));
+
+			auto resolved(container.template resolve<Class>());
+			std::tuple injected{
+				&std::get<0>(resolved.injected).value,
+				&std::get<1>(resolved.injected).value,
+				&std::get<2>(resolved.injected).value,
+				&std::get<3>(resolved.injected).value};
+			expect(injected, tuple(&registered[1], &registered[0], &registered[3], &registered[2]));
+		});
+
+		unit.test("resolve_calledWithClassRequiringConstReference_expectRegisteredNonConstReference", []()
+		{
+			using Class = ClassRequiringInjection<const ClassWithDefaultConstructor &>;
+			ClassWithDefaultConstructor registered;
+			const auto container(Container<>().registerFactory([&registered]() -> auto & { return registered; }));
+			auto resolved(container.template resolve<Class>());
+			expect(&std::get<0>(resolved.injected).value, equal_to(&registered));
+		});
+
+		unit.test("resolve_calledWithClassRequiringVolatileReference_expectRegisteredNonVolatileReference", []()
+		{
+			using Class = ClassRequiringInjection<volatile ClassWithDefaultConstructor &>;
+			ClassWithDefaultConstructor registered;
+			const auto container(Container<>().registerFactory([&registered]() -> auto & { return registered; }));
+			auto resolved(container.template resolve<Class>());
+			expect(&std::get<0>(resolved.injected).value, equal_to(&registered));
+		});
+
+		unit.test("resolve_calledWithClassRequiringConstVolatileReference_expectRegisteredNonConstVolatileReference", []()
+		{
+			using Class = ClassRequiringInjection<const volatile ClassWithDefaultConstructor &>;
+			ClassWithDefaultConstructor registered;
+			const auto container(Container<>().registerFactory([&registered]() -> auto & { return registered; }));
+			auto resolved(container.template resolve<Class>());
+			expect(&std::get<0>(resolved.injected).value, equal_to(&registered));
+		});
+
+		unit.test("resolve_calledWithClassRequiringConstVolatileReference_expectRegisteredConstNonVolatileReference", []()
+		{
+			using Class = ClassRequiringInjection<const volatile ClassWithDefaultConstructor &>;
+			ClassWithDefaultConstructor registered;
+			const auto container(Container<>().registerFactory([&registered]() -> const auto & { return registered; }));
+			auto resolved(container.template resolve<Class>());
+			expect(&std::get<0>(resolved.injected).value, equal_to(&registered));
+		});
+
+		unit.test("resolve_calledWithClassRequiringConstVolatileReference_expectRegisteredNonConstVolatileReference", []()
+		{
+			using Class = ClassRequiringInjection<const volatile ClassWithDefaultConstructor &>;
+			ClassWithDefaultConstructor registered;
+			const auto container(Container<>().registerFactory([&registered]() -> volatile auto & { return registered; }));
+			auto resolved(container.template resolve<Class>());
+			expect(&std::get<0>(resolved.injected).value, equal_to(&registered));
+		});
+
+		mettle::subsuite<
+			TypeOf<ClassWithDefaultConstructor *>,
+			TypeOf<const ClassWithDefaultConstructor *>,
+			TypeOf<volatile ClassWithDefaultConstructor *>,
+			TypeOf<const volatile ClassWithDefaultConstructor *>
+		>(unit, "Pointers", [](auto &unit) {
+			unit.test("resolve_calledWithRegisteredPointer_expectSameRegisteredPointer", [](auto fixture)
+			{
+				using PointerToClass = decltype(fixture)::Type;
+				using Class = std::remove_cvref_t<std::remove_pointer_t<PointerToClass>>;
+				Class registered;
+				const auto container(Container<>().registerFactory([&registered]() -> PointerToClass { return &registered; }));
+				auto resolved(container.template resolve<PointerToClass>());
+				expect(resolved, equal_to(&registered));
+			});
+
+			unit.test("resolve_calledWithConstRegisteredPointer_expectSameRegisteredNonConstPointer", [](auto fixture)
+			{
+				using PointerToClass = decltype(fixture)::Type;
+				using Class = std::remove_cvref_t<std::remove_pointer_t<PointerToClass>>;
+				Class registered;
+				const auto container(Container<>().registerFactory([&registered]() -> PointerToClass { return &registered; }));
+				const auto resolved(container.template resolve<const PointerToClass>());
+				expect(resolved, equal_to(&registered));
+			});
+
+			unit.test("resolve_calledWithRegisteredPointer_expectSameRegisteredConstPointer", [](auto fixture)
+			{
+				using PointerToClass = decltype(fixture)::Type;
+				using Class = std::remove_cvref_t<std::remove_pointer_t<PointerToClass>>;
+				Class registered;
+				const auto container(Container<>().registerFactory([&registered]() -> const PointerToClass { return &registered; }));
+				auto resolved(container.template resolve<PointerToClass>());
+				expect(resolved, equal_to(&registered));
+			});
+
+			unit.test("resolve_calledWithClassRequiringRegisteredPointer_expectSameRegisteredPointer", [](auto fixture)
+			{
+				using PointerToClass = decltype(fixture)::Type;
+				using Class = std::remove_cvref_t<std::remove_pointer_t<PointerToClass>>;
+				Class registered;
+				const auto container(Container<>().registerFactory([&registered]() -> PointerToClass { return &registered; }));
+				auto resolved(container.template resolve<ClassRequiringInjection<PointerToClass>>());
+				expect(std::get<0>(resolved.injected).value, equal_to(&registered));
+			});
+
+			unit.test("resolve_calledWithClassRequiringConstRegisteredPointer_expectSameRegisteredPointer", [](auto fixture)
+			{
+				using PointerToClass = decltype(fixture)::Type;
+				using Class = std::remove_cvref_t<std::remove_pointer_t<PointerToClass>>;
+				Class registered;
+				const auto container(Container<>().registerFactory([&registered]() -> PointerToClass { return &registered; }));
+				const auto resolved(container.template resolve<ClassRequiringInjection<const PointerToClass>>());
+				expect(std::get<0>(resolved.injected).value, equal_to(&registered));
+			});
+
+			unit.test("resolve_calledWithClassRequiringRegisteredPointer_expectSameRegisteredConstPointer", [](auto fixture)
+			{
+				using PointerToClass = decltype(fixture)::Type;
+				using Class = std::remove_cvref_t<std::remove_pointer_t<PointerToClass>>;
+				Class registered;
+				const auto container(Container<>().registerFactory([&registered]() -> const PointerToClass { return &registered; }));
+				auto resolved(container.template resolve<ClassRequiringInjection<PointerToClass>>());
+				expect(std::get<0>(resolved.injected).value, equal_to(&registered));
+			});
+		});
+
+		unit.test("resolve_calledWithClassRequiringRegisteredMixOfConstVolatilePointers_expectSameExactRegisteredPointers", []()
+		{
+			using Class = ClassRequiringInjection<
+				volatile ClassWithDefaultConstructor *,
+				const ClassWithDefaultConstructor *,
+				ClassWithDefaultConstructor *,
+				const volatile ClassWithDefaultConstructor *>;
+
+			std::array<ClassWithDefaultConstructor, 4> registered;
+			const auto container(Container<>()
+				.registerFactory([&registered]() -> const ClassWithDefaultConstructor * { return &registered[0]; })
+				.registerFactory([&registered]() -> volatile ClassWithDefaultConstructor * { return &registered[1]; })
+				.registerFactory([&registered]() -> const volatile ClassWithDefaultConstructor * { return &registered[2]; })
+				.registerFactory([&registered]() -> auto { return &registered[3]; }));
+
+			auto resolved(container.template resolve<Class>());
+			std::tuple injected{
+				std::get<0>(resolved.injected).value,
+				std::get<1>(resolved.injected).value,
+				std::get<2>(resolved.injected).value,
+				std::get<3>(resolved.injected).value};
+			expect(injected, tuple(&registered[1], &registered[0], &registered[3], &registered[2]));
+		});
+
+		unit.test("resolve_calledWithClassRequiringPointerToConst_expectRegisteredPointerToNonConst", []()
+		{
+			using Class = ClassRequiringInjection<const ClassWithDefaultConstructor *>;
+			ClassWithDefaultConstructor registered;
+			const auto container(Container<>().registerFactory([&registered]() -> auto { return &registered; }));
+			auto resolved(container.template resolve<Class>());
+			expect(std::get<0>(resolved.injected).value, equal_to(&registered));
+		});
+
+		unit.test("resolve_calledWithClassRequiringPointerToVolatile_expectRegisteredPonterToNonVolatile", []()
+		{
+			using Class = ClassRequiringInjection<volatile ClassWithDefaultConstructor *>;
+			ClassWithDefaultConstructor registered;
+			const auto container(Container<>().registerFactory([&registered]() -> auto { return &registered; }));
+			auto resolved(container.template resolve<Class>());
+			expect(std::get<0>(resolved.injected).value, equal_to(&registered));
+		});
+
+		unit.test("resolve_calledWithClassRequiringPointerToConstVolatile_expectRegisteredPointerToNonConstVolatile", []()
+		{
+			using Class = ClassRequiringInjection<const volatile ClassWithDefaultConstructor *>;
+			ClassWithDefaultConstructor registered;
+			const auto container(Container<>().registerFactory([&registered]() -> auto { return &registered; }));
+			auto resolved(container.template resolve<Class>());
+			expect(std::get<0>(resolved.injected).value, equal_to(&registered));
+		});
+
+		unit.test("resolve_calledWithClassRequiringPointerToConstVolatile_expectRegisteredPointerToConstNonVolatile", []()
+		{
+			using Class = ClassRequiringInjection<const volatile ClassWithDefaultConstructor *>;
+			ClassWithDefaultConstructor registered;
+			const auto container(Container<>().registerFactory([&registered]() -> const auto { return &registered; }));
+			auto resolved(container.template resolve<Class>());
+			expect(std::get<0>(resolved.injected).value, equal_to(&registered));
+		});
+
+		unit.test("resolve_calledWithClassRequiringPointerToConstVolatile_expectRegisteredPointerToNonConstVolatile", []()
+		{
+			using Class = ClassRequiringInjection<const volatile ClassWithDefaultConstructor *>;
+			ClassWithDefaultConstructor registered;
+			const auto container(Container<>().registerFactory([&registered]() -> volatile ClassWithDefaultConstructor * { return &registered; }));
+			auto resolved(container.template resolve<Class>());
+			expect(std::get<0>(resolved.injected).value, equal_to(&registered));
+		});
+
+		// TODO: what about requesting 'const T' when only 'T' is available ?  It should resolve exactly...
+		// TODO: what about requesting 'const T' and 'T' when both are available ?  They should resolve exactly...
+		// TODO: what about requesting 'const T &' when only 'T' is available ?  It should resolve exactly...
+		// TODO: what about requesting 'const T &' and 'T &' when both are available ?  They should resolve exactly...
+		// TODO: what about requesting 'volatile T &' when only 'T' is available ?  It should resolve exactly...
+		// TODO: what about requesting 'volatile T &' and 'T &' when both are available ?  They should resolve exactly...
+		// TODO: what about requesting 'const volatile T &' when only 'T' is available ?  It should resolve exactly...
+		// TODO: what about requesting 'const volatile T &' and 'T &' when both are available ?  They should resolve exactly...
+	});
+
+	suite<> containerResolveWithKeyTest("Container (Resolve With Key) Tests", [](auto &unit)
+	{
+		// TODO: Think about how key-based resolution will work:
+		//     Do all dependencies need to be keyed ?  Only if there is no registered default factory for the given key, ie. we should be able to provide a default factory for a given key that is invoked whenever there is an unregistered instance; before that invocation we should also call into parent containers, if any.
+		//     Does the initial dependency need to be keyed ?  Again, only if there is no default factory for the given key, and no parent container supplying it.
 	});
 }
