@@ -90,8 +90,13 @@ namespace smeg::kernel::di
 	template <typename T>
 	concept IRegistration = true; // TODO: needs to be defined and tested
 
-	template <IRegistration... TRegistrations>
-	class Container
+	template <typename, typename...>
+	struct _$UnspecifiedDefaultFactory
+	{
+	};
+
+	template <template <typename, typename...> typename TDefaultFactory, IRegistration... TRegistrations>
+	class _$Container
 	{
 	private:
 		std::tuple<TRegistrations...> registrations;
@@ -118,9 +123,9 @@ namespace smeg::kernel::di
 		template <typename TFrom>
 		struct Deduce
 		{
-			const Container<TRegistrations...> &container;
+			const _$Container<TDefaultFactory, TRegistrations...> &container;
 
-			constexpr Deduce(const Container<TRegistrations...> &container) :
+			constexpr Deduce(const _$Container<TDefaultFactory, TRegistrations...> &container) :
 				container(container)
 			{
 			}
@@ -238,38 +243,43 @@ namespace smeg::kernel::di
 			using Type = std::conditional_t<containerHasRegistrationFor<TClass>, TClass, typename FirstContainerRegistrationFor<TClasses...>::Type>;
 		};
 
-		template <typename, typename...>
-		struct DeducingFactoryFor;
+		template <typename...>
+		struct DefaultFactoryFor;
 
-		template <typename TClass, typename... TParameters>
-		struct DeducingFactoryFor<TClass, std::tuple<TParameters...>>
+		template <typename TClass, typename... TConstructorParameters>
+		struct DefaultFactoryFor<TClass, std::tuple<TConstructorParameters...>>
 		{
-			static auto createUsing(const Container<TRegistrations...> &container)
+			static auto createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
 			{
-				return TClass(Deduce<TParameters>(container) ...);
+				using DefaultFactory = TDefaultFactory<TClass, TConstructorParameters...>;
+				using UnspecifiedFactory = _$UnspecifiedDefaultFactory<TClass, TConstructorParameters...>;
+				if constexpr (std::same_as<DefaultFactory, UnspecifiedFactory>)
+					return TClass(Deduce<TConstructorParameters>(container) ...);
+				else
+					return DefaultFactory::createUsing(container);
 			}
 		};
 
 		template <typename TClass>
 		struct FactoryFor
 		{
-			static auto createUsing(const Container<TRegistrations...> &container)
+			static auto createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
 			{
 				using RegisteredType = FirstContainerRegistrationFor<TClass, const TClass, std::remove_const_t<TClass>>::Type;
 				if constexpr (!std::same_as<RegisteredType, NoneRegistered>)
 					return std::get<ContainerRegistrationFor<RegisteredType>>(container.registrations).create();
 				else
-					return DeducingFactoryFor<TClass, ConstructorParameters::For<TClass>>::createUsing(container); // TODO: this ought to be a call to a default factory really, to allow the user to determine whether to implicitly create classes or not
+					return DefaultFactoryFor<TClass, ConstructorParameters::For<TClass>>::createUsing(container);
 			}
 		};
 
 		template <typename TClass> // TODO: repeat this for the other CV qualifications
 		struct FactoryFor<TClass *>
 		{
-			static auto createUsing(const Container<TRegistrations...> &container)
+			static auto createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
 			{
 				using RegisteredType = FirstContainerRegistrationFor<TClass *, const TClass *>::Type;
-				static_assert(
+				static_assert( // TODO: We'll want to use the default factory for (TClass *)...
 					!std::same_as<RegisteredType, NoneRegistered>,
 					"TODO: rather than a static assertion, this really ought to be a call to a default factory to allow the user to specify whether to implicitly create classes or not");
 
@@ -280,10 +290,10 @@ namespace smeg::kernel::di
 		template <typename TClass> // TODO: repeat this for the other CV qualifications
 		struct FactoryFor<TClass *const>
 		{
-			static auto createUsing(const Container<TRegistrations...> &container)
+			static auto createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
 			{
 				using RegisteredType = FirstContainerRegistrationFor<TClass *const, const TClass *const, TClass *, const TClass *>::Type;
-				static_assert(
+				static_assert( // TODO: We'll want to use the default factory for (TClass *const)...
 					!std::same_as<RegisteredType, NoneRegistered>,
 					"TODO: rather than a static assertion, this really ought to be a call to a default factory to allow the user to specify whether to implicitly create classes or not");
 
@@ -294,10 +304,10 @@ namespace smeg::kernel::di
 		template <typename TClass>
 		struct FactoryFor<TClass &> // TODO: we'll need more of these specialisations for CV-qualified refs that are passed directly to the public container.resolve<cv T &>(), rather than injected into a class (test this theory...)
 		{
-			static auto &createUsing(const Container<TRegistrations...> &container)
+			static auto &createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
 			{
 				using RegisteredType = FirstContainerRegistrationFor<TClass &>::Type;
-				static_assert(
+				static_assert( // TODO: We'll want to use the default factory for (TClass &)...
 					!std::same_as<RegisteredType, NoneRegistered>,
 					"TODO: rather than a static assertion, this really ought to be a call to a default factory to allow the user to specify whether to implicitly create classes or not");
 
@@ -306,22 +316,27 @@ namespace smeg::kernel::di
 		};
 
 	public:
-		Container(std::tuple<TRegistrations...> registrations) :
-			registrations(registrations)
-		{
-		}
-
-	public:
-		Container(void) :
+		_$Container(void) :
 			registrations{}
 		{
 			static_assert(sizeof...(TRegistrations) == 0, "There must be no registrations for an initial DI container; remove the template arguments");
 		}
 
+		_$Container(std::tuple<TRegistrations...> registrations) :
+			registrations(registrations)
+		{
+		}
+
+		template <template <typename, typename...> typename TFactory>
+		auto withDefaultFactory(void) const
+		{
+			return _$Container<TFactory, TRegistrations...>(this->registrations);
+		}
+
 		template <ILambdaFactory TFactory> requires (!containerHasRegistrationFor<typename LambdaFactoryTraits<TFactory>::Type>)
 		auto registerFactory(TFactory factory) const
 		{
-			return Container<TRegistrations..., LambdaFactoryRegistration<NoKey, TFactory>>(std::tuple_cat(
+			return _$Container<TDefaultFactory, TRegistrations..., LambdaFactoryRegistration<NoKey, TFactory>>(std::tuple_cat(
 				this->registrations,
 				std::make_tuple(LambdaFactoryRegistration<NoKey, TFactory>(factory))));
 		}
@@ -336,6 +351,34 @@ namespace smeg::kernel::di
 		T resolve(void) const
 		{
 			return FactoryFor<T>::createUsing(*this);
+		}
+	};
+
+	class Container
+	{
+	private:
+		static auto defaultInstance(void)
+		{
+			return _$Container<_$UnspecifiedDefaultFactory>();
+		}
+
+	public:
+		template <template <typename, typename...> typename TFactory>
+		auto withDefaultFactory(void) const
+		{
+			return defaultInstance().withDefaultFactory<TFactory>();
+		}
+
+		template <ILambdaFactory TFactory>
+		auto registerFactory(TFactory factory) const
+		{
+			return defaultInstance().registerFactory(factory);
+		}
+
+		template <typename T>
+		T resolve(void) const
+		{
+			return defaultInstance().resolve<T>();
 		}
 	};
 }

@@ -58,6 +58,28 @@ namespace smeg::tests::unit::kernel::di
 		const std::uint32_t token;
 	};
 
+	template <typename TFactory, typename TClass, typename... TConstructorParameters>
+	class StubDefaultFactory
+	{
+	private:
+		template <typename...>
+		struct Specialised;
+
+		template <typename TStub>
+		struct Specialised<TStub, TClass, TConstructorParameters...>
+		{
+			template <typename TContainer>
+			static auto createUsing(const TContainer &container)
+			{
+				return TStub::createUsing(&container);
+			}
+		};
+
+	public:
+		template <typename TActualClass, typename... TActualConstructorParameters>
+		using Type = Specialised<TFactory, TActualClass, TActualConstructorParameters...>;
+	};
+
 	suite<> containerResolveWithoutKeyTest("Container (Resolve Without Key) Tests", [](auto &unit)
 	{
 		// all factories should be able to take up to the following:
@@ -105,7 +127,7 @@ namespace smeg::tests::unit::kernel::di
 		unit.test("resolve_calledWithTypeThatIsRegisteredDependencyFromStaticFactory_expectClassIsConstructed", []()
 		{
 			constexpr std::uint32_t registeredToken = 125694390;
-			const auto container(Container<>().registerFactory([]() static { return registeredToken; }));
+			const auto container(Container().registerFactory([]() static { return registeredToken; }));
 			auto resolved(container.template resolve<std::uint32_t>());
 			expect(resolved, equal_to(registeredToken));
 		});
@@ -113,7 +135,7 @@ namespace smeg::tests::unit::kernel::di
 		unit.test("resolve_calledWithClassRequiringRegisteredDependencyFromStaticFactory_expectClassIsConstructed", []()
 		{
 			constexpr std::uint32_t registeredToken = 9812378;
-			const auto container(Container<>().registerFactory([]() static { return registeredToken; }));
+			const auto container(Container().registerFactory([]() static { return registeredToken; }));
 			auto resolved(container.template resolve<ClassRequiringToken>());
 			expect(resolved.token, equal_to(registeredToken));
 		});
@@ -121,7 +143,7 @@ namespace smeg::tests::unit::kernel::di
 		unit.test("resolve_calledWithTypeThatIsRegisteredDependencyFromInstanceFactoryWithoutClosure_expectClassIsConstructed", []()
 		{
 			constexpr std::uint32_t registeredToken = 8973;
-			const auto container(Container<>().registerFactory([]() { return registeredToken; }));
+			const auto container(Container().registerFactory([]() { return registeredToken; }));
 			auto resolved(container.template resolve<std::uint32_t>());
 			expect(resolved, equal_to(registeredToken));
 		});
@@ -129,7 +151,7 @@ namespace smeg::tests::unit::kernel::di
 		unit.test("resolve_calledWithClassRequiringRegisteredDependencyFromInstanceFactoryWithoutClosure_expectClassIsConstructed", []()
 		{
 			constexpr std::uint32_t registeredToken = 103620;
-			const auto container(Container<>().registerFactory([]() { return registeredToken; }));
+			const auto container(Container().registerFactory([]() { return registeredToken; }));
 			auto resolved(container.template resolve<ClassRequiringToken>());
 			expect(resolved.token, equal_to(registeredToken));
 		});
@@ -137,7 +159,7 @@ namespace smeg::tests::unit::kernel::di
 		unit.test("resolve_calledWithTypeThatIsRegisteredDependencyFromInstanceFactory_expectClassIsConstructed", []()
 		{
 			auto registeredToken(anyValueOf<std::uint32_t>());
-			const auto container(Container<>().registerFactory([registeredToken]() { return registeredToken; }));
+			const auto container(Container().registerFactory([registeredToken]() { return registeredToken; }));
 			auto resolved(container.template resolve<std::uint32_t>());
 			expect(resolved, equal_to(registeredToken));
 		});
@@ -145,7 +167,7 @@ namespace smeg::tests::unit::kernel::di
 		unit.test("resolve_calledWithClassRequiringRegisteredDependencyFromInstanceFactory_expectClassIsConstructed", []()
 		{
 			auto registeredToken(anyValueOf<std::uint32_t>());
-			const auto container(Container<>().registerFactory([registeredToken]() { return registeredToken; }));
+			const auto container(Container().registerFactory([registeredToken]() { return registeredToken; }));
 			auto resolved(container.template resolve<ClassRequiringToken>());
 			expect(resolved.token, equal_to(registeredToken));
 		});
@@ -153,7 +175,7 @@ namespace smeg::tests::unit::kernel::di
 		unit.test("resolve_calledWhenFactoryHasBeenMovedBecauseOfNewRegistrations_expectSameClosureIsUsed", []()
 		{
 			auto registeredToken(anyValueOf<std::uint32_t>());
-			const auto container(Container<>()
+			const auto container(Container()
 				.registerFactory([registeredToken]() { return registeredToken; })
 				.registerFactory([]() { return "whatever"; }));
 
@@ -164,7 +186,7 @@ namespace smeg::tests::unit::kernel::di
 		unit.test("resolve_calledWhenFactoryHasBeenCopiedBecauseOfNewRegistrations_expectAllContainersUseSameClosure", []()
 		{
 			auto registeredToken(anyValueOf<std::uint32_t>());
-			const auto firstContainer(Container<>().registerFactory([registeredToken]() { return registeredToken; }));
+			const auto firstContainer(Container().registerFactory([registeredToken]() { return registeredToken; }));
 			const auto secondContainer(firstContainer.registerFactory([]() { return "whatever"; }));
 			auto firstResolved(firstContainer.template resolve<ClassRequiringToken>());
 			auto secondResolved(secondContainer.template resolve<ClassRequiringToken>());
@@ -174,7 +196,7 @@ namespace smeg::tests::unit::kernel::di
 		unit.test("resolve_calledOnDerivedContainerWithInitialRegistration_expectAllContainersUseSameClosure", []()
 		{
 			std::uint32_t counter(0);
-			const auto firstContainer(Container<>().registerFactory([&counter]() { return counter++; }));
+			const auto firstContainer(Container().registerFactory([&counter]() { return counter++; }));
 			const auto secondContainer(firstContainer.registerFactory([]() { return "whatever"; }));
 			auto firstResolved(firstContainer.template resolve<std::uint32_t>());
 			auto secondResolved(secondContainer.template resolve<std::uint32_t>());
@@ -185,7 +207,7 @@ namespace smeg::tests::unit::kernel::di
 		{
 			using Class = ClassRequiringInjection<std::uint32_t>;
 			Class registered(anyValueOf<std::uint32_t>());
-			const auto container(Container<>().registerFactory([&registered]() -> auto & { return registered; }));
+			const auto container(Container().registerFactory([&registered]() -> auto & { return registered; }));
 			auto &resolved(container.template resolve<Class &>());
 			expect(&resolved, equal_to(&registered));
 		});
@@ -195,7 +217,7 @@ namespace smeg::tests::unit::kernel::di
 			auto token(anyValueOf<std::uint32_t>());
 			using Class = ClassRequiringInjection<std::uint32_t &>;
 			Class registered(token);
-			const auto container(Container<>().registerFactory([&token]() -> auto & { return token; }));
+			const auto container(Container().registerFactory([&token]() -> auto & { return token; }));
 			auto resolved(container.template resolve<Class>());
 			expect(&std::get<0>(resolved.injected).value, equal_to(&token));
 		});
@@ -204,7 +226,7 @@ namespace smeg::tests::unit::kernel::di
 		{
 			std::tuple tokens{anyValueOf<std::uint32_t>(), anyValueOf<std::uint16_t>()};
 			using Class = ClassRequiringInjection<std::uint16_t, std::uint32_t>;
-			const auto container(Container<>()
+			const auto container(Container()
 				.registerFactory([tokens]() -> auto { return std::get<0>(tokens); })
 				.registerFactory([tokens]() -> auto { return std::get<1>(tokens); }));
 
@@ -217,7 +239,7 @@ namespace smeg::tests::unit::kernel::di
 		{
 			std::tuple tokens{anyValueOf<std::int16_t>(), anyValueOf<std::int8_t>()};
 			using Class = ClassRequiringInjection<std::int8_t &, std::int16_t &>;
-			const auto container(Container<>()
+			const auto container(Container()
 				.registerFactory([&tokens]() -> auto & { return std::get<0>(tokens); })
 				.registerFactory([&tokens]() -> auto & { return std::get<1>(tokens); }));
 
@@ -235,7 +257,7 @@ namespace smeg::tests::unit::kernel::di
 				const volatile ClassWithDefaultConstructor &>;
 
 			std::array<ClassWithDefaultConstructor, 4> registered;
-			const auto container(Container<>()
+			const auto container(Container()
 				.registerFactory([&registered]() -> const auto & { return registered[0]; })
 				.registerFactory([&registered]() -> volatile auto & { return registered[1]; })
 				.registerFactory([&registered]() -> const volatile auto & { return registered[2]; })
@@ -254,7 +276,7 @@ namespace smeg::tests::unit::kernel::di
 		{
 			using Class = ClassRequiringInjection<const ClassWithDefaultConstructor &>;
 			ClassWithDefaultConstructor registered;
-			const auto container(Container<>().registerFactory([&registered]() -> auto & { return registered; }));
+			const auto container(Container().registerFactory([&registered]() -> auto & { return registered; }));
 			auto resolved(container.template resolve<Class>());
 			expect(&std::get<0>(resolved.injected).value, equal_to(&registered));
 		});
@@ -263,7 +285,7 @@ namespace smeg::tests::unit::kernel::di
 		{
 			using Class = ClassRequiringInjection<volatile ClassWithDefaultConstructor &>;
 			ClassWithDefaultConstructor registered;
-			const auto container(Container<>().registerFactory([&registered]() -> auto & { return registered; }));
+			const auto container(Container().registerFactory([&registered]() -> auto & { return registered; }));
 			auto resolved(container.template resolve<Class>());
 			expect(&std::get<0>(resolved.injected).value, equal_to(&registered));
 		});
@@ -272,7 +294,7 @@ namespace smeg::tests::unit::kernel::di
 		{
 			using Class = ClassRequiringInjection<const volatile ClassWithDefaultConstructor &>;
 			ClassWithDefaultConstructor registered;
-			const auto container(Container<>().registerFactory([&registered]() -> auto & { return registered; }));
+			const auto container(Container().registerFactory([&registered]() -> auto & { return registered; }));
 			auto resolved(container.template resolve<Class>());
 			expect(&std::get<0>(resolved.injected).value, equal_to(&registered));
 		});
@@ -281,7 +303,7 @@ namespace smeg::tests::unit::kernel::di
 		{
 			using Class = ClassRequiringInjection<const volatile ClassWithDefaultConstructor &>;
 			ClassWithDefaultConstructor registered;
-			const auto container(Container<>().registerFactory([&registered]() -> const auto & { return registered; }));
+			const auto container(Container().registerFactory([&registered]() -> const auto & { return registered; }));
 			auto resolved(container.template resolve<Class>());
 			expect(&std::get<0>(resolved.injected).value, equal_to(&registered));
 		});
@@ -290,7 +312,7 @@ namespace smeg::tests::unit::kernel::di
 		{
 			using Class = ClassRequiringInjection<const volatile ClassWithDefaultConstructor &>;
 			ClassWithDefaultConstructor registered;
-			const auto container(Container<>().registerFactory([&registered]() -> volatile auto & { return registered; }));
+			const auto container(Container().registerFactory([&registered]() -> volatile auto & { return registered; }));
 			auto resolved(container.template resolve<Class>());
 			expect(&std::get<0>(resolved.injected).value, equal_to(&registered));
 		});
@@ -298,7 +320,7 @@ namespace smeg::tests::unit::kernel::di
 		unit.test("resolve_calledWithNonConstClassWhenOnlyConstIsRegistered_expectCopyConstructedInstance", []()
 		{
 			auto token(anyValueOf<std::uint32_t>());
-			const auto container(Container<>().registerFactory([token]() -> const auto { return ClassRequiringToken(token); }));
+			const auto container(Container().registerFactory([token]() -> const auto { return ClassRequiringToken(token); }));
 			auto resolved(container.template resolve<ClassRequiringToken>());
 			expect(resolved.token, equal_to(token));
 		});
@@ -306,7 +328,7 @@ namespace smeg::tests::unit::kernel::di
 		unit.test("resolve_calledWithConstClassWhenOnlyNonConstIsRegistered_expectCopyConstructedInstance", []()
 		{
 			auto token(anyValueOf<std::uint32_t>());
-			const auto container(Container<>().registerFactory([token]() -> auto { return ClassRequiringToken(token); }));
+			const auto container(Container().registerFactory([token]() -> auto { return ClassRequiringToken(token); }));
 			auto resolved(container.template resolve<const ClassRequiringToken>());
 			expect(resolved.token, equal_to(token));
 		});
@@ -315,7 +337,7 @@ namespace smeg::tests::unit::kernel::di
 		{
 			using Class = ClassRequiringInjection<ClassRequiringToken>;
 			auto token(anyValueOf<std::uint32_t>());
-			const auto container(Container<>().registerFactory([token]() -> const auto { return ClassRequiringToken(token); }));
+			const auto container(Container().registerFactory([token]() -> const auto { return ClassRequiringToken(token); }));
 			auto resolved(container.template resolve<Class>());
 			expect(std::get<0>(resolved.injected).value.token, equal_to(token));
 		});
@@ -324,7 +346,7 @@ namespace smeg::tests::unit::kernel::di
 		{
 			using Class = ClassRequiringInjection<const ClassRequiringToken>;
 			auto token(anyValueOf<std::uint32_t>());
-			const auto container(Container<>().registerFactory([token]() -> auto { return ClassRequiringToken(token); }));
+			const auto container(Container().registerFactory([token]() -> auto { return ClassRequiringToken(token); }));
 			auto resolved(container.template resolve<Class>());
 			expect(std::get<0>(resolved.injected).value.token, equal_to(token));
 		});
@@ -340,7 +362,7 @@ namespace smeg::tests::unit::kernel::di
 				using PointerToClass = decltype(fixture)::Type;
 				using Class = std::remove_cvref_t<std::remove_pointer_t<PointerToClass>>;
 				Class registered;
-				const auto container(Container<>().registerFactory([&registered]() -> PointerToClass { return &registered; }));
+				const auto container(Container().registerFactory([&registered]() -> PointerToClass { return &registered; }));
 				auto resolved(container.template resolve<PointerToClass>());
 				expect(resolved, equal_to(&registered));
 			});
@@ -350,7 +372,7 @@ namespace smeg::tests::unit::kernel::di
 				using PointerToClass = decltype(fixture)::Type;
 				using Class = std::remove_cvref_t<std::remove_pointer_t<PointerToClass>>;
 				Class registered;
-				const auto container(Container<>().registerFactory([&registered]() -> PointerToClass { return &registered; }));
+				const auto container(Container().registerFactory([&registered]() -> PointerToClass { return &registered; }));
 				const auto resolved(container.template resolve<const PointerToClass>());
 				expect(resolved, equal_to(&registered));
 			});
@@ -360,7 +382,7 @@ namespace smeg::tests::unit::kernel::di
 				using PointerToClass = decltype(fixture)::Type;
 				using Class = std::remove_cvref_t<std::remove_pointer_t<PointerToClass>>;
 				Class registered;
-				const auto container(Container<>().registerFactory([&registered]() -> const PointerToClass { return &registered; }));
+				const auto container(Container().registerFactory([&registered]() -> const PointerToClass { return &registered; }));
 				auto resolved(container.template resolve<PointerToClass>());
 				expect(resolved, equal_to(&registered));
 			});
@@ -370,7 +392,7 @@ namespace smeg::tests::unit::kernel::di
 				using PointerToClass = decltype(fixture)::Type;
 				using Class = std::remove_cvref_t<std::remove_pointer_t<PointerToClass>>;
 				Class registered;
-				const auto container(Container<>().registerFactory([&registered]() -> PointerToClass { return &registered; }));
+				const auto container(Container().registerFactory([&registered]() -> PointerToClass { return &registered; }));
 				auto resolved(container.template resolve<ClassRequiringInjection<PointerToClass>>());
 				expect(std::get<0>(resolved.injected).value, equal_to(&registered));
 			});
@@ -380,7 +402,7 @@ namespace smeg::tests::unit::kernel::di
 				using PointerToClass = decltype(fixture)::Type;
 				using Class = std::remove_cvref_t<std::remove_pointer_t<PointerToClass>>;
 				Class registered;
-				const auto container(Container<>().registerFactory([&registered]() -> PointerToClass { return &registered; }));
+				const auto container(Container().registerFactory([&registered]() -> PointerToClass { return &registered; }));
 				const auto resolved(container.template resolve<ClassRequiringInjection<const PointerToClass>>());
 				expect(std::get<0>(resolved.injected).value, equal_to(&registered));
 			});
@@ -390,7 +412,7 @@ namespace smeg::tests::unit::kernel::di
 				using PointerToClass = decltype(fixture)::Type;
 				using Class = std::remove_cvref_t<std::remove_pointer_t<PointerToClass>>;
 				Class registered;
-				const auto container(Container<>().registerFactory([&registered]() -> const PointerToClass { return &registered; }));
+				const auto container(Container().registerFactory([&registered]() -> const PointerToClass { return &registered; }));
 				auto resolved(container.template resolve<ClassRequiringInjection<PointerToClass>>());
 				expect(std::get<0>(resolved.injected).value, equal_to(&registered));
 			});
@@ -405,7 +427,7 @@ namespace smeg::tests::unit::kernel::di
 				const volatile ClassWithDefaultConstructor *>;
 
 			std::array<ClassWithDefaultConstructor, 4> registered;
-			const auto container(Container<>()
+			const auto container(Container()
 				.registerFactory([&registered]() -> const ClassWithDefaultConstructor * { return &registered[0]; })
 				.registerFactory([&registered]() -> volatile ClassWithDefaultConstructor * { return &registered[1]; })
 				.registerFactory([&registered]() -> const volatile ClassWithDefaultConstructor * { return &registered[2]; })
@@ -424,7 +446,7 @@ namespace smeg::tests::unit::kernel::di
 		{
 			using Class = ClassRequiringInjection<const ClassWithDefaultConstructor *>;
 			ClassWithDefaultConstructor registered;
-			const auto container(Container<>().registerFactory([&registered]() -> auto { return &registered; }));
+			const auto container(Container().registerFactory([&registered]() -> auto { return &registered; }));
 			auto resolved(container.template resolve<Class>());
 			expect(std::get<0>(resolved.injected).value, equal_to(&registered));
 		});
@@ -433,7 +455,7 @@ namespace smeg::tests::unit::kernel::di
 		{
 			using Class = ClassRequiringInjection<volatile ClassWithDefaultConstructor *>;
 			ClassWithDefaultConstructor registered;
-			const auto container(Container<>().registerFactory([&registered]() -> auto { return &registered; }));
+			const auto container(Container().registerFactory([&registered]() -> auto { return &registered; }));
 			auto resolved(container.template resolve<Class>());
 			expect(std::get<0>(resolved.injected).value, equal_to(&registered));
 		});
@@ -442,7 +464,7 @@ namespace smeg::tests::unit::kernel::di
 		{
 			using Class = ClassRequiringInjection<const volatile ClassWithDefaultConstructor *>;
 			ClassWithDefaultConstructor registered;
-			const auto container(Container<>().registerFactory([&registered]() -> auto { return &registered; }));
+			const auto container(Container().registerFactory([&registered]() -> auto { return &registered; }));
 			auto resolved(container.template resolve<Class>());
 			expect(std::get<0>(resolved.injected).value, equal_to(&registered));
 		});
@@ -451,7 +473,7 @@ namespace smeg::tests::unit::kernel::di
 		{
 			using Class = ClassRequiringInjection<const volatile ClassWithDefaultConstructor *>;
 			ClassWithDefaultConstructor registered;
-			const auto container(Container<>().registerFactory([&registered]() -> const auto { return &registered; }));
+			const auto container(Container().registerFactory([&registered]() -> const auto { return &registered; }));
 			auto resolved(container.template resolve<Class>());
 			expect(std::get<0>(resolved.injected).value, equal_to(&registered));
 		});
@@ -460,10 +482,70 @@ namespace smeg::tests::unit::kernel::di
 		{
 			using Class = ClassRequiringInjection<const volatile ClassWithDefaultConstructor *>;
 			ClassWithDefaultConstructor registered;
-			const auto container(Container<>().registerFactory([&registered]() -> volatile ClassWithDefaultConstructor * { return &registered; }));
+			const auto container(Container().registerFactory([&registered]() -> volatile ClassWithDefaultConstructor * { return &registered; }));
 			auto resolved(container.template resolve<Class>());
 			expect(std::get<0>(resolved.injected).value, equal_to(&registered));
 		});
+
+		unit.test("resolve_calledWithUnregisteredClassWhenDefaultFactoryIsRegisteredBeforeRegistrations_expectClassIsConstructedByDefaultFactory", []()
+		{
+			using Class = ClassRequiringInjection<const void *, std::uint32_t, const char *>;
+			struct StubFactory
+			{
+				static auto createUsing(const void *container)
+				{
+					return Class(container, 123, "hello from the default factory...");
+				}
+			};
+
+			const auto container(Container().withDefaultFactory<StubDefaultFactory<
+				StubFactory,
+				Class,
+				const void *,
+				std::uint32_t,
+				const char *>::template Type>());
+
+			auto resolved(container.template resolve<Class>());
+			std::tuple injected{
+				std::get<0>(resolved.injected).value,
+				std::get<1>(resolved.injected).value,
+				std::get<2>(resolved.injected).value};
+			expect(injected, tuple(&container, 123, "hello from the default factory..."));
+		});
+
+		unit.test("resolve_calledWithUnregisteredClassWhenDefaultFactoryIsRegisteredAfterRegistrations_expectClassIsConstructedByDefaultFactory", []()
+		{
+			using Class = ClassRequiringInjection<const void *, std::uint32_t, const char *>;
+			struct StubFactory
+			{
+				static auto createUsing(const void *container)
+				{
+					return Class(container, 456, "hello again from the default factory...");
+				}
+			};
+
+			const auto container(Container()
+				.registerFactory([]() -> auto { return ClassRequiringInjection(1, 2, 3); })
+				.template withDefaultFactory<StubDefaultFactory<
+					StubFactory,
+					Class,
+					const void *,
+					std::uint32_t,
+					const char *>::template Type>());
+
+			auto resolved(container.template resolve<Class>());
+			std::tuple injected{
+				std::get<0>(resolved.injected).value,
+				std::get<1>(resolved.injected).value,
+				std::get<2>(resolved.injected).value};
+			expect(injected, tuple(&container, 456, "hello again from the default factory..."));
+		});
+
+		// TODO: explicit factory and default factory registered, use explicit factory
+
+		// TODO: test default factory for reference (duplicate and adapt above tests - for the various CV qualifications, too...)
+		// TODO: test default factory for pointer (duplicate and adapt above test - for the various CV qualifications, too...)
+
 	});
 
 	suite<> containerResolveWithKeyTest("Container (Resolve With Key) Tests", [](auto &unit)
