@@ -255,8 +255,9 @@ namespace smeg::kernel::di
 		{
 			static auto createUsing(const Container<TRegistrations...> &container)
 			{
-				if constexpr (containerHasRegistrationFor<TClass>)
-					return std::get<ContainerRegistrationFor<TClass>>(container.registrations).create(); // TODO: then try const TClass and volatile TClass and const volatile TClass _iff_ there is a copy constructor...
+				using RegisteredType = FirstContainerRegistrationFor<TClass, const TClass, std::remove_const_t<TClass>>::Type;
+				if constexpr (!std::same_as<RegisteredType, NoneRegistered>)
+					return std::get<ContainerRegistrationFor<RegisteredType>>(container.registrations).create();
 				else
 					return DeducingFactoryFor<TClass, ConstructorParameters::For<TClass>>::createUsing(container); // TODO: this ought to be a call to a default factory really, to allow the user to determine whether to implicitly create classes or not
 			}

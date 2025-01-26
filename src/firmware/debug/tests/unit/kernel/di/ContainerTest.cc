@@ -126,7 +126,7 @@ namespace smeg::tests::unit::kernel::di
 			expect(resolved, equal_to(registeredToken));
 		});
 
-		unit.test("resolve_calledWithClassRequiringRegisteredDependencyFromWithoutClosure_expectClassIsConstructed", []()
+		unit.test("resolve_calledWithClassRequiringRegisteredDependencyFromInstanceFactoryWithoutClosure_expectClassIsConstructed", []()
 		{
 			constexpr std::uint32_t registeredToken = 103620;
 			const auto container(Container<>().registerFactory([]() { return registeredToken; }));
@@ -295,6 +295,40 @@ namespace smeg::tests::unit::kernel::di
 			expect(&std::get<0>(resolved.injected).value, equal_to(&registered));
 		});
 
+		unit.test("resolve_calledWithNonConstClassWhenOnlyConstIsRegistered_expectCopyConstructedInstance", []()
+		{
+			auto token(anyValueOf<std::uint32_t>());
+			const auto container(Container<>().registerFactory([token]() -> const auto { return ClassRequiringToken(token); }));
+			auto resolved(container.template resolve<ClassRequiringToken>());
+			expect(resolved.token, equal_to(token));
+		});
+
+		unit.test("resolve_calledWithConstClassWhenOnlyNonConstIsRegistered_expectCopyConstructedInstance", []()
+		{
+			auto token(anyValueOf<std::uint32_t>());
+			const auto container(Container<>().registerFactory([token]() -> auto { return ClassRequiringToken(token); }));
+			auto resolved(container.template resolve<const ClassRequiringToken>());
+			expect(resolved.token, equal_to(token));
+		});
+
+		unit.test("resolve_calledWithClassRequiringNonConstClassWhenOnlyConstIsRegistered_expectCopyConstructedInstance", []()
+		{
+			using Class = ClassRequiringInjection<ClassRequiringToken>;
+			auto token(anyValueOf<std::uint32_t>());
+			const auto container(Container<>().registerFactory([token]() -> const auto { return ClassRequiringToken(token); }));
+			auto resolved(container.template resolve<Class>());
+			expect(std::get<0>(resolved.injected).value.token, equal_to(token));
+		});
+
+		unit.test("resolve_calledWithClassRequiringConstClassWhenOnlyNonConstIsRegistered_expectCopyConstructedInstance", []()
+		{
+			using Class = ClassRequiringInjection<const ClassRequiringToken>;
+			auto token(anyValueOf<std::uint32_t>());
+			const auto container(Container<>().registerFactory([token]() -> auto { return ClassRequiringToken(token); }));
+			auto resolved(container.template resolve<Class>());
+			expect(std::get<0>(resolved.injected).value.token, equal_to(token));
+		});
+
 		mettle::subsuite<
 			TypeOf<ClassWithDefaultConstructor *>,
 			TypeOf<const ClassWithDefaultConstructor *>,
@@ -430,15 +464,6 @@ namespace smeg::tests::unit::kernel::di
 			auto resolved(container.template resolve<Class>());
 			expect(std::get<0>(resolved.injected).value, equal_to(&registered));
 		});
-
-		// TODO: what about requesting 'const T' when only 'T' is available ?  It should resolve exactly...
-		// TODO: what about requesting 'const T' and 'T' when both are available ?  They should resolve exactly...
-		// TODO: what about requesting 'const T &' when only 'T' is available ?  It should resolve exactly...
-		// TODO: what about requesting 'const T &' and 'T &' when both are available ?  They should resolve exactly...
-		// TODO: what about requesting 'volatile T &' when only 'T' is available ?  It should resolve exactly...
-		// TODO: what about requesting 'volatile T &' and 'T &' when both are available ?  They should resolve exactly...
-		// TODO: what about requesting 'const volatile T &' when only 'T' is available ?  It should resolve exactly...
-		// TODO: what about requesting 'const volatile T &' and 'T &' when both are available ?  They should resolve exactly...
 	});
 
 	suite<> containerResolveWithKeyTest("Container (Resolve With Key) Tests", [](auto &unit)
