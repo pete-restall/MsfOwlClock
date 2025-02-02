@@ -1,4 +1,8 @@
 # MSF Owl Clock
+<span style="display:block;text-align:center">[![PCB](doc/photos/pcb-with-all-parts-434x578.jpg)](doc/photos/pcb-with-all-parts-3072x4096.jpg)</span>
+
+The board with the ferrite rod antenna and two TFT displays attached.
+
 [![Front of PCB](doc/photos/pcb-with-edge-rails-front-217x289.jpg)](doc/photos/pcb-with-edge-rails-front-6944x9248.jpg) [![Back of PCB](doc/photos/pcb-with-edge-rails-back-217x289.jpg)](doc/photos/pcb-with-edge-rails-back-6944x9248.jpg)
 
 The above images are the boards as delivered from fabrication, not the end product.  Namely:
