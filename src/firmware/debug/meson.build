@@ -65,7 +65,13 @@ todo_look_into_these_warnings_cpp_args = [
 ]
 
 global_disable_warnings_cpp_args = disable_stdlib_warnings_cpp_args + disable_metaprogramming_false_positives_cpp_args + disable_stylistic_warnings_cpp_args
-test_disable_warnings_cpp_args = []
+test_disable_warnings_cpp_args = [
+	'-Wno-suggest-attribute=pure', # function might be candidate for attribute ‘pure’ if it is known to return normally
+
+	# TODO: Mainly happens for default destructors for classes containing std::shared_ptr<T>; there is a (very old) GCC bug
+	# filed / ignored for this - https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70328
+	'-Wno-inline' # inlining failed in call to ‘T::X()’: call is unlikely and code size would grow
+]
 
 extra_cpp_args = global_disable_warnings_cpp_args + meson.get_external_property('mcu_cpp_args', [])
 add_global_arguments(extra_cpp_args, language: 'cpp', native: true)
