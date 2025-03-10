@@ -541,7 +541,49 @@ namespace smeg::tests::unit::kernel::di
 			expect(injected, tuple(&container, 456, "hello again from the default factory..."));
 		});
 
-		// TODO: explicit factory and default factory registered, use explicit factory
+		unit.test("resolve_calledWithRegisteredClassWhenDefaultFactoryIsRegisteredBeforeRegistrations_expectClassIsConstructedByRegisteredFactory", []()
+		{
+			using Class = ClassRequiringToken;
+			constexpr std::uint32_t defaultTokenValue(2379321);
+			Class registered(anyValueOfExcept(defaultTokenValue));
+
+			struct StubFactory
+			{
+				static auto createUsing(const void *) { return Class(defaultTokenValue); }
+			};
+
+			const auto container(Container()
+				.withDefaultFactory<StubDefaultFactory<
+					StubFactory,
+					Class,
+					std::uint32_t>::template Type>()
+				.registerFactory([registered]() -> auto { return registered; }));
+
+			auto resolved(container.template resolve<Class>());
+			expect(resolved.token, equal_to(registered.token));
+		});
+
+		unit.test("resolve_calledWithRegisteredClassWhenDefaultFactoryIsRegisteredAfterRegistrations_expectClassIsConstructedByRegisteredFactory", []()
+		{
+			using Class = ClassRequiringToken;
+			constexpr std::uint32_t defaultTokenValue(1978);
+			Class registered(anyValueOfExcept(defaultTokenValue));
+
+			struct StubFactory
+			{
+				static auto createUsing(const void *) { return Class(defaultTokenValue); }
+			};
+
+			const auto container(Container()
+				.registerFactory([registered]() -> auto { return registered; })
+				.template withDefaultFactory<StubDefaultFactory<
+					StubFactory,
+					Class,
+					std::uint32_t>::template Type>());
+
+			auto resolved(container.template resolve<Class>());
+			expect(resolved.token, equal_to(registered.token));
+		});
 
 		// TODO: test default factory for reference (duplicate and adapt above tests - for the various CV qualifications, too...)
 		// TODO: test default factory for pointer (duplicate and adapt above test - for the various CV qualifications, too...)

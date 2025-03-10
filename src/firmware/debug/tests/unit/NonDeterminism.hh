@@ -76,6 +76,17 @@ namespace smeg::tests::unit
 	{
 		return anyInClosedRange(std::numeric_limits<T>::min(), std::numeric_limits<T>::max());
 	}
+
+	template <std::integral T>
+	T anyValueOfExcept(T except)
+	{
+		while (true)
+		{
+			auto anyValue(anyValueOf<T>());
+			if (anyValue != except)
+				return anyValue;
+		}
+	}
 }
 
 #endif
