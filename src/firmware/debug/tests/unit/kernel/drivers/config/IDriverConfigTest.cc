@@ -121,7 +121,7 @@ namespace smeg::tests::unit::kernel::drivers::config
 		using ProvidedMagic = DummyClass;
 	};
 
-	suite<> idriverConfigTest("IDriverConfig Test Suite", [](auto &unit)
+	suite<> iDriverConfigTest("IDriverConfig Test Suite", [](auto &unit)
 	{
 		unit.test("IDriverConfig_conceptPassedConfigWithOnlyProvidedApis_expectTrueIsReturned", []()
 		{
