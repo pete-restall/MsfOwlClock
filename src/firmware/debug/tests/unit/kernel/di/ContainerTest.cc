@@ -80,7 +80,7 @@ namespace smeg::tests::unit::kernel::di
 		using Type = Specialised<TFactory, TActualClass, TActualConstructorParameters...>;
 	};
 
-	suite<> containerResolveWithoutKeyTest("Container (Resolve Without Key) Tests", [](auto &unit)
+	suite<> containerResolveWithoutKeyTest("Container (Resolve Without Key) Test Suite", [](auto &unit)
 	{
 		// all factories should be able to take up to the following:
 		// factory<TContainer, T, TKey, ResolutionContext<TContext>>(container, context)
@@ -590,7 +590,7 @@ namespace smeg::tests::unit::kernel::di
 
 	});
 
-	suite<> containerResolveWithKeyTest("Container (Resolve With Key) Tests", [](auto &unit)
+	suite<> containerResolveWithKeyTest("Container (Resolve With Key) Test Suite", [](auto &unit)
 	{
 		// TODO: Think about how key-based resolution will work:
 		//     Do all dependencies need to be keyed ?  Only if there is no registered default factory for the given key, ie. we should be able to provide a default factory for a given key that is invoked whenever there is an unregistered instance; before that invocation we should also call into parent containers, if any.

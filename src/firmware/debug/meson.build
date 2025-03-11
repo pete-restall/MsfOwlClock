@@ -73,7 +73,14 @@ test_disable_warnings_cpp_args = [
 	'-Wno-inline' # inlining failed in call to ‘T::X()’: call is unlikely and code size would grow
 ]
 
-extra_cpp_args = global_disable_warnings_cpp_args + meson.get_external_property('mcu_cpp_args', [])
+extra_cpp_args = [
+	# TODO: Workaround for what appears to be a GCC name-mangling bug when using certain lambdas.  This ought to be able to be removed in future (ABI > 19 ?):
+	#     mangling of ‘...’ conflicts with a previous mangle
+	#     note: a later ‘-fabi-version=’ (or =0) avoids this error with a change in mangling
+	'-fabi-version=17'
+]
+
+extra_cpp_args = extra_cpp_args + global_disable_warnings_cpp_args + meson.get_external_property('mcu_cpp_args', [])
 add_global_arguments(extra_cpp_args, language: 'cpp', native: true)
 add_global_arguments(extra_cpp_args, language: 'cpp', native: false)
 
@@ -193,6 +200,7 @@ else
 			unit_tests_dir / kernel_crt_crt0_linker_dir / 'LinkerInitArraySectionTest.cc',
 			unit_tests_dir / kernel_di_dir / 'ConstructorParametersTest.cc',
 			unit_tests_dir / kernel_di_dir / 'ContainerTest.cc',
+			unit_tests_dir / kernel_di_dir / 'ILambdaFactoryTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'DriverTaskApisTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'IDriverTaskTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'IIsrTest.cc',

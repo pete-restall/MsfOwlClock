@@ -5,7 +5,9 @@
 #include <type_traits>
 
 #include "../tuples/TupleProjection.hh"
+#include "_IsNotSameAs.hh"
 #include "ConstructorParameters.hh"
+#include "ILambdaFactory.hh"
 
 namespace smeg::kernel::di
 {
@@ -14,24 +16,6 @@ namespace smeg::kernel::di
 	struct NoKey
 	{
 	};
-
-	template <typename T, typename TNot>
-	concept _$IsNotSameAs = !std::is_same_v<T, TNot>;
-
-	template <typename T>
-	concept IStaticLambdaFactory = !std::is_member_function_pointer_v<decltype(&T::operator())> && requires // TODO: needs testing independently of the container
-	{
-		{ T::operator()() } -> _$IsNotSameAs<void>; // TODO: needs testing independently of the container
-	};
-
-	template <typename T>
-	concept IInstanceLambdaFactory = std::is_member_function_pointer_v<decltype(&T::operator())> && requires(T &lambda) // TODO: needs testing independently of the container
-	{
-		{ lambda() } -> _$IsNotSameAs<void>; // TODO: needs testing independently of the container
-	};
-
-	template <typename T>
-	concept ILambdaFactory = IStaticLambdaFactory<T> || IInstanceLambdaFactory<T>; // TODO: needs testing independently of the container
 
 	template <typename TFactory>
 	struct LambdaFactoryTraits;
