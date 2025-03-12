@@ -8,6 +8,7 @@
 #include "_IsNotSameAs.hh"
 #include "ConstructorParameters.hh"
 #include "ILambdaFactory.hh"
+#include "LambdaFactoryRegistration.hh"
 #include "LambdaFactoryTraits.hh"
 
 namespace smeg::kernel::di
@@ -16,45 +17,6 @@ namespace smeg::kernel::di
 
 	struct NoKey
 	{
-	};
-
-	template <typename...>
-	class LambdaFactoryRegistration;
-
-	template <typename TKey, IStaticLambdaFactory TFactory>
-	class LambdaFactoryRegistration<TKey, TFactory>
-	{
-	public:
-		using Type = LambdaFactoryTraits<TFactory>::Type;
-
-		LambdaFactoryRegistration(TFactory)
-		{
-		}
-
-		constexpr Type create(void) const
-		{
-			return TFactory::operator()();
-		}
-	};
-
-	template <typename TKey, IInstanceLambdaFactory TFactory>
-	class LambdaFactoryRegistration<TKey, TFactory>
-	{
-	private:
-		TFactory factory; // TODO: need to devise a test to verify that we're using an instance member here rather than an auto
-
-	public:
-		LambdaFactoryRegistration(TFactory factory) :
-			factory(factory)
-		{
-		}
-
-		using Type = LambdaFactoryTraits<TFactory>::Type;
-
-		constexpr Type create(void) const
-		{
-			return this->factory();
-		}
 	};
 
 	template <typename T>
