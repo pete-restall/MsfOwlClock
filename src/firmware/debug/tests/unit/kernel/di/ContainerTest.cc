@@ -692,9 +692,21 @@ namespace smeg::tests::unit::kernel::di
 
 		mettle::subsuite<
 			TypeOf<Dummy *>,
+			TypeOf<Dummy *const>,
+			TypeOf<Dummy *volatile>,
+			TypeOf<Dummy *const volatile>,
 			TypeOf<const Dummy *>,
+			TypeOf<const Dummy *const>,
+			TypeOf<const Dummy *volatile>,
+			TypeOf<const Dummy *const volatile>,
 			TypeOf<volatile Dummy *>,
-			TypeOf<const volatile Dummy *>
+			TypeOf<volatile Dummy *const>,
+			TypeOf<volatile Dummy *volatile>,
+			TypeOf<volatile Dummy *const volatile>,
+			TypeOf<const volatile Dummy *>,
+			TypeOf<const volatile Dummy *const>,
+			TypeOf<const volatile Dummy *volatile>,
+			TypeOf<const volatile Dummy *const volatile>
 		>(unit, "Pointers (Default Factory)", [](auto &unit) {
 			unit.test("resolve_calledWithUnregisteredPointerWhenDefaultFactoryIsRegisteredBeforeRegistrations_expectPointerIsConstructedByDefaultFactory", [](auto fixture)
 			{
@@ -778,9 +790,6 @@ namespace smeg::tests::unit::kernel::di
 				expect(resolved, equal_to(&registered));
 			});
 		});
-
-		// TODO: for references, the registered (ie. non-default) factory needs to be able to resolve, say, const T & -> T &, volatile T & -> T &, etc. etc.
-		// TODO: for pointers, the registered (ie. non-default) factory needs to be able to resolve, say, const T *const -> T *, volatile T * -> T *, etc. etc.
 	});
 
 	suite<> containerResolveWithKeyTest("Container (Resolve With Key) Test Suite", [](auto &unit)

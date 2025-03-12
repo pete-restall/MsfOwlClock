@@ -207,13 +207,58 @@ namespace smeg::kernel::di
 			}
 		};
 
-		template <typename TClass>
+		template <typename TClass> // TODO: the permutations of DefaultFactoryFor can probably be reduced by using specialisations along the lines of 'typename TClass, bool IsReference, bool IsPointer'; come back and refactor this...
 		struct DefaultFactoryFor<TClass *>
 		{
 			static auto createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
 			{
 				using DefaultFactory = TDefaultFactory<TClass *>;
 				using UnspecifiedFactory = _$UnspecifiedDefaultFactory<TClass *>;
+				static_assert(
+					!std::same_as<DefaultFactory, UnspecifiedFactory>,
+					"The DI container cannot create pointers; these must be registered explicitly, or provided via your own default factory");
+
+				return DefaultFactory::createUsing(container);
+			}
+		};
+
+		template <typename TClass>
+		struct DefaultFactoryFor<TClass *const>
+		{
+			static auto createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
+			{
+				using DefaultFactory = TDefaultFactory<TClass *const>;
+				using UnspecifiedFactory = _$UnspecifiedDefaultFactory<TClass *const>;
+				static_assert(
+					!std::same_as<DefaultFactory, UnspecifiedFactory>,
+					"The DI container cannot create pointers; these must be registered explicitly, or provided via your own default factory");
+
+				return DefaultFactory::createUsing(container);
+			}
+		};
+
+		template <typename TClass>
+		struct DefaultFactoryFor<TClass *volatile>
+		{
+			static auto createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
+			{
+				using DefaultFactory = TDefaultFactory<TClass *volatile>;
+				using UnspecifiedFactory = _$UnspecifiedDefaultFactory<TClass *volatile>;
+				static_assert(
+					!std::same_as<DefaultFactory, UnspecifiedFactory>,
+					"The DI container cannot create pointers; these must be registered explicitly, or provided via your own default factory");
+
+				return DefaultFactory::createUsing(container);
+			}
+		};
+
+		template <typename TClass>
+		struct DefaultFactoryFor<TClass *const volatile>
+		{
+			static auto createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
+			{
+				using DefaultFactory = TDefaultFactory<TClass *const volatile>;
+				using UnspecifiedFactory = _$UnspecifiedDefaultFactory<TClass *const volatile>;
 				static_assert(
 					!std::same_as<DefaultFactory, UnspecifiedFactory>,
 					"The DI container cannot create pointers; these must be registered explicitly, or provided via your own default factory");
@@ -235,7 +280,7 @@ namespace smeg::kernel::di
 			}
 		};
 
-		template <typename TClass> // TODO: repeat this for the other CV qualifications
+		template <typename TClass>
 		struct FactoryFor<TClass *>
 		{
 			static auto createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
@@ -248,22 +293,47 @@ namespace smeg::kernel::di
 			}
 		};
 
-		template <typename TClass> // TODO: repeat this for the other CV qualifications
+		template <typename TClass>
 		struct FactoryFor<TClass *const>
 		{
 			static auto createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
 			{
-				using RegisteredType = FirstContainerRegistrationFor<TClass *const, const TClass *const, TClass *, const TClass *>::Type;
-				static_assert( // TODO: We'll want to use the default factory for (TClass *const)...
-					!std::same_as<RegisteredType, NoneRegistered>,
-					"TODO: rather than a static assertion, this really ought to be a call to a default factory to allow the user to specify whether to implicitly create classes or not");
-
-				return std::get<ContainerRegistrationFor<RegisteredType>>(container.registrations).create();
+				using RegisteredType = FirstContainerRegistrationFor<TClass *const, TClass *>::Type;
+				if constexpr (!std::same_as<RegisteredType, NoneRegistered>)
+					return std::get<ContainerRegistrationFor<RegisteredType>>(container.registrations).create();
+				else
+					return DefaultFactoryFor<TClass *const>::createUsing(container);
 			}
 		};
 
 		template <typename TClass>
-		struct FactoryFor<TClass &> // TODO: we'll need more of these specialisations for CV-qualified refs that are passed directly to the public container.resolve<cv T &>(), rather than injected into a class (test this theory...)
+		struct FactoryFor<TClass *volatile>
+		{
+			static auto createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
+			{
+				using RegisteredType = FirstContainerRegistrationFor<TClass *volatile, TClass *const volatile, TClass *, TClass *const>::Type;
+				if constexpr (!std::same_as<RegisteredType, NoneRegistered>)
+					return std::get<ContainerRegistrationFor<RegisteredType>>(container.registrations).create();
+				else
+					return DefaultFactoryFor<TClass *volatile>::createUsing(container);
+			}
+		};
+
+		template <typename TClass>
+		struct FactoryFor<TClass *const volatile>
+		{
+			static auto createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
+			{
+				using RegisteredType = FirstContainerRegistrationFor<TClass *const volatile, TClass *volatile, TClass *const, TClass *>::Type;
+				if constexpr (!std::same_as<RegisteredType, NoneRegistered>)
+					return std::get<ContainerRegistrationFor<RegisteredType>>(container.registrations).create();
+				else
+					return DefaultFactoryFor<TClass *const volatile>::createUsing(container);
+			}
+		};
+
+		template <typename TClass>
+		struct FactoryFor<TClass &> // TODO: we'll need more of these specialisations for CV-qualified refs so that we can resolve 'const T & -> T &', for example...
 		{
 			static auto &createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
 			{
