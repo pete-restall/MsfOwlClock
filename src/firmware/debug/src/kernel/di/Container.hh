@@ -193,6 +193,21 @@ namespace smeg::kernel::di
 		};
 
 		template <typename TClass>
+		struct DefaultFactoryFor<TClass &>
+		{
+			static auto &createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
+			{
+				using DefaultFactory = TDefaultFactory<TClass &>;
+				using UnspecifiedFactory = _$UnspecifiedDefaultFactory<TClass &>;
+				static_assert(
+					!std::same_as<DefaultFactory, UnspecifiedFactory>,
+					"The DI container cannot create references; these must be registered explicitly, or provided via your own default factory");
+
+				return DefaultFactory::createUsing(container);
+			}
+		};
+
+		template <typename TClass>
 		struct FactoryFor
 		{
 			static auto createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
@@ -239,11 +254,10 @@ namespace smeg::kernel::di
 			static auto &createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
 			{
 				using RegisteredType = FirstContainerRegistrationFor<TClass &>::Type;
-				static_assert( // TODO: We'll want to use the default factory for (TClass &)...
-					!std::same_as<RegisteredType, NoneRegistered>,
-					"TODO: rather than a static assertion, this really ought to be a call to a default factory to allow the user to specify whether to implicitly create classes or not");
-
-				return std::get<ContainerRegistrationFor<RegisteredType>>(container.registrations).create();
+				if constexpr (!std::same_as<RegisteredType, NoneRegistered>)
+					return std::get<ContainerRegistrationFor<RegisteredType>>(container.registrations).create();
+				else
+					return DefaultFactoryFor<TClass &>::createUsing(container);
 			}
 		};
 

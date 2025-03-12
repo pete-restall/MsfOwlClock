@@ -62,11 +62,11 @@ namespace smeg::tests::unit::kernel::di
 	class StubDefaultFactory
 	{
 	private:
-		template <typename...>
+		template <bool, typename...>
 		struct Specialised;
 
 		template <typename TStub>
-		struct Specialised<TStub, TClass, TConstructorParameters...>
+		struct Specialised<false, TStub, TClass, TConstructorParameters...>
 		{
 			template <typename TContainer>
 			static auto createUsing(const TContainer &container)
@@ -75,9 +75,23 @@ namespace smeg::tests::unit::kernel::di
 			}
 		};
 
+		template <typename TStub>
+		struct Specialised<true, TStub, TClass>
+		{
+			template <typename TContainer>
+			static auto &createUsing(const TContainer &container)
+			{
+				return TStub::createUsing(&container);
+			}
+		};
+
 	public:
 		template <typename TActualClass, typename... TActualConstructorParameters>
-		using Type = Specialised<TFactory, TActualClass, TActualConstructorParameters...>;
+		using Type = Specialised<std::is_reference_v<TClass>, TFactory, TActualClass, TActualConstructorParameters...>;
+	};
+
+	struct Dummy
+	{
 	};
 
 	suite<> containerResolveWithoutKeyTest("Container (Resolve Without Key) Test Suite", [](auto &unit)
@@ -498,12 +512,14 @@ namespace smeg::tests::unit::kernel::di
 				}
 			};
 
-			const auto container(Container().withDefaultFactory<StubDefaultFactory<
-				StubFactory,
-				Class,
-				const void *,
-				std::uint32_t,
-				const char *>::template Type>());
+			const auto container(Container()
+				.withDefaultFactory<StubDefaultFactory<
+					StubFactory,
+					Class,
+					const void *,
+					std::uint32_t,
+					const char *>::template Type>()
+				.registerFactory([]() -> auto { return 456; }));
 
 			auto resolved(container.template resolve<Class>());
 			std::tuple injected{
@@ -585,9 +601,99 @@ namespace smeg::tests::unit::kernel::di
 			expect(resolved.token, equal_to(registered.token));
 		});
 
-		// TODO: test default factory for reference (duplicate and adapt above tests - for the various CV qualifications, too...)
-		// TODO: test default factory for pointer (duplicate and adapt above test - for the various CV qualifications, too...)
 
+		// TODO: the above two tests need duplicating like the below two (CV qualifications)
+
+		mettle::subsuite<
+			TypeOf<Dummy &>,
+			TypeOf<const Dummy &>,
+			TypeOf<volatile Dummy &>,
+			TypeOf<const volatile Dummy &>
+		>(unit, "References", [](auto &unit) {
+			unit.test("resolve_calledWithUnregisteredReferenceWhenDefaultFactoryIsRegisteredBeforeRegistrations_expectReferenceIsConstructedByDefaultFactory", [](auto fixture)
+			{
+				using ReferenceToClass = decltype(fixture)::Type;
+				static std::remove_cvref_t<ReferenceToClass> defaultFactoryInstance;
+				struct StubFactory
+				{
+					static auto &createUsing(const void *)
+					{
+						return defaultFactoryInstance;
+					}
+				};
+
+				const auto container(Container()
+					.withDefaultFactory<StubDefaultFactory<StubFactory, ReferenceToClass>::template Type>()
+					.registerFactory([]() -> auto { return 123; }));
+
+				auto &resolved(container.template resolve<ReferenceToClass>());
+				expect(&resolved, equal_to(&defaultFactoryInstance));
+			});
+
+			unit.test("resolve_calledWithUnregisteredReferenceWhenDefaultFactoryIsRegisteredAfterRegistrations_expectReferenceIsConstructedByDefaultFactory", [](auto fixture)
+			{
+				using ReferenceToClass = decltype(fixture)::Type;
+				static std::remove_cvref_t<ReferenceToClass> defaultFactoryInstance;
+				struct StubFactory
+				{
+					static auto &createUsing(const void *)
+					{
+						return defaultFactoryInstance;
+					}
+				};
+
+				const auto container(Container()
+					.registerFactory([]() -> auto { return 123; })
+					.template withDefaultFactory<StubDefaultFactory<StubFactory, ReferenceToClass>::template Type>());
+
+				auto &resolved(container.template resolve<ReferenceToClass>());
+				expect(&resolved, equal_to(&defaultFactoryInstance));
+			});
+
+			unit.test("resolve_calledWithRegisteredClassWhenDefaultFactoryIsRegisteredBeforeRegistrations_expectClassIsConstructedByRegisteredFactory", [](auto fixture)
+			{
+				using ReferenceToClass = decltype(fixture)::Type;
+				static std::remove_cvref_t<ReferenceToClass> defaultFactoryInstance;
+				struct StubFactory
+				{
+					static auto &createUsing(const void *)
+					{
+						return defaultFactoryInstance;
+					}
+				};
+
+				std::remove_cvref_t<ReferenceToClass> registered;
+				const auto container(Container()
+					.withDefaultFactory<StubDefaultFactory<StubFactory, ReferenceToClass>::template Type>()
+					.registerFactory([&registered]() -> ReferenceToClass { return registered; }));
+
+				auto &resolved(container.template resolve<ReferenceToClass>());
+				expect(&resolved, equal_to(&registered));
+			});
+
+			unit.test("resolve_calledWithRegisteredClassWhenDefaultFactoryIsRegisteredAfterRegistrations_expectClassIsConstructedByRegisteredFactory", [](auto fixture)
+			{
+				using ReferenceToClass = decltype(fixture)::Type;
+				static std::remove_cvref_t<ReferenceToClass> defaultFactoryInstance;
+				struct StubFactory
+				{
+					static auto &createUsing(const void *)
+					{
+						return defaultFactoryInstance;
+					}
+				};
+
+				std::remove_cvref_t<ReferenceToClass> registered;
+				const auto container(Container()
+					.registerFactory([&registered]() -> ReferenceToClass { return registered; })
+					.template withDefaultFactory<StubDefaultFactory<StubFactory, ReferenceToClass>::template Type>());
+
+				auto &resolved(container.template resolve<ReferenceToClass>());
+				expect(&resolved, equal_to(&registered));
+			});
+		});
+
+		// TODO: test default factory for pointers (duplicate and adapt above sub-suite of tests)
 	});
 
 	suite<> containerResolveWithKeyTest("Container (Resolve With Key) Test Suite", [](auto &unit)
