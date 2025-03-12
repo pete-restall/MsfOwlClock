@@ -201,6 +201,7 @@ else
 			unit_tests_dir / kernel_di_dir / 'ConstructorParametersTest.cc',
 			unit_tests_dir / kernel_di_dir / 'ContainerTest.cc',
 			unit_tests_dir / kernel_di_dir / 'ILambdaFactoryTest.cc',
+			unit_tests_dir / kernel_di_dir / 'LambdaFactoryTraitsTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'DriverTaskApisTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'IDriverTaskTest.cc',
 			unit_tests_dir / kernel_drivers_dir / 'IIsrTest.cc',

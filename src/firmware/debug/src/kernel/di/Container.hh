@@ -8,6 +8,7 @@
 #include "_IsNotSameAs.hh"
 #include "ConstructorParameters.hh"
 #include "ILambdaFactory.hh"
+#include "LambdaFactoryTraits.hh"
 
 namespace smeg::kernel::di
 {
@@ -15,21 +16,6 @@ namespace smeg::kernel::di
 
 	struct NoKey
 	{
-	};
-
-	template <typename TFactory>
-	struct LambdaFactoryTraits;
-
-	template <IStaticLambdaFactory TFactory>
-	struct LambdaFactoryTraits<TFactory>
-	{
-		using Type = decltype(TFactory::operator()());
-	};
-
-	template <IInstanceLambdaFactory TFactory>
-	struct LambdaFactoryTraits<TFactory>
-	{
-		using Type = decltype(std::declval<TFactory>()());
 	};
 
 	template <typename...>
