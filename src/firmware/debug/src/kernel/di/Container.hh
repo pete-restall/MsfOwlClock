@@ -175,11 +175,11 @@ namespace smeg::kernel::di
 			using Type = std::conditional_t<containerHasRegistrationFor<TClass>, TClass, typename FirstContainerRegistrationFor<TClasses...>::Type>;
 		};
 
-		template <typename...>
-		struct DefaultFactoryFor;
+		template <typename, bool, bool, typename...>
+		struct _$DefaultFactoryFor;
 
 		template <typename TClass, typename... TConstructorParameters>
-		struct DefaultFactoryFor<TClass, std::tuple<TConstructorParameters...>>
+		struct _$DefaultFactoryFor<TClass, false, false, std::tuple<TConstructorParameters...>>
 		{
 			static auto createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
 			{
@@ -192,80 +192,29 @@ namespace smeg::kernel::di
 			}
 		};
 
-		template <typename TClass>
-		struct DefaultFactoryFor<TClass &>
+		template <typename TClass, bool IsReference, bool IsPointer>
+		struct _$DefaultFactoryFor<TClass, IsReference, IsPointer>
 		{
-			static auto &createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
+			static_assert(IsReference ^ IsPointer, "TODO: References to pointers have not been wired into the DI container yet...");
+
+			static TClass createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
 			{
-				using DefaultFactory = TDefaultFactory<TClass &>;
-				using UnspecifiedFactory = _$UnspecifiedDefaultFactory<TClass &>;
+				using DefaultFactory = TDefaultFactory<TClass>;
+				using UnspecifiedFactory = _$UnspecifiedDefaultFactory<TClass>;
 				static_assert(
-					!std::same_as<DefaultFactory, UnspecifiedFactory>,
+					IsPointer || (IsReference && !std::same_as<DefaultFactory, UnspecifiedFactory>),
 					"The DI container cannot create references; these must be registered explicitly, or provided via your own default factory");
 
-				return DefaultFactory::createUsing(container);
-			}
-		};
-
-		template <typename TClass> // TODO: the permutations of DefaultFactoryFor can probably be reduced by using specialisations along the lines of 'typename TClass, bool IsReference, bool IsPointer'; come back and refactor this...
-		struct DefaultFactoryFor<TClass *>
-		{
-			static auto createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
-			{
-				using DefaultFactory = TDefaultFactory<TClass *>;
-				using UnspecifiedFactory = _$UnspecifiedDefaultFactory<TClass *>;
 				static_assert(
-					!std::same_as<DefaultFactory, UnspecifiedFactory>,
+					IsReference || (IsPointer && !std::same_as<DefaultFactory, UnspecifiedFactory>),
 					"The DI container cannot create pointers; these must be registered explicitly, or provided via your own default factory");
 
 				return DefaultFactory::createUsing(container);
 			}
 		};
 
-		template <typename TClass>
-		struct DefaultFactoryFor<TClass *const>
-		{
-			static auto createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
-			{
-				using DefaultFactory = TDefaultFactory<TClass *const>;
-				using UnspecifiedFactory = _$UnspecifiedDefaultFactory<TClass *const>;
-				static_assert(
-					!std::same_as<DefaultFactory, UnspecifiedFactory>,
-					"The DI container cannot create pointers; these must be registered explicitly, or provided via your own default factory");
-
-				return DefaultFactory::createUsing(container);
-			}
-		};
-
-		template <typename TClass>
-		struct DefaultFactoryFor<TClass *volatile>
-		{
-			static auto createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
-			{
-				using DefaultFactory = TDefaultFactory<TClass *volatile>;
-				using UnspecifiedFactory = _$UnspecifiedDefaultFactory<TClass *volatile>;
-				static_assert(
-					!std::same_as<DefaultFactory, UnspecifiedFactory>,
-					"The DI container cannot create pointers; these must be registered explicitly, or provided via your own default factory");
-
-				return DefaultFactory::createUsing(container);
-			}
-		};
-
-		template <typename TClass>
-		struct DefaultFactoryFor<TClass *const volatile>
-		{
-			static auto createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
-			{
-				using DefaultFactory = TDefaultFactory<TClass *const volatile>;
-				using UnspecifiedFactory = _$UnspecifiedDefaultFactory<TClass *const volatile>;
-				static_assert(
-					!std::same_as<DefaultFactory, UnspecifiedFactory>,
-					"The DI container cannot create pointers; these must be registered explicitly, or provided via your own default factory");
-
-				return DefaultFactory::createUsing(container);
-			}
-		};
+		template <typename TClass, typename... TConstructorParameters>
+		using DefaultFactoryFor = _$DefaultFactoryFor<TClass, std::is_reference_v<TClass>, std::is_pointer_v<TClass>, TConstructorParameters...>;
 
 		template <typename TClass>
 		struct FactoryFor
