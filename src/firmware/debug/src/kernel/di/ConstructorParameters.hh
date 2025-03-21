@@ -88,11 +88,14 @@ namespace smeg::kernel::di
 		template <typename TClass, std::size_t ParameterIndex>
 		struct Deduce
 		{
+			struct Tag1 { char _; };
+			struct Tag2 { char _[2]; };
+
 			template <typename, std::size_t>
-			static auto instantiateLoophole(...) -> std::size_t;
+			static auto instantiateLoophole(...) -> Tag2;
 
 			template <typename, std::size_t N, auto = captureParameterType(Tag<TClass, N>{})>
-			static auto instantiateLoophole(int) -> char;
+			static auto instantiateLoophole(int) -> Tag1;
 
 			template <
 				typename TParameter,
@@ -100,7 +103,7 @@ namespace smeg::kernel::di
 					TClass,
 					std::remove_cvref_t<TParameter>,
 					ParameterIndex,
-					sizeof(instantiateLoophole<std::remove_cvref_t<TParameter>, ParameterIndex>(0)) == sizeof(char)>)>
+					sizeof(instantiateLoophole<std::remove_cvref_t<TParameter>, ParameterIndex>(0)) == sizeof(Tag1)>)>
 			operator TParameter&();
 
 			template <
@@ -109,7 +112,7 @@ namespace smeg::kernel::di
 					TClass,
 					std::remove_cvref_t<TParameter>,
 					ParameterIndex,
-					sizeof(instantiateLoophole<std::remove_cvref_t<TParameter>, ParameterIndex>(0)) == sizeof(char)>)>
+					sizeof(instantiateLoophole<std::remove_cvref_t<TParameter>, ParameterIndex>(0)) == sizeof(Tag1)>)>
 			operator TParameter&&();
 		};
 
@@ -134,7 +137,7 @@ namespace smeg::kernel::di
 			using AsTuple = std::tuple<typename decltype(capturedParameterType(Tag<T, ParameterIndices>()))::UnqualifiedType ...>;
 		};
 
-		template <typename T>
+		template <typename>
 		struct From
 		{
 			using AsTuple = std::tuple<>;
