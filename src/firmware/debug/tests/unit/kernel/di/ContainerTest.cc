@@ -96,16 +96,17 @@ namespace smeg::tests::unit::kernel::di
 
 	suite<> containerResolveWithoutKeyTest("Container (Resolve Without Key) Test Suite", [](auto &unit)
 	{
-		// all factories should be able to take up to the following:
-		// factory<TContainer, T, TKey, ResolutionContext<TContext>>(container, context)
-
-		// resolve<T>()
-		// resolve<T, TKey>()
-
-		// resolve<T>(TContext &)
-		// resolve<T, TKey>(TContext &)
-
-		// Don't forget to test for const (instances, references, pointers and pointers-to) and volatile (references, and pointers-to) and the valid combinations thereof
+		// TODO: The intent is that factories should be able to take one of the following forms:
+		//   factory<T>()
+		//   factory<T, TContainer>(container)
+		//   factory<T, TKey, TContainer>(container)
+		//   factory<T, TKey, TContainer, ResolutionContext<TContext>>(container, context)
+		//
+		// And resolving dependencies can take one of the following forms:
+		//   resolve<T>()
+		//   resolve<T>(TContext &)
+		//   resolve<T, TKey>()
+		//   resolve<T, TKey>(TContext &)
 
 		unit.test("resolve_calledWithUnregisteredClassWithDefaultConstructor_expectClassIsConstructed", []()
 		{
@@ -329,6 +330,56 @@ namespace smeg::tests::unit::kernel::di
 			const auto container(Container().registerFactory([&registered]() -> volatile auto & { return registered; }));
 			auto resolved(container.template resolve<Class>());
 			expect(&std::get<0>(resolved.injected).value, equal_to(&registered));
+		});
+
+		unit.test("resolve_calledWithConstVolatileReferenceWhenOnlyNonConstNonVolatileIsRegistered_expectRegisteredNonConstNonVolatileReference", []()
+		{
+			ClassWithDefaultConstructor registered;
+			const auto container(Container()
+				.registerFactory([&registered]() -> auto & { return registered; }));
+
+			auto &resolved(container.template resolve<const volatile ClassWithDefaultConstructor &>());
+			expect(&resolved, equal_to(&registered));
+		});
+
+		unit.test("resolve_calledWithConstVolatileReferenceWhenOnlyNonConstVolatileIsRegistered_expectRegisteredNonConstVolatileReference", []()
+		{
+			ClassWithDefaultConstructor registered;
+			const auto container(Container()
+				.registerFactory([&registered]() -> volatile auto & { return registered; }));
+
+			auto &resolved(container.template resolve<const volatile ClassWithDefaultConstructor &>());
+			expect(&resolved, equal_to(&registered));
+		});
+
+		unit.test("resolve_calledWithConstVolatileReferenceWhenOnlyConstIsRegistered_expectRegisteredConstReference", []()
+		{
+			ClassWithDefaultConstructor registered;
+			const auto container(Container()
+				.registerFactory([&registered]() -> const auto & { return registered; }));
+
+			auto &resolved(container.template resolve<const volatile ClassWithDefaultConstructor &>());
+			expect(&resolved, equal_to(&registered));
+		});
+
+		unit.test("resolve_calledWithConstReferenceWhenOnlyNonConstIsRegistered_expectRegisteredNonConstReference", []()
+		{
+			ClassWithDefaultConstructor registered;
+			const auto container(Container()
+				.registerFactory([&registered]() -> auto & { return registered; }));
+
+			auto &resolved(container.template resolve<const ClassWithDefaultConstructor &>());
+			expect(&resolved, equal_to(&registered));
+		});
+
+		unit.test("resolve_calledWithVolatileReferenceWhenOnlyNonVolatileIsRegistered_expectRegisteredNonVolatileReference", []()
+		{
+			ClassWithDefaultConstructor registered;
+			const auto container(Container()
+				.registerFactory([&registered]() -> auto & { return registered; }));
+
+			auto &resolved(container.template resolve<volatile ClassWithDefaultConstructor &>());
+			expect(&resolved, equal_to(&registered));
 		});
 
 		unit.test("resolve_calledWithNonConstClassWhenOnlyConstIsRegistered_expectCopyConstructedInstance", []()

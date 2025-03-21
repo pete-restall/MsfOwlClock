@@ -195,7 +195,7 @@ namespace smeg::kernel::di
 		template <typename TClass, bool IsReference, bool IsPointer>
 		struct _$DefaultFactoryFor<TClass, IsReference, IsPointer>
 		{
-			static_assert(IsReference ^ IsPointer, "TODO: References to pointers have not been wired into the DI container yet...");
+			static_assert(IsReference ^ IsPointer, "A type that is both a reference and a pointer...?");
 
 			static TClass createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
 			{
@@ -282,7 +282,7 @@ namespace smeg::kernel::di
 		};
 
 		template <typename TClass>
-		struct FactoryFor<TClass &> // TODO: we'll need more of these specialisations for CV-qualified refs so that we can resolve 'const T & -> T &', for example...
+		struct FactoryFor<TClass &>
 		{
 			static auto &createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
 			{
@@ -291,6 +291,45 @@ namespace smeg::kernel::di
 					return std::get<ContainerRegistrationFor<RegisteredType>>(container.registrations).create();
 				else
 					return DefaultFactoryFor<TClass &>::createUsing(container);
+			}
+		};
+
+		template <typename TClass>
+		struct FactoryFor<const TClass &>
+		{
+			static auto &createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
+			{
+				using RegisteredType = FirstContainerRegistrationFor<const TClass &, TClass &>::Type;
+				if constexpr (!std::same_as<RegisteredType, NoneRegistered>)
+					return std::get<ContainerRegistrationFor<RegisteredType>>(container.registrations).create();
+				else
+					return DefaultFactoryFor<const TClass &>::createUsing(container);
+			}
+		};
+
+		template <typename TClass>
+		struct FactoryFor<volatile TClass &>
+		{
+			static auto &createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
+			{
+				using RegisteredType = FirstContainerRegistrationFor<volatile TClass &, TClass &>::Type;
+				if constexpr (!std::same_as<RegisteredType, NoneRegistered>)
+					return std::get<ContainerRegistrationFor<RegisteredType>>(container.registrations).create();
+				else
+					return DefaultFactoryFor<volatile TClass &>::createUsing(container);
+			}
+		};
+
+		template <typename TClass>
+		struct FactoryFor<const volatile TClass &>
+		{
+			static auto &createUsing(const _$Container<TDefaultFactory, TRegistrations...> &container)
+			{
+				using RegisteredType = FirstContainerRegistrationFor<const volatile TClass &, volatile TClass &, const TClass &, TClass &>::Type;
+				if constexpr (!std::same_as<RegisteredType, NoneRegistered>)
+					return std::get<ContainerRegistrationFor<RegisteredType>>(container.registrations).create();
+				else
+					return DefaultFactoryFor<const volatile TClass &>::createUsing(container);
 			}
 		};
 
